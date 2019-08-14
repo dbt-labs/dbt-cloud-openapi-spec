@@ -1417,6 +1417,7 @@ components:
       type: apiKey
       in: header
       name: Authorization
+      description: Enter your token in the format **Token &lt;token&gt;**
       
 security:
   - apiKeyAuth: []
