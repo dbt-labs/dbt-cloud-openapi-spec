@@ -1413,11 +1413,9 @@ components:
           description: "Technical description of the response."
           
   securitySchemes:
-    apiKeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Enter your token in the format **Token &lt;token&gt;**
+    bearerAuth:
+      type: http
+      scheme: bearer
       
 security:
-  - apiKeyAuth: []
+  - bearerAuth: []
