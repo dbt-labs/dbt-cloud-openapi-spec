@@ -12,6 +12,7 @@ info:
 tags:
   - name: accounts
   - name: connections
+  - name: credentials
   - name: environments
   - name: jobs
   - name: repositories
@@ -65,6 +66,80 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountResponse'
+                
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
+          description: Unauthorized or Not Found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /accounts/{accountId}/credentials/:
+    get:
+      tags:
+        - credentials
+      summary: search or list credentials on an account
+      operationId: listCredentialsForAccount
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the account to retrieve
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialsResponse'
+                
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
+          description: Unauthorized or Not Found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                
+    post:
+      tags:
+        - credentials
+      summary: create credentials on account
+      operationId: createCredentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/BigqueryCredential"
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the account to create the new Credentials in
+      responses:
+        '201':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialsResponse'
                 
         '400':
           description: Bad Request.
@@ -1036,6 +1111,24 @@ components:
           format: "date-time"
     Connection:
       type: object
+    BigqueryCredential:
+      type: "object"
+      properties:
+        id:
+          type: integer
+          description: "Leave blank when creating a BigqueryCredential object"
+        account_id:
+          type: integer
+          description: "The account id to create the BigqueryCredential in"
+        type:
+          type: string
+          description: "The database type (for BigqueryCredentials, use \"bigquery\")"
+        state:
+          type: integer
+          description: "The state of the BigqueryCredential (1 = present, 2 = deleted)"
+        schema:
+          type: string
+          description: "The schema (dataset) for this BigqueryCredential object"
     BigqueryConnection:
       type: "object"
       properties:
@@ -1062,8 +1155,6 @@ components:
         project_id:
           type: "string"
           description: "Google BigQuery project ID"
-        schema:
-          type: "string"
         timeout_seconds:
           type: "integer"
         private_key_id:
@@ -1315,6 +1406,15 @@ components:
           type: "array"
           items: 
             $ref: "#/components/schemas/Connection"
+        status:
+          $ref: "#/components/schemas/Status"
+    CredentialsResponse:
+      type: "object"
+      properties:
+        data:
+          type: "array"
+          items: 
+            $ref: "#/components/schemas/BigqueryCredential"
         status:
           $ref: "#/components/schemas/Status"
     ConnectionResponse:
