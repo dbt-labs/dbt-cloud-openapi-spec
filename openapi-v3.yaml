@@ -568,11 +568,63 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /accounts/{accountId}/runs/{runId}/artifacts/:
+    get:
+      tags:
+        - Runs
+      summary: List run artifacts
+      description: |
+        Use this endpoint to fetch a list of artifact files generated for a completed run.
+
+        **Note:** at present, only the artifacts generated from _the last step in the command list_ will
+        be returned from this endpoint. Artifacts produced by any steps other than the last step
+        in the run are not available. In the future, a separate endpoint will be provided to download
+        artifacts from each job step independently.
+      operationId: listArtifactsByRunId
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the account to retrieve
+        - in: path
+          name: runId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the run to retrieve
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: "array"
+                example: ['manifest.json', 'catalog.json', 'run_results.json', 'compiled/my_project/my_model.sql']
+                items:
+                  type: "string"
+                  description: A list of artifact file paths that can be used with the [getArtifactsByRunId](#operation/getArtifactsByRunId) endpoint
+
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
+          description: Unauthorized or Not Found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /accounts/{accountId}/runs/{runId}/artifacts/{path}:
     get:
       tags:
         - Runs
-      summary: Get run artifact
+      summary: Get a run artifact
       description: |
         Use this endpoint to fetch artifacts from a completed run. Once a run has completed,
         you can use this endpoint to download the `manifest.json`, `run_results.json` or
