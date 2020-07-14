@@ -1,29 +1,83 @@
+
 openapi: 3.0.0
 servers:
   - description: Production
     url: https://cloud.getdbt.com/api/v2
-    
 info:
-  version: "2.0.0a1"
+  version: "2.0.0"
   title: dbt Cloud API v2
+  termsOfService: 'https://www.getdbt.com/cloud/terms'
+  description: |
+      The dbt Cloud API makes it possible to fetch data from your
+      dbt Cloud account and programmatically run and monitor dbt jobs.
+
+      # How to use this API
+
+      The dbt Cloud API is intended for enqueuing runs from a job, polling for run progress,
+      and downloading artifacts after jobs have completed running. Operational endpoints around
+      creating, modifying, and deleting _objects_ in dbt Cloud are still in flux. These endpoints
+      are largely undocumented in API v2. A new version of the API (v3) is in-progress and will be
+      released alongside documentation for creating, modifying, and deleting objects in the future.
+
+      The API docs are generated from an openapi spec defined in the
+      [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)
+      repository. If you find issues in these docs or have questions about using the dbt Cloud
+      API, please open an issue in the dbt-cloud-openapi-spec repo or contact support@getdbt.com.
+
+      # Authentication
+
+      To authenticate an application with the dbt Cloud API, navigate to the
+      API Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).
+      If you cannot access this page, confirm that your dbt Cloud account has access to the API,
+      and that you are using the hosted version of dbt Cloud. If dbt Cloud is running inside of a VPC
+      in an Enterprise account, contact your account manager for help finding your API key.
+
+      ## TokenAuth
+
+      Once you've found your API key, use it in the Authorization header of requests to the dbt Cloud API.
+      Be sure to include the `Token` prefix in the Authorization header, or the request will fail with a
+      "401 Unauthorized" error. Note: `Bearer` can be used in place of `Token` in the Authorization header.
+      Both syntaxes are equivalent.
+
+      **Headers**
+      ```
+      Accept: application/json
+      Authorization: Token <your token>
+      ```
+
+      ## Example request
+
+      The following example will list the Accounts that your token is authorized to access.
+      Be sure to replace `<your token>` in the Authorization header with your actual API token.
+
+      ```
+      curl --request GET \
+        --url https://cloud.getdbt.com/api/v2/accounts/ \
+        --header 'Content-Type: application/json' \
+        --header 'Authorization: Token <your token>'
+      ```
+
   contact:
     email: support@getdbt.com
     
 tags:
-  - name: accounts
-  - name: connections
-  - name: credentials
-  - name: environments
-  - name: jobs
-  - name: repositories
-  - name: runs
+  - name: Accounts
+    description: List and view Accounts
+  - name: Projects
+    description: List, view, and modify Projects
+  - name: Jobs
+    description: List, view, and modify, and trigger Jobs
+  - name: Runs
+    description: List and view Runs
   
 paths:
+  # Accounts
   /accounts/:
     get:
       tags:
-        - accounts
-      summary: search or list accounts
+        - Accounts
+      summary: List Accounts
+      description: Use the List Accounts endpoint to list the Accounts that your API Token is authorized to access.
       operationId: listAccounts
       responses:
         '200':
@@ -49,8 +103,9 @@ paths:
   /accounts/{accountId}/:
     get:
       tags:
-        - accounts
-      summary: get account by id
+        - Accounts
+      summary: Get Account
+      description: Get an Account by its ID
       operationId: getAccountById
       parameters:
         - in: path
@@ -80,26 +135,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /accounts/{accountId}/credentials/:
+  /accounts/{accountId}/projects/:
     get:
       tags:
-        - credentials
-      summary: search or list credentials on an account
-      operationId: listCredentialsForAccount
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - Projects
+      summary: List Projects
+      description: Use the List Projects endpoint to list the Projects in the specified Account
+      operationId: listProjects
       responses:
         '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CredentialsResponse'
+                $ref: '#/components/schemas/ProjectsResponse'
                 
         '400':
           description: Bad Request.
@@ -114,72 +163,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-                
-    post:
-      tags:
-        - credentials
-      summary: create credentials on account
-      operationId: createCredentials
-      requestBody:
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - $ref: "#/components/schemas/BigqueryCredential"
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to create the new Credentials in
-      responses:
-        '201':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CredentialsResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /accounts/{accountId}/connections/:
+  /accounts/{accountId}/projects/{projectId}:
     get:
       tags:
-        - connections
-      summary: search or list connections on an account
-      operationId: listConnectionsForAccount
+        - Projects
+      summary: Get Project
+      description: Get a Project by its ID
+      operationId: getProjectById
       parameters:
         - in: path
           name: accountId
           schema:
             type: integer
           required: true
-          description: Numeric ID of the account to retrieve
-        - in: query
-          name: order_by
+          description: Numeric ID of the Project to retrieve
+        - in: path
+          name: projectId
           schema:
-            type: string
-          description: |
-            Field to order the result by. Use `-` to indicate reverse order.
+            type: integer
+          required: true
+          description: Numeric ID of the Project to retrieve
       responses:
         '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConnectionsResponse'
+                $ref: '#/components/schemas/ProjectResponse'
                 
         '400':
           description: Bad Request.
@@ -194,383 +204,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-                
-    post:
-      tags:
-        - connections
-      summary: create connection on account
-      operationId: createConnection
-      requestBody:
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - $ref: "#/components/schemas/Connection"
-                - $ref: "#/components/schemas/BigqueryConnection"
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to create the new Connection in
-      responses:
-        '201':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ConnectionResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /accounts/{accountId}/connections/{connectionId}/:
-    get:
-      tags:
-        - connections
-      summary: get specific connection on account
-      operationId: getConnectionById
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
-        - in: path
-          name: connectionId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the connection to retrieve
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ConnectionResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-    post:
-      tags:
-        - connections
-      summary: update connection on account
-      operationId: updateConnectionById
-      requestBody:
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - $ref: "#/components/schemas/Connection"
-                - $ref: "#/components/schemas/BigqueryConnection"
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account that the Job belongs to
-        - in: path
-          name: connectionId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Job to update
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ConnectionResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
- 
-    delete:
-      tags:
-        - connections
-      summary: delete connection on account
-      operationId: deleteConnectionById
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account that the Connection belongs to
-        - in: path
-          name: connectionId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Connection to delete
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ConnectionResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /accounts/{accountId}/environments/:
-    get:
-      tags:
-        - environments
-      summary: search or list environments on an account
-      operationId: listEnvironmentsForAccount
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
-        - in: query
-          name: order_by
-          schema:
-            type: string
-          description: |
-            Field to order the result by. Use `-` to indicate reverse order.
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentsResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-    post:
-      tags:
-        - environments
-      summary: create environment on account
-      operationId: createEnvironment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Environment'
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account to create the new Environment in
-      responses:
-        '201':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /accounts/{accountId}/environments/{environmentId}/:
-    get:
-      tags:
-        - environments
-      summary: get specific environment on account
-      operationId: getEnvironmentById
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
-        - in: path
-          name: environmentId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the run to retrieve
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JobResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-    post:
-      tags:
-        - environments
-      summary: update environment on account
-      operationId: updateEnvironmentById
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Environment'
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account that the Environment belongs to
-        - in: path
-          name: environmentId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Environment to update
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
- 
-    delete:
-      tags:
-        - environments
-      summary: delete environment on account
-      operationId: deleteEnvironmentById
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account that the Environment belongs to
-        - in: path
-          name: environmentId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Environment to delete
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+
   /accounts/{accountId}/jobs/:
     get:
       tags:
-        - jobs
-      summary: search or list jobs on an account
+        - Jobs
+      summary: List jobs
+      description: List jobs in a project
       operationId: listJobsForAccount
       parameters:
         - in: path
@@ -578,13 +218,19 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric ID of the account to retrieve
+          description: Numeric ID of the account containing jobs
         - in: query
           name: order_by
           schema:
             type: string
           description: |
             Field to order the result by. Use `-` to indicate reverse order.
+        - in: query
+          name: project_id
+          schema:
+            type: integer
+          description: |
+            Numeric ID of the project containing jobs
       responses:
         '200':
           description: Success.
@@ -609,8 +255,9 @@ paths:
                 
     post:
       tags:
-        - jobs
-      summary: create job on account
+        - Jobs
+      summary: Create job
+      description: Create a job in a project. 
       operationId: createJob
       requestBody:
         content:
@@ -648,8 +295,9 @@ paths:
   /accounts/{accountId}/jobs/{jobId}/:
     get:
       tags:
-        - jobs
-      summary: get specific job on account
+        - Jobs
+      summary: Get job
+      description: Return job details for a job on an account
       operationId: getJobById
       parameters:
         - in: path
@@ -657,13 +305,13 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric ID of the account to retrieve
+          description: Numeric ID of the account containing the job
         - in: path
           name: jobId
           schema:
             type: integer
           required: true
-          description: Numeric ID of the run to retrieve
+          description: Numeric ID of the job to retrieve
         - in: query
           name: order_by
           schema:
@@ -694,8 +342,9 @@ paths:
                 
     post:
       tags:
-        - jobs
-      summary: update job on account
+        - Jobs
+      summary: Update job
+      description: Update the definition of an existing job
       operationId: updateJobById
       requestBody:
         content:
@@ -737,62 +386,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
  
-    delete:
-      tags:
-        - jobs
-      summary: delete job on account
-      operationId: deleteJobById
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account that the Job belongs to
-        - in: path
-          name: jobId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Job to delete
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JobResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
   /accounts/{accountId}/jobs/{jobId}/run/:
     post:
       tags:
-        - jobs
-      summary: trigger run for job
+        - Jobs
+      summary: Trigger job to run
+      description: |
+        Use this endpoint to kick off a run for a job. When this endpoint returns a successful
+        response, a new run will be enqueued for the account. Users can poll the [Get run](#operation/getRunById)
+        endpoint to poll the run until it completes. After the run has completed, users can use the [Get run artifact](#operation/getArtifactsByRunId)
+        endpoint to download artifacts generated by the run.
       operationId: triggerRun
       requestBody:
         content:
           application/json:
             schema:
               type: object
+              required:
+                - cause
               properties:
                 cause:
+                  description: A text description of the reason for running this job
+                  example: "Kicked off from Airflow"
                   type: string
                 git_sha:
+                  description: Optional. The git sha to check out before running this job
                   type: string
                 git_branch:
+                  description: Optional. The git branch to check out before running this job
                   type: string
       parameters:
         - in: path
@@ -806,7 +427,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric ID of the Job for which to trigger a run
+          description: Numeric ID of the Job to run
       responses:
         '200':
           description: Success.
@@ -831,8 +452,8 @@ paths:
   /accounts/{accountId}/runs/:
     get:
       tags:
-        - runs
-      summary: search or list runs for an account
+        - Runs
+      summary: List runs
       operationId: listRunsForAccount
       parameters:
         - in: path
@@ -846,16 +467,35 @@ paths:
           schema:
             type: string
           required: true
-          example: '["trigger", "job"]'
+          example: '["trigger", "job", "repository", "environment"]'
           description: |
             List of related fields to pull with the run. Valid values are 
-            "trigger" and "job".
+            "trigger", "job", "repository", and "environment".
+        - in: query
+          name: job_definition_id
+          example: 1234
+          schema:
+            type: integer
+          description: Optional. Applies a filter to only return runs from the specified Job.
         - in: query
           name: order_by
+          example: "-id"
           schema:
             type: string
           description: |
             Field to order the result by. Use `-` to indicate reverse order.
+        - in: query
+          name: offset
+          example: 100
+          schema:
+            type: integer
+          description: The offset to apply when listing runs. Use with `limit` to paginate results.
+        - in: query
+          name: limit
+          example: 100
+          schema:
+            type: integer
+          description: The limit to apply when listing runs. Use with `offset` to paginate results.
       responses:
         '200':
           description: Success.
@@ -880,8 +520,8 @@ paths:
   /accounts/{accountId}/runs/{runId}/:
     get:
       tags:
-        - runs
-      summary: get specific run on account
+        - Runs
+      summary: Get run
       operationId: getRunById
       parameters:
         - in: path
@@ -902,8 +542,10 @@ paths:
             type: string
           example: '["trigger", "job"]'
           description: |
-            List of related fields to pull with the run. Valid values are 
-            "trigger" and "job".
+            List of related fields to pull with the run. Valid values are
+            "trigger", "job", and "debug_logs". If "debug_logs" is not provided
+            in a request, then the included debug logs will be truncated to the last
+            1,000 lines of the debug log output file.
       responses:
         '200':
           description: Success.
@@ -925,11 +567,134 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
+  /accounts/{accountId}/runs/{runId}/artifacts/:
+    get:
+      tags:
+        - Runs
+      summary: List run artifacts
+      description: |
+        Use this endpoint to fetch a list of artifact files generated for a completed run.
+
+        **Note:** at present, only the artifacts generated from _the last step in the command list_ will
+        be returned from this endpoint. Artifacts produced by any steps other than the last step
+        in the run are not available. In the future, a separate endpoint will be provided to download
+        artifacts from each job step independently.
+      operationId: listArtifactsByRunId
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the account to retrieve
+        - in: path
+          name: runId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the run to retrieve
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: "array"
+                example: ['manifest.json', 'catalog.json', 'run_results.json', 'compiled/my_project/my_model.sql']
+                items:
+                  type: "string"
+                  description: A list of artifact file paths that can be used with the [getArtifactsByRunId](#operation/getArtifactsByRunId) endpoint
+
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
+          description: Unauthorized or Not Found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /accounts/{accountId}/runs/{runId}/artifacts/{path}:
+    get:
+      tags:
+        - Runs
+      summary: Get a run artifact
+      description: |
+        Use this endpoint to fetch artifacts from a completed run. Once a run has completed,
+        you can use this endpoint to download the `manifest.json`, `run_results.json` or
+        `catalog.json` files from dbt Cloud. These _artifacts_ contain information about
+        the models in your dbt project, timing information around their execution, and
+        a status message indicating the result of the model build.
+
+        **Note:** at present, only the artifacts generated from _the last step in the command list_ will
+        be returned from this endpoint. Artifacts produced by any steps other than the last step
+        in the run are not available. In the future, a separate endpoint will be provided to download
+        artifacts from each job step independently.
+      operationId: getArtifactsByRunId
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the account to retrieve
+        - in: path
+          name: runId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the run to retrieve
+        - in: path
+          name: path
+          schema:
+            type: string
+          example: 'manifest.json'
+          description: |
+            Paths are rooted at the `target/` directory. Use `manifest.json`, `catalog.json`,
+            or `run_results.json` to download dbt-generated artifacts for the run.
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Raw file contents product by dbt
+                example:
+                  nodes: {}
+                  sources: {}
+                  macros: {}
+                  docs: {}
+                  disabled: []
+                  generated_at: "2020-01-01T12:00:00.00000Z"
+                  parent_map: {}
+                  child_map: {}
+
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
+          description: Unauthorized or Not Found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /accounts/{accountId}/runs/{runId}/cancel/:
     post:
       tags:
-        - runs
-      summary: cancel specific run on account
+        - Runs
+      summary: Cancel a run
       operationId: cancelRunById
       parameters:
         - in: path
@@ -958,129 +723,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /accounts/{accountId}/repositories/:
-    get:
-      tags:
-        - repositories
-      summary: search or list repositories on an account
-      operationId: listRepositoriesForAccount
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RepositoriesResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-    post:
-      tags:
-        - repositories
-      summary: create repository on account
-      operationId: createRepository
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                remote_url:
-                  type: "string"
-                  description: "The git URL of the repository."
-                github_installation_id:
-                  type: "integer"
-                  description: "If using a github integration, provide the id of the installation. If not, send `null`."
-                  example: null
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to create the new Connection in
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RepositoryResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-  /accounts/{accountId}/repositories/{repositoryId}/:
-    get:
-      tags:
-        - repositories
-      summary: get specific repository on account
-      operationId: getRepositoryById
-      parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
-        - in: path
-          name: repositoryId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the repository to retrieve
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RepositoryResponse'
-                
-        '400':
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
-        '404':
-          description: Unauthorized or Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
 
 components:
   schemas:
@@ -1089,20 +731,74 @@ components:
       properties:
         id:
           type: "integer"
+          description: A unique identifier for dbt Cloud accounts
+          example: 1
         name:
           type: "string"
+          description: The name of the dbt Cloud account
         plan:
           type: "string"
+          enum: ["developer", "team", "enterprise"]
+          example: team
+          description: The billing tier for the account
         pending_cancel:
           type: "boolean"
-        extra_slots:
-          type: "integer"
-        extra_seats:
-          type: "integer"
-        total_seats:
-          type: "integer"
+          example: False
+          description: True if the account is pending cancellation
         state:
           type: "integer"
+          example: 1
+          description: 1 = Active, 2 = Deleted
+        developer_seats:
+          type: "integer"
+          example: 5
+          description: The number of Developer Licenses assigned to the account
+        read_only_seats:
+          type: "integer"
+          example: 50
+          description: The number of Read Only Licenses assigned to the account
+        run_slots:
+          type: "integer"
+          example: 5
+          description: The number of Run Slots assigned to the account
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique identifier for a project
+          example: 100
+        account_id:
+          type: integer
+          example: 1
+        connection:
+          $ref: '#/components/schemas/Connection'
+        connection_id:
+          type: integer
+          example: 5000
+        dbt_project_subdirectory:
+          type: [null, integer]
+          description: Optional. The path in the attached repository where a dbt project can be found
+          example: analytics/dbt-models
+        name:
+          type: string
+          description: A name for the project
+          example: Analytics
+        repository:
+          $ref: '#/components/schemas/Repository'
+        repository_id:
+          type: integer
+          example: 6000
+        state:
+          type: integer
+          description: 1 = active, 2 = deleted
+          example: 1
         created_at:
           type: "string"
           format: "date-time"
@@ -1111,6 +807,7 @@ components:
           format: "date-time"
     Connection:
       type: object
+
     BigqueryCredential:
       type: "object"
       properties:
@@ -1178,10 +875,11 @@ components:
       properties:
         id:
           type: "integer"
+          description: A unique identifier for an environment
+          example: 10
         account_id:
           type: "integer"
-        connection_id:
-          type: "integer"
+          example: 1
         deploy_key_id:
           type: "integer"
         created_by_id:
@@ -1190,31 +888,51 @@ components:
           type: "integer"
         name:
           type: "string"
-        notification_email:
-          type: "integer"
+          description: A name for the environment
         dbt_version:
           type: "string"
+          description: The default dbt version for jobs in this environment
+          example: 0.17.0
         use_custom_branch:
           type: "boolean"
+          example: True
+          description: If set, use the custom_branch field when cloning and running jobs in this environment
         custom_branch: 
           type: "string"
+          example: develop
         supports_docs: 
           type: "boolean"
+          description: dbt Cloud-generated / read only field
         state:
           type: "integer"
+          description: 1 = active, 2 = deleted
+          example: 1
     Job:
       type: "object"
+      required:
+        - account_id
+        - project_id
+        - environment_id
+        - name
+        - execute_steps
       properties:
-        id:
-          type: "integer"
-        project_id:
-          type: "integer"
         account_id:
           type: "integer"
+          example: 1
+        project_id:
+          type: "integer"
+          example: 100
+        environment_id:
+          type: "integer"
+          example: 10
         name:
           type: "string"
+          description: A name for the job
+          example: Nightly run
         dbt_version:
-          type: "string"
+          type: ["string", null]
+          description: Overrides the dbt_version specified on the attached Environment if provided
+          example: 0.17.1
         triggers:
           type: "object"
           properties:
@@ -1222,31 +940,39 @@ components:
               type: "boolean"
             schedule:
               type: "boolean"
-        created_at:
-          type: "string"
-          format: "date-time"
-        updated_at:
-          type: "string"
-          format: "date-time"
+            custom_branch_only:
+              type: "boolean"
         execute_steps:
           type: "array"
+          example: ['dbt run', 'dbt test', 'dbt source snapshot-freshness']
           items:
             type: "string"
-            example: "dbt run"
         settings:
           type: "object"
           properties:
             threads:
               type: "integer"
+              example: 4
+              description: The maximum number of models to run in parallel in a single dbt run
             target_name:
+              example: prod
+              description: Informational field that can be consumed in dbt project code with `{{ target.name }}`
               type: "string"
         state:
           type: "integer"
+          example: 1
+          description: 1 = active, 2 = deleted
         generate_docs:
           type: "boolean"
+          example: True
+          description: When true, run a `dbt docs generate` step at the end of runs triggered from this job
         schedule:
           type: "object"
           properties:
+            cron:
+              type: string
+              description: Cron-syntax schedule for the job
+              example: "0 7 * * 1"
             date:
               type: "object"
               properties:
@@ -1265,10 +991,15 @@ components:
       properties:
         id:
           type: "integer"
+          description: A unique identifier for the Repository
+          example: 200
         account_id:
           type: "integer"
+          example: 1
         remote_url:
           type: "string"
+          description: The git clone URL for the repository
+          example: "git@github.com:fishtown-analytics/jaffle_shop.git"
         remote_backend:
           type: "string"
         git_clone_strategy:
@@ -1291,39 +1022,62 @@ components:
       properties:
         id:
           type: "integer"
+          description: Unique identifier for a run
+          example: 10000
         trigger_id:
           type: "integer"
         account_id:
           type: "integer"
+          example: 1
         project_id:
           type: "integer"
+          example: 100
         job_definition_id:
           type: "integer"
         status:
           type: "integer"
+          enum: [1,2,3,10,20,30]
+          description: |
+            A numeric representation of the job status
+            1: Queued
+            2: Starting
+            3: Running
+            10: Success
+            20: Error
+            30: Cancelled
         git_branch:
           type: "string"
+          example: develop
+          description: Optional. If provided, check out this branch or tag before running the job.
         git_sha:
           type: "string"
+          example: "#abcd123"
+          description: Optional. If provided, check out this sha before running the job.
         status_message:
           type: "string"
+          example: Success
         dbt_version:
           type: "string"
+          example: 0.17.0
         created_at:
           type: "string"
           format: "date-time"
+          description: When the run was initially created (either via the scheduler or via an API request / webhook)
         updated_at:
           type: "string"
           format: "date-time"
         dequeued_at:
           type: "string"
           format: "date-time"
+          description: When the run was picked up by a processor node
         started_at:
           type: "string"
           format: "date-time"
+          description: When processing of the node actually began
         finished_at:
           type: "string"
           format: "date-time"
+          description: When the run completed execution
         last_checked_at:
           type: "string"
           format: "date-time"
@@ -1359,6 +1113,7 @@ components:
           type: "string"
         status_humanized:
           type: "string"
+          enum: ["Queued", "Starting", "Running", "Success", "Error", "Cancelled"]
         created_at_humanized:
           type: "string"
     Trigger:
@@ -1397,6 +1152,22 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Account"
+        status:
+          $ref: "#/components/schemas/Status"
+    ProjectsResponse:
+      type: "object"
+      properties:
+        data:
+          type: "array"
+          items: 
+            $ref: "#/components/schemas/Project"
+        status:
+          $ref: "#/components/schemas/Status"
+    ProjectResponse:
+      type: "object"
+      properties:
+        data:
+          $ref: "#/components/schemas/Project"
         status:
           $ref: "#/components/schemas/Status"
     ConnectionsResponse:
@@ -1513,9 +1284,10 @@ components:
           description: "Technical description of the response."
           
   securitySchemes:
-    bearerAuth:
+    TokenAuth:
       type: http
       scheme: bearer
-      
+      bearerFormat: "Bearer <Token>"
+
 security:
-  - bearerAuth: []
+  - TokenAuth: []
