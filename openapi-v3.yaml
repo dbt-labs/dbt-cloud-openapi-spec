@@ -30,8 +30,9 @@ info:
       ## TokenAuth
 
       Once you've found your API key, use it in the Authorization header of requests to the dbt Cloud API.
-      Be sure to include the `Token ` prefix in the Authorization header, or the request will fail with a
-      "401 Unauthorized" error.
+      Be sure to include the `Token` prefix in the Authorization header, or the request will fail with a
+      "401 Unauthorized" error. Note: `Bearer` can be used in place of `Token` in the Authorization header.
+      Both syntaxes are equivalent.
 
       **Headers**
       ```
