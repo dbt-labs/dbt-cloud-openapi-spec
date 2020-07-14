@@ -19,6 +19,11 @@ info:
       are largely undocumented in API v2. A new version of the API (v3) is in-progress and will be
       released alongside documentation for creating, modifying, and deleting objects in the future.
 
+      The API docs are generated from an openapi spec defined in the
+      [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)
+      repository. If you find issues in these docs or have questions about using the dbt Cloud
+      API, please open an issue in the dbt-cloud-openapi-spec repo or contact support@getdbt.com.
+
       # Authentication
 
       To authenticate an application with the dbt Cloud API, navigate to the
