@@ -415,6 +415,36 @@ paths:
                 git_branch:
                   description: Optional. The git branch to check out before running this job
                   type: string
+                schema_override:
+                  description: Optional. Override the destination schema in the configured target for this job.
+                  example: "dbt_cloud_pr_123_456"
+                  type: string
+                dbt_version_override:
+                  description: Optional. Override the version of dbt used to run this job
+                  example: 0.18.0
+                  type: string
+                threads_override:
+                  description: Optional. Override the number of threads used to run this job
+                  example: 8
+                  type: integer
+                target_name_override:
+                  description: Optional. Override the `target.name` context variable used when running this job
+                  example: CI
+                  type: string
+                generate_docs_override:
+                  description: Optional. Override whether or not this job generates docs (true=yes, false=no)
+                  example: true
+                  type: boolean
+                timeout_seconds_override:
+                  description: Optional. Override the timeout in seconds for this job
+                  example: 60
+                  type: integer
+                steps_override:
+                  type: array
+                  description: Optional. Override the list of steps for this job
+                  example: ['dbt run', 'dbt test', 'dbt source snapshot-freshness']
+                  items:
+                    type: "string"
       parameters:
         - in: path
           name: accountId
@@ -1133,6 +1163,32 @@ components:
           type: "integer"
         schema_override:
           type: "string"
+        dbt_version_override:
+          description: Optional. Override the version of dbt used to run this job
+          example: 0.18.0
+          type: string
+        threads_override:
+          description: Optional. Override the number of threads used to run this job
+          example: 8
+          type: integer
+        target_name_override:
+          description: Optional. Override the `target.name` context variable used when running this job
+          example: CI
+          type: string
+        generate_docs_override:
+          description: Optional. Override whether or not this job generates docs (true=yes, false=no)
+          example: true
+          type: boolean
+        timeout_seconds_override:
+          description: Optional. Override the timeout in seconds for this job
+          example: 60
+          type: integer
+        steps_override:
+          type: array
+          description: Optional. Override the list of steps for this job
+          example: ['dbt run', 'dbt test', 'dbt source snapshot-freshness']
+          items:
+            type: "string"
         created_at:
           type: "string"
           format: "date-time"
