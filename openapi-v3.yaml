@@ -400,6 +400,20 @@ paths:
       requestBody:
         content:
           application/json:
+            example:
+              cause: Kicked off from Airflow
+              git_branch: staging
+              schema_overide: dbt_cloud_pr_123
+              dbt_version_override: 0.18.0
+              target_name_override: staging
+              timeout_seconds_override: 3000
+              generate_docs_override: true
+              threads_override: 8
+              steps_override:
+                - dbt seed
+                - dbt run --fail-fast
+                - dbt test --fail-fast
+
             schema:
               type: object
               required:
@@ -445,6 +459,7 @@ paths:
                   example: ['dbt run', 'dbt test', 'dbt source snapshot-freshness']
                   items:
                     type: "string"
+              example:
       parameters:
         - in: path
           name: accountId
