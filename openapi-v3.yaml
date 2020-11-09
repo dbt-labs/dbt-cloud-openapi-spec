@@ -459,7 +459,6 @@ paths:
                   example: ['dbt run', 'dbt test', 'dbt source snapshot-freshness']
                   items:
                     type: "string"
-              example:
       parameters:
         - in: path
           name: accountId
