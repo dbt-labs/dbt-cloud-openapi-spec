@@ -620,10 +620,8 @@ paths:
       description: |
         Use this endpoint to fetch a list of artifact files generated for a completed run.
 
-        **Note:** at present, only the artifacts generated from _the last step in the command list_ will
-        be returned from this endpoint. Artifacts produced by any steps other than the last step
-        in the run are not available. In the future, a separate endpoint will be provided to download
-        artifacts from each job step independently.
+        **Note:** By default, this endpoint returns artifacts from the _last step_ in the run.
+        To list artifacts from other steps in the run, use the `step` query parameter described below.
       operationId: listArtifactsByRunId
       parameters:
         - in: path
@@ -638,6 +636,15 @@ paths:
             type: integer
           required: true
           description: Numeric ID of the run to retrieve
+        - in: query
+          name: step
+          schema:
+            type: integer
+          required: false
+          description: |
+            The index of the Step in the Run to query for artifacts. The first step in the run
+            has the index `1`. If the `step` parameter is omitted, then this endpoint
+            will return the artifacts compiled for the last step in the run.
       responses:
         '200':
           description: Success.
@@ -676,10 +683,8 @@ paths:
         the models in your dbt project, timing information around their execution, and
         a status message indicating the result of the model build.
 
-        **Note:** at present, only the artifacts generated from _the last step in the command list_ will
-        be returned from this endpoint. Artifacts produced by any steps other than the last step
-        in the run are not available. In the future, a separate endpoint will be provided to download
-        artifacts from each job step independently.
+        **Note:** By default, this endpoint returns artifacts from the _last step_ in the run.
+        To list artifacts from other steps in the run, use the `step` query parameter described below.
       operationId: getArtifactsByRunId
       parameters:
         - in: path
@@ -702,6 +707,15 @@ paths:
           description: |
             Paths are rooted at the `target/` directory. Use `manifest.json`, `catalog.json`,
             or `run_results.json` to download dbt-generated artifacts for the run.
+        - in: query
+          name: step
+          schema:
+            type: integer
+          required: false
+          description: |
+            The index of the Step in the Run to query for artifacts. The first step in the run
+            has the index `1`. If the `step` parameter is omitted, then this endpoint
+            will return the artifacts compiled for the last step in the run.
       responses:
         '200':
           description: Success.
