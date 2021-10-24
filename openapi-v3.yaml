@@ -403,7 +403,7 @@ paths:
             example:
               cause: Kicked off from Airflow
               git_branch: staging
-              schema_overide: dbt_cloud_pr_123
+              schema_override: dbt_cloud_pr_123
               dbt_version_override: 0.18.0
               target_name_override: staging
               timeout_seconds_override: 3000
