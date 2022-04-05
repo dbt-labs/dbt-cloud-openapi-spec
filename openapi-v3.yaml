@@ -970,15 +970,9 @@ components:
       required:
         - account_id
         - project_id
-        - id
         - environment_id
         - name
-        - dbt_version
-        - triggers
         - execute_steps
-        - settings
-        - state
-        - schedule
       properties:
         account_id:
           type: "integer"
@@ -986,9 +980,6 @@ components:
         project_id:
           type: "integer"
           example: 100
-        id:
-          type: [null]
-          example: 
         environment_id:
           type: "integer"
           example: 10
@@ -1002,7 +993,6 @@ components:
           example: 0.17.1
         triggers:
           type: "object"
-          example: {'github_webhook': false, 'schedule': true, 'custom_branch_only': false}
           properties:
             github_webhook:
               type: "boolean"
@@ -1017,7 +1007,6 @@ components:
             type: "string"
         settings:
           type: "object"
-          example: {'threads': 4, 'target_name': 'prod'}
           properties:
             threads:
               type: "integer"
@@ -1037,7 +1026,6 @@ components:
           description: When true, run a `dbt docs generate` step at the end of runs triggered from this job
         schedule:
           type: "object"
-          example: {'cron': '0 7 * * 1', 'date': {'type': 'every_day'}, 'time': {'interval': 1, 'type': 'every_hour'}}
           properties:
             cron:
               type: string
@@ -1052,8 +1040,6 @@ components:
             time:
               type: "object"
               properties:
-                interval:
-                  type: "integer"
                 type:
                   type: "string"
                   enum: ["every_hour", "at_exact_hours"]
