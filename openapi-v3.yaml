@@ -86,7 +86,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountsResponse'
-                
+          links:
+            GetAccountById:
+              operationId: getAccountById
+              parameters: 
+                accountId: $response.body#/id
+            ListProjects:
+              operationId: listProjects
+              parameters: 
+                accountId: $response.body#/id
+            ListJobsForAccount:
+              operationId: listJobsForAccount
+              parameters: 
+                accountId: $response.body#/id
         '400':
           description: Bad Request.
           content:
@@ -142,6 +154,13 @@ paths:
       summary: List Projects
       description: Use the List Projects endpoint to list the Projects in the specified Account
       operationId: listProjects
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the account to retrieve
       responses:
         '200':
           description: Success.
@@ -149,7 +168,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectsResponse'
-                
+          links:
+            GetProjectById:
+              operationId: getProjectById
+              parameters: 
+                accoutnId: $request.path.accountId
+                projectId: $response.body#/id
         '400':
           description: Bad Request.
           content:
@@ -703,6 +727,7 @@ paths:
           name: path
           schema:
             type: string
+          required: true
           example: 'manifest.json'
           description: |
             Paths are rooted at the `target/` directory. Use `manifest.json`, `catalog.json`,
@@ -795,8 +820,9 @@ components:
           type: "string"
           description: The name of the dbt Cloud account
         plan:
-          type: "string"
-          enum: ["developer", "team", "enterprise"]
+          anyOf:
+            - enum: ["developer", "team", "enterprise"]
+            - type: "string"
           example: team
           description: The billing tier for the account
         pending_cancel:
@@ -841,7 +867,8 @@ components:
           type: integer
           example: 5000
         dbt_project_subdirectory:
-          type: [null, integer]
+          type: integer
+          nullable: true
           description: Optional. The path in the attached repository where a dbt project can be found
           example: analytics/dbt-models
         name:
@@ -988,7 +1015,8 @@ components:
           description: A name for the job
           example: Nightly run
         dbt_version:
-          type: ["string", null]
+          type: "string"
+          nullable: true
           description: Overrides the dbt_version specified on the attached Environment if provided
           example: 0.17.1
         triggers:
