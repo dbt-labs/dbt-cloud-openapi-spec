@@ -1,0 +1,46 @@
+version: "3"
+
+vars:
+  TIMESTAMP:
+    sh: date '+%s'
+
+tasks:
+  require-var-auth-token:
+    silent: true
+    cmds:
+      - exit 0
+    preconditions:
+      - sh: test -n "{{.AUTH_TOKEN}}"
+        msg: "AUTH_TOKEN variable not set! Please use AUTH_TOKEN=[personal or service token]."
+
+  require-var-base-url:
+    silent: true
+    cmds:
+      - exit 0
+    preconditions:
+      - sh: test -n "{{.BASE_URL}}"
+        msg: "BASE_URL variable not set!"
+
+  mkdir-cassettes:
+    silent: true
+    cmds:
+      - mkdir -p .cassettes
+
+  clean-cassettes:
+    silent: true
+    cmds:
+      - rm -r .cassettes/*
+
+  schemathesis:
+    desc: Tests the OpenAPI v3 spec against an API (experimental)
+    deps: [require-var-auth-token, require-var-base-url, mkdir-cassettes]
+    cmds:
+      - >
+        st run
+        -M GET
+        -T Accounts
+        -H "Authorization: Token {{.AUTH_TOKEN}}"
+        --base-url {{.BASE_URL}}
+        --checks not_a_server_error,status_code_conformance,response_schema_conformance,response_headers_conformance
+        --cassette-path .cassettes/{{.TIMESTAMP}}.yaml
+        ./openapi-v3.yaml

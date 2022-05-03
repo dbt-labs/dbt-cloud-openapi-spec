@@ -90,15 +90,15 @@ paths:
             GetAccountById:
               operationId: getAccountById
               parameters: 
-                accountId: $response.body#/id
+                accountId: $response.body#/data/0/id
             ListProjects:
               operationId: listProjects
               parameters: 
-                accountId: $response.body#/id
+                accountId: $response.body#/data/0/id
             ListJobsForAccount:
               operationId: listJobsForAccount
               parameters: 
-                accountId: $response.body#/id
+                accountId: $response.body#/data/0/id
         '400':
           description: Bad Request.
           content:
