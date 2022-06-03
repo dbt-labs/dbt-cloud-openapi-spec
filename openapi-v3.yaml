@@ -1,3 +1,4 @@
+
 openapi: 3.0.0
 servers:
   - description: Production
@@ -246,7 +247,9 @@ paths:
           name: order_by
           schema:
             type: string
-            enum: [id, created_at, -id, -created_at]
+            anyOf:
+            - enum: [id, created_at, -id, -created_at]
+            - type: "string"
           description: |
             Field to order the result by. Use `-` to indicate reverse order.
         - in: query

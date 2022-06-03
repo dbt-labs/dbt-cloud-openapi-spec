@@ -1,8 +1,6 @@
-name: Run Spectral on Pull Requests
-
 on:
   - pull_request
-
+name: Spectral
 jobs:
   build:
     name: Run Spectral
