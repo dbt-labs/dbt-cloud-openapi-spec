@@ -147,6 +147,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /accounts/{accountId}/users:
+    get:
+      tags:
+        - Accounts
+      summary: List Users
+      description: Use the List Users endpoint to list the Users in the specified Account
+      operationId: listUsers
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the account
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersResponse'
   /accounts/{accountId}/projects/:
     get:
       tags:
@@ -537,10 +558,10 @@ paths:
           schema:
             type: string
           required: true
-          example: '["trigger", "job", "repository", "environment"]'
+          example: '["trigger", "job", "repository", "environment", "run_steps"]'
           description: |
-            List of related fields to pull with the run. Valid values are 
-            "trigger", "job", "repository", and "environment".
+            List of related fields to pull with the run. Valid values are
+            "trigger", "job", "repository", "environment", and "run_steps".
         - in: query
           name: job_definition_id
           example: 1234
@@ -830,9 +851,7 @@ components:
           example: False
           description: True if the account is pending cancellation
         state:
-          type: "integer"
-          example: 1
-          description: 1 = Active, 2 = Deleted
+          $ref: '#/components/schemas/State'
         developer_seats:
           type: "integer"
           example: 5
@@ -851,6 +870,107 @@ components:
         updated_at:
           type: "string"
           format: "date-time"
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique identifier for a user
+          example: 100
+        state:
+          $ref: '#/components/schemas/State'
+        name:
+          type: string
+          description: The user's name
+          example: John Doe
+        lock_reason:
+          type: string
+          nullable: true
+          description: The reason an account was locked
+        unlock_if_subscription_renewed:
+          type: boolean
+          description: If set, an admin will be able to unlock it by renewing its subscription
+        plan:
+          type: string
+          enum: [free, trial, enterprise, developer, team, cancelled]
+          description: The user's plan type
+        pending_cancel:
+          type: boolean
+        run_slots:
+          type: integer
+        developer_seats:
+          type: integer
+        read_only_seats:
+          type: integer
+        queue_limit:
+          type: integer
+        pod_memory_request_mebibytes:
+          type: integer
+          description: |
+            The amount of memory (in MiB) to request for scheduled runs and
+            develop pods on this account.
+        run_duration_limit_seconds:
+          type: integer
+          description: |
+            The maximum duration a run for this account is permitted to execute
+            before it is terminated
+        enterprise_authentication_method:
+          nullable: true
+          type: string
+          enum: [none, okta, azure_ad, gsuite]
+        enterprise_login_slug:
+          type: string
+          nullable: true
+        enterprise_unique_identifier:
+          type: string
+          nullable: true
+        billing_email_address:
+          type: string
+          nullable: true
+        locked:
+          type: boolean
+        unlocked_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        starter_repo_url:
+          type: string
+          nullable: true
+          description: The account will use this to initialize projects if defined
+        sso_reauth:
+          type: boolean
+          description: |
+            If set and the account has configured SSO, users will be forced to
+            re-authenticate with their identity provider periodically
+        git_auth_level:
+          type: string
+          enum: [personal, team]
+          nullable: true
+          description: Indicates the git provider authentication level for this user
+        identifier:
+          type: string
+          description: A globally unique identifier
+          example: act_0ujtsYcgvSTl8PAuAdqWYSMnLOv
+        docs_job_id:
+          deprecated: true
+        freshness_job_id:
+          deprecated: true
+        docs_job:
+          deprecated: true
+        freshness_job:
+          deprecated: true
+        enterprise_login_url:
+          type: string
+          nullable: true
+          description: The enterprise login URL, if available
+    State:
+      type: integer
+      description: 1 = Active, 2 = Deleted
     Project:
       type: object
       properties:
@@ -881,9 +1001,7 @@ components:
           type: integer
           example: 6000
         state:
-          type: integer
-          description: 1 = active, 2 = deleted
-          example: 1
+          $ref: '#/components/schemas/State'
         created_at:
           type: "string"
           format: "date-time"
@@ -922,13 +1040,13 @@ components:
         created_by_id:
           type: "integer"
           description: "User ID who created the connection"
-        name: 
+        name:
           type: "string"
         type:
           type: "string"
           enum: ["postgres", "redshift", "snowflake", "bigquery"]
         state:
-          type: "integer"
+          $ref: '#/components/schemas/State'
         created_at:
           type: "string"
           format: "date-time"
@@ -990,9 +1108,7 @@ components:
           type: "boolean"
           description: dbt Cloud-generated / read only field
         state:
-          type: "integer"
-          description: 1 = active, 2 = deleted
-          example: 1
+          $ref: '#/components/schemas/State'
     Job:
       type: "object"
       required:
@@ -1046,9 +1162,7 @@ components:
               description: Informational field that can be consumed in dbt project code with `{{ target.name }}`
               type: "string"
         state:
-          type: "integer"
-          example: 1
-          description: 1 = active, 2 = deleted
+          $ref: '#/components/schemas/State'
         generate_docs:
           type: "boolean"
           example: True
@@ -1096,7 +1210,7 @@ components:
         github_installation_id:
           type: "integer"
         state:
-          type: "integer"
+          $ref: '#/components/schemas/State'
         created_at:
           type: "string"
           format: "date-time"
@@ -1265,6 +1379,15 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Account"
+        status:
+          $ref: "#/components/schemas/Status"
+    UsersResponse:
+      type: "object"
+      properties:
+        data:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/User"
         status:
           $ref: "#/components/schemas/Status"
     ProjectsResponse:
