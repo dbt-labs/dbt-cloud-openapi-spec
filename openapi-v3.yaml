@@ -5,60 +5,60 @@ servers:
 info:
   version: "2.0.0"
   title: dbt Cloud API v2
-  termsOfService: "https://www.getdbt.com/cloud/terms"
+  termsOfService: 'https://www.getdbt.com/cloud/terms'
   description: |
-    The dbt Cloud API makes it possible to fetch data from your
-    dbt Cloud account and programmatically run and monitor dbt jobs.
+      The dbt Cloud API makes it possible to fetch data from your
+      dbt Cloud account and programmatically run and monitor dbt jobs.
 
-    # How to use this API
+      # How to use this API
 
-    The dbt Cloud API is intended for enqueuing runs from a job, polling for run progress,
-    and downloading artifacts after jobs have completed running. Operational endpoints around
-    creating, modifying, and deleting _objects_ in dbt Cloud are still in flux. These endpoints
-    are largely undocumented in API v2. A new version of the API (v3) is in-progress and will be
-    released alongside documentation for creating, modifying, and deleting objects in the future.
+      The dbt Cloud API is intended for enqueuing runs from a job, polling for run progress,
+      and downloading artifacts after jobs have completed running. Operational endpoints around
+      creating, modifying, and deleting _objects_ in dbt Cloud are still in flux. These endpoints
+      are largely undocumented in API v2. A new version of the API (v3) is in-progress and will be
+      released alongside documentation for creating, modifying, and deleting objects in the future.
 
-    The API docs are generated from an openapi spec defined in the
-    [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)
-    repository. If you find issues in these docs or have questions about using the dbt Cloud
-    API, please open an issue in the dbt-cloud-openapi-spec repo or contact support@getdbt.com.
+      The API docs are generated from an openapi spec defined in the
+      [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)
+      repository. If you find issues in these docs or have questions about using the dbt Cloud
+      API, please open an issue in the dbt-cloud-openapi-spec repo or contact support@getdbt.com.
 
-    # Authentication
+      # Authentication
 
-    To authenticate an application with the dbt Cloud API, navigate to the
-    API Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).
-    If you cannot access this page, confirm that your dbt Cloud account has access to the API,
-    and that you are using the hosted version of dbt Cloud. If dbt Cloud is running inside of a VPC
-    in an Enterprise account, contact your account manager for help finding your API key.
+      To authenticate an application with the dbt Cloud API, navigate to the
+      API Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).
+      If you cannot access this page, confirm that your dbt Cloud account has access to the API,
+      and that you are using the hosted version of dbt Cloud. If dbt Cloud is running inside of a VPC
+      in an Enterprise account, contact your account manager for help finding your API key.
 
-    ## TokenAuth
+      ## TokenAuth
 
-    Once you've found your API key, use it in the Authorization header of requests to the dbt Cloud API.
-    Be sure to include the `Token` prefix in the Authorization header, or the request will fail with a
-    "401 Unauthorized" error. Note: `Bearer` can be used in place of `Token` in the Authorization header.
-    Both syntaxes are equivalent.
+      Once you've found your API key, use it in the Authorization header of requests to the dbt Cloud API.
+      Be sure to include the `Token` prefix in the Authorization header, or the request will fail with a
+      "401 Unauthorized" error. Note: `Bearer` can be used in place of `Token` in the Authorization header.
+      Both syntaxes are equivalent.
 
-    **Headers**
-    ```
-    Accept: application/json
-    Authorization: Token <your token>
-    ```
+      **Headers**
+      ```
+      Accept: application/json
+      Authorization: Token <your token>
+      ```
 
-    ## Example request
+      ## Example request
 
-    The following example will list the Accounts that your token is authorized to access.
-    Be sure to replace `<your token>` in the Authorization header with your actual API token.
+      The following example will list the Accounts that your token is authorized to access.
+      Be sure to replace `<your token>` in the Authorization header with your actual API token.
 
-    ```
-    curl --request GET \
-      --url https://cloud.getdbt.com/api/v2/accounts/ \
-      --header 'Content-Type: application/json' \
-      --header 'Authorization: Token <your token>'
-    ```
+      ```
+      curl --request GET \
+        --url https://cloud.getdbt.com/api/v2/accounts/ \
+        --header 'Content-Type: application/json' \
+        --header 'Authorization: Token <your token>'
+      ```
 
   contact:
     email: support@getdbt.com
-
+    
 tags:
   - name: Accounts
     description: List and view Accounts
@@ -68,7 +68,7 @@ tags:
     description: List, view, and modify, and trigger Jobs
   - name: Runs
     description: List and view Runs
-
+  
 paths:
   # Accounts
   /accounts/:
@@ -79,12 +79,12 @@ paths:
       description: Use the List Accounts endpoint to list the Accounts that your API Token is authorized to access.
       operationId: listAccounts
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountsResponse"
+                $ref: '#/components/schemas/AccountsResponse'
           links:
             GetAccountById:
               operationId: getAccountById
@@ -98,19 +98,19 @@ paths:
               operationId: listJobsForAccount
               parameters:
                 accountId: $response.body#/data/0/id
-        "400":
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
   /accounts/{accountId}/:
     get:
       tags:
@@ -126,26 +126,26 @@ paths:
           required: true
           description: Numeric ID of the account to retrieve
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountResponse"
-
-        "400":
+                $ref: '#/components/schemas/AccountResponse'
+                
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
   /accounts/{accountId}/projects/:
     get:
       tags:
@@ -161,31 +161,31 @@ paths:
           required: true
           description: Numeric ID of the account to retrieve
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProjectsResponse"
+                $ref: '#/components/schemas/ProjectsResponse'
           links:
             GetProjectById:
               operationId: getProjectById
               parameters:
                 accoutnId: $request.path.accountId
                 projectId: $response.body#/id
-        "400":
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
   /accounts/{accountId}/projects/{projectId}:
     get:
       tags:
@@ -207,26 +207,26 @@ paths:
           required: true
           description: Numeric ID of the Project to retrieve
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProjectResponse"
-
-        "400":
+                $ref: '#/components/schemas/ProjectResponse'
+                
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /accounts/{accountId}/jobs/:
     get:
@@ -256,38 +256,38 @@ paths:
           description: |
             Numeric ID of the project containing jobs
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/JobsResponse"
-
-        "400":
+                $ref: '#/components/schemas/JobsResponse'
+                
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
+                $ref: '#/components/schemas/ErrorResponse'
+                
     post:
       tags:
         - Jobs
       summary: Create job
-      description: Create a job in a project.
+      description: Create a job in a project. 
       operationId: createJob
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Job"
+              $ref: '#/components/schemas/Job'
       parameters:
         - in: path
           name: accountId
@@ -296,26 +296,26 @@ paths:
           required: true
           description: Numeric ID of the account to create the new Job in
       responses:
-        "201":
+        '201':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/JobResponse"
-
-        "400":
+                $ref: '#/components/schemas/JobResponse'
+                
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
   /accounts/{accountId}/jobs/{jobId}/:
     get:
       tags:
@@ -343,27 +343,27 @@ paths:
           description: |
             Field to order the result by. Use `-` to indicate reverse order.
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/JobResponse"
-
-        "400":
+                $ref: '#/components/schemas/JobResponse'
+                
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
+                $ref: '#/components/schemas/ErrorResponse'
+                
     post:
       tags:
         - Jobs
@@ -374,7 +374,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Job"
+              $ref: '#/components/schemas/Job'
       parameters:
         - in: path
           name: accountId
@@ -389,27 +389,27 @@ paths:
           required: true
           description: Numeric ID of the Job to update
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/JobResponse"
-
-        "400":
+                $ref: '#/components/schemas/JobResponse'
+                
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
+                $ref: '#/components/schemas/ErrorResponse'
+ 
   /accounts/{accountId}/jobs/{jobId}/run/:
     post:
       tags:
@@ -480,8 +480,7 @@ paths:
                 steps_override:
                   type: array
                   description: Optional. Override the list of steps for this job
-                  example:
-                    ["dbt run", "dbt test", "dbt source snapshot-freshness"]
+                  example: ['dbt run', 'dbt test', 'dbt source snapshot-freshness']
                   items:
                     type: "string"
       parameters:
@@ -498,26 +497,26 @@ paths:
           required: true
           description: Numeric ID of the Job to run
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RunResponse"
-
-        "400":
+                $ref: '#/components/schemas/RunResponse'
+                
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
   /accounts/{accountId}/runs/:
     get:
       tags:
@@ -566,26 +565,26 @@ paths:
             type: integer
           description: The limit to apply when listing runs. Use with `offset` to paginate results.
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RunsResponse"
-
-        "400":
+                $ref: '#/components/schemas/RunsResponse'
+                
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
   /accounts/{accountId}/runs/{runId}/:
     get:
       tags:
@@ -616,26 +615,26 @@ paths:
             in a request, then the included debug logs will be truncated to the last
             1,000 lines of the debug log output file.
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RunResponse"
-
-        "400":
+                $ref: '#/components/schemas/RunResponse'
+                
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /accounts/{accountId}/runs/{runId}/artifacts/:
     get:
@@ -671,36 +670,30 @@ paths:
             has the index `1`. If the `step` parameter is omitted, then this endpoint
             will return the artifacts compiled for the last step in the run.
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
                 type: "array"
-                example:
-                  [
-                    "manifest.json",
-                    "catalog.json",
-                    "run_results.json",
-                    "compiled/my_project/my_model.sql",
-                  ]
+                example: ['manifest.json', 'catalog.json', 'run_results.json', 'compiled/my_project/my_model.sql']
                 items:
                   type: "string"
                   description: A list of artifact file paths that can be used with the [getArtifactsByRunId](#operation/getArtifactsByRunId) endpoint
 
-        "400":
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /accounts/{accountId}/runs/{runId}/artifacts/{path}:
     get:
@@ -735,7 +728,7 @@ paths:
           schema:
             type: string
           required: true
-          example: "manifest.json"
+          example: 'manifest.json'
           description: |
             Paths are rooted at the `target/` directory. Use `manifest.json`, `catalog.json`,
             or `run_results.json` to download dbt-generated artifacts for the run.
@@ -749,7 +742,7 @@ paths:
             has the index `1`. If the `step` parameter is omitted, then this endpoint
             will return the artifacts compiled for the last step in the run.
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
@@ -764,20 +757,19 @@ paths:
                   version: 0.5.0
                   - package: dbt-labs/dbt_utils
                   version: 0.8.2"
-
-        "400":
+        '400':
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /accounts/{accountId}/runs/{runId}/cancel/:
     post:
@@ -799,19 +791,19 @@ paths:
           required: true
           description: Numeric ID of the run to cancel
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RunResponse"
-
-        "404":
+                $ref: '#/components/schemas/RunResponse'
+                
+        '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   schemas:
@@ -868,7 +860,7 @@ components:
           type: integer
           example: 1
         connection:
-          $ref: "#/components/schemas/Connection"
+          $ref: '#/components/schemas/Connection'
         connection_id:
           type: integer
           example: 5000
@@ -882,7 +874,7 @@ components:
           description: A name for the project
           example: Analytics
         repository:
-          $ref: "#/components/schemas/Repository"
+          $ref: '#/components/schemas/Repository'
         repository_id:
           type: integer
           example: 6000
@@ -911,7 +903,7 @@ components:
           description: "The account id to create the BigqueryCredential in"
         type:
           type: string
-          description: 'The database type (for BigqueryCredentials, use "bigquery")'
+          description: "The database type (for BigqueryCredentials, use \"bigquery\")"
         state:
           type: integer
           description: "The state of the BigqueryCredential (1 = present, 2 = deleted)"
@@ -928,7 +920,7 @@ components:
         created_by_id:
           type: "integer"
           description: "User ID who created the connection"
-        name:
+        name: 
           type: "string"
         type:
           type: "string"
@@ -989,10 +981,10 @@ components:
           type: "boolean"
           example: True
           description: If set, use the custom_branch field when cloning and running jobs in this environment
-        custom_branch:
+        custom_branch: 
           type: "string"
           example: develop
-        supports_docs:
+        supports_docs: 
           type: "boolean"
           description: dbt Cloud-generated / read only field
         state:
@@ -1037,7 +1029,7 @@ components:
               type: "boolean"
         execute_steps:
           type: "array"
-          example: ["dbt run", "dbt test", "dbt source snapshot-freshness"]
+          example: ['dbt run', 'dbt test', 'dbt source snapshot-freshness']
           items:
             type: "string"
         settings:
@@ -1078,7 +1070,7 @@ components:
                 type:
                   type: "string"
                   enum: ["every_hour", "at_exact_hours"]
-
+                  
     Repository:
       type: object
       properties:
@@ -1109,7 +1101,7 @@ components:
         updated_at:
           type: "string"
           format: "date-time"
-
+          
     Run:
       type: object
       properties:
@@ -1129,7 +1121,7 @@ components:
           type: "integer"
         status:
           type: "integer"
-          enum: [1, 2, 3, 10, 20, 30]
+          enum: [1,2,3,10,20,30]
           description: |
             A numeric representation of the job status
             1: Queued
@@ -1188,10 +1180,10 @@ components:
         has_docs_generated:
           type: "boolean"
         trigger:
-          $ref: "#/components/schemas/Trigger"
+          $ref: '#/components/schemas/Trigger'
         job:
-          $ref: "#/components/schemas/Job"
-
+          $ref: '#/components/schemas/Job'
+          
         duration:
           type: "string"
         queued_duration:
@@ -1206,8 +1198,7 @@ components:
           type: "string"
         status_humanized:
           type: "string"
-          enum:
-            ["Queued", "Starting", "Running", "Success", "Error", "Cancelled"]
+          enum: ["Queued", "Starting", "Running", "Success", "Error", "Cancelled"]
         created_at_humanized:
           type: "string"
     Trigger:
@@ -1250,20 +1241,20 @@ components:
         steps_override:
           type: array
           description: Optional. Override the list of steps for this job
-          example: ["dbt run", "dbt test", "dbt source snapshot-freshness"]
+          example: ['dbt run', 'dbt test', 'dbt source snapshot-freshness']
           items:
             type: "string"
         created_at:
           type: "string"
           format: "date-time"
-
+          
     # responses
     AccountsResponse:
       type: "object"
       properties:
         data:
           type: "array"
-          items:
+          items: 
             $ref: "#/components/schemas/Account"
         status:
           $ref: "#/components/schemas/Status"
@@ -1279,7 +1270,7 @@ components:
       properties:
         data:
           type: "array"
-          items:
+          items: 
             $ref: "#/components/schemas/Project"
         status:
           $ref: "#/components/schemas/Status"
@@ -1295,7 +1286,7 @@ components:
       properties:
         data:
           type: "array"
-          items:
+          items: 
             $ref: "#/components/schemas/Connection"
         status:
           $ref: "#/components/schemas/Status"
@@ -1304,7 +1295,7 @@ components:
       properties:
         data:
           type: "array"
-          items:
+          items: 
             $ref: "#/components/schemas/BigqueryCredential"
         status:
           $ref: "#/components/schemas/Status"
@@ -1322,7 +1313,7 @@ components:
       properties:
         data:
           type: "array"
-          items:
+          items: 
             $ref: "#/components/schemas/Environment"
         status:
           $ref: "#/components/schemas/Status"
@@ -1338,7 +1329,7 @@ components:
       properties:
         data:
           type: "array"
-          items:
+          items: 
             $ref: "#/components/schemas/Job"
         status:
           $ref: "#/components/schemas/Status"
@@ -1354,7 +1345,7 @@ components:
       properties:
         data:
           type: "array"
-          items:
+          items: 
             $ref: "#/components/schemas/Repository"
         status:
           $ref: "#/components/schemas/Status"
@@ -1370,7 +1361,7 @@ components:
       properties:
         data:
           type: "array"
-          items:
+          items: 
             $ref: "#/components/schemas/Run"
         status:
           $ref: "#/components/schemas/Status"
@@ -1402,7 +1393,7 @@ components:
         developer_message:
           type: "string"
           description: "Technical description of the response."
-
+          
   securitySchemes:
     TokenAuth:
       type: http
