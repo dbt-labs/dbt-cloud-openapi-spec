@@ -432,7 +432,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
- 
+    delete:
+      tags:
+        - Jobs
+      operationId: deleteJobById
+      summary: Delete job
+      description: Delete the given job by its id
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Account that the Job belongs to
+        - in: path
+          name: jobId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the job to delete
+      responses:
+        '200':
+          description: Job deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+
   /accounts/{accountId}/jobs/{jobId}/run/:
     post:
       tags:
