@@ -120,12 +120,7 @@ paths:
       description: Get an Account by its ID
       operationId: getAccountById
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
       responses:
         '200':
           description: Success.
@@ -155,12 +150,7 @@ paths:
       description: Use the List Users endpoint to list the Users in the specified Account
       operationId: listUsers
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account
+        - $ref: '#/components/parameters/accountId'
       responses:
         '200':
           description: Success.
@@ -176,12 +166,7 @@ paths:
       description: Use the List Projects endpoint to list the Projects in the specified Account
       operationId: listProjects
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
       responses:
         '200':
           description: Success.
@@ -216,12 +201,7 @@ paths:
       description: Get a Project by its ID
       operationId: getProjectById
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Project to retrieve
+        - $ref: '#/components/parameters/accountId'
         - in: path
           name: projectId
           schema:
@@ -258,12 +238,7 @@ paths:
       description: List jobs in a project
       operationId: listJobsForAccount
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account containing jobs
+        - $ref: '#/components/parameters/accountId'
         - in: query
           name: order_by
           example: "-id"
@@ -303,7 +278,7 @@ paths:
       tags:
         - Jobs
       summary: Create job
-      description: Create a job in a project. 
+      description: Create a job in a project.
       operationId: createJob
       requestBody:
         content:
@@ -311,12 +286,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Job'
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to create the new Job in
+        - $ref: '#/components/parameters/accountId'
       responses:
         '201':
           description: Success.
@@ -346,18 +316,8 @@ paths:
       description: Return job details for a job on an account
       operationId: getJobById
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account containing the job
-        - in: path
-          name: jobId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the job to retrieve
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/jobId'
         - in: query
           name: order_by
           example: "-id"
@@ -399,18 +359,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Job'
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account that the Job belongs to
-        - in: path
-          name: jobId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Job to update
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/jobId'
       responses:
         '200':
           description: Success.
@@ -439,18 +389,8 @@ paths:
       summary: Delete job
       description: Delete the given job by its id
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account that the Job belongs to
-        - in: path
-          name: jobId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the job to delete
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/jobId'
       responses:
         '200':
           description: Job deleted successfully
@@ -533,18 +473,8 @@ paths:
                   items:
                     type: "string"
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account that the Job belongs to
-        - in: path
-          name: jobId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Job to run
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/jobId'
       responses:
         '200':
           description: Success.
@@ -573,12 +503,7 @@ paths:
       summary: List runs
       operationId: listRunsForAccount
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
         - in: query
           name: include_related
           schema:
@@ -641,12 +566,7 @@ paths:
       summary: Get run
       operationId: getRunById
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
         - in: path
           name: runId
           schema:
@@ -697,12 +617,7 @@ paths:
         To list artifacts from other steps in the run, use the `step` query parameter described below.
       operationId: listArtifactsByRunId
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
         - in: path
           name: runId
           schema:
@@ -760,12 +675,7 @@ paths:
         To list artifacts from other steps in the run, use the `step` query parameter described below.
       operationId: getArtifactsByRunId
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
         - in: path
           name: runId
           schema:
@@ -827,12 +737,7 @@ paths:
       summary: Cancel a run
       operationId: cancelRunById
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account for this run
+        - $ref: '#/components/parameters/accountId'
         - in: path
           name: runId
           schema:
@@ -855,6 +760,21 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 
 components:
+  parameters:
+    accountId:
+      in: path
+      name: accountId
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the account
+    jobId:
+      in: path
+      name: jobId
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the job
   schemas:
     Account:
       type: object
