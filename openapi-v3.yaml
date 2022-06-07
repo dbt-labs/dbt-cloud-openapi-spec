@@ -245,11 +245,9 @@ paths:
           description: Numeric ID of the account containing jobs
         - in: query
           name: order_by
+          example: "-id"
           schema:
             type: string
-            anyOf:
-            - enum: [id, created_at, -id, -created_at]
-            - type: "string"
           description: |
             Field to order the result by. Use `-` to indicate reverse order.
         - in: query
@@ -341,6 +339,7 @@ paths:
           description: Numeric ID of the job to retrieve
         - in: query
           name: order_by
+          example: "-id"
           schema:
             type: string
           description: |
