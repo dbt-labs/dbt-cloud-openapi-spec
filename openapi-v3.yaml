@@ -505,15 +505,7 @@ paths:
       operationId: listRunsForAccount
       parameters:
         - $ref: '#/components/parameters/accountId'
-        - in: query
-          name: include_related
-          schema:
-            type: string
-          required: true
-          example: '["trigger", "job", "repository", "environment", "run_steps"]'
-          description: |
-            List of related fields to pull with the run. Valid values are
-            "trigger", "job", "repository", "environment", and "run_steps".
+        - $ref: '#/components/parameters/includeRelated'
         - in: query
           name: job_definition_id
           example: 1234
@@ -575,16 +567,7 @@ paths:
             type: integer
           required: true
           description: Numeric ID of the run to retrieve
-        - in: query
-          name: include_related
-          schema:
-            type: string
-          example: '["trigger", "job"]'
-          description: |
-            List of related fields to pull with the run. Valid values are
-            "trigger", "job", and "debug_logs". If "debug_logs" is not provided
-            in a request, then the included debug logs will be truncated to the last
-            1,000 lines of the debug log output file.
+        - $ref: '#/components/parameters/includeRelated'
       responses:
         '200':
           description: Success.
@@ -740,6 +723,7 @@ paths:
       operationId: listSteps
       parameters:
         - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/includeRelated'
       responses:
         '200':
           description: Success.
@@ -762,6 +746,7 @@ paths:
             type: integer
           required: true
           description: Numeric ID of the step
+        - $ref: '#/components/parameters/includeRelated'
       responses:
         '200':
           description: Success.
@@ -822,6 +807,17 @@ components:
         type: integer
       required: true
       description: Numeric ID of the job
+    includeRelated:
+      in: query
+      name: include_related
+      schema:
+        type: string
+      example: '["trigger", "job"]'
+      description: |
+        List of related fields to pull with the run. Valid values are
+        "trigger", "job", and "debug_logs". If "debug_logs" is not provided
+        in a request, then the included debug logs will be truncated to the last
+        1,000 lines of the debug log output file.
   schemas:
     Account:
       type: object
