@@ -501,6 +501,7 @@ paths:
       tags:
         - Runs
       summary: List runs
+      description: List the runs for a given account
       operationId: listRunsForAccount
       parameters:
         - $ref: '#/components/parameters/accountId'
@@ -564,6 +565,7 @@ paths:
       tags:
         - Runs
       summary: Get run
+      description: Fetch information about a specific run
       operationId: getRunById
       parameters:
         - $ref: '#/components/parameters/accountId'
@@ -729,12 +731,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /accounts/{accountId}/steps/:
+    get:
+      tags:
+        - Runs
+      summary: List steps
+      description: Fetch information about all steps in an account
+      operationId: listSteps
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StepsResponse'
+  /acounts/{accountId}/steps/{stepId}/:
+    get:
+      tags:
+        - Runs
+      summary: Get step
+      description: Fetch information about a given step
+      operationId: getStep
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - in: path
+          name: stepId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the step
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StepResponse'
+        '404':
+          description: Unauthorized or Not Found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /accounts/{accountId}/runs/{runId}/cancel/:
     post:
       tags:
         - Runs
       summary: Cancel a run
+      description: Cancel a run in progress
       operationId: cancelRunById
       parameters:
         - $ref: '#/components/parameters/accountId'
@@ -1163,7 +1210,82 @@ components:
         updated_at:
           type: "string"
           format: "date-time"
-          
+    Step:
+      type: object
+      properties:
+        id:
+          type: "integer"
+          description: Unique identifier for a step
+        run_id:
+          type: "integer"
+          description: Unique identifier for a run
+        account_id:
+          type: "integer"
+          description: Unique identifier for an account
+        logs:
+          type: "string"
+          nullable: true
+          description: High level logs for the given run step
+        debug_logs:
+          type: "string"
+          nullable: true
+          description: The full debug logs, if requested
+        log_location:
+          type: "string"
+          enum: ["legacy", "db", "s3", "empty"]
+        log_path:
+          type: "string"
+          nullable: true
+          description: The path to the logs, if available
+        debug_log_path:
+          type: "string"
+          nullable: true
+          description: The path to the debug logs, if available
+        log_archive_type:
+          type: "string"
+          enum: ["db_flushed", "scribe"]
+        truncated_debug_logs:
+          type: "string"
+          nullable: true
+          description: A subset of the debug logs
+        created_at:
+          type: "string"
+          format: "date-time"
+          description: When the step was originally created
+        updated_at:
+          type: "string"
+          format: "date-time"
+        started_at:
+          type: "string"
+          format: "date-time"
+          description: When processing of the step began
+        finished_at:
+          type: "string"
+          format: "date-time"
+          description: When the step completed
+        status_color:
+          type: "string"
+          description: A color code, in hex format to display status
+          example: "#55973a"
+        status_humanized:
+          type: "string"
+          enum:
+            - "Queued"
+            - "Starting"
+            - "Running"
+            - "Success"
+            - "Error"
+            - "Cancelled"
+        duration:
+          type: "string"
+          nullable: true
+          description: The time it took to run the given step
+          example: "00:00:23"
+        duration_humanized:
+          type: "string"
+          nullable: true
+          description: A human-readable version of the step duration
+          example: "23 seconds"
     Run:
       type: object
       properties:
@@ -1441,6 +1563,22 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Run"
+        status:
+          $ref: "#/components/schemas/Status"
+    StepsResponse:
+      type: "object"
+      properties:
+        data:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Step"
+        status:
+          $ref: "#/components/schemas/Status"
+    StepResponse:
+      type: "object"
+      properties:
+        data:
+          $ref: "#/components/schemas/Step"
         status:
           $ref: "#/components/schemas/Status"
     ErrorResponse:
