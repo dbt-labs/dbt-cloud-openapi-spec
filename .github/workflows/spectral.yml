@@ -1,0 +1,13 @@
+on:
+  - pull_request
+name: Spectral
+jobs:
+  build:
+    name: Run Spectral
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: stoplightio/spectral-action@latest
+        with:
+          file_glob: "openapi-v3.yaml"
+          spectral_ruleset: ".spectral.json"
