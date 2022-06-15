@@ -120,12 +120,7 @@ paths:
       description: Get an Account by its ID
       operationId: getAccountById
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
       responses:
         '200':
           description: Success.
@@ -147,6 +142,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /accounts/{accountId}/users:
+    get:
+      tags:
+        - Accounts
+      summary: List Users
+      description: Use the List Users endpoint to list the Users in the specified Account
+      operationId: listUsers
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersResponse'
+  /accounts/{accountId}/permissions/{licenseId}:
+    post:
+      tags:
+        - Accounts
+      summary: Update License
+      description: Update (or deactivate) permissions for a given license
+      operationId: updateLicense
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLicense'
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - in: path
+          name: licenseId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the License to update
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateLicenseResponse'
+        '404':
+          description: Unauthorized or Not Found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /accounts/{accountId}/projects/:
     get:
       tags:
@@ -155,12 +200,7 @@ paths:
       description: Use the List Projects endpoint to list the Projects in the specified Account
       operationId: listProjects
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
       responses:
         '200':
           description: Success.
@@ -195,12 +235,7 @@ paths:
       description: Get a Project by its ID
       operationId: getProjectById
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Project to retrieve
+        - $ref: '#/components/parameters/accountId'
         - in: path
           name: projectId
           schema:
@@ -237,12 +272,7 @@ paths:
       description: List jobs in a project
       operationId: listJobsForAccount
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account containing jobs
+        - $ref: '#/components/parameters/accountId'
         - in: query
           name: order_by
           example: "-id"
@@ -282,7 +312,7 @@ paths:
       tags:
         - Jobs
       summary: Create job
-      description: Create a job in a project. 
+      description: Create a job in a project.
       operationId: createJob
       requestBody:
         content:
@@ -290,12 +320,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Job'
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to create the new Job in
+        - $ref: '#/components/parameters/accountId'
       responses:
         '201':
           description: Success.
@@ -325,18 +350,8 @@ paths:
       description: Return job details for a job on an account
       operationId: getJobById
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account containing the job
-        - in: path
-          name: jobId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the job to retrieve
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/jobId'
         - in: query
           name: order_by
           example: "-id"
@@ -378,18 +393,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Job'
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account that the Job belongs to
-        - in: path
-          name: jobId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Job to update
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/jobId'
       responses:
         '200':
           description: Success.
@@ -411,7 +416,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
- 
+    delete:
+      tags:
+        - Jobs
+      operationId: deleteJobById
+      summary: Delete job
+      description: Delete the given job by its id
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/jobId'
+      responses:
+        '200':
+          description: Job deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+
   /accounts/{accountId}/jobs/{jobId}/run/:
     post:
       tags:
@@ -486,18 +507,8 @@ paths:
                   items:
                     type: "string"
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Account that the Job belongs to
-        - in: path
-          name: jobId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Job to run
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/jobId'
       responses:
         '200':
           description: Success.
@@ -524,23 +535,11 @@ paths:
       tags:
         - Runs
       summary: List runs
+      description: List the runs for a given account
       operationId: listRunsForAccount
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
-        - in: query
-          name: include_related
-          schema:
-            type: string
-          required: true
-          example: '["trigger", "job", "repository", "environment"]'
-          description: |
-            List of related fields to pull with the run. Valid values are 
-            "trigger", "job", "repository", and "environment".
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/includeRelated'
         - in: query
           name: job_definition_id
           example: 1234
@@ -592,30 +591,17 @@ paths:
       tags:
         - Runs
       summary: Get run
+      description: Fetch information about a specific run
       operationId: getRunById
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
         - in: path
           name: runId
           schema:
             type: integer
           required: true
           description: Numeric ID of the run to retrieve
-        - in: query
-          name: include_related
-          schema:
-            type: string
-          example: '["trigger", "job"]'
-          description: |
-            List of related fields to pull with the run. Valid values are
-            "trigger", "job", and "debug_logs". If "debug_logs" is not provided
-            in a request, then the included debug logs will be truncated to the last
-            1,000 lines of the debug log output file.
+        - $ref: '#/components/parameters/includeRelated'
       responses:
         '200':
           description: Success.
@@ -650,12 +636,7 @@ paths:
         To list artifacts from other steps in the run, use the `step` query parameter described below.
       operationId: listArtifactsByRunId
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
         - in: path
           name: runId
           schema:
@@ -713,12 +694,7 @@ paths:
         To list artifacts from other steps in the run, use the `step` query parameter described below.
       operationId: getArtifactsByRunId
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account to retrieve
+        - $ref: '#/components/parameters/accountId'
         - in: path
           name: runId
           schema:
@@ -772,20 +748,62 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /accounts/{accountId}/steps/:
+    get:
+      tags:
+        - Runs
+      summary: List steps
+      description: Fetch information about all steps in an account
+      operationId: listSteps
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/includeRelated'
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StepsResponse'
+  /acounts/{accountId}/steps/{stepId}/:
+    get:
+      tags:
+        - Runs
+      summary: Get step
+      description: Fetch information about a given step
+      operationId: getStep
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - in: path
+          name: stepId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the step
+        - $ref: '#/components/parameters/includeRelated'
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StepResponse'
+        '404':
+          description: Unauthorized or Not Found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /accounts/{accountId}/runs/{runId}/cancel/:
     post:
       tags:
         - Runs
       summary: Cancel a run
+      description: Cancel a run in progress
       operationId: cancelRunById
       parameters:
-        - in: path
-          name: accountId
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the account for this run
+        - $ref: '#/components/parameters/accountId'
         - in: path
           name: runId
           schema:
@@ -808,6 +826,32 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 
 components:
+  parameters:
+    accountId:
+      in: path
+      name: accountId
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the account
+    jobId:
+      in: path
+      name: jobId
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the job
+    includeRelated:
+      in: query
+      name: include_related
+      schema:
+        type: string
+      example: '["trigger", "job"]'
+      description: |
+        List of related fields to pull with the run. Valid values are
+        "trigger", "job", and "debug_logs". If "debug_logs" is not provided
+        in a request, then the included debug logs will be truncated to the last
+        1,000 lines of the debug log output file.
   schemas:
     Account:
       type: object
@@ -830,9 +874,7 @@ components:
           example: False
           description: True if the account is pending cancellation
         state:
-          type: "integer"
-          example: 1
-          description: 1 = Active, 2 = Deleted
+          $ref: '#/components/schemas/State'
         developer_seats:
           type: "integer"
           example: 5
@@ -851,6 +893,110 @@ components:
         updated_at:
           type: "string"
           format: "date-time"
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique identifier for a user
+          example: 100
+        state:
+          $ref: '#/components/schemas/State'
+        name:
+          type: string
+          description: The user's name
+          example: John Doe
+        lock_reason:
+          type: string
+          nullable: true
+          description: The reason an account was locked
+        unlock_if_subscription_renewed:
+          type: boolean
+          description: If set, an admin will be able to unlock it by renewing its subscription
+        plan:
+          type: string
+          enum: [free, trial, enterprise, developer, team, cancelled]
+          description: The user's plan type
+        pending_cancel:
+          type: boolean
+        run_slots:
+          type: integer
+        developer_seats:
+          type: integer
+        read_only_seats:
+          type: integer
+        queue_limit:
+          type: integer
+        pod_memory_request_mebibytes:
+          type: integer
+          description: |
+            The amount of memory (in MiB) to request for scheduled runs and
+            develop pods on this account.
+        run_duration_limit_seconds:
+          type: integer
+          description: |
+            The maximum duration a run for this account is permitted to execute
+            before it is terminated
+        enterprise_authentication_method:
+          nullable: true
+          type: string
+          enum: [none, okta, azure_ad, gsuite]
+        enterprise_login_slug:
+          type: string
+          nullable: true
+        enterprise_unique_identifier:
+          type: string
+          nullable: true
+        billing_email_address:
+          type: string
+          nullable: true
+        locked:
+          type: boolean
+        unlocked_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        starter_repo_url:
+          type: string
+          nullable: true
+          description: The account will use this to initialize projects if defined
+        sso_reauth:
+          type: boolean
+          description: |
+            If set and the account has configured SSO, users will be forced to
+            re-authenticate with their identity provider periodically
+        git_auth_level:
+          type: string
+          enum: [personal, team]
+          nullable: true
+          description: Indicates the git provider authentication level for this user
+        identifier:
+          type: string
+          description: A globally unique identifier
+          example: act_0ujtsYcgvSTl8PAuAdqWYSMnLOv
+        docs_job_id:
+          deprecated: true
+        freshness_job_id:
+          deprecated: true
+        docs_job:
+          deprecated: true
+        freshness_job:
+          deprecated: true
+        enterprise_login_url:
+          type: string
+          nullable: true
+          description: The enterprise login URL, if available
+        permissions:
+          $ref: '#/components/schemas/UserLicense'
+    State:
+      type: integer
+      description: 1 = Active, 2 = Deleted
     Project:
       type: object
       properties:
@@ -881,9 +1027,7 @@ components:
           type: integer
           example: 6000
         state:
-          type: integer
-          description: 1 = active, 2 = deleted
-          example: 1
+          $ref: '#/components/schemas/State'
         created_at:
           type: "string"
           format: "date-time"
@@ -922,13 +1066,13 @@ components:
         created_by_id:
           type: "integer"
           description: "User ID who created the connection"
-        name: 
+        name:
           type: "string"
         type:
           type: "string"
           enum: ["postgres", "redshift", "snowflake", "bigquery"]
         state:
-          type: "integer"
+          $ref: '#/components/schemas/State'
         created_at:
           type: "string"
           format: "date-time"
@@ -990,9 +1134,7 @@ components:
           type: "boolean"
           description: dbt Cloud-generated / read only field
         state:
-          type: "integer"
-          description: 1 = active, 2 = deleted
-          example: 1
+          $ref: '#/components/schemas/State'
     Job:
       type: "object"
       required:
@@ -1046,9 +1188,7 @@ components:
               description: Informational field that can be consumed in dbt project code with `{{ target.name }}`
               type: "string"
         state:
-          type: "integer"
-          example: 1
-          description: 1 = active, 2 = deleted
+          $ref: '#/components/schemas/State'
         generate_docs:
           type: "boolean"
           example: True
@@ -1096,14 +1236,89 @@ components:
         github_installation_id:
           type: "integer"
         state:
-          type: "integer"
+          $ref: '#/components/schemas/State'
         created_at:
           type: "string"
           format: "date-time"
         updated_at:
           type: "string"
           format: "date-time"
-          
+    Step:
+      type: object
+      properties:
+        id:
+          type: "integer"
+          description: Unique identifier for a step
+        run_id:
+          type: "integer"
+          description: Unique identifier for a run
+        account_id:
+          type: "integer"
+          description: Unique identifier for an account
+        logs:
+          type: "string"
+          nullable: true
+          description: High level logs for the given run step
+        debug_logs:
+          type: "string"
+          nullable: true
+          description: The full debug logs, if requested
+        log_location:
+          type: "string"
+          enum: ["legacy", "db", "s3", "empty"]
+        log_path:
+          type: "string"
+          nullable: true
+          description: The path to the logs, if available
+        debug_log_path:
+          type: "string"
+          nullable: true
+          description: The path to the debug logs, if available
+        log_archive_type:
+          type: "string"
+          enum: ["db_flushed", "scribe"]
+        truncated_debug_logs:
+          type: "string"
+          nullable: true
+          description: A subset of the debug logs
+        created_at:
+          type: "string"
+          format: "date-time"
+          description: When the step was originally created
+        updated_at:
+          type: "string"
+          format: "date-time"
+        started_at:
+          type: "string"
+          format: "date-time"
+          description: When processing of the step began
+        finished_at:
+          type: "string"
+          format: "date-time"
+          description: When the step completed
+        status_color:
+          type: "string"
+          description: A color code, in hex format to display status
+          example: "#55973a"
+        status_humanized:
+          type: "string"
+          enum:
+            - "Queued"
+            - "Starting"
+            - "Running"
+            - "Success"
+            - "Error"
+            - "Cancelled"
+        duration:
+          type: "string"
+          nullable: true
+          description: The time it took to run the given step
+          example: "00:00:23"
+        duration_humanized:
+          type: "string"
+          nullable: true
+          description: A human-readable version of the step duration
+          example: "23 seconds"
     Run:
       type: object
       properties:
@@ -1249,7 +1464,155 @@ components:
         created_at:
           type: "string"
           format: "date-time"
-          
+
+    UserLicense:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The numeric ID for the License
+        license_type:
+          type: string
+          enum: [developer, read_only]
+        user_id:
+          type: integer
+          description: The associated User ID
+        account_id:
+          type: integer
+          description: The associated Account ID
+        state:
+          $ref: '#/components/schemas/State'
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+        permission_statements:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionStatement'
+
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The numeric ID for the Group
+        account_id:
+          type: integer
+          description: The associated Account ID
+        name:
+          type: string
+          description: The name of the group
+          example: "Owner"
+        state:
+            $ref: '#/components/schemas/State'
+        assign_by_default:
+          type: boolean
+          description: Should the group be assigned by default?
+        group_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupPermission'
+
+    PermissionStatement:
+      type: object
+      properties:
+        permission:
+          type: string
+          enum:
+            - billing_read
+            - billing_write
+            - invitations_send
+            - invitations_modify
+            - invitations_read
+            - members_read
+            - members_write
+            - groups_read
+            - groups_write
+            - license_read
+            - license_allocate
+            - projects_read
+            - projects_develop
+            - projects_write
+            - projects_create
+            - projects_delete
+            - environments_read
+            - environments_write
+            - develop_access
+            - dbt_adapters_read
+            - dbt_adapters_write
+            - credentials_read
+            - credentials_write
+            - connections_read
+            - connections_write
+            - jobs_read
+            - jobs_write
+            - repositories_read
+            - repositories_write
+            - runs_trigger
+            - runs_write
+            - runs_read
+            - permissions_write
+            - permissions_read
+            - account_settings_write
+            - account_settings_read
+            - auth_provider_write
+            - auth_provider_read
+            - service_tokens_write
+            - service_tokens_read
+            - metadata_read
+            - webhooks_write
+            - custom_environment_variables_read
+            - custom_environment_variables_write
+            - audit_log_read
+        target_resource:
+          type: integer
+        all_resources:
+          type: boolean
+          description: Does this apply to all resources?
+
+    GroupPermission:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The numeric ID for the Group Permission
+        account_id:
+          type: integer
+          description: The associated Account ID
+        project_id:
+          type: integer
+          nullable: true
+          description: The associated Project ID
+        all_projects:
+          type: boolean
+          description: Does this apply to all projects?
+        permission_set:
+          type: string
+          enum:
+            - owner
+            - member
+            - account_admin
+            - admin
+            - database_admin
+            - git_admin
+            - team_admin
+            - job_admin
+            - job_viewer
+            - analyst
+            - developer
+            - stakeholder
+            - readonly
+            - project_creator
+            - account_viewer
+            - metadata_only
+            - webhooks_only
+        permission_level:
+          type: integer
+          nullable: true
+        state:
+          $ref: '#/components/schemas/State'
+
     # responses
     AccountsResponse:
       type: "object"
@@ -1265,6 +1628,22 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Account"
+        status:
+          $ref: "#/components/schemas/Status"
+    UsersResponse:
+      type: "object"
+      properties:
+        data:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/User"
+        status:
+          $ref: "#/components/schemas/Status"
+    UpdateLicenseResponse:
+      type: "object"
+      properties:
+        data:
+          $ref: "#/components/schemas/UserLicense"
         status:
           $ref: "#/components/schemas/Status"
     ProjectsResponse:
@@ -1372,6 +1751,22 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Run"
+        status:
+          $ref: "#/components/schemas/Status"
+    StepsResponse:
+      type: "object"
+      properties:
+        data:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Step"
+        status:
+          $ref: "#/components/schemas/Status"
+    StepResponse:
+      type: "object"
+      properties:
+        data:
+          $ref: "#/components/schemas/Step"
         status:
           $ref: "#/components/schemas/Status"
     ErrorResponse:
