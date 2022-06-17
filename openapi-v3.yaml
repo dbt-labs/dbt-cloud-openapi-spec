@@ -300,14 +300,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-                
+
         '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-                
+
     post:
       tags:
         - Jobs
@@ -328,20 +328,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JobResponse'
-                
+
         '400':
           description: Bad Request.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-                
+
         '404':
           description: Unauthorized or Not Found.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
   /accounts/{accountId}/jobs/{jobId}/:
     get:
       tags:
@@ -1034,9 +1035,6 @@ components:
         updated_at:
           type: "string"
           format: "date-time"
-    Connection:
-      type: object
-      nullable: true
 
     BigqueryCredential:
       type: "object"
@@ -1056,50 +1054,122 @@ components:
         schema:
           type: string
           description: "The schema (dataset) for this BigqueryCredential object"
-    BigqueryConnection:
-      type: "object"
+    Connection:
+      type: object
       properties:
         id:
-          type: "integer"
+          type: integer
+          description: The numeric ID for the connection
         account_id:
-          type: "integer"
-        created_by_id:
-          type: "integer"
-          description: "User ID who created the connection"
+          type: integer
+          description: The numeric ID for the associated account
+        project_id:
+          type: integer
+          description: The numeric ID for the associated project
         name:
-          type: "string"
+          type: string
         type:
-          type: "string"
-          enum: ["postgres", "redshift", "snowflake", "bigquery"]
+          type: string
+          enum:
+            - postgres
+            - redshift
+            - snowflake
+            - bigquery
+            - adapter
         state:
           $ref: '#/components/schemas/State'
+        created_by_id:
+          nullable: true
+          type: integer
+          description: The ID of the user who created the connection
+        created_by_service_token_id:
+          nullable: true
+          type: integer
+          description: The ID of the service token used to create the connection
         created_at:
-          type: "string"
-          format: "date-time"
+          type: string
+          format: date-time
         updated_at:
-          type: "string"
-          format: "date-time"
+          type: string
+          format: date-time
+        details:
+          oneOf:
+            - $ref: '#/components/schemas/BigQueryConnectionDetails'
+            - $ref: '#/components/schemas/RedshiftConnectionDetails'
+            - $ref: '#/components/schemas/PostgresConnectionDetails'
+            - $ref: '#/components/schemas/SnowflakeConnectionDetails'
+
+    SnowflakeConnectionDetails:
+      type: object
+      properties:
+        account:
+          type: string
+          description: The Snowflake account id
+        database:
+          type: string
+        warehouse:
+          type: string
+        allow_sso:
+          type: boolean
+        client_session_keep_alive:
+          type: boolean
+
+    BigQueryConnectionDetails:
+      type: object
+      properties:
         project_id:
-          type: "string"
-          description: "Google BigQuery project ID"
+          type: string
+          description: Google BigQuery project ID
         timeout_seconds:
-          type: "integer"
+          type: integer
         private_key_id:
-          type: "string"
+          type: string
         private_key:
-          type: "string"
+          type: string
         client_email:
-          type: "string"
+          type: string
         client_id:
-          type: "string"
+          type: string
         auth_uri:
-          type: "string"
+          type: string
         token_uri:
-          type: "string"
+          type: string
         auth_provider_x509_cert_url:
-          type: "string"
+          type: string
         client_x509_cert_url:
-          type: "string"
+          type: string
+
+    RedshiftConnectionDetails:
+      type: object
+      properties:
+        hostname:
+          type: string
+          description: The hostname of the Redshift instance
+          example: "my-redshift.us-east-2.redshift.amazonaws.com"
+        dbname:
+          type: string
+          description: The database name within Redshift
+        port:
+          type: integer
+          description: The port to connect to the Redshift database
+        tunnel_enabled:
+          type: boolean
+
+    PostgresConnectionDetails:
+      type: object
+      properties:
+        hostname:
+          type: string
+          description: The hostname of the Postgres instance
+        dbname:
+          type: string
+          description: The database name within Postgres
+        port:
+          type: integer
+          description: The port to connect to the Postgres database
+        tunnel_enabled:
+          type: boolean
+
     Environment:
       type: object
       properties:
@@ -1143,6 +1213,10 @@ components:
         - environment_id
         - name
         - execute_steps
+        - state
+        - triggers
+        - settings
+        - schedule
       properties:
         account_id:
           type: "integer"
@@ -1167,12 +1241,15 @@ components:
           properties:
             github_webhook:
               type: "boolean"
+            git_provider_webhook:
+              type: "boolean"
             schedule:
               type: "boolean"
             custom_branch_only:
               type: "boolean"
         execute_steps:
           type: "array"
+          description: "A list of commands that the job will run"
           example: ['dbt run', 'dbt test', 'dbt source snapshot-freshness']
           items:
             type: "string"
@@ -1206,13 +1283,34 @@ components:
                 type:
                   type: "string"
                   enum: ["every_day", "days_of_week", "custom_cron"]
+                days:
+                  type: array
+                  nullable: true
+                  items:
+                    type: integer
+                  description: The numeric days of the week, required with days_of_week
+                cron:
+                  type: string
+                  nullable: true
+                  description: The custom schedule in crontab format, required with custom_cron
             time:
               type: "object"
               properties:
                 type:
                   type: "string"
                   enum: ["every_hour", "at_exact_hours"]
-                  
+                interval:
+                  type: integer
+                  nullable: true
+                  description: The number of hours between runs, required with every_hour
+                hours:
+                  type: array
+                  nullable: true
+                  items:
+                    type: integer
+                  description: The specific hours to run in UTC, required with at_exact_hours
+
+
     Repository:
       type: object
       properties:
@@ -1231,6 +1329,12 @@ components:
           type: "string"
         git_clone_strategy:
           type: "string"
+          enum:
+              - azure_active_directory_app
+              - deploy_key
+              - deploy_token
+              - github_app
+              - git_token
         deploy_key_id:
           type: "integer"
         github_installation_id:
@@ -1357,6 +1461,7 @@ components:
           description: Optional. If provided, check out this sha before running the job.
         status_message:
           type: "string"
+          nullable: true
           example: Success
         dbt_version:
           type: "string"
@@ -1388,11 +1493,12 @@ components:
           format: "date-time"
         owner_thread_id:
           type: "string"
+          nullable: true
         executed_by_thread_id:
           type: "string"
         artifacts_saved:
           type: "boolean"
-        artifacts_s3_path:
+        artifact_s3_path:
           type: "string"
         has_docs_generated:
           type: "boolean"
@@ -1400,18 +1506,22 @@ components:
           $ref: '#/components/schemas/Trigger'
         job:
           $ref: '#/components/schemas/Job'
-          
         duration:
           type: "string"
+          example: "00:00:12"
         queued_duration:
           type: "string"
+          example: "00:00:12"
         run_duration:
           type: "string"
+          example: "00:00:12"
         duration_humanized:
           type: "string"
         queued_duration_humanized:
           type: "string"
         run_duration_humanized:
+          type: "string"
+        finished_at_humanized:
           type: "string"
         status_humanized:
           type: "string"
@@ -1678,15 +1788,6 @@ components:
           type: "array"
           items: 
             $ref: "#/components/schemas/BigqueryCredential"
-        status:
-          $ref: "#/components/schemas/Status"
-    ConnectionResponse:
-      type: "object"
-      properties:
-        data:
-          oneOf:
-            - $ref: "#/components/schemas/Connection"
-            - $ref: "#/components/schemas/BigqueryConnection"
         status:
           $ref: "#/components/schemas/Status"
     EnvironmentsResponse:
