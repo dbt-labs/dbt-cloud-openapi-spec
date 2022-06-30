@@ -1208,9 +1208,11 @@ components:
     Job:
       type: "object"
       required:
+        - id
         - account_id
         - project_id
         - environment_id
+        - dbt_version
         - name
         - execute_steps
         - state
@@ -1218,52 +1220,62 @@ components:
         - settings
         - schedule
       properties:
+        id:
+          type: integer
+          nullable: true
+          description: Must be `null` when creating a new Job
         account_id:
-          type: "integer"
+          type: integer
           example: 1
         project_id:
-          type: "integer"
+          type: integer
           example: 100
         environment_id:
-          type: "integer"
+          type: integer
           example: 10
         name:
-          type: "string"
+          type: string
           description: A name for the job
           example: Nightly run
         dbt_version:
-          type: "string"
+          type: string
           nullable: true
           description: Overrides the dbt_version specified on the attached Environment if provided
           example: 0.17.1
         triggers:
-          type: "object"
+          type: object
+          required:
+            - github_webhook
+            - schedule
           properties:
             github_webhook:
-              type: "boolean"
+              type: boolean
             git_provider_webhook:
-              type: "boolean"
+              type: boolean
             schedule:
-              type: "boolean"
+              type: boolean
             custom_branch_only:
-              type: "boolean"
+              type: boolean
         execute_steps:
-          type: "array"
+          type: array
           description: "A list of commands that the job will run"
           example: ['dbt run', 'dbt test', 'dbt source snapshot-freshness']
           items:
-            type: "string"
+            type: string
         settings:
-          type: "object"
+          type: object
+          required:
+            - threads
+            - target_name
           properties:
             threads:
-              type: "integer"
+              type: integer
               example: 4
               description: The maximum number of models to run in parallel in a single dbt run
             target_name:
               example: prod
               description: Informational field that can be consumed in dbt project code with `{{ target.name }}`
-              type: "string"
+              type: string
         state:
           $ref: '#/components/schemas/State'
         generate_docs:
@@ -1271,17 +1283,22 @@ components:
           example: True
           description: When true, run a `dbt docs generate` step at the end of runs triggered from this job
         schedule:
-          type: "object"
+          type: object
+          required:
+            - date
+            - time
           properties:
             cron:
               type: string
               description: Cron-syntax schedule for the job
               example: "0 7 * * 1"
             date:
-              type: "object"
+              type: object
+              required:
+                - type
               properties:
                 type:
-                  type: "string"
+                  type: string
                   enum: ["every_day", "days_of_week", "custom_cron"]
                 days:
                   type: array
@@ -1294,10 +1311,12 @@ components:
                   nullable: true
                   description: The custom schedule in crontab format, required with custom_cron
             time:
-              type: "object"
+              type: object
+              required:
+                - type
               properties:
                 type:
-                  type: "string"
+                  type: string
                   enum: ["every_hour", "at_exact_hours"]
                 interval:
                   type: integer
