@@ -742,7 +742,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-                
+
         '404':
           description: Unauthorized or Not Found.
           content:
@@ -751,10 +751,14 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
   /accounts/{accountId}/steps/:
     get:
+      deprecated: true
       tags:
         - Runs
       summary: List steps
-      description: Fetch information about all steps in an account
+      description: |
+        This method is deprecated, please use `include_related=["run_steps"]` on the
+        `GET /accounts/{accountId}/runs/{runId}/` endpoint instead to fetch steps
+        within a specific run.
       operationId: listSteps
       parameters:
         - $ref: '#/components/parameters/accountId'
