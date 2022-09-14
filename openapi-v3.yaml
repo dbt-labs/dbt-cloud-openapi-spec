@@ -602,7 +602,7 @@ paths:
             type: integer
           required: true
           description: Numeric ID of the run to retrieve
-        - $ref: '#/components/parameters/includeRelated'
+        - $ref: '#/components/parameters/includeRelatedRun'
       responses:
         '200':
           description: Success.
@@ -757,8 +757,8 @@ paths:
       summary: List steps
       description: |
         This method is deprecated, please use `include_related=["run_steps"]` on the
-        `GET /accounts/{accountId}/runs/{runId}/` endpoint instead to fetch steps
-        within a specific run.
+        [Get run](#operation/getRunById) endpoint instead to fetch steps within
+        a specific run.
       operationId: listSteps
       parameters:
         - $ref: '#/components/parameters/accountId'
@@ -846,6 +846,17 @@ components:
         type: integer
       required: true
       description: Numeric ID of the job
+    includeRelatedRun:
+      in: query
+      name: include_related
+      schema:
+        type: string
+        example: '["run_steps", "job"]'
+        description: |
+          List of related fields to pull with the run. Valid values are
+          "trigger", "job", "debug_logs", and "run_steps". If "debug_logs"
+          is not provided in a request, then the included debug logs will
+          be truncated to the last 1,000 lines of the debug log output file.
     includeRelated:
       in: query
       name: include_related
