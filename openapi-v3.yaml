@@ -749,27 +749,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /accounts/{accountId}/steps/:
-    get:
-      deprecated: true
-      tags:
-        - Runs
-      summary: List steps
-      description: |
-        This method is deprecated, please use `include_related=["run_steps"]` on the
-        [Get run](#operation/getRunById) endpoint instead to fetch steps within
-        a specific run.
-      operationId: listSteps
-      parameters:
-        - $ref: '#/components/parameters/accountId'
-        - $ref: '#/components/parameters/includeRelated'
-      responses:
-        '200':
-          description: Success.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StepsResponse'
   /acounts/{accountId}/steps/{stepId}/:
     get:
       tags:
@@ -1886,15 +1865,6 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Run"
-        status:
-          $ref: "#/components/schemas/Status"
-    StepsResponse:
-      type: "object"
-      properties:
-        data:
-          type: "array"
-          items:
-            $ref: "#/components/schemas/Step"
         status:
           $ref: "#/components/schemas/Status"
     StepResponse:
