@@ -560,7 +560,8 @@ paths:
             enum: [1, 2, 3, 10, 20, 30]
           example: 10
           description: >
-            Valid `status` values:
+            Optional. Applies a filter to return only runs with the specified Status:
+            
              * `1` - The run is queued but hasn't begun being scheduled
              * `2` - The run is being removed from the queue and is actively being scheduled
              * `3` - The run is currently executing
