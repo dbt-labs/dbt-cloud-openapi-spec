@@ -5,6 +5,12 @@ info:
     The dbt Cloud API makes it possible to fetch data from your
     dbt Cloud account and programmatically run and monitor dbt jobs.
 
+    # Deprecation Notice
+    dbt Cloud API v4 will be DEPRECATED by April 30th, 2023. We are advising migration to 
+    dbt Cloud API v2 and will be providing guidance docs soon. In the interim, support for 
+    partners can be provided via shared Slack channels or reaching out to partnerships@dbtlabs.com. 
+    All other users can reach out to dbt Support https://docs.getdbt.com/docs/dbt-support.
+
     # Authentication
 
     To authenticate an application with the dbt Cloud API, navigate to the
