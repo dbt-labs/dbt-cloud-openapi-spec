@@ -548,6 +548,27 @@ paths:
             type: integer
           description: Optional. Applies a filter to only return runs from the specified Job.
         - in: query
+          name: project_id
+          example: 1234
+          schema:
+            type: integer
+          description: Optional. Applies a filter to only return runs from the specified Project.
+        - in: query
+          name: status
+          schema:
+            type: integer
+            enum: [1, 2, 3, 10, 20, 30]
+          example: 10
+          description: >
+            Optional. Applies a filter to return only runs with the specified Status:
+            
+             * `1` - The run is queued but hasn't begun being scheduled
+             * `2` - The run is being removed from the queue and is actively being scheduled
+             * `3` - The run is currently executing
+             * `10` - The run completed successfully
+             * `20` - The run failed to complete
+             * `30` - The run was cancelled by a user or via the API
+        - in: query
           name: order_by
           example: "-id"
           schema:
