@@ -16,8 +16,7 @@ info:
       The dbt Cloud API is intended for enqueuing runs from a job, polling for run progress,
       and downloading artifacts after jobs have completed running. Operational endpoints around
       creating, modifying, and deleting _objects_ in dbt Cloud are still in flux. These endpoints
-      are largely undocumented in API v2. A new version of the API (v3) is in-progress and will be
-      released alongside documentation for creating, modifying, and deleting objects in the future.
+      are largely undocumented in API v2.
 
       The API docs are generated from an openapi spec defined in the
       [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)
