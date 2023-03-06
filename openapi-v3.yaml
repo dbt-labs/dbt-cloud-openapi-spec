@@ -56,6 +56,15 @@ info:
         --header 'Authorization: Token <your token>'
       ```
 
+      # Pagination
+
+      All top-level API resources have support for bulk fetches via "list" API methods. These list
+      API methods accept `limit` and `offset` query parameters which can be used together to paginate results.
+
+      Offsets begin at 0.
+
+      The maximum limit for a single request is 100.
+
   contact:
     email: support@getdbt.com
     
