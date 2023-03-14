@@ -7,9 +7,9 @@ info:
 
     # Deprecation Notice
     dbt Cloud API v4 will be DEPRECATED by April 30th, 2023. We are advising migration to 
-    dbt Cloud API v2 and will be providing guidance docs soon. In the interim, support for 
-    partners can be provided via shared Slack channels or reaching out to partnerships@dbtlabs.com. 
-    All other users can reach out to dbt Support https://docs.getdbt.com/docs/dbt-support.
+    dbt Cloud API v2. You can find out more in [Migrating to dbt Cloud Administrative API v2](https://docs.getdbt.com/docs/dbt-cloud-apis/migrating-to-v2). If you need further help, support for 
+    partners can be provided using shared Slack channels or reaching out to partnerships@dbtlabs.com. 
+    All others can reach out to [dbt Support](https://docs.getdbt.com/docs/dbt-support).
 
     # Authentication
 
