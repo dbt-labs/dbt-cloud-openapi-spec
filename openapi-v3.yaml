@@ -591,6 +591,8 @@ paths:
               - -finished_at
           description: |
             Field to order the result by. Use `-` to indicate reverse order.
+
+            All other order_by values will be deprecated on May 15, 2023.
         - in: query
           name: offset
           example: 100
