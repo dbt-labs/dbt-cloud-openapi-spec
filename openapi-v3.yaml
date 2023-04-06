@@ -581,6 +581,14 @@ paths:
           example: "-id"
           schema:
             type: string
+            default: id
+            enum:
+              - id
+              - -id
+              - created_at
+              - -created_at
+              - finished_at
+              - -finished_at
           description: |
             Field to order the result by. Use `-` to indicate reverse order.
         - in: query
