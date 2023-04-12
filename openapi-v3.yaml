@@ -777,7 +777,7 @@ paths:
                     'exposures' : { ... },
                     'metrics' : { ... },
                     'selectors' : { ... },
-                    'disabled' : { ... },
+                    'disabled' : [ ... ],
                     'parent_map' : { ... },
                     'child_map' : { ... }
                   }"
