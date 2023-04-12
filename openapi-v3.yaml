@@ -767,14 +767,20 @@ paths:
               schema:
                 type: string
                 description: Raw file contents product by dbt
-                example: "# package.yaml
-                  packages:
-                  - package: dbt-labs/audit_helper
-                  version: 0.5.0
-                  - package: dbt-labs/codegen
-                  version: 0.5.0
-                  - package: dbt-labs/dbt_utils
-                  version: 0.8.2"
+                example: "# 'manifest.json'
+                  {
+                    'metadata' : { ... },
+                    'nodes' : { ... },
+                    'sources' : { ... },
+                    'macros' : { ... },
+                    'docs' : { ... },
+                    'exposures' : { ... },
+                    'metrics' : { ... },
+                    'selectors' : { ... },
+                    'disabled' : { ... },
+                    'parent_map' : { ... },
+                    'child_map' : { ... }
+                  }"
         '400':
           description: Bad Request.
           content:
