@@ -672,8 +672,6 @@ paths:
       description: |
         Use this endpoint to fetch a list of artifact files generated for a completed run.
 
-        **Note:** By default, this endpoint returns artifacts from the _last step_ in the run.
-        To list artifacts from other steps in the run, use the `step` query parameter described below.
       operationId: listArtifactsByRunId
       parameters:
         - $ref: '#/components/parameters/accountId'
@@ -683,15 +681,6 @@ paths:
             type: integer
           required: true
           description: Numeric ID of the run to retrieve
-        - in: query
-          name: step
-          schema:
-            type: integer
-          required: false
-          description: |
-            The index of the Step in the Run to query for artifacts. The first step in the run
-            has the index `1`. If the `step` parameter is omitted, then this endpoint
-            will return the artifacts compiled for the last step in the run.
       responses:
         '200':
           description: Success.
