@@ -2,14 +2,12 @@ openapi: 3.0.3
 info:
   title: dbt Cloud API
   version: 1.0.0
-  description: "\n      The dbt Cloud API makes it possible to fetch data from your\n\
-    \      dbt Cloud account and programmatically run and monitor dbt jobs.\n\n  \
-    \    # How to use this API\n\n      The dbt Cloud API is intended for enqueuing\
-    \ runs from a job, polling for run progress,\n      and downloading artifacts\
-    \ after jobs have completed running. Operational endpoints around\n      creating,\
-    \ modifying, and deleting _objects_ in dbt Cloud are still in flux. These endpoints\n\
-    \      are largely undocumented in API v2.\n\n      The API docs are generated\
-    \ from an openapi spec defined in the\n      [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)\n\
+  description: "\n      # How to use this API\n\n      The dbt Cloud API is intended\
+    \ for enqueuing runs from a job, polling for run progress,\n      and downloading\
+    \ artifacts after jobs have completed running. Operational endpoints around\n\
+    \      creating, modifying, and deleting _objects_ in dbt Cloud are still in flux.\
+    \ These endpoints\n      are largely undocumented in API v2.\n\n      The API\
+    \ docs are generated from an openapi spec defined in the\n      [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)\n\
     \      repository. If you find issues in these docs or have questions about using\
     \ the dbt Cloud\n      API, please open an issue in the dbt-cloud-openapi-spec\
     \ repo or contact support@getdbt.com.\n\n      # Authentication\n\n      To authenticate\
@@ -18,12 +16,7 @@ info:
     \  If you cannot access this page, confirm that your dbt Cloud account has access\
     \ to the API,\n      and that you are using the hosted version of dbt Cloud. If\
     \ dbt Cloud is running inside of a VPC\n      in an Enterprise account, contact\
-    \ your account manager for help finding your API key.\n\n      ## TokenAuth\n\n\
-    \      Once you've found your API key, use it in the Authorization header of requests\
-    \ to the dbt Cloud API.\n      Be sure to include the `Token` prefix in the Authorization\
-    \ header, or the request will fail with a\n      \"401 Unauthorized\" error. Note:\
-    \ `Bearer` can be used in place of `Token` in the Authorization header.\n    \
-    \  Both syntaxes are equivalent.\n      "
+    \ your account manager for help finding your API key.\n      "
   termsOfService: https://www.getdbt.com/terms-of-service
   contact: support@getdbt.com
 paths:
@@ -2178,6 +2171,3 @@ components:
       in: header
       name: Authorization
       description: Token-based authentication with required prefix "Token"
-servers:
-- url: https://cloud.getdbt.com/api/v2
-  description: Production
