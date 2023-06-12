@@ -1,10 +1,33 @@
 openapi: 3.0.3
 info:
-  title: dbt Cloud API
-  version: 1.0.0
-  description: API documentation for dbt Cloud
+  title: dbt Cloud API v2
+  version: 2.0.0
+  description: "\n      The dbt Cloud API makes it possible to fetch data from your\n\
+    \      dbt Cloud account and programmatically run and monitor dbt jobs.\n\n  \
+    \    # How to use this API\n\n      The dbt Cloud API is intended for enqueuing\
+    \ runs from a job, polling for run progress,\n      and downloading artifacts\
+    \ after jobs have completed running. Operational endpoints around\n      creating,\
+    \ modifying, and deleting _objects_ in dbt Cloud are still in flux. These endpoints\n\
+    \      are largely undocumented in API v2.\n\n      The API docs are generated\
+    \ from an openapi spec defined in the\n      [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)\n\
+    \      repository. If you find issues in these docs or have questions about using\
+    \ the dbt Cloud\n      API, please open an issue in the dbt-cloud-openapi-spec\
+    \ repo or contact support@getdbt.com.\n\n      # Authentication\n\n      To authenticate\
+    \ an application with the dbt Cloud API, navigate to the\n      API Settings page\
+    \ in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).\n    \
+    \  If you cannot access this page, confirm that your dbt Cloud account has access\
+    \ to the API,\n      and that you are using the hosted version of dbt Cloud. If\
+    \ dbt Cloud is running inside of a VPC\n      in an Enterprise account, contact\
+    \ your account manager for help finding your API key.\n\n      ## TokenAuth\n\n\
+    \      Once you've found your API key, use it in the Authorization header of requests\
+    \ to the dbt Cloud API.\n      Be sure to include the `Token` prefix in the Authorization\
+    \ header, or the request will fail with a\n      \"401 Unauthorized\" error. Note:\
+    \ `Bearer` can be used in place of `Token` in the Authorization header.\n    \
+    \  Both syntaxes are equivalent.\n      "
+  termsOfService: https://www.getdbt.com/terms-of-service
+  contact: support@getdbt.com
 paths:
-  /api/v1/accounts/{account_id}/billing/cancel/:
+  /api/v2/accounts/{account_id}/billing/cancel/:
     post:
       operationId: Create Billing Cancel
       parameters:
@@ -20,7 +43,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/billing/cards/:
+  /api/v2/accounts/{account_id}/billing/cards/:
     post:
       operationId: Create Billing Cards
       parameters:
@@ -36,7 +59,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/billing/reactivate/:
+  /api/v2/accounts/{account_id}/billing/reactivate/:
     post:
       operationId: Create Billing Reactivate
       parameters:
@@ -52,7 +75,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/billing/signup/:
+  /api/v2/accounts/{account_id}/billing/signup/:
     post:
       operationId: Create Billing Signup
       parameters:
@@ -68,7 +91,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/billing/status/:
+  /api/v2/accounts/{account_id}/billing/status/:
     get:
       operationId: Retrieve Billing Status
       parameters:
@@ -84,7 +107,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/billing/update/:
+  /api/v2/accounts/{account_id}/billing/update/:
     post:
       operationId: Create Billing Update
       parameters:
@@ -100,7 +123,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/connections/:
+  /api/v2/accounts/{account_id}/connections/:
     get:
       operationId: List Connections
       parameters:
@@ -204,7 +227,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/connections/{id}/:
+  /api/v2/accounts/{account_id}/connections/{id}/:
     get:
       operationId: Retrieve Connections
       parameters:
@@ -319,7 +342,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/develop/{develop_request_id}/:
+  /api/v2/accounts/{account_id}/develop/{develop_request_id}/:
     get:
       operationId: Retrieve Develop
       parameters:
@@ -340,7 +363,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/develop/{develop_request_id}/batchfiles/:
+  /api/v2/accounts/{account_id}/develop/{develop_request_id}/batchfiles/:
     post:
       operationId: Create Develop Batchfiles
       parameters:
@@ -361,7 +384,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/develop/{develop_request_id}/contents/{remainder}:
+  /api/v2/accounts/{account_id}/develop/{develop_request_id}/contents/{remainder}:
     get:
       operationId: Retrieve Develop Contents
       parameters:
@@ -387,7 +410,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/develop/{develop_request_id}/files/:
+  /api/v2/accounts/{account_id}/develop/{develop_request_id}/files/:
     get:
       operationId: Retrieve Develop Files
       parameters:
@@ -408,7 +431,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/develop/{develop_request_id}/files/{remainder}:
+  /api/v2/accounts/{account_id}/develop/{develop_request_id}/files/{remainder}:
     post:
       operationId: Create Develop Files
       parameters:
@@ -459,7 +482,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/develop/{develop_request_id}/git/branch/:
+  /api/v2/accounts/{account_id}/develop/{develop_request_id}/git/branch/:
     get:
       operationId: Retrieve Develop Git Branch
       parameters:
@@ -480,7 +503,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/develop/{develop_request_id}/git/fileTree/:
+  /api/v2/accounts/{account_id}/develop/{develop_request_id}/git/fileTree/:
     get:
       operationId: Retrieve Develop Git Filetree
       parameters:
@@ -501,7 +524,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/develop/{develop_request_id}/git/status/:
+  /api/v2/accounts/{account_id}/develop/{develop_request_id}/git/status/:
     get:
       operationId: Retrieve Develop Git Status
       parameters:
@@ -542,7 +565,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/develop/{develop_request_id}/health/:
+  /api/v2/accounts/{account_id}/develop/{develop_request_id}/health/:
     get:
       operationId: Retrieve Develop Health
       parameters:
@@ -563,7 +586,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/develop/{develop_request_id}/rpc/:
+  /api/v2/accounts/{account_id}/develop/{develop_request_id}/rpc/:
     post:
       operationId: Create Develop Rpc
       parameters:
@@ -584,7 +607,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/encryptions/:
+  /api/v2/accounts/{account_id}/encryptions/:
     get:
       operationId: List Encryptions
       parameters:
@@ -702,7 +725,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/encryptions/{id}/:
+  /api/v2/accounts/{account_id}/encryptions/{id}/:
     get:
       operationId: Retrieve Encryptions
       parameters:
@@ -831,7 +854,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/environments/:
+  /api/v2/accounts/{account_id}/environments/:
     get:
       operationId: List Environments
       parameters:
@@ -943,7 +966,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/environments/{environment_id}/develop/:
+  /api/v2/accounts/{account_id}/environments/{environment_id}/develop/:
     get:
       operationId: Retrieve Environments Develop
       parameters:
@@ -1004,7 +1027,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/environments/{environment_id}/develop/check/:
+  /api/v2/accounts/{account_id}/environments/{environment_id}/develop/check/:
     get:
       operationId: Retrieve Environments Develop Check
       parameters:
@@ -1025,7 +1048,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/environments/{environment_id}/develop/start/:
+  /api/v2/accounts/{account_id}/environments/{environment_id}/develop/start/:
     post:
       operationId: Create Environments Develop Start
       parameters:
@@ -1046,7 +1069,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/environments/{id}/:
+  /api/v2/accounts/{account_id}/environments/{id}/:
     get:
       operationId: Retrieve Environments
       parameters:
@@ -1169,7 +1192,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/invites/:
+  /api/v2/accounts/{account_id}/invites/:
     get:
       operationId: Retrieve Invites
       parameters:
@@ -1185,7 +1208,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/invites/{id}/:
+  /api/v2/accounts/{account_id}/invites/{id}/:
     get:
       operationId: Retrieve Invites_2
       parameters:
@@ -1226,7 +1249,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/jobs/:
+  /api/v2/accounts/{account_id}/jobs/:
     get:
       operationId: List Jobs
       parameters:
@@ -1410,7 +1433,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/jobs/{job_id}/artifacts/{remainder}:
+  /api/v2/accounts/{account_id}/jobs/{job_id}/artifacts/{remainder}:
     get:
       operationId: Retrieve Jobs Artifacts
       description: |-
@@ -1439,7 +1462,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/jobs/{job_id}/run/:
+  /api/v2/accounts/{account_id}/jobs/{job_id}/run/:
     post:
       operationId: Create Jobs Run
       parameters:
@@ -1460,7 +1483,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/jobs/{id}/:
+  /api/v2/accounts/{account_id}/jobs/{id}/:
     get:
       operationId: Retrieve Jobs
       parameters:
@@ -1655,7 +1678,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/licenses/:
+  /api/v2/accounts/{account_id}/licenses/:
     get:
       operationId: Retrieve Licenses
       parameters:
@@ -1671,7 +1694,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/notifications/:
+  /api/v2/accounts/{account_id}/notifications/:
     get:
       operationId: List Notifications
       parameters:
@@ -1775,7 +1798,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/notifications/{id}/:
+  /api/v2/accounts/{account_id}/notifications/{id}/:
     get:
       operationId: Retrieve Notifications
       parameters:
@@ -1890,7 +1913,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/permissions/{id}/:
+  /api/v2/accounts/{account_id}/permissions/{id}/:
     post:
       operationId: Create Permissions
       parameters:
@@ -1911,7 +1934,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/projects/:
+  /api/v2/accounts/{account_id}/projects/:
     get:
       operationId: List Projects
       parameters:
@@ -2037,7 +2060,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/projects/{id}/:
+  /api/v2/accounts/{account_id}/projects/{id}/:
     get:
       operationId: Retrieve Projects
       parameters:
@@ -2174,7 +2197,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/repositories/:
+  /api/v2/accounts/{account_id}/repositories/:
     get:
       operationId: List Repositories
       parameters:
@@ -2286,7 +2309,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/repositories/{id}/:
+  /api/v2/accounts/{account_id}/repositories/{id}/:
     get:
       operationId: Retrieve Repositories
       parameters:
@@ -2409,7 +2432,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/runs/:
+  /api/v2/accounts/{account_id}/runs/:
     get:
       operationId: List Runs
       parameters:
@@ -2615,7 +2638,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/runs/{id}/:
+  /api/v2/accounts/{account_id}/runs/{id}/:
     get:
       operationId: Retrieve Runs
       parameters:
@@ -2832,7 +2855,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/accounts/{account_id}/runs/{run_id}/artifacts/:
+  /api/v2/accounts/{account_id}/runs/{run_id}/artifacts/:
     get:
       operationId: Retrieve Runs Artifacts
       parameters:
@@ -2853,7 +2876,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/runs/{run_id}/artifacts/{remainder}:
+  /api/v2/accounts/{account_id}/runs/{run_id}/artifacts/{remainder}:
     get:
       operationId: Retrieve Runs Artifacts_2
       parameters:
@@ -2879,7 +2902,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/runs/{run_id}/cancel/:
+  /api/v2/accounts/{account_id}/runs/{run_id}/cancel/:
     post:
       operationId: Create Runs Cancel
       parameters:
@@ -2900,7 +2923,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/runs/{run_id}/steps/:
+  /api/v2/accounts/{account_id}/runs/{run_id}/steps/:
     get:
       operationId: Retrieve Runs Steps
       parameters:
@@ -2921,7 +2944,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/runs/{run_id}/steps/{id}/:
+  /api/v2/accounts/{account_id}/runs/{run_id}/steps/{id}/:
     get:
       operationId: Retrieve Runs Steps_2
       parameters:
@@ -2947,7 +2970,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/steps/{id}/:
+  /api/v2/accounts/{account_id}/steps/{id}/:
     get:
       operationId: Retrieve Steps
       parameters:
@@ -2968,7 +2991,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/users/:
+  /api/v2/accounts/{account_id}/users/:
     get:
       operationId: Retrieve Users
       parameters:
@@ -2984,7 +3007,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/accounts/{account_id}/users/{id}/:
+  /api/v2/accounts/{account_id}/users/{id}/:
     get:
       operationId: Retrieve Users_2
       parameters:
@@ -3005,7 +3028,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/constants/:
+  /api/v2/constants/:
     get:
       operationId: 'Retrieve '
       tags:
@@ -3013,7 +3036,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/integrations/github/disconnect/:
+  /api/v2/integrations/github/disconnect/:
     post:
       operationId: Create Github Disconnect
       tags:
@@ -3023,7 +3046,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/integrations/github/installations/:
+  /api/v2/integrations/github/installations/:
     get:
       operationId: Retrieve Github Installations
       tags:
@@ -3033,7 +3056,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/integrations/github/installations/{installation_id}/repositories/:
+  /api/v2/integrations/github/installations/{installation_id}/repositories/:
     get:
       operationId: Retrieve Github Installations Repositories
       parameters:
@@ -3050,7 +3073,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/integrations/github/metadata/:
+  /api/v2/integrations/github/metadata/:
     get:
       operationId: Retrieve Github Metadata
       tags:
@@ -3060,7 +3083,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/integrations/slack/channels/:
+  /api/v2/integrations/slack/channels/:
     get:
       operationId: Retrieve Slack Channels
       tags:
@@ -3070,7 +3093,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/integrations/slack/disconnect/:
+  /api/v2/integrations/slack/disconnect/:
     post:
       operationId: Create Slack Disconnect
       tags:
@@ -3080,7 +3103,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/notifications/unsubscribe/:
+  /api/v2/notifications/unsubscribe/:
     post:
       operationId: Create Unsubscribe
       tags:
@@ -3090,7 +3113,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/usage_acceptance/:
+  /api/v2/usage_acceptance/:
     post:
       operationId: 'Create '
       tags:
@@ -3098,7 +3121,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/users/:
+  /api/v2/users/:
     get:
       operationId: 'List '
       parameters:
@@ -3186,7 +3209,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/users/{id}/:
+  /api/v2/users/{id}/:
     get:
       operationId: Retrieve _2
       parameters:
@@ -3286,7 +3309,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/users/{user_id}/apikey/:
+  /api/v2/users/{user_id}/apikey/:
     get:
       operationId: Retrieve Apikey
       parameters:
@@ -3317,7 +3340,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/verify-email/:
+  /api/v2/verify-email/:
     post:
       operationId: Create _3
       tags:
@@ -3327,7 +3350,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v1/whoami/:
+  /api/v2/whoami/:
     get:
       operationId: Retrieve _3
       tags:
@@ -19706,3 +19729,6 @@ components:
       in: header
       name: Authorization
       description: Token-based authentication with required prefix "Token"
+servers:
+- url: https://cloud.getdbt.com/api/v2
+  description: Production
