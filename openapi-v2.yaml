@@ -7,7 +7,7 @@ info:
     \ artifacts after jobs have completed running. Operational endpoints around\n\
     \      creating, modifying, and deleting _objects_ in dbt Cloud are still in flux.\
     \ These endpoints\n      are largely undocumented in API v2.\n\n      The API\
-    \ docs are generated from an openapi spec defined in the\n      [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)\n\
+    \ docs are generated from an openapi spec defined in the\n      [dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec)\n\
     \      repository. If you find issues in these docs or have questions about using\
     \ the dbt Cloud\n      API, please open an issue in the dbt-cloud-openapi-spec\
     \ repo or contact support@getdbt.com.\n\n      # Authentication\n\n      To authenticate\
@@ -20,102 +20,6 @@ info:
   termsOfService: https://www.getdbt.com/terms-of-service
   contact: support@getdbt.com
 paths:
-  /api/v2/accounts/{account_id}/billing/cancel/:
-    post:
-      operationId: Create Billing Cancel
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Billing Cancel
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/billing/cards/:
-    post:
-      operationId: Create Billing Cards
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Billing Cards
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/billing/reactivate/:
-    post:
-      operationId: Create Billing Reactivate
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Billing Reactivate
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/billing/signup/:
-    post:
-      operationId: Create Billing Signup
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Billing Signup
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/billing/status/:
-    get:
-      operationId: Retrieve Billing Status
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Billing Status
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/billing/update/:
-    post:
-      operationId: Create Billing Update
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Billing Update
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
   /api/v2/accounts/{account_id}/connections/:
     get:
       operationId: List Connections
@@ -334,271 +238,6 @@ paths:
       - tokenAuth: []
       responses:
         '204':
-          description: No response body
-  /api/v2/accounts/{account_id}/develop/{develop_request_id}/:
-    get:
-      operationId: Retrieve Develop
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Develop
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/develop/{develop_request_id}/batchfiles/:
-    post:
-      operationId: Create Develop Batchfiles
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Develop Batchfiles
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/develop/{develop_request_id}/contents/{remainder}:
-    get:
-      operationId: Retrieve Develop Contents
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: remainder
-        schema:
-          type: string
-        required: true
-      tags:
-      - Develop Contents
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/develop/{develop_request_id}/files/:
-    get:
-      operationId: Retrieve Develop Files
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Develop Files
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/develop/{develop_request_id}/files/{remainder}:
-    post:
-      operationId: Create Develop Files
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: remainder
-        schema:
-          type: string
-        required: true
-      tags:
-      - Develop Files
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    delete:
-      operationId: Destroy Develop Files
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: remainder
-        schema:
-          type: string
-        required: true
-      tags:
-      - Develop Files
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/v2/accounts/{account_id}/develop/{develop_request_id}/git/branch/:
-    get:
-      operationId: Retrieve Develop Git Branch
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Develop Git Branch
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/develop/{develop_request_id}/git/fileTree/:
-    get:
-      operationId: Retrieve Develop Git Filetree
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Develop Git Filetree
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/develop/{develop_request_id}/git/status/:
-    get:
-      operationId: Retrieve Develop Git Status
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Develop Git Status
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: Create Develop Git Status
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Develop Git Status
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/develop/{develop_request_id}/health/:
-    get:
-      operationId: Retrieve Develop Health
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Develop Health
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/develop/{develop_request_id}/rpc/:
-    post:
-      operationId: Create Develop Rpc
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: develop_request_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Develop Rpc
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
           description: No response body
   /api/v2/accounts/{account_id}/encryptions/:
     get:
@@ -974,7 +613,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Environments Develop
+      - Environments
       security:
       - tokenAuth: []
       responses:
@@ -994,7 +633,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Environments Develop
+      - Environments
       security:
       - tokenAuth: []
       responses:
@@ -1014,53 +653,11 @@ paths:
           type: integer
         required: true
       tags:
-      - Environments Develop
+      - Environments
       security:
       - tokenAuth: []
       responses:
         '204':
-          description: No response body
-  /api/v2/accounts/{account_id}/environments/{environment_id}/develop/check/:
-    get:
-      operationId: Retrieve Environments Develop Check
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: environment_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Environments Develop Check
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/environments/{environment_id}/develop/start/:
-    post:
-      operationId: Create Environments Develop Start
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: environment_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Environments Develop Start
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
           description: No response body
   /api/v2/accounts/{account_id}/environments/{id}/:
     get:
@@ -1449,7 +1046,7 @@ paths:
           type: string
         required: true
       tags:
-      - Jobs Artifacts
+      - Jobs
       security:
       - tokenAuth: []
       responses:
@@ -1470,7 +1067,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Jobs Run
+      - Jobs
       security:
       - tokenAuth: []
       responses:
@@ -2863,7 +2460,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Runs Artifacts
+      - Runs
       security:
       - tokenAuth: []
       responses:
@@ -2889,7 +2486,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Runs Artifacts
+      - Runs
       security:
       - tokenAuth: []
       responses:
@@ -2910,7 +2507,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Runs Cancel
+      - Runs
       security:
       - tokenAuth: []
       responses:
@@ -2931,7 +2528,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Runs Steps
+      - Runs
       security:
       - tokenAuth: []
       responses:
@@ -2957,7 +2554,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Runs Steps
+      - Runs
       security:
       - tokenAuth: []
       responses:
@@ -3033,7 +2630,7 @@ paths:
     post:
       operationId: Create Github Disconnect
       tags:
-      - Integrations Github Disconnect
+      - Integrations
       security:
       - tokenAuth: []
       responses:
@@ -3043,7 +2640,7 @@ paths:
     get:
       operationId: Retrieve Github Installations
       tags:
-      - Integrations Github Installations
+      - Integrations
       security:
       - tokenAuth: []
       responses:
@@ -3060,7 +2657,7 @@ paths:
           pattern: ^[0-9]+$
         required: true
       tags:
-      - Integrations Github Installations Repositories
+      - Integrations
       security:
       - tokenAuth: []
       responses:
@@ -3070,7 +2667,7 @@ paths:
     get:
       operationId: Retrieve Github Metadata
       tags:
-      - Integrations Github Metadata
+      - Integrations
       security:
       - tokenAuth: []
       responses:
@@ -3080,7 +2677,7 @@ paths:
     get:
       operationId: Retrieve Slack Channels
       tags:
-      - Integrations Slack Channels
+      - Integrations
       security:
       - tokenAuth: []
       responses:
@@ -3090,7 +2687,7 @@ paths:
     post:
       operationId: Create Slack Disconnect
       tags:
-      - Integrations Slack Disconnect
+      - Integrations
       security:
       - tokenAuth: []
       responses:
@@ -3100,17 +2697,9 @@ paths:
     post:
       operationId: Create Unsubscribe
       tags:
-      - Notifications Unsubscribe
+      - Notifications
       security:
       - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/usage_acceptance/:
-    post:
-      operationId: 'Create '
-      tags:
-      - Usage_Acceptance
       responses:
         '200':
           description: No response body
@@ -3149,7 +2738,7 @@ paths:
                   $ref: '#/components/schemas/User'
           description: ''
     post:
-      operationId: Create _2
+      operationId: 'Create '
       tags:
       - Users
       requestBody:
@@ -3312,7 +2901,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Users Apikey
+      - Users
       security:
       - tokenAuth: []
       responses:
@@ -3327,17 +2916,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Users Apikey
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/verify-email/:
-    post:
-      operationId: Create _3
-      tags:
-      - Verify Email
+      - Users
       security:
       - tokenAuth: []
       responses:
