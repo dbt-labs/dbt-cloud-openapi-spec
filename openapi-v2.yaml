@@ -14948,3 +14948,10 @@ components:
       in: header
       name: Authorization
       description: Token-based authentication with required prefix "Token"
+servers:
+- url: https://cloud.getdbt.com/
+  description: Production (US)
+- url: https://emea.dbt.com/
+  description: Production (Europe)
+- url: https://au.dbt.com/
+  description: Production (AU)
