@@ -18,7 +18,9 @@ info:
     \ dbt Cloud is running inside of a VPC\n      in an Enterprise account, contact\
     \ your account manager for help finding your API key.\n      "
   termsOfService: https://www.getdbt.com/terms-of-service
-  contact: support@getdbt.com
+  contact:
+    email: support@getdbt.com
+paths:
 paths:
   /api/v2/accounts/{account_id}/connections/:
     get:
