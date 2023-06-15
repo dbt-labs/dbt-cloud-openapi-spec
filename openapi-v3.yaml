@@ -63,7 +63,6 @@ info:
   contact:
     email: support@getdbt.com
 paths:
-paths:
   /api/v3/accounts/:
     get:
       operationId: Retrieve Accounts
@@ -2035,211 +2034,6 @@ paths:
       - tokenAuth: []
       responses:
         '200':
-          description: No response body
-  /api/v3/accounts/{account_id}/ip-restrictions/:
-    get:
-      operationId: Retrieve Ip Restrictions
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Ip Restrictions
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: Create Ip Restrictions
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Ip Restrictions
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    put:
-      operationId: Update Ip Restrictions
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Ip Restrictions
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    delete:
-      operationId: Destroy Ip Restrictions
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Ip Restrictions
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/v3/accounts/{account_id}/ip-restrictions-set/:
-    post:
-      operationId: Create Ip Restrictions Set
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Ip Restrictions Set
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v3/accounts/{account_id}/ip-restrictions-set/{id}/validate/:
-    get:
-      operationId: Retrieve Ip Restrictions Set Validate
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Ip Restrictions Set
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v3/accounts/{account_id}/ip-restrictions-set/{id}/validate/{rule_id}:
-    get:
-      operationId: Retrieve Ip Restrictions Set Validate_2
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: rule_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Ip Restrictions Set
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v3/accounts/{account_id}/ip-restrictions/{id}:
-    get:
-      operationId: Retrieve Ip Restrictions_2
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - Ip Restrictions
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: Create Ip Restrictions_2
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - Ip Restrictions
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    put:
-      operationId: Update Ip Restrictions_2
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - Ip Restrictions
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    delete:
-      operationId: Destroy Ip Restrictions_2
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - Ip Restrictions
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
           description: No response body
   /api/v3/accounts/{account_id}/license-maps/:
     get:
@@ -4580,56 +4374,6 @@ paths:
         '200':
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/semantic-layer-configurations/:
-    get:
-      operationId: List Projects Semantic Layer Configurations
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: environment_id
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      tags:
-      - Projects Semantic Layer Configurations
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SemanticLayerConfig'
-          description: ''
     post:
       operationId: Create Projects Semantic Layer Configurations
       parameters:
@@ -4811,6 +4555,58 @@ paths:
       - tokenAuth: []
       responses:
         '204':
+          description: No response body
+  /api/v3/accounts/{account_id}/runs/export/:
+    get:
+      operationId: Retrieve Runs Export
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Runs
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: Create Runs Export
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Runs
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v3/accounts/{account_id}/runs/export/{job_id}/download/:
+    get:
+      operationId: Retrieve Runs Export Download
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: job_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Runs
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
           description: No response body
   /api/v3/accounts/{account_id}/semantic-layer-credentials/:
     post:
@@ -5135,22 +4931,6 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v3/accounts/{account_id}/sso-reauth/:
-    get:
-      operationId: Retrieve Sso Reauth
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Sso Reauth
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
   /api/v3/accounts/{account_id}/users/:
     get:
       operationId: Retrieve Users
@@ -5384,33 +5164,6 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v3/databricks-partner-connect-signup/:
-    get:
-      operationId: Retrieve Databricks Partner Connect Signup
-      tags:
-      - Databricks Partner Connect Signup
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: Create Databricks Partner Connect Signup
-      description: |-
-        Given a Databricks Partner Connect token:
-            - verify that the token is valid
-            - update the user's password
-            - update the account's name
-            - accept the terms of service
-            - invalidate the token
-            - if it's a new user, auto verify their email and
-              log them in automatically
-
-        If any errors occur while trying to update the necessary database records,
-        the transaction will be rolled back.
-      tags:
-      - Databricks Partner Connect Signup
-      responses:
-        '200':
-          description: No response body
   /api/v3/git-provider/disconnect/:
     post:
       operationId: Create Git Provider Disconnect
@@ -5631,33 +5384,6 @@ paths:
       - tokenAuth: []
       responses:
         '204':
-          description: No response body
-  /api/v3/snowflake-partner-connect-signup/:
-    get:
-      operationId: Retrieve Snowflake Partner Connect Signup
-      tags:
-      - Snowflake Partner Connect Signup
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: Create Snowflake Partner Connect Signup
-      description: |-
-        Given a Partner Connect token:
-            - verify that the token is valid
-            - update the user's password
-            - update the account's name
-            - accept the terms of service
-            - invalidate the token
-            - if it's a new user, auto verify their email and
-              log them in automatically
-
-        If any errors occur while trying to update the necessary database records,
-        the transaction will be rolled back.
-      tags:
-      - Snowflake Partner Connect Signup
-      responses:
-        '200':
           description: No response body
   /api/v3/user-preferences/:
     get:
@@ -5900,107 +5626,11 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/users/{user_id}/user-social-auth/:
-    get:
-      operationId: List Users User Social Auth
-      parameters:
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: provider
-        schema:
-          type: string
-      - in: query
-        name: state
-        schema:
-          type: integer
-      - in: path
-        name: user_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: user_id
-        schema:
-          type: integer
-      tags:
-      - Users
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v3/users/{user_id}/user-social-auth/{id}/:
-    get:
-      operationId: Retrieve Users User Social Auth
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: provider
-        schema:
-          type: string
-      - in: query
-        name: state
-        schema:
-          type: integer
-      - in: path
-        name: user_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: user_id
-        schema:
-          type: integer
-      tags:
-      - Users
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
   /api/v3/whats-new/:
     get:
       operationId: Retrieve Whats New
       description: Returns an array representing all the yaml file entries in the
         whats new directory
-      tags:
-      - Whats New
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: Create Whats New
-      description: Updates the `viewed` state of whats new entries for the current
-        user
       tags:
       - Whats New
       security:
@@ -8102,6 +7732,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -8151,13 +7789,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -8266,6 +7907,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -11852,6 +11494,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -11901,13 +11551,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -12016,6 +11669,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -15638,6 +15292,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -15687,13 +15349,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -15802,6 +15467,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -19394,6 +19060,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -19443,13 +19117,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -19558,6 +19235,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -23139,6 +22817,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -23188,13 +22874,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -23303,6 +22992,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -26880,6 +26570,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -26929,13 +26627,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -27044,6 +26745,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -30674,6 +30376,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -30723,13 +30433,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -30838,6 +30551,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -34450,6 +34164,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -34499,13 +34221,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -34614,6 +34339,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -36473,6 +36199,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -38286,6 +38013,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -38335,13 +38070,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -40220,6 +39958,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -42033,6 +41772,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -42082,13 +41829,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -45744,6 +45494,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -45793,13 +45551,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -45908,6 +45669,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -49511,6 +49273,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -49560,13 +49330,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -49675,6 +49448,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -51531,6 +51305,7 @@ components:
       enum:
       - developer
       - read_only
+      - it
     PatchedSemanticLayerCredentialsRequest:
       type: object
       required:
@@ -53498,6 +53273,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -53547,13 +53330,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -53662,6 +53448,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -57240,6 +57027,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -57289,13 +57084,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -57404,6 +57202,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -59239,6 +59038,10 @@ components:
           oneOf:
           - type: integer
           - type: 'null'
+        github_webhook_id:
+          oneOf:
+          - type: integer
+          - type: 'null'
         pull_request_url_template:
           oneOf:
           - type: string
@@ -59291,10 +59094,12 @@ components:
         NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
         NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
         Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-        = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-        state: int = 1, created_at: Union[datetime.datetime, NoneType] = None, updated_at:
-        Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any, Any],
-        NoneType] = None, github_repo: Union[str, NoneType] = None, name: Union[str,
+        = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+        Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+        NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+        = None, state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
+        updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
+        Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name: Union[str,
         NoneType] = None, git_provider_id: Union[int, NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
         NoneType] = None, git_provider: Union[models.git_provider.GitProvider, NoneType]
         = None)'
@@ -61070,6 +60875,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -61122,13 +60931,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -61237,6 +61049,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -63072,6 +62885,15 @@ components:
           oneOf:
           - type: integer
           - type: 'null'
+        github_webhook_id:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        github_webhook_secret:
+          oneOf:
+          - type: string
+          - type: 'null'
+          writeOnly: true
         pull_request_url_template:
           oneOf:
           - type: string
@@ -63109,10 +62931,12 @@ components:
         NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
         NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
         Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-        = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-        state: int = 1, created_at: Union[datetime.datetime, NoneType] = None, updated_at:
-        Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any, Any],
-        NoneType] = None, github_repo: Union[str, NoneType] = None, name: Union[str,
+        = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+        Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+        NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+        = None, state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
+        updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
+        Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name: Union[str,
         NoneType] = None, git_provider_id: Union[int, NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
         NoneType] = None, git_provider: Union[models.git_provider.GitProvider, NoneType]
         = None)'
@@ -64888,6 +64712,15 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
+              writeOnly: true
             pull_request_url_template:
               oneOf:
               - type: string
@@ -64925,13 +64758,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -65040,6 +64876,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -69150,6 +68987,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -69199,13 +69044,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -69314,6 +69162,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -72906,6 +72755,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -72955,13 +72812,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -73070,6 +72930,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin

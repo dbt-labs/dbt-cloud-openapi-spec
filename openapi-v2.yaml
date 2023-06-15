@@ -63,7 +63,6 @@ info:
   contact:
     email: support@getdbt.com
 paths:
-paths:
   /api/v2/accounts/{account_id}/connections/:
     get:
       operationId: List Connections
@@ -4740,6 +4739,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -4789,13 +4796,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -4904,6 +4914,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -8514,6 +8525,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -8563,13 +8582,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -8678,6 +8700,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
@@ -10609,6 +10632,10 @@ components:
           oneOf:
           - type: 'null'
           - type: integer
+        github_webhook_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
         pull_request_url_template:
           oneOf:
           - type: 'null'
@@ -10687,6 +10714,10 @@ components:
           - type: 'null'
           - type: integer
         github_installation_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+        github_webhook_id:
           oneOf:
           - type: 'null'
           - type: integer
@@ -12643,6 +12674,14 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            github_webhook_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            github_webhook_secret:
+              oneOf:
+              - type: string
+              - type: 'null'
             pull_request_url_template:
               oneOf:
               - type: string
@@ -12692,13 +12731,16 @@ components:
             NoneType] = None, git_clone_strategy: Union[models.repository.GitCloneStrategy,
             NoneType] = None, deploy_key_id: Union[int, NoneType] = None, repository_credentials_id:
             Union[int, NoneType] = None, github_installation_id: Union[int, NoneType]
-            = None, pull_request_url_template: Union[PullRequestUrl, NoneType] = None,
-            state: int = 1, created_at: Union[datetime.datetime, NoneType] = None,
-            updated_at: Union[datetime.datetime, NoneType] = None, deploy_key: Union[Dict[Any,
-            Any], NoneType] = None, github_repo: Union[str, NoneType] = None, name:
-            Union[str, NoneType] = None, git_provider_id: Union[int, NoneType] = None,
-            gitlab: Union[models.repository_gitlab.RepositoryGitlab, NoneType] = None,
-            git_provider: Union[models.git_provider.GitProvider, NoneType] = None)'
+            = None, github_webhook_id: Union[int, NoneType] = None, github_webhook_secret:
+            Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
+            NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
+            = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
+            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
+            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
+            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
+            NoneType] = None)'
         RepositoryGitlab:
           type: object
           required:
@@ -12807,6 +12849,7 @@ components:
               - owner
               - member
               - account_admin
+              - security_admin
               - admin
               - database_admin
               - git_admin
