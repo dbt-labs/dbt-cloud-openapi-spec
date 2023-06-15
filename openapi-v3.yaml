@@ -5385,27 +5385,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/user-preferences/:
-    get:
-      operationId: Retrieve User Preferences
-      description: Fetch the user's preferences
-      tags:
-      - User Preferences
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: Create User Preferences
-      description: Set the specified user preference values
-      tags:
-      - User Preferences
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
   /api/v3/users/{user_id}/credentials/:
     get:
       operationId: List Users Credentials
@@ -74666,3 +74645,5 @@ servers:
   description: Production (Europe)
 - url: https://au.dbt.com/
   description: Production (AU)
+- url: https://dev-mbarker.dev.cloud.getdbt.com/
+  description: Dev (You)
