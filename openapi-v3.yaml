@@ -74645,5 +74645,3 @@ servers:
   description: Production (Europe)
 - url: https://au.dbt.com/
   description: Production (AU)
-- url: https://dev-mbarker.dev.cloud.getdbt.com/
-  description: Dev (You)
