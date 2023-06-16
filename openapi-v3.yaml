@@ -8405,34 +8405,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -12167,34 +12140,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -15965,34 +15911,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -19733,34 +19652,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -23490,34 +23382,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -27243,34 +27108,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -31049,34 +30887,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -34837,34 +34648,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -38619,34 +38403,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -42378,34 +42135,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -46167,34 +45897,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -49946,34 +49649,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -53946,34 +53622,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -57700,34 +57349,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -61547,34 +61169,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -65374,34 +64969,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -69660,34 +69228,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
@@ -73428,34 +72969,7 @@ components:
             is_running:
               type: boolean
           additionalProperties: false
-          description: 'Run(id: Union[int, NoneType], trigger_id: Union[int, NoneType],
-            account_id: int, environment_id: int, project_id: int, job_definition_id:
-            int, status: int = 1, dbt_version: str = ''1.4.0-latest'', git_branch:
-            Union[str, NoneType] = None, git_sha: Union[str, NoneType] = None, status_message:
-            Union[str, NoneType] = None, owner_thread_id: Union[str, NoneType] = None,
-            executed_by_thread_id: Union[str, NoneType] = None, deferring_run_id:
-            Union[int, NoneType] = None, artifacts_saved: bool = False, artifact_s3_path:
-            Union[str, NoneType] = None, has_docs_generated: bool = False, has_sources_generated:
-            bool = False, notifications_sent: bool = False, blocked_by: List[int]
-            = <factory>, scribe_enabled: bool = False, created_at: Union[datetime.datetime,
-            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None,
-            dequeued_at: Union[datetime.datetime, NoneType] = None, started_at: Union[datetime.datetime,
-            NoneType] = None, finished_at: Union[datetime.datetime, NoneType] = None,
-            last_checked_at: Union[datetime.datetime, NoneType] = None, last_heartbeat_at:
-            Union[datetime.datetime, NoneType] = None, should_start_at: Union[datetime.datetime,
-            NoneType] = None, trigger: ''Optional[models.RunTrigger]'' = None, job:
-            Union[Dict[Any, Any], NoneType] = None, environment: Union[Dict[Any, Any],
-            NoneType] = None, run_steps: ''Optional[List[models.RunStep]]'' = <factory>,
-            status_humanized: Union[str, NoneType] = None, in_progress: Union[bool,
-            NoneType] = None, is_complete: Union[bool, NoneType] = None, is_success:
-            Union[bool, NoneType] = None, is_error: Union[bool, NoneType] = None,
-            is_cancelled: Union[bool, NoneType] = None, href: Union[str, NoneType]
-            = None, duration: Union[str, NoneType] = None, queued_duration: Union[str,
-            NoneType] = None, run_duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None, queued_duration_humanized: Union[str, NoneType]
-            = None, run_duration_humanized: Union[str, NoneType] = None, created_at_humanized:
-            Union[str, NoneType] = None, finished_at_humanized: Union[str, NoneType]
-            = None, job_id: Union[int, NoneType] = None, is_running: bool = None)'
+          description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
           type: object
           required:
