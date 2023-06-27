@@ -103,7 +103,7 @@ paths:
                   $ref: '#/components/schemas/BaseConnection'
           description: ''
     post:
-      operationId: Create Connections
+      operationId: Create Connection
       parameters:
       - in: path
         name: account_id
@@ -137,7 +137,7 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/connections/{id}/:
     get:
-      operationId: Retrieve Connections
+      operationId: Retrieve Connection
       parameters:
       - in: path
         name: account_id
@@ -178,7 +178,7 @@ paths:
                 $ref: '#/components/schemas/BaseConnection'
           description: ''
     post:
-      operationId: Update Connections
+      operationId: Update Connection
       parameters:
       - in: path
         name: account_id
@@ -214,7 +214,7 @@ paths:
                 $ref: '#/components/schemas/BaseConnection'
           description: ''
     delete:
-      operationId: Destroy Connections
+      operationId: Destroy Connection
       parameters:
       - in: path
         name: account_id
@@ -252,7 +252,7 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/encryptions/:
     get:
-      operationId: List Encryptions
+      operationId: List Connection Encryptions
       parameters:
       - in: path
         name: account_id
@@ -284,7 +284,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Encryptions
+      - Connection Encryptions
       security:
       - tokenAuth: []
       responses:
@@ -297,7 +297,7 @@ paths:
                   $ref: '#/components/schemas/ConnectionEncryption'
           description: ''
     post:
-      operationId: Create Encryptions
+      operationId: Create Connection Encryption
       parameters:
       - in: path
         name: account_id
@@ -305,7 +305,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Encryptions
+      - Connection Encryptions
       requestBody:
         content:
           application/json:
@@ -331,7 +331,7 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/encryptions/{id}/:
     get:
-      operationId: Retrieve Encryptions
+      operationId: Retrieve Connection Encryption
       parameters:
       - in: path
         name: account_id
@@ -368,7 +368,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Encryptions
+      - Connection Encryptions
       security:
       - tokenAuth: []
       responses:
@@ -379,7 +379,7 @@ paths:
                 $ref: '#/components/schemas/ConnectionEncryption'
           description: ''
     post:
-      operationId: Update Encryptions
+      operationId: Update Connection Encryption
       parameters:
       - in: path
         name: account_id
@@ -392,7 +392,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Encryptions
+      - Connection Encryptions
       requestBody:
         content:
           application/json:
@@ -415,7 +415,7 @@ paths:
                 $ref: '#/components/schemas/ConnectionEncryption'
           description: ''
     delete:
-      operationId: Destroy Encryptions
+      operationId: Destroy Connection Encryption
       parameters:
       - in: path
         name: account_id
@@ -452,7 +452,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Encryptions
+      - Connection Encryptions
       security:
       - tokenAuth: []
       responses:
@@ -502,7 +502,7 @@ paths:
                   $ref: '#/components/schemas/EnvironmentV2'
           description: ''
     post:
-      operationId: Create Environments
+      operationId: Create Environment
       parameters:
       - in: path
         name: account_id
@@ -534,70 +534,9 @@ paths:
                 items:
                   $ref: '#/components/schemas/EnvironmentV2'
           description: ''
-  /api/v2/accounts/{account_id}/environments/{environment_id}/develop/:
-    get:
-      operationId: Retrieve Environments Develop
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: environment_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Environments
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: Create Environments Develop
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: environment_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Environments
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    delete:
-      operationId: Destroy Environments Develop
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: environment_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Environments
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
   /api/v2/accounts/{account_id}/environments/{id}/:
     get:
-      operationId: Retrieve Environments
+      operationId: Retrieve Environment
       parameters:
       - in: path
         name: account_id
@@ -642,7 +581,7 @@ paths:
                 $ref: '#/components/schemas/EnvironmentV2'
           description: ''
     post:
-      operationId: Update Environments
+      operationId: Update Environment
       parameters:
       - in: path
         name: account_id
@@ -678,7 +617,7 @@ paths:
                 $ref: '#/components/schemas/EnvironmentV2'
           description: ''
     delete:
-      operationId: Destroy Environments
+      operationId: Destroy Environment
       parameters:
       - in: path
         name: account_id
@@ -720,7 +659,7 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/invites/:
     get:
-      operationId: Retrieve Invites
+      operationId: List Invites
       parameters:
       - in: path
         name: account_id
@@ -736,7 +675,7 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/invites/{id}/:
     get:
-      operationId: Retrieve Invites_2
+      operationId: Retrieve Invite
       parameters:
       - in: path
         name: account_id
@@ -756,7 +695,7 @@ paths:
         '200':
           description: No response body
     post:
-      operationId: Create Invites
+      operationId: Create Invite
       parameters:
       - in: path
         name: account_id
@@ -855,7 +794,7 @@ paths:
                   $ref: '#/components/schemas/InternalJobDefinition'
           description: ''
     post:
-      operationId: Create Jobs
+      operationId: Create Job
       parameters:
       - in: path
         name: account_id
@@ -889,10 +828,9 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/jobs/{job_id}/artifacts/{remainder}:
     get:
-      operationId: Retrieve Jobs Artifacts
-      description: |-
-        Given a job id and *a set of RUN filters* return the
-        latest matching artifact for that job.
+      operationId: Retrieve Job Artifact
+      description: Given a job id and *a set of Run filters* return the latest matching
+        artifact for that job.
       parameters:
       - in: path
         name: account_id
@@ -918,7 +856,12 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/jobs/{job_id}/run/:
     post:
-      operationId: Create Jobs Run
+      operationId: Trigger Job Run
+      description: Use this endpoint to kick off a run for a job. When this endpoint
+        returns a successful response, a new run will be enqueued for the account.
+        Users can poll the Get run endpoint to poll the run until it completes. After
+        the run has completed, users can use the Get run artifact endpoint to download
+        artifacts generated by the run.
       parameters:
       - in: path
         name: account_id
@@ -955,7 +898,7 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/jobs/{id}/:
     get:
-      operationId: Retrieve Jobs
+      operationId: Retrieve Job
       parameters:
       - in: query
         name: account__locked
@@ -1036,7 +979,7 @@ paths:
                 $ref: '#/components/schemas/InternalJobDefinition'
           description: ''
     post:
-      operationId: Update Jobs
+      operationId: Update Job
       parameters:
       - in: path
         name: account_id
@@ -1072,7 +1015,7 @@ paths:
                 $ref: '#/components/schemas/InternalJobDefinition'
           description: ''
     delete:
-      operationId: Destroy Jobs
+      operationId: Destroy Job
       parameters:
       - in: query
         name: account__locked
@@ -1150,7 +1093,7 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/licenses/:
     get:
-      operationId: Retrieve Licenses
+      operationId: List Account Licenses
       parameters:
       - in: path
         name: account_id
@@ -1204,7 +1147,7 @@ paths:
                   $ref: '#/components/schemas/JobNotificationSettings'
           description: ''
     post:
-      operationId: Create Notifications
+      operationId: Create Notification
       parameters:
       - in: path
         name: account_id
@@ -1238,7 +1181,7 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/notifications/{id}/:
     get:
-      operationId: Retrieve Notifications
+      operationId: Retrieve Notification
       parameters:
       - in: path
         name: account_id
@@ -1279,7 +1222,7 @@ paths:
                 $ref: '#/components/schemas/JobNotificationSettings'
           description: ''
     post:
-      operationId: Update Notifications
+      operationId: Update Notification
       parameters:
       - in: path
         name: account_id
@@ -1315,7 +1258,7 @@ paths:
                 $ref: '#/components/schemas/JobNotificationSettings'
           description: ''
     delete:
-      operationId: Destroy Notifications
+      operationId: Destroy Notification
       parameters:
       - in: path
         name: account_id
@@ -1353,7 +1296,7 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/permissions/{id}/:
     post:
-      operationId: Create Permissions
+      operationId: Create Permission
       parameters:
       - in: path
         name: account_id
@@ -1423,7 +1366,7 @@ paths:
                   $ref: '#/components/schemas/Project'
           description: ''
     post:
-      operationId: Create Projects
+      operationId: Create Project
       parameters:
       - in: path
         name: account_id
@@ -1457,7 +1400,7 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/projects/{id}/:
     get:
-      operationId: Retrieve Projects
+      operationId: Retrieve Project
       parameters:
       - in: path
         name: account_id
@@ -1509,7 +1452,7 @@ paths:
                 $ref: '#/components/schemas/Project'
           description: ''
     post:
-      operationId: Update Projects
+      operationId: Update Project
       parameters:
       - in: path
         name: account_id
@@ -1545,7 +1488,7 @@ paths:
                 $ref: '#/components/schemas/Project'
           description: ''
     delete:
-      operationId: Destroy Projects
+      operationId: Destroy Project
       parameters:
       - in: path
         name: account_id
@@ -1636,7 +1579,7 @@ paths:
                   $ref: '#/components/schemas/RepositoryV2'
           description: ''
     post:
-      operationId: Create Repositories
+      operationId: Create Repository
       parameters:
       - in: path
         name: account_id
@@ -1670,7 +1613,7 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/repositories/{id}/:
     get:
-      operationId: Retrieve Repositories
+      operationId: Retrieve Repository
       parameters:
       - in: path
         name: account_id
@@ -1715,7 +1658,7 @@ paths:
                 $ref: '#/components/schemas/RepositoryV2'
           description: ''
     delete:
-      operationId: Destroy Repositories
+      operationId: Destroy Repository
       parameters:
       - in: path
         name: account_id
@@ -1847,7 +1790,7 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/runs/{id}/:
     get:
-      operationId: Retrieve Runs
+      operationId: Retrieve Run
       parameters:
       - in: path
         name: account_id
@@ -1940,7 +1883,7 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/runs/{run_id}/artifacts/:
     get:
-      operationId: Retrieve Runs Artifacts
+      operationId: List Run Artifacts
       parameters:
       - in: path
         name: account_id
@@ -1961,7 +1904,15 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/runs/{run_id}/artifacts/{remainder}:
     get:
-      operationId: Retrieve Runs Artifacts_2
+      operationId: Retrieve Run Artifact
+      description: Use this endpoint to fetch artifacts from a completed run. Once
+        a run has completed, you can use this endpoint to download the `manifest.json`,
+        run `results.json` or `catalog.json` files from dbt Cloud. These artifacts
+        contain information about the models in your dbt project, timing information
+        around their execution, and a status message indicating the result of the
+        model build. By default, this endpoint returns artifacts from the last step
+        in the run. To list artifacts from other steps in the run, use the step query
+        parameter described below.
       parameters:
       - in: path
         name: account_id
@@ -1978,6 +1929,14 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: step
+        schema:
+          type: integer
+        description: The index of the Step in the Run to query for artifacts. The
+          first step in the run has the index `1`. If the `step` parameter is omitted,
+          then this endpoint will return the artifacts compiled for the last step
+          in the run.
       tags:
       - Runs
       security:
@@ -1987,57 +1946,10 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/runs/{run_id}/cancel/:
     post:
-      operationId: Create Runs Cancel
+      operationId: Cancel Run
       parameters:
       - in: path
         name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: run_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Runs
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/runs/{run_id}/steps/:
-    get:
-      operationId: Retrieve Runs Steps
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: run_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Runs
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/runs/{run_id}/steps/{id}/:
-    get:
-      operationId: Retrieve Runs Steps_2
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
         schema:
           type: integer
         required: true
@@ -2055,7 +1967,7 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/steps/{id}/:
     get:
-      operationId: Retrieve Steps
+      operationId: Retrieve Run Step
       parameters:
       - in: path
         name: account_id
@@ -2068,7 +1980,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Steps
+      - Runs
       security:
       - tokenAuth: []
       responses:
@@ -2076,7 +1988,7 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/users/:
     get:
-      operationId: Retrieve Users
+      operationId: List Users
       parameters:
       - in: path
         name: account_id
@@ -2085,102 +1997,6 @@ paths:
         required: true
       tags:
       - Users
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/accounts/{account_id}/users/{id}/:
-    get:
-      operationId: Retrieve Users_2
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Users
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/constants/:
-    get:
-      operationId: Retrieve Constants
-      tags:
-      - Constants
-      responses:
-        '200':
-          description: No response body
-  /api/v2/integrations/github/disconnect/:
-    post:
-      operationId: Create Integrations Github Disconnect
-      tags:
-      - Integrations
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/integrations/github/installations/:
-    get:
-      operationId: Retrieve Integrations Github Installations
-      tags:
-      - Integrations
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/integrations/github/installations/{installation_id}/repositories/:
-    get:
-      operationId: Retrieve Integrations Github Installations Repositories
-      parameters:
-      - in: path
-        name: installation_id
-        schema:
-          type: string
-          pattern: ^[0-9]+$
-        required: true
-      tags:
-      - Integrations
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/integrations/github/metadata/:
-    get:
-      operationId: Retrieve Integrations Github Metadata
-      tags:
-      - Integrations
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/integrations/slack/channels/:
-    get:
-      operationId: Retrieve Integrations Slack Channels
-      tags:
-      - Integrations
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/integrations/slack/disconnect/:
-    post:
-      operationId: Create Integrations Slack Disconnect
-      tags:
-      - Integrations
       security:
       - tokenAuth: []
       responses:
@@ -2188,7 +2004,7 @@ paths:
           description: No response body
   /api/v2/notifications/unsubscribe/:
     post:
-      operationId: Create Notifications Unsubscribe
+      operationId: Unsubscribe from Notifications
       tags:
       - Notifications
       security:
@@ -2196,43 +2012,9 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/v2/users/:
-    get:
-      operationId: List Users
-      parameters:
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
-      tags:
-      - Users
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-          description: ''
   /api/v2/users/{id}/:
     get:
-      operationId: Retrieve Users_3
+      operationId: Retrieve User
       parameters:
       - in: query
         name: account_id
@@ -2268,7 +2050,7 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
     post:
-      operationId: Update Users
+      operationId: Update User
       parameters:
       - in: path
         name: id
@@ -2298,47 +2080,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
-  /api/v2/users/{user_id}/apikey/:
-    get:
-      operationId: Retrieve Users Apikey
-      parameters:
-      - in: path
-        name: user_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Users
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: Create Users Apikey
-      parameters:
-      - in: path
-        name: user_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Users
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/v2/whoami/:
-    get:
-      operationId: Retrieve Whoami
-      tags:
-      - Whoami
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
 components:
   schemas:
     BaseConnection:
@@ -5171,7 +4912,7 @@ components:
               default: New Environment
             dbt_version:
               type: string
-              default: 1.4.0-latest
+              default: 1.5.0-latest
             raw_dbt_version:
               oneOf:
               - type: string
@@ -5366,7 +5107,7 @@ components:
               default: 1
             dbt_version:
               type: string
-              default: 1.4.0-latest
+              default: 1.5.0-latest
             git_branch:
               oneOf:
               - type: string
@@ -8930,7 +8671,7 @@ components:
               default: New Environment
             dbt_version:
               type: string
-              default: 1.4.0-latest
+              default: 1.5.0-latest
             raw_dbt_version:
               oneOf:
               - type: string
@@ -9125,7 +8866,7 @@ components:
               default: 1
             dbt_version:
               type: string
-              default: 1.4.0-latest
+              default: 1.5.0-latest
             git_branch:
               oneOf:
               - type: string
@@ -10726,7 +10467,7 @@ components:
           default: 1
         dbt_version:
           type: string
-          default: 1.4.0-latest
+          default: 1.5.0-latest
         git_branch:
           oneOf:
           - type: string
