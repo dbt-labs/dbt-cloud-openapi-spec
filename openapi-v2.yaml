@@ -21,52 +21,6 @@ info:
   contact:
     email: support@getdbt.com
 paths:
-  /api/v2/accounts/{account_id}/billing/alerts/:
-    get:
-      operationId: Retrieve Billing Alert
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Billing
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: Create Billing Alert
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Billing
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    delete:
-      operationId: Destroy Billing Alert
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Billing
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
   /api/v2/accounts/{account_id}/connections/:
     get:
       operationId: List Connections
