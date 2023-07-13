@@ -2,63 +2,63 @@ openapi: 3.0.3
 info:
   title: dbt Cloud API v3
   version: 3.0.0
-    description: |
-      The dbt Cloud API makes it possible to fetch data from your
-      dbt Cloud account and programmatically run and monitor dbt jobs.
+  description: |
+    The dbt Cloud API makes it possible to fetch data from your
+    dbt Cloud account and programmatically run and monitor dbt jobs.
 
-      # How to use this API
+    # How to use this API
 
-      The dbt Cloud API is intended for enqueuing runs from a job, polling for run progress,
-      and downloading artifacts after jobs have completed running. Operational endpoints around
-      creating, modifying, and deleting _objects_ in dbt Cloud are still in flux. These endpoints
-      are largely undocumented in API v2.
+    The dbt Cloud API is intended for enqueuing runs from a job, polling for run progress,
+    and downloading artifacts after jobs have completed running. Operational endpoints around
+    creating, modifying, and deleting _objects_ in dbt Cloud are still in flux. These endpoints
+    are largely undocumented in API v2.
 
-      The API docs are generated from an openapi spec defined in the
-      [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)
-      repository. If you find issues in these docs or have questions about using the dbt Cloud
-      API, please open an issue in the dbt-cloud-openapi-spec repo or contact support@getdbt.com.
+    The API docs are generated from an openapi spec defined in the
+    [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)
+    repository. If you find issues in these docs or have questions about using the dbt Cloud
+    API, please open an issue in the dbt-cloud-openapi-spec repo or contact support@getdbt.com.
 
-      # Authentication
+    # Authentication
 
-      To authenticate an application with the dbt Cloud API, navigate to the
-      API Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).
-      If you cannot access this page, confirm that your dbt Cloud account has access to the API,
-      and that you are using the hosted version of dbt Cloud. If dbt Cloud is running inside of a VPC
-      in an Enterprise account, contact your account manager for help finding your API key.
+    To authenticate an application with the dbt Cloud API, navigate to the
+    API Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).
+    If you cannot access this page, confirm that your dbt Cloud account has access to the API,
+    and that you are using the hosted version of dbt Cloud. If dbt Cloud is running inside of a VPC
+    in an Enterprise account, contact your account manager for help finding your API key.
 
-      ## TokenAuth
+    ## TokenAuth
 
-      Once you've found your API key, use it in the Authorization header of requests to the dbt Cloud API.
-      Be sure to include the `Token` prefix in the Authorization header, or the request will fail with a
-      "401 Unauthorized" error. Note: `Bearer` can be used in place of `Token` in the Authorization header.
-      Both syntaxes are equivalent.
+    Once you've found your API key, use it in the Authorization header of requests to the dbt Cloud API.
+    Be sure to include the `Token` prefix in the Authorization header, or the request will fail with a
+    "401 Unauthorized" error. Note: `Bearer` can be used in place of `Token` in the Authorization header.
+    Both syntaxes are equivalent.
 
-      **Headers**
-      ```
-      Accept: application/json
-      Authorization: Token <your token>
-      ```
+    **Headers**
+    ```
+    Accept: application/json
+    Authorization: Token <your token>
+    ```
 
-      ## Example request
+    ## Example request
 
-      The following example will list the Accounts that your token is authorized to access.
-      Be sure to replace `<your token>` in the Authorization header with your actual API token.
+    The following example will list the Accounts that your token is authorized to access.
+    Be sure to replace `<your token>` in the Authorization header with your actual API token.
 
-      ```
-      curl --request GET \
-        --url https://cloud.getdbt.com/api/v2/accounts/ \
-        --header 'Content-Type: application/json' \
-        --header 'Authorization: Token <your token>'
-      ```
+    ```
+    curl --request GET \
+      --url https://cloud.getdbt.com/api/v2/accounts/ \
+      --header 'Content-Type: application/json' \
+      --header 'Authorization: Token <your token>'
+    ```
 
-      # Pagination
+    # Pagination
 
-      All top-level API resources have support for bulk fetches via "list" API methods. These list
-      API methods accept `limit` and `offset` query parameters which can be used together to paginate results.
+    All top-level API resources have support for bulk fetches via "list" API methods. These list
+    API methods accept `limit` and `offset` query parameters which can be used together to paginate results.
 
-      Offsets begin at 0.
+    Offsets begin at 0.
 
-      The maximum limit for a single request is 100.
+    The maximum limit for a single request is 100.
   termsOfService: https://www.getdbt.com/terms-of-service
   contact:
     email: support@getdbt.com
@@ -843,244 +843,6 @@ paths:
           type: integer
       tags:
       - Projects
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/adapter-profiles/:
-    post:
-      operationId: Create Projects Adapter Profile
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Projects Adapter Profiles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AdapterProfileRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AdapterProfileRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AdapterProfileRequest'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AdapterProfile'
-          description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/adapter-profiles/{id}/:
-    get:
-      operationId: Retrieve Projects Adapter Profile
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      tags:
-      - Projects Adapter Profiles
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdapterProfile'
-          description: ''
-    post:
-      operationId: Update Projects Adapter Profile
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Projects Adapter Profiles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AdapterProfileRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AdapterProfileRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AdapterProfileRequest'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdapterProfile'
-          description: ''
-    patch:
-      operationId: Partial Update Projects Adapter Profile
-      description: Overriding the default patch behavior is necessary since we have
-        to handle JSON blob merge as opposed to normal model merge
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      tags:
-      - Projects Adapter Profiles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedAdapterProfileRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedAdapterProfileRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedAdapterProfileRequest'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdapterProfile'
-          description: ''
-    delete:
-      operationId: Destroy Projects Adapter Profile
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      tags:
-      - Projects Adapter Profiles
       security:
       - tokenAuth: []
       responses:
@@ -3655,94 +3417,6 @@ components:
           - type: 'null'
           - type: integer
       additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
-    AdapterProfile:
-      type: object
-      required:
-      - account_id
-      - project_id
-      - adapter_type
-      - dbt_version
-      - auth_method
-      properties:
-        id:
-          oneOf:
-          - type: integer
-          - type: 'null'
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        adapter_type:
-          type: string
-        dbt_version:
-          type: string
-        auth_method:
-          type: string
-        profile_json:
-          oneOf:
-          - type: object
-          - type: 'null'
-        created_at:
-          oneOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          readOnly: true
-        updated_at:
-          oneOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          readOnly: true
-        state:
-          type: integer
-          default: 1
-      additionalProperties: false
-      description: 'AdapterProfile(id: Union[int, NoneType], account_id: int, project_id:
-        int, adapter_type: str, dbt_version: str, auth_method: str, profile_json:
-        Union[Dict[str, Any], NoneType] = None, created_at: Union[datetime.datetime,
-        NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None, state:
-        int = 1)'
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
-    AdapterProfileRequest:
-      type: object
-      required:
-      - account_id
-      - project_id
-      - adapter_type
-      - dbt_version
-      - auth_method
-      properties:
-        id:
-          oneOf:
-          - type: integer
-          - type: 'null'
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        adapter_type:
-          type: string
-        dbt_version:
-          type: string
-        auth_method:
-          type: string
-        profile_json:
-          oneOf:
-          - type: object
-          - type: 'null'
-        state:
-          type: integer
-          default: 1
-      additionalProperties: false
-      description: 'AdapterProfile(id: Union[int, NoneType], account_id: int, project_id:
-        int, adapter_type: str, dbt_version: str, auth_method: str, profile_json:
-        Union[Dict[str, Any], NoneType] = None, created_at: Union[datetime.datetime,
-        NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None, state:
-        int = 1)'
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
     AdapterVersionEnum:
@@ -34904,44 +34578,6 @@ components:
       - developer
       - read_only
       - it
-    PatchedAdapterProfileRequest:
-      type: object
-      required:
-      - account_id
-      - project_id
-      - adapter_type
-      - dbt_version
-      - auth_method
-      properties:
-        id:
-          oneOf:
-          - type: integer
-          - type: 'null'
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        adapter_type:
-          type: string
-        dbt_version:
-          type: string
-        auth_method:
-          type: string
-        profile_json:
-          oneOf:
-          - type: object
-          - type: 'null'
-        state:
-          type: integer
-          default: 1
-      additionalProperties: false
-      description: 'AdapterProfile(id: Union[int, NoneType], account_id: int, project_id:
-        int, adapter_type: str, dbt_version: str, auth_method: str, profile_json:
-        Union[Dict[str, Any], NoneType] = None, created_at: Union[datetime.datetime,
-        NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None, state:
-        int = 1)'
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
     Project:
       type: object
       required:
