@@ -2,63 +2,35 @@ openapi: 3.0.3
 info:
   title: dbt Cloud API v2
   version: 2.0.0
-  description: |
-    The dbt Cloud API makes it possible to fetch data from your
-    dbt Cloud account and programmatically run and monitor dbt jobs.
-
-    # How to use this API
-
-    The dbt Cloud API is intended for enqueuing runs from a job, polling for run progress,
-    and downloading artifacts after jobs have completed running. Operational endpoints around
-    creating, modifying, and deleting _objects_ in dbt Cloud are still in flux. These endpoints
-    are largely undocumented in API v2.
-
-    The API docs are generated from an openapi spec defined in the
-    [dbt-cloud-openapi-spec](https://github.com/fishtown-analytics/dbt-cloud-openapi-spec)
-    repository. If you find issues in these docs or have questions about using the dbt Cloud
-    API, please open an issue in the dbt-cloud-openapi-spec repo or contact support@getdbt.com.
-
-    # Authentication
-
-    To authenticate an application with the dbt Cloud API, navigate to the
-    API Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).
-    If you cannot access this page, confirm that your dbt Cloud account has access to the API,
-    and that you are using the hosted version of dbt Cloud. If dbt Cloud is running inside of a VPC
-    in an Enterprise account, contact your account manager for help finding your API key.
-
-    ## TokenAuth
-
-    Once you've found your API key, use it in the Authorization header of requests to the dbt Cloud API.
-    Be sure to include the `Token` prefix in the Authorization header, or the request will fail with a
-    "401 Unauthorized" error. Note: `Bearer` can be used in place of `Token` in the Authorization header.
-    Both syntaxes are equivalent.
-
-    **Headers**
-    ```
-    Accept: application/json
-    Authorization: Token <your token>
-    ```
-
-    ## Example request
-
-    The following example will list the Accounts that your token is authorized to access.
-    Be sure to replace `<your token>` in the Authorization header with your actual API token.
-
-    ```
-    curl --request GET \
-      --url https://cloud.getdbt.com/api/v2/accounts/ \
-      --header 'Content-Type: application/json' \
-      --header 'Authorization: Token <your token>'
-    ```
-
-    # Pagination
-
-    All top-level API resources have support for bulk fetches via "list" API methods. These list
-    API methods accept `limit` and `offset` query parameters which can be used together to paginate results.
-
-    Offsets begin at 0.
-
-    The maximum limit for a single request is 100.
+  description: "# How to use this API\n\nThe dbt Cloud API is intended for enqueuing\
+    \ runs from a job, polling for run progress,\nand downloading artifacts after\
+    \ jobs have completed running. Operational endpoints around\ncreating, modifying,\
+    \ and deleting _objects_ in dbt Cloud are still in flux. These endpoints\nare\
+    \ largely undocumented in API v2.\n\nThe API docs are generated from an openapi\
+    \ spec defined in the\n[dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec)\n\
+    repository. If you find issues in these docs or have questions about using the\
+    \ dbt Cloud\nAPI, please open an issue in the dbt-cloud-openapi-spec repo or contact\
+    \ support@getdbt.com.\n\n# Authentication\n\nTo authenticate an application with\
+    \ the dbt Cloud API, navigate to the\nAPI Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).\n\
+    If you cannot access this page, confirm that your dbt Cloud account has access\
+    \ to the API,\nand that you are using the hosted version of dbt Cloud. If dbt\
+    \ Cloud is running inside of a VPC\nin an Enterprise account, contact your account\
+    \ manager for help finding your API key.\n\n## Token Auth\n\nOnce you've found\
+    \ your API key, use it in the Authorization header of requests to the dbt Cloud\
+    \ API.\nBe sure to include the `Token` prefix in the Authorization header, or\
+    \ the request will fail with a\n\"401 Unauthorized\" error. Note: `Bearer` can\
+    \ be used in place of `Token` in the Authorization header.\nBoth syntaxes are\
+    \ equivalent.\n\n**Headers**\n```\nAccept: application/json\nAuthorization: Token\
+    \ <your token>\n```\n\n## Example request\n\nThe following example will list the\
+    \ Accounts that your token is authorized to access.\nBe sure to replace `<your\
+    \ token>` in the Authorization header with your actual API token.\n\n```bash\n\
+    curl --request GET \\\n  --url https://cloud.getdbt.com/api/v2/accounts/ \\\n\
+    \  --header 'Content-Type: application/json' \\\n  --header 'Authorization: Token\
+    \ <your token>'\n```\n\n&nbsp;  \n\n# Pagination\n\nAll top-level API resources\
+    \ have support for bulk fetches via \"list\" API methods. These list\nAPI methods\
+    \ accept `limit` and `offset` query parameters which can be used together to paginate\
+    \ results.\n\nOffsets begin at 0.\n\nThe maximum limit for a single request is\
+    \ 100.\n"
   termsOfService: https://www.getdbt.com/terms-of-service
   contact:
     email: support@getdbt.com
@@ -92,7 +64,7 @@ paths:
       tags:
       - Connections
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -125,7 +97,7 @@ paths:
               $ref: '#/components/schemas/BaseConnectionRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -169,7 +141,7 @@ paths:
       tags:
       - Connections
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -205,7 +177,7 @@ paths:
               $ref: '#/components/schemas/BaseConnectionRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -246,7 +218,7 @@ paths:
       tags:
       - Connections
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '204':
           description: No response body
@@ -286,7 +258,7 @@ paths:
       tags:
       - Connection Encryptions
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -319,7 +291,7 @@ paths:
               $ref: '#/components/schemas/ConnectionEncryptionRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -370,7 +342,7 @@ paths:
       tags:
       - Connection Encryptions
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -406,7 +378,7 @@ paths:
               $ref: '#/components/schemas/ConnectionEncryptionRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -454,7 +426,7 @@ paths:
       tags:
       - Connection Encryptions
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '204':
           description: No response body
@@ -491,7 +463,7 @@ paths:
       tags:
       - Environments
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -524,7 +496,7 @@ paths:
               $ref: '#/components/schemas/EnvironmentV2Request'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -572,7 +544,7 @@ paths:
       tags:
       - Environments
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -608,7 +580,7 @@ paths:
               $ref: '#/components/schemas/EnvironmentV2Request'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -653,7 +625,7 @@ paths:
       tags:
       - Environments
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '204':
           description: No response body
@@ -669,7 +641,7 @@ paths:
       tags:
       - Invites
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -690,7 +662,7 @@ paths:
       tags:
       - Invites
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -710,7 +682,7 @@ paths:
       tags:
       - Invites
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -783,7 +755,7 @@ paths:
       tags:
       - Jobs
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -816,7 +788,7 @@ paths:
               $ref: '#/components/schemas/InternalJobDefinitionRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -850,7 +822,7 @@ paths:
       tags:
       - Jobs
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -888,7 +860,7 @@ paths:
               $ref: '#/components/schemas/TriggerRunRequestRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -970,7 +942,7 @@ paths:
       tags:
       - Jobs
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1006,7 +978,7 @@ paths:
               $ref: '#/components/schemas/InternalJobDefinitionRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1087,7 +1059,7 @@ paths:
       tags:
       - Jobs
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '204':
           description: No response body
@@ -1103,7 +1075,7 @@ paths:
       tags:
       - Licenses
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -1136,7 +1108,7 @@ paths:
       tags:
       - Notifications
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1169,7 +1141,7 @@ paths:
               $ref: '#/components/schemas/JobNotificationSettingsRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1213,7 +1185,7 @@ paths:
       tags:
       - Notifications
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1249,7 +1221,7 @@ paths:
               $ref: '#/components/schemas/JobNotificationSettingsRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1290,7 +1262,7 @@ paths:
       tags:
       - Notifications
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '204':
           description: No response body
@@ -1311,7 +1283,7 @@ paths:
       tags:
       - Permissions
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -1355,7 +1327,7 @@ paths:
       tags:
       - Projects
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1388,7 +1360,7 @@ paths:
               $ref: '#/components/schemas/ProjectRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1443,7 +1415,7 @@ paths:
       tags:
       - Projects
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1479,7 +1451,7 @@ paths:
               $ref: '#/components/schemas/ProjectRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1531,7 +1503,7 @@ paths:
       tags:
       - Projects
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '204':
           description: No response body
@@ -1568,7 +1540,7 @@ paths:
       tags:
       - Repositories
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1601,7 +1573,7 @@ paths:
               $ref: '#/components/schemas/RepositoryV2Request'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1649,7 +1621,7 @@ paths:
       tags:
       - Repositories
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1694,7 +1666,7 @@ paths:
       tags:
       - Repositories
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '204':
           description: No response body
@@ -1778,7 +1750,7 @@ paths:
       tags:
       - Runs
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1873,7 +1845,7 @@ paths:
       tags:
       - Runs
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -1898,7 +1870,7 @@ paths:
       tags:
       - Runs
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -1940,7 +1912,7 @@ paths:
       tags:
       - Runs
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -1961,7 +1933,7 @@ paths:
       tags:
       - Runs
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -1982,7 +1954,7 @@ paths:
       tags:
       - Runs
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -1998,7 +1970,7 @@ paths:
       tags:
       - Users
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -2008,7 +1980,7 @@ paths:
       tags:
       - Notifications
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           description: No response body
@@ -2041,7 +2013,7 @@ paths:
       tags:
       - Users
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -2072,7 +2044,7 @@ paths:
               $ref: '#/components/schemas/UserRequest'
         required: true
       security:
-      - tokenAuth: []
+      - BearerAuthentication: []
       responses:
         '200':
           content:
@@ -2523,6 +2495,12 @@ components:
           type: boolean
         run_failure_count:
           type: integer
+        job_type:
+          oneOf:
+          - {}
+          - {}
+          - {}
+          - type: 'null'
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -2623,6 +2601,12 @@ components:
           type: boolean
         run_failure_count:
           type: integer
+        job_type:
+          oneOf:
+          - {}
+          - {}
+          - {}
+          - type: 'null'
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -4924,6 +4908,14 @@ components:
                 items:
                   $ref: '#/definitions/CustomEnvironmentVariable'
               - type: 'null'
+            job_type:
+              oneOf:
+              - type: string
+                enum:
+                - ci
+                - scheduled
+                - other
+              - type: 'null'
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -4939,7 +4931,8 @@ components:
             = None, most_recent_run: Union[models.run.Run, NoneType] = None, most_recent_completed_run:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
-            NoneType] = None)'
+            NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
+            = None)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -5355,10 +5348,6 @@ components:
             is_cancelled:
               oneOf:
               - type: boolean
-              - type: 'null'
-            href:
-              oneOf:
-              - type: string
               - type: 'null'
             duration:
               oneOf:
@@ -8792,6 +8781,14 @@ components:
                 items:
                   $ref: '#/definitions/CustomEnvironmentVariable'
               - type: 'null'
+            job_type:
+              oneOf:
+              - type: string
+                enum:
+                - ci
+                - scheduled
+                - other
+              - type: 'null'
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -8807,7 +8804,8 @@ components:
             = None, most_recent_run: Union[models.run.Run, NoneType] = None, most_recent_completed_run:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
-            NoneType] = None)'
+            NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
+            = None)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -9223,10 +9221,6 @@ components:
             is_cancelled:
               oneOf:
               - type: boolean
-              - type: 'null'
-            href:
-              oneOf:
-              - type: string
               - type: 'null'
             duration:
               oneOf:
@@ -10843,11 +10837,6 @@ components:
           - type: boolean
           - type: 'null'
           readOnly: true
-        href:
-          oneOf:
-          - type: string
-          - type: 'null'
-          readOnly: true
         duration:
           oneOf:
           - type: string
@@ -11438,11 +11427,10 @@ components:
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
   securitySchemes:
-    tokenAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Token-based authentication with required prefix "Token"
+    BearerAuthentication:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer
 servers:
 - url: https://cloud.getdbt.com/
   description: Production (US)
