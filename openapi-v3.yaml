@@ -48,7 +48,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'
+                $ref: '#/components/schemas/AccountEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/assign-groups/:
     post:
@@ -65,7 +65,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/audit-logs/:
     get:
       operationId: List Recent Audit Log Events
@@ -82,7 +86,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/audit-logs/download/:
     get:
       operationId: Get Recent Audit Log Events CSV
@@ -99,7 +107,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/audit-logs/export/:
     get:
       operationId: Get Bulk Audit Log Export Status
@@ -115,7 +127,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     post:
       operationId: Submit Bulk Audit Log Export Request
       description: Submit a bulk export request.
@@ -131,7 +147,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/audit-logs/export/{job_id}/download/:
     get:
       operationId: Download Bulk Audit Log Export
@@ -152,7 +172,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/codex-token/:
     get:
       operationId: Retrieve Codex Token
@@ -170,7 +194,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/group-permissions/{group_id}/:
     post:
       operationId: Assign Group Permissions
@@ -191,7 +219,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/groups/:
     get:
       operationId: List Groups
@@ -244,7 +276,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Group'
+                  $ref: '#/components/schemas/GroupEnveloped'
           description: ''
     post:
       operationId: Create Group
@@ -277,7 +309,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Group'
+                  $ref: '#/components/schemas/GroupEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/groups/{id}/:
     get:
@@ -334,7 +366,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Group'
+                $ref: '#/components/schemas/GroupEnveloped'
           description: ''
     post:
       operationId: Update Group
@@ -370,7 +402,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Group'
+                $ref: '#/components/schemas/GroupEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/invites/:
     post:
@@ -387,7 +419,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/license-maps/:
     get:
       operationId: List License Maps
@@ -428,7 +464,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LicenseMap'
+                  $ref: '#/components/schemas/LicenseMapEnveloped'
           description: ''
     post:
       operationId: Create License Map
@@ -461,7 +497,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LicenseMap'
+                  $ref: '#/components/schemas/LicenseMapEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/license-maps/{id}/:
     get:
@@ -506,7 +542,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LicenseMap'
+                $ref: '#/components/schemas/LicenseMapEnveloped'
           description: ''
     post:
       operationId: Update License Map
@@ -542,7 +578,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LicenseMap'
+                $ref: '#/components/schemas/LicenseMapEnveloped'
           description: ''
     delete:
       operationId: Destroy License Map
@@ -599,7 +635,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/projects/:
     get:
       operationId: List Projects
@@ -648,7 +688,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Project'
+                  $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
     post:
       operationId: Create Project
@@ -681,7 +721,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Project'
+                  $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{id}/:
     get:
@@ -734,7 +774,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
+                $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
     post:
       operationId: Update Project
@@ -770,7 +810,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
+                $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
     delete:
       operationId: Destroy Project
@@ -873,7 +913,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DbtAdapter'
+                  $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
     post:
       operationId: Create Projects Adapter
@@ -911,7 +951,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DbtAdapter'
+                  $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/adapters/{id}/:
     get:
@@ -969,7 +1009,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DbtAdapter'
+                $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
     post:
       operationId: Update Projects Adapter
@@ -1010,7 +1050,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DbtAdapter'
+                $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
     delete:
       operationId: Destroy Projects Adapter
@@ -1087,7 +1127,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/connections/:
     get:
       operationId: List Projects Connections
@@ -1141,7 +1185,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BaseConnectionV3'
+                  $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
     post:
       operationId: Create Projects Connection
@@ -1179,7 +1223,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BaseConnectionV3'
+                  $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/connections/{id}/:
     get:
@@ -1237,7 +1281,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseConnectionV3'
+                $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
     post:
       operationId: Update Projects Connection
@@ -1278,7 +1322,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseConnectionV3'
+                $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
     delete:
       operationId: Destroy Projects Connection
@@ -1381,7 +1425,13 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Defaults'
+          description: ''
     post:
       operationId: Create Projects Credential
       parameters:
@@ -1401,7 +1451,13 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/{id}/:
     get:
       operationId: Retrieve Projects Credential
@@ -1455,7 +1511,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     post:
       operationId: Update Projects Credential
       parameters:
@@ -1480,7 +1540,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     patch:
       operationId: Partial Update Projects Credential
       description: |-
@@ -1537,7 +1601,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     delete:
       operationId: Destroy Projects Credential
       parameters:
@@ -1628,7 +1696,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CustomEnvironmentVariable'
+                  $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/{id}/:
     post:
@@ -1670,7 +1738,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariable'
+                $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
     delete:
       operationId: Destroy Projects Environment Variable
@@ -1780,7 +1848,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariable'
+                $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
     put:
       operationId: Update Projects Environment Variables Bulk
@@ -1816,7 +1884,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariable'
+                $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
     delete:
       operationId: Destroy Projects Environment Variables Bulk
@@ -1911,7 +1979,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CustomEnvironmentVariable'
+                  $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/job/:
     get:
@@ -1986,7 +2054,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CustomEnvironmentVariable'
+                  $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/user/:
     get:
@@ -2061,7 +2129,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CustomEnvironmentVariable'
+                  $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environments/:
     get:
@@ -2148,7 +2216,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EnvironmentV3'
+                  $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
     post:
       operationId: Create Projects Environment
@@ -2186,7 +2254,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EnvironmentV3'
+                  $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environments/{id}/:
     get:
@@ -2276,7 +2344,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentV3'
+                $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
     post:
       operationId: Update Projects Environment
@@ -2317,7 +2385,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentV3'
+                $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
     delete:
       operationId: Destroy Projects Environment
@@ -2424,7 +2492,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/repositories/:
     get:
       operationId: List Repositories
@@ -2482,7 +2554,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RepositoryV3'
+                  $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
     post:
       operationId: Create Repository
@@ -2520,7 +2592,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RepositoryV3'
+                  $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/repositories/{id}/:
     get:
@@ -2582,7 +2654,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RepositoryV3'
+                $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
     post:
       operationId: Update Repository
@@ -2623,7 +2695,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RepositoryV3'
+                $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
     delete:
       operationId: Destroy Repository
@@ -2697,7 +2769,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     post:
       operationId: Create Service Token
       description: This route is used for generating a new service account token.
@@ -2713,7 +2789,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/service-tokens/{id}/:
     get:
       operationId: Retrieve Service Token
@@ -2734,7 +2814,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     put:
       operationId: Update Service Token
       parameters:
@@ -2754,7 +2838,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     delete:
       operationId: Destroy Service Token
       parameters:
@@ -2795,7 +2883,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     post:
       operationId: Create Service Tokens Permission
       parameters:
@@ -2815,7 +2907,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/users/:
     get:
       operationId: Retrieve User
@@ -2831,7 +2927,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/webhooks/event/{event_id}:
     get:
       operationId: Retrieve Webhooks Event
@@ -2852,7 +2952,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/webhooks/event/{event_id}/receipts:
     get:
       operationId: Retrieve Webhooks Event Receipt
@@ -2873,7 +2977,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/webhooks/receipt/{receipt_id}:
     get:
       operationId: Retrieve Webhooks Receipt
@@ -2894,7 +3002,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/webhooks/subscription/{subscription_id}:
     get:
       operationId: Retrieve Webhooks Subscription
@@ -2915,7 +3027,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     put:
       operationId: Update Webhooks Subscription
       parameters:
@@ -2935,7 +3051,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     delete:
       operationId: Destroy Webhooks Subscription
       parameters:
@@ -2976,7 +3096,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/webhooks/subscription/{subscription_id}/test:
     get:
       operationId: Retrieve Webhooks Subscription Test
@@ -2997,7 +3121,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/webhooks/subscriptions:
     get:
       operationId: List Webhooks Subscriptions
@@ -3013,7 +3141,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     post:
       operationId: Create Webhooks Subscription
       parameters:
@@ -3028,7 +3160,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/adapter-schema/:
     get:
       operationId: Retrieve Adapter Schema
@@ -3038,7 +3174,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/users/{user_id}/credentials/:
     get:
       operationId: List Users Credentials
@@ -3087,7 +3227,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserCredentials'
+                  $ref: '#/components/schemas/UserCredentialsEnveloped'
           description: ''
     post:
       operationId: Create Users Credential
@@ -3120,7 +3260,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserCredentials'
+                  $ref: '#/components/schemas/UserCredentialsEnveloped'
           description: ''
   /api/v3/users/{user_id}/credentials/{id}/:
     get:
@@ -3173,7 +3313,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserCredentials'
+                $ref: '#/components/schemas/UserCredentialsEnveloped'
           description: ''
     post:
       operationId: Update Users Credential
@@ -3209,7 +3349,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserCredentials'
+                $ref: '#/components/schemas/UserCredentialsEnveloped'
           description: ''
     delete:
       operationId: Destroy Users Credential
@@ -3415,6 +3555,18 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    AccountEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     AdapterVersionEnum:
       type: string
       enum:
@@ -4830,29 +4982,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -4876,15 +5005,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -4956,104 +5078,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -5871,7 +5915,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -6063,7 +6106,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -7299,6 +7344,18 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    BaseConnectionV3Enveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseConnectionV3'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     BaseConnectionV3Request:
       type: object
       required:
@@ -8679,29 +8736,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -8725,15 +8759,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -8805,104 +8832,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -9720,7 +9669,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -9912,7 +9860,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -12564,29 +12514,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -12610,15 +12537,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -12690,104 +12610,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -13605,7 +13447,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -13797,7 +13638,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -15028,6 +14871,18 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    CustomEnvironmentVariableEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomEnvironmentVariable'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     CustomEnvironmentVariableRequest:
       type: object
       required:
@@ -16419,29 +16274,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -16465,15 +16297,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -16545,104 +16370,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -17460,7 +17207,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -17652,7 +17398,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -20263,29 +20011,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -20309,15 +20034,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -20389,104 +20107,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -21304,7 +20944,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -21496,7 +21135,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -22725,6 +22366,18 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    DbtAdapterEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DbtAdapter'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     DbtAdapterRequest:
       type: object
       required:
@@ -24103,29 +23756,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -24149,15 +23779,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -24229,104 +23852,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -25144,7 +24689,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -25336,7 +24880,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -26553,6 +26099,17 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    Defaults:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: {}
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     EnvironmentV3:
       type: object
       required:
@@ -27996,29 +27553,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -28042,15 +27576,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -28122,104 +27649,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -29040,7 +28489,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -29232,7 +28680,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -30468,6 +29918,18 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    EnvironmentV3Enveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentV3'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     EnvironmentV3Request:
       type: object
       required:
@@ -31874,29 +31336,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -31920,15 +31359,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -32000,104 +31432,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -32881,7 +32235,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -33073,7 +32426,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -34434,6 +33789,18 @@ components:
             = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
             = None, updated_at: Union[datetime.datetime, NoneType] = None)'
       $schema: http://json-schema.org/draft-07/schema#
+    GroupEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     GroupRequest:
       type: object
       required:
@@ -34578,6 +33945,18 @@ components:
         = None, updated_at: Union[datetime.datetime, NoneType] = None)'
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    LicenseMapEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseMap'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     LicenseMapRequest:
       type: object
       required:
@@ -36057,29 +35436,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -36103,15 +35459,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -36183,104 +35532,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -37098,7 +36369,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -37290,7 +36560,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -38526,6 +37798,18 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    ProjectEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     ProjectRequest:
       type: object
       required:
@@ -39930,29 +39214,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -39976,15 +39237,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -40056,104 +39310,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -40971,7 +40147,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -41163,7 +40338,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -43865,29 +43042,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -43911,15 +43065,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -43991,104 +43138,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -44905,7 +43974,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -45097,7 +44165,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -46333,6 +45403,18 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    RepositoryV3Enveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RepositoryV3'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     RepositoryV3Request:
       type: object
       required:
@@ -47789,29 +46871,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -47835,15 +46894,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -47915,104 +46967,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -48819,7 +47793,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -49011,7 +47984,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -50247,6 +49222,22 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+        user_message:
+          type: string
+        developer_message:
+          type: string
+      required:
+      - developer_message
+      - is_success
+      - user_message
     UserCredentials:
       type: object
       required:
@@ -51704,29 +50695,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -51750,15 +50718,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -51830,104 +50791,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -52745,7 +51628,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -52937,7 +51819,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -54116,6 +53000,18 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    UserCredentialsEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserCredentials'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     UserCredentialsRequest:
       type: object
       required:
@@ -55559,29 +54455,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -55605,15 +54478,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -55685,104 +54551,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -56600,7 +55388,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -56792,7 +55579,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:

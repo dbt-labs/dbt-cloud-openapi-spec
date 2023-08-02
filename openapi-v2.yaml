@@ -72,7 +72,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BaseConnection'
+                  $ref: '#/components/schemas/BaseConnectionEnveloped'
           description: ''
     post:
       operationId: Create Connection
@@ -105,7 +105,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BaseConnection'
+                  $ref: '#/components/schemas/BaseConnectionEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/connections/{id}/:
     get:
@@ -147,7 +147,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseConnection'
+                $ref: '#/components/schemas/BaseConnectionEnveloped'
           description: ''
     post:
       operationId: Update Connection
@@ -183,7 +183,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseConnection'
+                $ref: '#/components/schemas/BaseConnectionEnveloped'
           description: ''
     delete:
       operationId: Destroy Connection
@@ -266,7 +266,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ConnectionEncryption'
+                  $ref: '#/components/schemas/ConnectionEncryptionEnveloped'
           description: ''
     post:
       operationId: Create Connection Encryption
@@ -299,7 +299,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ConnectionEncryption'
+                  $ref: '#/components/schemas/ConnectionEncryptionEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/encryptions/{id}/:
     get:
@@ -348,7 +348,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConnectionEncryption'
+                $ref: '#/components/schemas/ConnectionEncryptionEnveloped'
           description: ''
     post:
       operationId: Update Connection Encryption
@@ -384,7 +384,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConnectionEncryption'
+                $ref: '#/components/schemas/ConnectionEncryptionEnveloped'
           description: ''
     delete:
       operationId: Destroy Connection Encryption
@@ -471,7 +471,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EnvironmentV2'
+                  $ref: '#/components/schemas/EnvironmentV2Enveloped'
           description: ''
     post:
       operationId: Create Environment
@@ -504,7 +504,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EnvironmentV2'
+                  $ref: '#/components/schemas/EnvironmentV2Enveloped'
           description: ''
   /api/v2/accounts/{account_id}/environments/{id}/:
     get:
@@ -550,7 +550,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentV2'
+                $ref: '#/components/schemas/EnvironmentV2Enveloped'
           description: ''
     post:
       operationId: Update Environment
@@ -586,7 +586,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentV2'
+                $ref: '#/components/schemas/EnvironmentV2Enveloped'
           description: ''
     delete:
       operationId: Destroy Environment
@@ -644,7 +644,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/accounts/{account_id}/invites/{id}/:
     get:
       operationId: Retrieve Invite
@@ -665,7 +669,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
     post:
       operationId: Create Invite
       parameters:
@@ -685,7 +693,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/accounts/{account_id}/jobs/:
     get:
       operationId: List Jobs
@@ -763,7 +775,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InternalJobDefinition'
+                  $ref: '#/components/schemas/InternalJobDefinitionEnveloped'
           description: ''
     post:
       operationId: Create Job
@@ -796,7 +808,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InternalJobDefinition'
+                  $ref: '#/components/schemas/InternalJobDefinitionEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/jobs/{job_id}/artifacts/{remainder}:
     get:
@@ -825,7 +837,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/accounts/{account_id}/jobs/{job_id}/run/:
     post:
       operationId: Trigger Job Run
@@ -866,7 +882,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Run'
+                $ref: '#/components/schemas/RunEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/jobs/{id}/:
     get:
@@ -948,7 +964,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalJobDefinition'
+                $ref: '#/components/schemas/InternalJobDefinitionEnveloped'
           description: ''
     post:
       operationId: Update Job
@@ -984,7 +1000,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalJobDefinition'
+                $ref: '#/components/schemas/InternalJobDefinitionEnveloped'
           description: ''
     delete:
       operationId: Destroy Job
@@ -1078,7 +1094,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/accounts/{account_id}/notifications/:
     get:
       operationId: List Notifications
@@ -1116,7 +1136,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/JobNotificationSettings'
+                  $ref: '#/components/schemas/JobNotificationSettingsEnveloped'
           description: ''
     post:
       operationId: Create Notification
@@ -1149,7 +1169,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/JobNotificationSettings'
+                  $ref: '#/components/schemas/JobNotificationSettingsEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/notifications/{id}/:
     get:
@@ -1191,7 +1211,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JobNotificationSettings'
+                $ref: '#/components/schemas/JobNotificationSettingsEnveloped'
           description: ''
     post:
       operationId: Update Notification
@@ -1227,7 +1247,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JobNotificationSettings'
+                $ref: '#/components/schemas/JobNotificationSettingsEnveloped'
           description: ''
     delete:
       operationId: Destroy Notification
@@ -1286,7 +1306,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/accounts/{account_id}/projects/:
     get:
       operationId: List Projects
@@ -1335,7 +1359,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Project'
+                  $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
     post:
       operationId: Create Project
@@ -1368,7 +1392,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Project'
+                  $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/projects/{id}/:
     get:
@@ -1421,7 +1445,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
+                $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
     post:
       operationId: Update Project
@@ -1457,7 +1481,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
+                $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
     delete:
       operationId: Destroy Project
@@ -1548,7 +1572,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RepositoryV2'
+                  $ref: '#/components/schemas/RepositoryV2Enveloped'
           description: ''
     post:
       operationId: Create Repository
@@ -1581,7 +1605,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RepositoryV2'
+                  $ref: '#/components/schemas/RepositoryV2Enveloped'
           description: ''
   /api/v2/accounts/{account_id}/repositories/{id}/:
     get:
@@ -1627,7 +1651,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RepositoryV2'
+                $ref: '#/components/schemas/RepositoryV2Enveloped'
           description: ''
     delete:
       operationId: Destroy Repository
@@ -1758,7 +1782,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Run'
+                  $ref: '#/components/schemas/RunEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/runs/{id}/:
     get:
@@ -1851,7 +1875,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Run'
+                $ref: '#/components/schemas/RunEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/runs/{run_id}/artifacts/:
     get:
@@ -1873,7 +1897,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/accounts/{account_id}/runs/{run_id}/artifacts/{remainder}:
     get:
       operationId: Retrieve Run Artifact
@@ -1915,7 +1943,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/accounts/{account_id}/runs/{run_id}/cancel/:
     post:
       operationId: Cancel Run
@@ -1936,7 +1968,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/accounts/{account_id}/steps/{id}/:
     get:
       operationId: Retrieve Run Step
@@ -1957,7 +1993,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/accounts/{account_id}/users/:
     get:
       operationId: List Users
@@ -1973,7 +2013,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/notifications/unsubscribe/:
     post:
       operationId: Unsubscribe from Notifications
@@ -1983,7 +2027,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/users/{id}/:
     get:
       operationId: Retrieve User
@@ -2019,7 +2067,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserEnveloped'
           description: ''
     post:
       operationId: Update User
@@ -2050,7 +2098,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserEnveloped'
           description: ''
 components:
   schemas:
@@ -2099,6 +2147,18 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    BaseConnectionEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseConnection'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     BaseConnectionRequest:
       type: object
       required:
@@ -2175,6 +2235,18 @@ components:
         NoneType] = None)'
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    ConnectionEncryptionEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectionEncryption'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     ConnectionEncryptionRequest:
       type: object
       required:
@@ -2214,6 +2286,17 @@ components:
         NoneType] = None)'
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    Defaults:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: {}
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     EnvironmentV2:
       type: object
       required:
@@ -2305,6 +2388,18 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    EnvironmentV2Enveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentV2'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     EnvironmentV2Request:
       type: object
       required:
@@ -2504,6 +2599,18 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    InternalJobDefinitionEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InternalJobDefinition'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     InternalJobDefinitionRequest:
       type: object
       required:
@@ -2664,6 +2771,18 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    JobNotificationSettingsEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobNotificationSettings'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     JobNotificationSettingsRequest:
       type: object
       required:
@@ -4153,29 +4272,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -4199,15 +4295,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -4279,104 +4368,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -5194,7 +5205,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -5386,7 +5396,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -6622,6 +6634,18 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    ProjectEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     ProjectRequest:
       type: object
       required:
@@ -8026,29 +8050,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                connect_retries:
-                  metadata:
-                    label: Connection retries limit
-                    description: The number of times to retry connecting to Databricks.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 1
-                connect_timeout:
-                  metadata:
-                    label: Connection timeout limit
-                    description: The number of seconds to wait before timing out a
-                      connection attempt.
-                    field_type: number
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: 0
             field_order:
               type: array
               items:
@@ -8072,15 +8073,8 @@ components:
             name if Unity Catalog is enabled in your Databricks workspace.  Only available
             in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
-            required=False, pattern=None)), value=''''), connect_retries=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            retries limit'', description=''The number of times to retry connecting
-            to Databricks.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=1), connect_timeout=IntegerField(metadata=IntegerFieldMetadata(label=''Connection
-            timeout limit'', description=''The number of seconds to wait before timing
-            out a connection attempt.'', field_type=''number'', encrypt=False, depends_on=None,
-            overrideable=False, validation=GenericIntegerValidation(required=False)),
-            value=0)), field_order: List[str] = <factory>)'
+            required=False, pattern=None)), value='''')), field_order: List[str] =
+            <factory>)'
         DatabricksConnectionFields:
           type: object
           required: []
@@ -8152,104 +8146,26 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            connect_retries:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection retries limit
-                  description: The number of times to retry connecting to Databricks.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 1
-            connect_timeout:
-              oneOf:
-              - $ref: '#/definitions/IntegerField'
-              - type: 'null'
-              default:
-                metadata:
-                  label: Connection timeout limit
-                  description: The number of seconds to wait before timing out a connection
-                    attempt.
-                  field_type: number
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: 0
           additionalProperties: false
-          description: Configuration fields for Databricks (dbt-databricks) connections.
-        IntegerField:
-          type: object
-          required:
-          - metadata
-          - value
-          properties:
-            metadata:
-              $ref: '#/definitions/IntegerFieldMetadata'
-            value:
-              type: integer
-          additionalProperties: false
-          description: 'IntegerField(metadata: schemas.fields.IntegerField.IntegerFieldMetadata,
-            value: int = None)'
-        IntegerFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: number
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericIntegerValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'IntegerFieldMetadata(label: str, description: str, field_type:
-            str = ''number'', encrypt: bool = False, depends_on: Union[Dict[str, Union[str,
-            List[str]]], NoneType] = None, overrideable: Union[bool, NoneType] = False,
-            validation: schemas.fields.IntegerField.GenericIntegerValidation = GenericIntegerValidation(required=False))'
-        GenericIntegerValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericIntegerValidation(required: Union[bool, NoneType] =
-            False)'
+          description: 'DatabricksConnectionFields(type: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Connection type'', description='''',
+            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=False,
+            pattern=None)), value=''databricks''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Server Hostname'', description=''The
+            hostname of the Databricks cluster or SQL warehouse.'', field_type=''text'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=True, pattern=''databricks_hostname'')), value=''''),
+            http_path: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''HTTP
+            Path'', description=''The HTTP path of the Databricks cluster or SQL warehouse.'',
+            field_type=''text'', encrypt=False, depends_on=None, overrideable=False,
+            validation=GenericTextValidation(min_length=None, max_length=None, required=True,
+            pattern=''databricks_http_path'')), value=''''), catalog: Union[schemas.fields.TextField.TextField,
+            NoneType] = TextField(metadata=TextFieldMetadata(label=''Catalog'', description=''Catalog
+            name if Unity Catalog is enabled in your Databricks workspace.  Only available
+            in dbt version 1.1 and later.'', field_type=''text'', encrypt=False, depends_on=None,
+            overrideable=True, validation=GenericTextValidation(min_length=None, max_length=None,
+            required=False, pattern=None)), value=''''))'
         TrinoConnectionSchema:
           type: object
           required: []
@@ -9067,7 +8983,6 @@ components:
           - environment_id
           - project_id
           - job_definition_id
-          - is_running
           properties:
             id:
               oneOf:
@@ -9259,7 +9174,9 @@ components:
               - type: integer
               - type: 'null'
             is_running:
-              type: boolean
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    Represents a run of a job definition.\n    "
         RunTrigger:
@@ -10580,6 +10497,18 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    RepositoryV2Enveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RepositoryV2'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     RepositoryV2Request:
       type: object
       required:
@@ -10664,7 +10593,6 @@ components:
       - environment_id
       - project_id
       - job_definition_id
-      - is_running
       properties:
         id:
           oneOf:
@@ -10883,7 +10811,9 @@ components:
           - type: 'null'
           readOnly: true
         is_running:
-          type: boolean
+          oneOf:
+          - type: boolean
+          - type: 'null'
       additionalProperties: false
       description: "\n    Represents a run of a job definition.\n    "
       definitions:
@@ -11084,6 +11014,34 @@ components:
             Union[str, NoneType] = None, duration: Union[str, NoneType] = None, duration_humanized:
             Union[str, NoneType] = None)'
       $schema: http://json-schema.org/draft-07/schema#
+    RunEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Run'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+        user_message:
+          type: string
+        developer_message:
+          type: string
+      required:
+      - developer_message
+      - is_success
+      - user_message
     TriggerRunRequestRequest:
       type: object
       required:
@@ -11284,6 +11242,18 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    UserEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     UserRequest:
       type: object
       required:
