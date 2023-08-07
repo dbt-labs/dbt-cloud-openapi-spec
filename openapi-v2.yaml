@@ -1728,6 +1728,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: finished_at__range
+        schema:
+          type: array
+      - in: query
         name: has_docs_generated
         schema:
           type: boolean
@@ -1817,6 +1821,10 @@ paths:
         name: environment_id
         schema:
           type: integer
+      - in: query
+        name: finished_at__range
+        schema:
+          type: array
       - in: query
         name: has_docs_generated
         schema:
@@ -2541,7 +2549,9 @@ components:
           oneOf:
           - type: string
           - type: 'null'
-        triggers: {}
+        triggers:
+          description: 'only one of the following fields can be true: triggers.github_webhook,
+            triggers.schedule, & triggers.git_provider_webhook'
         created_at:
           type: string
           format: date-time
@@ -2556,7 +2566,8 @@ components:
           - minLength: 1
             maxLength: 100
           - {}
-        schedule: {}
+        schedule:
+          description: schedule is only required if triggers.schedule is true
         settings: {}
         execution: {}
         state:
@@ -2667,14 +2678,17 @@ components:
           oneOf:
           - type: string
           - type: 'null'
-        triggers: {}
+        triggers:
+          description: 'only one of the following fields can be true: triggers.github_webhook,
+            triggers.schedule, & triggers.git_provider_webhook'
         execute_steps:
           allOf:
           - {}
           - minLength: 1
             maxLength: 100
           - {}
-        schedule: {}
+        schedule:
+          description: schedule is only required if triggers.schedule is true
         settings: {}
         execution: {}
         state:
@@ -5033,7 +5047,7 @@ components:
               default: New Environment
             dbt_version:
               type: string
-              default: 1.5.0-latest
+              default: 1.6.0-latest
             raw_dbt_version:
               oneOf:
               - type: string
@@ -5227,7 +5241,7 @@ components:
               default: 1
             dbt_version:
               type: string
-              default: 1.5.0-latest
+              default: 1.6.0-latest
             git_branch:
               oneOf:
               - type: string
@@ -6518,7 +6532,6 @@ components:
           required:
           - account_id
           - project_id
-          - created_by_id
           - adapter_version
           - metadata_json
           properties:
@@ -6531,7 +6544,13 @@ components:
             project_id:
               type: integer
             created_by_id:
-              type: integer
+              oneOf:
+              - type: integer
+              - type: 'null'
+            created_by_service_token_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             adapter_version:
               type: string
               enum:
@@ -6562,7 +6581,8 @@ components:
               - type: 'null'
           additionalProperties: false
           description: 'DbtAdapter(id: Union[int, NoneType], account_id: int, project_id:
-            int, created_by_id: int, adapter_version: schemas.adapter.DbtAdapterVersion,
+            int, created_by_id: Union[int, NoneType], created_by_service_token_id:
+            Union[int, NoneType], adapter_version: schemas.adapter.DbtAdapterVersion,
             metadata_json: Dict[str, str], state: int = 1, created_at: Union[datetime.datetime,
             NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None)'
         CustomEnvironmentVariable:
@@ -8811,7 +8831,7 @@ components:
               default: New Environment
             dbt_version:
               type: string
-              default: 1.5.0-latest
+              default: 1.6.0-latest
             raw_dbt_version:
               oneOf:
               - type: string
@@ -9005,7 +9025,7 @@ components:
               default: 1
             dbt_version:
               type: string
-              default: 1.5.0-latest
+              default: 1.6.0-latest
             git_branch:
               oneOf:
               - type: string
@@ -10296,7 +10316,6 @@ components:
           required:
           - account_id
           - project_id
-          - created_by_id
           - adapter_version
           - metadata_json
           properties:
@@ -10309,7 +10328,13 @@ components:
             project_id:
               type: integer
             created_by_id:
-              type: integer
+              oneOf:
+              - type: integer
+              - type: 'null'
+            created_by_service_token_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             adapter_version:
               type: string
               enum:
@@ -10340,7 +10365,8 @@ components:
               - type: 'null'
           additionalProperties: false
           description: 'DbtAdapter(id: Union[int, NoneType], account_id: int, project_id:
-            int, created_by_id: int, adapter_version: schemas.adapter.DbtAdapterVersion,
+            int, created_by_id: Union[int, NoneType], created_by_service_token_id:
+            Union[int, NoneType], adapter_version: schemas.adapter.DbtAdapterVersion,
             metadata_json: Dict[str, str], state: int = 1, created_at: Union[datetime.datetime,
             NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None)'
         CustomEnvironmentVariable:
@@ -10615,7 +10641,7 @@ components:
           default: 1
         dbt_version:
           type: string
-          default: 1.5.0-latest
+          default: 1.6.0-latest
         git_branch:
           oneOf:
           - type: string
