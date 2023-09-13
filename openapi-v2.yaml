@@ -2,12 +2,11 @@ openapi: 3.0.3
 info:
   title: dbt Cloud API v2
   version: 2.0.0
-  description: "# How to use this API\n\nThe dbt Cloud API is intended for enqueuing\
-    \ runs from a job, polling for run progress,\nand downloading artifacts after\
-    \ jobs have completed running. Operational endpoints around\ncreating, modifying,\
-    \ and deleting _objects_ in dbt Cloud are still in flux. These endpoints\nare\
-    \ largely undocumented in API v2.\n\nThe API docs are generated from an openapi\
-    \ spec defined in the\n[dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec)\n\
+  description: "# How to use this API\n\nThe dbt Cloud API v2 contains endpoints for\
+    \ enqueuing runs from a job, polling for run progress,\nand downloading artifacts\
+    \ after jobs have completed running. For operational endpoints to\ncreate, modify,\
+    \ and delete _objects_ in dbt Cloud, consider using [API v3](/dbt-cloud/api-v3#/)\n\
+    \nThe API docs are generated from an openapi spec defined in the\n[dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec/blob/master/openapi-v2.yaml)\n\
     repository. If you find issues in these docs or have questions about using the\
     \ dbt Cloud\nAPI, please open an issue in the dbt-cloud-openapi-spec repo or contact\
     \ support@getdbt.com.\n\n# Authentication\n\nTo authenticate an application with\
@@ -505,6 +504,31 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/EnvironmentV2Enveloped'
+          description: ''
+  /api/v2/accounts/{account_id}/environments/{environment_id}/develop/:
+    get:
+      operationId: Retrieve Environments Develop
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: environment_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Environments
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
           description: ''
   /api/v2/accounts/{account_id}/environments/{id}/:
     get:
@@ -1768,6 +1792,10 @@ paths:
         schema:
           type: array
       - in: query
+        name: state
+        schema:
+          type: integer
+      - in: query
         name: status
         schema:
           type: integer
@@ -1866,6 +1894,10 @@ paths:
         name: project_id__in
         schema:
           type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
       - in: query
         name: status
         schema:
@@ -2393,6 +2425,10 @@ components:
           - type: string
             format: date-time
           readOnly: true
+        extended_attributes_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -2490,6 +2526,10 @@ components:
           oneOf:
           - type: 'null'
           - {}
+        extended_attributes_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -2607,6 +2647,8 @@ components:
           - {}
           - {}
           - type: 'null'
+        triggers_on_draft_pr:
+          type: boolean
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -2728,6 +2770,8 @@ components:
           - {}
           - {}
           - type: 'null'
+        triggers_on_draft_pr:
+          type: boolean
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -2853,6 +2897,7 @@ components:
           type: string
         account_id:
           type: integer
+          description: id of account this project belongs to
         connection_id:
           oneOf:
           - type: integer
@@ -4941,6 +4986,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -4957,7 +5007,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -5042,6 +5092,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -5115,6 +5169,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -5130,6 +5188,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -5492,6 +5551,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -5503,7 +5572,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -6562,6 +6632,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -6676,6 +6748,7 @@ components:
           type: string
         account_id:
           type: integer
+          description: id of account this project belongs to
         connection_id:
           oneOf:
           - type: integer
@@ -8725,6 +8798,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -8741,7 +8819,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -8826,6 +8904,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -8899,6 +8981,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -8914,6 +9000,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -9276,6 +9363,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -9287,7 +9384,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -10346,6 +10444,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -10920,6 +11020,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -10931,7 +11041,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -11083,7 +11194,15 @@ components:
           oneOf:
           - type: string
           - type: 'null'
+        azure_pull_request_id:
+          oneOf:
+          - type: integer
+          - type: 'null'
         github_pull_request_id:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        gitlab_merge_request_id:
           oneOf:
           - type: integer
           - type: 'null'

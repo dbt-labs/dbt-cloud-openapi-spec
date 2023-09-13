@@ -2,12 +2,12 @@ openapi: 3.0.3
 info:
   title: dbt Cloud API v3
   version: 3.0.0
-  description: "# How to use this API\n\nThe dbt Cloud API is intended for enqueuing\
-    \ runs from a job, polling for run progress,\nand downloading artifacts after\
-    \ jobs have completed running. Operational endpoints around\ncreating, modifying,\
-    \ and deleting _objects_ in dbt Cloud are still in flux. These endpoints\nare\
-    \ largely undocumented in API v2.\n\nThe API docs are generated from an openapi\
-    \ spec defined in the\n[dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec)\n\
+  description: "# How to use this API\n\nThe dbt Cloud API v3 contains endpoints for\
+    \ programmatic administration of your dbt Cloud account.\nWith it, you can replicate\
+    \ resources across projects, accounts, and environments, or standardize project\n\
+    creation for business teams. For endpoints related to jobs and runs, refer to\
+    \ the\n[Discovery API](/docs/dbt-cloud-apis/discovery-api) or [dbt Cloud API v2](/dbt-cloud/api-v2#/).\n\
+    \nThe API docs are generated from an openapi spec defined in the\n[dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec/blob/master/openapi-v3.yaml)\n\
     repository. If you find issues in these docs or have questions about using the\
     \ dbt Cloud\nAPI, please open an issue in the dbt-cloud-openapi-spec repo or contact\
     \ support@getdbt.com.\n\n# Authentication\n\nTo authenticate an application with\
@@ -1850,13 +1850,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -1865,7 +1865,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
+                $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseEnveloped'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseFailEnveloped'
           description: ''
     put:
       operationId: Update Projects Environment Variables Bulk
@@ -2771,6 +2777,26 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/reports/:
+    get:
+      operationId: Retrieve Report
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Reports
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/service-tokens/:
     get:
       operationId: List Service Tokens
@@ -3595,6 +3621,8 @@ components:
       - bigquery_v0
       - postgres_v0
       - redshift_v0
+      - synapse_v0
+      - fabric_v0
     BaseConnectionV3:
       type: object
       required:
@@ -5654,6 +5682,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -5670,7 +5703,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -5755,6 +5788,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -5828,6 +5865,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -5843,6 +5884,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -6205,6 +6247,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -6216,7 +6268,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -7275,6 +7328,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -9414,6 +9469,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -9430,7 +9490,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -9515,6 +9575,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -9588,6 +9652,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -9603,6 +9671,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -9965,6 +10034,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -9976,7 +10055,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -11035,6 +11115,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -13198,6 +13280,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -13214,7 +13301,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -13299,6 +13386,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -13372,6 +13463,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -13387,6 +13482,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -13749,6 +13845,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -13760,7 +13866,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -14819,6 +14926,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -14906,6 +15015,92 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    CustomEnvironmentVariableBulkRequest:
+      type: object
+      properties:
+        new_name:
+          type: string
+          minLength: 1
+        project:
+          type: string
+          minLength: 1
+        environmentNameExample1:
+          type: string
+          minLength: 1
+          description: This key must match the name of the environment you want to
+            set this environment variable for.
+        environmentNameExample2:
+          type: string
+          minLength: 1
+          description: This key must match the name of the environment you want to
+            set this environment variable for.
+      required:
+      - new_name
+    CustomEnvironmentVariableBulkRequestRequest:
+      type: object
+      properties:
+        env_var:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequest'
+      required:
+      - env_var
+    CustomEnvironmentVariableBulkResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        status_code:
+          type: integer
+        key_name:
+          type: string
+        data:
+          $ref: '#/components/schemas/ResponseData'
+      required:
+      - data
+      - key_name
+      - status
+      - status_code
+    CustomEnvironmentVariableBulkResponseEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    CustomEnvironmentVariableBulkResponseFail:
+      type: object
+      properties:
+        status:
+          type: string
+        status_code:
+          type: integer
+        key_name:
+          type: string
+        reason:
+          type: string
+      required:
+      - key_name
+      - reason
+      - status
+      - status_code
+    CustomEnvironmentVariableBulkResponseFailEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseFail'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     CustomEnvironmentVariableEnveloped:
       type: object
       properties:
@@ -16964,6 +17159,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -16980,7 +17180,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -17065,6 +17265,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -17138,6 +17342,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -17153,6 +17361,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -17515,6 +17724,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -17526,7 +17745,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -18585,6 +18805,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -20713,6 +20935,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -20729,7 +20956,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -20814,6 +21041,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -20887,6 +21118,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -20902,6 +21137,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -21264,6 +21500,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -21275,7 +21521,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -24470,6 +24717,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -24486,7 +24738,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -24571,6 +24823,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -24644,6 +24900,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -24659,6 +24919,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -25021,6 +25282,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -25032,7 +25303,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -26193,6 +26465,10 @@ components:
           oneOf:
           - type: integer
           - type: 'null'
+        extended_attributes_id:
+          oneOf:
+          - type: integer
+          - type: 'null'
         name:
           type: string
           default: New Environment
@@ -26269,6 +26545,11 @@ components:
             enum:
             - production
           - type: 'null'
+        is_deferrable:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+          readOnly: true
       additionalProperties: false
       description: "\n    An environment is a collection of settings within a project\
         \ that defines how dbt is run.\n    Use it to define the version controlled\
@@ -28273,6 +28554,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -28289,7 +28575,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -28374,6 +28660,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -28450,6 +28740,11 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              readOnly: true
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -28465,6 +28760,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -28827,6 +29123,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -28838,7 +29144,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -29897,6 +30204,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -30019,6 +30328,10 @@ components:
           oneOf:
           - type: integer
           - type: 'null'
+        extended_attributes_id:
+          oneOf:
+          - type: integer
+          - type: 'null'
         name:
           type: string
           default: New Environment
@@ -32062,6 +32375,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -32078,7 +32396,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -32163,6 +32481,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -32217,6 +32539,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -32579,6 +32902,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -32590,7 +32923,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -33649,6 +33983,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -34080,6 +34416,7 @@ components:
           type: string
         account_id:
           type: integer
+          description: id of account this project belongs to
         connection_id:
           oneOf:
           - type: integer
@@ -36168,6 +36505,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -36184,7 +36526,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -36269,6 +36611,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -36342,6 +36688,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -36357,6 +36707,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -36719,6 +37070,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -36730,7 +37091,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -37789,6 +38151,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -37903,6 +38267,7 @@ components:
           type: string
         account_id:
           type: integer
+          description: id of account this project belongs to
         connection_id:
           oneOf:
           - type: integer
@@ -39952,6 +40317,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -39968,7 +40338,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -40053,6 +40423,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -40126,6 +40500,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -40141,6 +40519,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -40503,6 +40882,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -40514,7 +40903,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -41573,6 +41963,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -43785,6 +44177,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -43801,7 +44198,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -43886,6 +44283,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -43959,6 +44360,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -43974,6 +44379,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -44336,6 +44742,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -44347,7 +44763,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -45406,6 +45823,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -47610,6 +48029,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -47626,7 +48050,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -47711,6 +48135,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -47784,6 +48212,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -47799,6 +48231,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -48161,6 +48594,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -48172,7 +48615,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -49231,6 +49675,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -49323,6 +49769,17 @@ components:
             \ which can be\n    set on the account, job or user-level and leveraged\
             \ in both the IDE and\n    scheduled Runs.\n    "
       $schema: http://json-schema.org/draft-07/schema#
+    ResponseData:
+      type: object
+      properties:
+        message:
+          type: string
+        new_var_ids:
+          type: array
+          items: {}
+      required:
+      - message
+      - new_var_ids
     Status:
       type: object
       properties:
@@ -51451,6 +51908,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -51467,7 +51929,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -51552,6 +52014,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -51625,6 +52091,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -51640,6 +52110,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -52002,6 +52473,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -52013,7 +52494,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -53015,6 +53497,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
@@ -55217,6 +55701,11 @@ components:
                 - scheduled
                 - other
               - type: 'null'
+            triggers_on_draft_pr:
+              oneOf:
+              - type: boolean
+              - type: 'null'
+              default: false
           additionalProperties: false
           description: 'JobDefinitionV2(environment_id: int, account_id: int, project_id:
             int, name: str, generate_docs: bool, run_generate_sources: bool, state:
@@ -55233,7 +55722,7 @@ components:
             Union[models.run.Run, NoneType] = None, custom_environment_variables:
             Union[List[models.custom_environment_variable.CustomEnvironmentVariable],
             NoneType] = None, job_type: Union[common.constants.JobType, NoneType]
-            = None)'
+            = None, triggers_on_draft_pr: Union[bool, NoneType] = False)'
         JobDefinitionTriggers:
           type: object
           required:
@@ -55318,6 +55807,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            extended_attributes_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             name:
               type: string
               default: New Environment
@@ -55391,6 +55884,10 @@ components:
                 enum:
                 - production
               - type: 'null'
+            is_deferrable:
+              oneOf:
+              - type: boolean
+              - type: 'null'
           additionalProperties: false
           description: "\n    An environment is a collection of settings within a\
             \ project that defines how dbt is run.\n    Use it to define the version\
@@ -55406,6 +55903,7 @@ components:
               type: string
             account_id:
               type: integer
+              description: id of account this project belongs to
             connection_id:
               oneOf:
               - type: integer
@@ -55768,6 +56266,16 @@ components:
               oneOf:
               - type: object
               - type: 'null'
+            cause_category:
+              oneOf:
+              - type: string
+                enum:
+                - api
+                - ci
+                - scheduled
+                - ui
+                - rerun
+              - type: 'null'
           additionalProperties: false
           description: 'RunTrigger(id: Union[int, NoneType], cause: str, job_definition_id:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
@@ -55779,7 +56287,8 @@ components:
             Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
             = None, steps_override: Union[List[str], NoneType] = None, created_at:
             Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None)'
+            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
+            Union[common.constants.RunCauseCategory, NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -56781,6 +57290,8 @@ components:
               - bigquery_v0
               - postgres_v0
               - redshift_v0
+              - synapse_v0
+              - fabric_v0
             metadata_json:
               type: object
               additionalProperties:
