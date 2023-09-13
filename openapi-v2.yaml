@@ -5,7 +5,7 @@ info:
   description: "# How to use this API\n\nThe dbt Cloud API v2 contains endpoints for\
     \ enqueuing runs from a job, polling for run progress,\nand downloading artifacts\
     \ after jobs have completed running. For operational endpoints to\ncreate, modify,\
-    \ and delete _objects_ in dbt Cloud, consider using [API v3](/dbt-cloud/api-v3#/)\n\
+    \ and delete _objects_ in dbt Cloud, consider using [API v3](https://docs.getdbt.com/dbt-cloud/api-v3#/)\n\
     \nThe API docs are generated from an openapi spec defined in the\n[dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec/blob/master/openapi-v2.yaml)\n\
     repository. If you find issues in these docs or have questions about using the\
     \ dbt Cloud\nAPI, please open an issue in the dbt-cloud-openapi-spec repo or contact\

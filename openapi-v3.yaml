@@ -6,7 +6,7 @@ info:
     \ programmatic administration of your dbt Cloud account.\nWith it, you can replicate\
     \ resources across projects, accounts, and environments, or standardize project\n\
     creation for business teams. For endpoints related to jobs and runs, refer to\
-    \ the\n[Discovery API](/docs/dbt-cloud-apis/discovery-api) or [dbt Cloud API v2](/dbt-cloud/api-v2#/).\n\
+    \ the\n[Discovery API](https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api) or [dbt Cloud API v2](https://docs.getdbt.com/dbt-cloud/api-v2#/).\n\
     \nThe API docs are generated from an openapi spec defined in the\n[dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec/blob/master/openapi-v3.yaml)\n\
     repository. If you find issues in these docs or have questions about using the\
     \ dbt Cloud\nAPI, please open an issue in the dbt-cloud-openapi-spec repo or contact\
