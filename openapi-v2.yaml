@@ -9,27 +9,31 @@ info:
     \nThe API docs are generated from an openapi spec defined in the\n[dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec/blob/master/openapi-v2.yaml)\n\
     repository. If you find issues in these docs or have questions about using the\
     \ dbt Cloud\nAPI, please open an issue in the dbt-cloud-openapi-spec repo or contact\
-    \ support@getdbt.com.\n\n# Authentication\n\nTo authenticate an application with\
+    \ support@getdbt.com.\n\n## Authentication\n\nTo authenticate an application with\
     \ the dbt Cloud API, navigate to the\nAPI Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).\n\
     If you cannot access this page, confirm that your dbt Cloud account has access\
     \ to the API,\nand that you are using the hosted version of dbt Cloud. If dbt\
     \ Cloud is running inside of a VPC\nin an Enterprise account, contact your account\
-    \ manager for help finding your API key.\n\n## Token Auth\n\nOnce you've found\
-    \ your API key, use it in the Authorization header of requests to the dbt Cloud\
-    \ API.\nBe sure to include the `Token` prefix in the Authorization header, or\
-    \ the request will fail with a\n\"401 Unauthorized\" error. Note: `Bearer` can\
-    \ be used in place of `Token` in the Authorization header.\nBoth syntaxes are\
-    \ equivalent.\n\n**Headers**\n```\nAccept: application/json\nAuthorization: Token\
-    \ <your token>\n```\n\n## Example request\n\nThe following example will list the\
-    \ Accounts that your token is authorized to access.\nBe sure to replace `<your\
-    \ token>` in the Authorization header with your actual API token.\n\n```bash\n\
-    curl --request GET \\\n  --url https://cloud.getdbt.com/api/v2/accounts/ \\\n\
-    \  --header 'Content-Type: application/json' \\\n  --header 'Authorization: Token\
-    \ <your token>'\n```\n\n&nbsp;  \n\n# Pagination\n\nAll top-level API resources\
-    \ have support for bulk fetches via \"list\" API methods. These list\nAPI methods\
-    \ accept `limit` and `offset` query parameters which can be used together to paginate\
-    \ results.\n\nOffsets begin at 0.\n\nThe maximum limit for a single request is\
-    \ 100.\n"
+    \ manager for help finding your API key.\n\nOnce you've found your API key, use\
+    \ it in the Authorization header of requests to the dbt Cloud API.\nBe sure to\
+    \ include the `Token` prefix in the Authorization header, or the request will\
+    \ fail with a\n\"401 Unauthorized\" error.\n\n*Note: `Bearer` can be used in place\
+    \ of `Token` in the Authorization header. Both syntaxes are equivalent.*\n\n**Headers**\n\
+    ```\nAccept: application/json\nAuthorization: Token <your token>\n```  \n\n##\
+    \ Pagination\n\nAll top-level API resources support bulk fetches using the \"\
+    list\" or `GET` API methods. These API methods accept `limit` and `offset` query\
+    \ parameters that you can use together to paginate results and return a subset\
+    \ of those results.\n\n* Offset: Specifies how many records to skip. Can be an\
+    \ integer 0 and higher.\n* Limit: Specifies the maximum records you want to retrieve\
+    \ in a single request. Can be an integer up to 100. This limit makes responses\
+    \ easier to handle for servers and people.\n\n\n## Example request\n\nThe following\
+    \ example uses the list projects endpoint to list the projects that your token\
+    \ is authorized to access.\nThis request skips the first 10 projects and lists\
+    \ the next 10 projects.\nBe sure to replace `<YOUR_TOKEN>` in the Authorization\
+    \ header with your actual API token and `<YOUR_ACCOUNT_ID>` with your actual account\
+    \ ID.\n\n```bash\ncurl --request GET \\\n  --url 'https://cloud.getdbt.com/api/v3/accounts/<YOUR_ACCOUNT_ID/projects/?limit=10&offset=5'\
+    \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'Authorization:\
+    \ Token <YOUR_TOKEN>'\n```\n"
   termsOfService: https://www.getdbt.com/terms-of-service
   contact:
     email: support@getdbt.com
@@ -127,6 +131,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -208,6 +216,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -286,6 +298,10 @@ paths:
           type: integer
       - in: query
         name: offset
+        schema:
+          type: integer
+      - in: query
+        name: project_id
         schema:
           type: integer
       - in: query
@@ -541,6 +557,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -626,6 +646,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -708,6 +732,10 @@ paths:
           type: integer
       - in: query
         name: offset
+        schema:
+          type: integer
+      - in: query
+        name: project_id
         schema:
           type: integer
       - in: query
@@ -2439,6 +2467,9 @@ components:
           - type: 'null'
           - type: integer
           description: (Deprecated)
+        allow_repo_caching:
+          type: boolean
+          description: Repo caching is not currently available. Coming soon!
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -2605,6 +2636,9 @@ components:
           - type: 'null'
           - type: integer
           description: (Deprecated)
+        allow_repo_caching:
+          type: boolean
+          description: Repo caching is not currently available. Coming soon!
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -2819,7 +2853,6 @@ components:
     EnvironmentV2:
       type: object
       required:
-      - id
       - account_id
       - connection_id
       - created_by_id
@@ -2898,6 +2931,12 @@ components:
           oneOf:
           - type: 'null'
           - {}
+        created_at:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+          readOnly: true
         updated_at:
           oneOf:
           - type: 'null'
@@ -2926,7 +2965,6 @@ components:
     EnvironmentV2Request:
       type: object
       required:
-      - id
       - account_id
       - connection_id
       - created_by_id
@@ -4029,7 +4067,7 @@ components:
                   metadata:
                     label: Kerberos Service Name
                     description: ''
-                    field_type: text
+                    field_type: hidden
                     encrypt: false
                     depends_on: null
                     overrideable: false
@@ -4078,7 +4116,7 @@ components:
             description='''', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=False, pattern=None)), value=''''), kerberos_service_name=TextField(metadata=TextFieldMetadata(label=''Kerberos
-            Service Name'', description='''', field_type=''text'', encrypt=False,
+            Service Name'', description='''', field_type=''hidden'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=False, pattern=None)), value='''')), field_order:
             List[str] = <factory>)'
@@ -4251,7 +4289,7 @@ components:
                 metadata:
                   label: Kerberos Service Name
                   description: ''
-                  field_type: text
+                  field_type: hidden
                   encrypt: false
                   depends_on: null
                   overrideable: false
@@ -4304,7 +4342,7 @@ components:
             validation=GenericTextValidation(min_length=None, max_length=None, required=False,
             pattern=None)), value=''''), kerberos_service_name: schemas.fields.TextField.TextField
             = TextField(metadata=TextFieldMetadata(label=''Kerberos Service Name'',
-            description='''', field_type=''text'', encrypt=False, depends_on=None,
+            description='''', field_type=''hidden'', encrypt=False, depends_on=None,
             overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=False, pattern=None)), value=''''))'
         TextField:
@@ -5309,28 +5347,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                encrypt:
-                  metadata:
-                    label: Encrypt
-                    description: Whether the use of encryption is enabled.
-                    field_type: hidden
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: true
-                trust_cert:
-                  metadata:
-                    label: Trust cert
-                    description: Whether the server certificate should be trusted.
-                    field_type: hidden
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: true
                 host:
                   metadata:
                     label: Host
@@ -5355,7 +5371,7 @@ components:
                     overrideable: false
                     validation:
                       required: true
-                  value: 1443
+                  value: 1433
                 database:
                   metadata:
                     label: Database
@@ -5423,19 +5439,13 @@ components:
             max_length=None, required=False, pattern=None)), value=''synapse''), driver=TextField(metadata=TextFieldMetadata(label=''Driver'',
             description=''The ODBC driver to use.'', field_type=''hidden'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=False, pattern=None)), value=''''), encrypt=BooleanField(metadata=BooleanFieldMetadata(label=''Encrypt'',
-            description=''Whether the use of encryption is enabled.'', field_type=''hidden'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericBooleanValidation(required=False)),
-            value=True), trust_cert=BooleanField(metadata=BooleanFieldMetadata(label=''Trust
-            cert'', description=''Whether the server certificate should be trusted.'',
-            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
-            validation=GenericBooleanValidation(required=False)), value=True), host=TextField(metadata=TextFieldMetadata(label=''Host'',
+            max_length=None, required=False, pattern=None)), value=''''), host=TextField(metadata=TextFieldMetadata(label=''Host'',
             description=''The hostname of the account to connect to.'', field_type=''text'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), port=IntegerField(metadata=IntegerFieldMetadata(label=''Port'',
             description=''The port to connect to for this connection.'', field_type=''number'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
-            value=1443), database=TextField(metadata=TextFieldMetadata(label=''Database'',
+            value=1433), database=TextField(metadata=TextFieldMetadata(label=''Database'',
             description=''The name of the database.'', field_type=''text'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), retries=IntegerField(metadata=IntegerFieldMetadata(label=''Retries'',
@@ -5490,32 +5500,6 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            encrypt:
-              $ref: '#/definitions/BooleanField'
-              default:
-                metadata:
-                  label: Encrypt
-                  description: Whether the use of encryption is enabled.
-                  field_type: hidden
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: true
-            trust_cert:
-              $ref: '#/definitions/BooleanField'
-              default:
-                metadata:
-                  label: Trust cert
-                  description: Whether the server certificate should be trusted.
-                  field_type: hidden
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: true
             host:
               $ref: '#/definitions/TextField'
               default:
@@ -5544,7 +5528,7 @@ components:
                   overrideable: false
                   validation:
                     required: true
-                value: 1443
+                value: 1433
             database:
               $ref: '#/definitions/TextField'
               default:
@@ -5616,22 +5600,15 @@ components:
             = TextField(metadata=TextFieldMetadata(label=''Driver'', description=''The
             ODBC driver to use.'', field_type=''hidden'', encrypt=False, depends_on=None,
             overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=False, pattern=None)), value=''''), encrypt:
-            schemas.fields.BooleanField.BooleanField = BooleanField(metadata=BooleanFieldMetadata(label=''Encrypt'',
-            description=''Whether the use of encryption is enabled.'', field_type=''hidden'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericBooleanValidation(required=False)),
-            value=True), trust_cert: schemas.fields.BooleanField.BooleanField = BooleanField(metadata=BooleanFieldMetadata(label=''Trust
-            cert'', description=''Whether the server certificate should be trusted.'',
-            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
-            validation=GenericBooleanValidation(required=False)), value=True), host:
-            schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Host'',
-            description=''The hostname of the account to connect to.'', field_type=''text'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=False, pattern=None)), value=''''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Host'', description=''The
+            hostname of the account to connect to.'', field_type=''text'', encrypt=False,
+            depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), port: schemas.fields.IntegerField.IntegerField
             = IntegerField(metadata=IntegerFieldMetadata(label=''Port'', description=''The
             port to connect to for this connection.'', field_type=''number'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
-            value=1443), database: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Database'',
+            value=1433), database: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Database'',
             description=''The name of the database.'', field_type=''text'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), retries:
@@ -5651,72 +5628,6 @@ components:
             or uses the default system settings.'', field_type=''number'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
             value=0))'
-        BooleanField:
-          type: object
-          required:
-          - metadata
-          properties:
-            metadata:
-              $ref: '#/definitions/BooleanFieldMetadata'
-            value:
-              type: boolean
-              default: true
-          additionalProperties: false
-          description: 'BooleanField(metadata: schemas.fields.BooleanField.BooleanFieldMetadata,
-            value: bool = True)'
-        BooleanFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: boolean
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericBooleanValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'BooleanFieldMetadata(label: str, description: str, field_type:
-            str = ''boolean'', encrypt: bool = False, depends_on: Union[Dict[str,
-            Union[str, List[str]]], NoneType] = None, overrideable: Union[bool, NoneType]
-            = False, validation: schemas.fields.BooleanField.GenericBooleanValidation
-            = GenericBooleanValidation(required=False))'
-        GenericBooleanValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericBooleanValidation(required: Union[bool, NoneType] =
-            False)'
         IntegerField:
           type: object
           required:
@@ -5835,16 +5746,13 @@ components:
                   metadata:
                     label: Port
                     description: The port to connect to for this connection.
-                    field_type: text
+                    field_type: number
                     encrypt: false
                     depends_on: null
                     overrideable: false
                     validation:
-                      min_length: null
-                      max_length: null
                       required: true
-                      pattern: null
-                  value: '1433'
+                  value: 1433
                 database:
                   metadata:
                     label: Database
@@ -5859,28 +5767,6 @@ components:
                       required: true
                       pattern: null
                   value: ''
-                encrypt:
-                  metadata:
-                    label: Encrypt
-                    description: Whether the use of encryption is enabled.
-                    field_type: hidden
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: true
-                trust_cert:
-                  metadata:
-                    label: Trust cert
-                    description: Whether the server certificate should be trusted.
-                    field_type: hidden
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: true
                 retries:
                   metadata:
                     label: Retries
@@ -5938,19 +5824,13 @@ components:
             for SQL Server''), server=TextField(metadata=TextFieldMetadata(label=''Server'',
             description=''The server to connect to for this connection.'', field_type=''text'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''''), port=TextField(metadata=TextFieldMetadata(label=''Port'',
-            description=''The port to connect to for this connection.'', field_type=''text'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''1433''), database=TextField(metadata=TextFieldMetadata(label=''Database'',
+            max_length=None, required=True, pattern=None)), value=''''), port=IntegerField(metadata=IntegerFieldMetadata(label=''Port'',
+            description=''The port to connect to for this connection.'', field_type=''number'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
+            value=1433), database=TextField(metadata=TextFieldMetadata(label=''Database'',
             description=''The database to connect to for this connection.'', field_type=''text'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''''), encrypt=BooleanField(metadata=BooleanFieldMetadata(label=''Encrypt'',
-            description=''Whether the use of encryption is enabled.'', field_type=''hidden'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericBooleanValidation(required=False)),
-            value=True), trust_cert=BooleanField(metadata=BooleanFieldMetadata(label=''Trust
-            cert'', description=''Whether the server certificate should be trusted.'',
-            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
-            validation=GenericBooleanValidation(required=False)), value=True), retries=IntegerField(metadata=IntegerFieldMetadata(label=''Retries'',
+            max_length=None, required=True, pattern=None)), value=''''), retries=IntegerField(metadata=IntegerFieldMetadata(label=''Retries'',
             description=''The number of automatic times to retry a query before failing.
             Defaults to 1. Queries with syntax errors will not be retried. This setting
             can be used to overcome intermittent network issues.'', field_type=''number'',
@@ -6019,21 +5899,18 @@ components:
                     pattern: null
                 value: ''
             port:
-              $ref: '#/definitions/TextField'
+              $ref: '#/definitions/IntegerField'
               default:
                 metadata:
                   label: Port
                   description: The port to connect to for this connection.
-                  field_type: text
+                  field_type: number
                   encrypt: false
                   depends_on: null
                   overrideable: false
                   validation:
-                    min_length: null
-                    max_length: null
                     required: true
-                    pattern: null
-                value: '1433'
+                value: 1433
             database:
               $ref: '#/definitions/TextField'
               default:
@@ -6050,32 +5927,6 @@ components:
                     required: true
                     pattern: null
                 value: ''
-            encrypt:
-              $ref: '#/definitions/BooleanField'
-              default:
-                metadata:
-                  label: Encrypt
-                  description: Whether the use of encryption is enabled.
-                  field_type: hidden
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: true
-            trust_cert:
-              $ref: '#/definitions/BooleanField'
-              default:
-                metadata:
-                  label: Trust cert
-                  description: Whether the server certificate should be trusted.
-                  field_type: hidden
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: true
             retries:
               $ref: '#/definitions/IntegerField'
               default:
@@ -6135,22 +5986,14 @@ components:
             for SQL Server''), server: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Server'',
             description=''The server to connect to for this connection.'', field_type=''text'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''''), port: schemas.fields.TextField.TextField
-            = TextField(metadata=TextFieldMetadata(label=''Port'', description=''The
-            port to connect to for this connection.'', field_type=''text'', encrypt=False,
-            depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''1433''), database:
-            schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Database'',
+            max_length=None, required=True, pattern=None)), value=''''), port: schemas.fields.IntegerField.IntegerField
+            = IntegerField(metadata=IntegerFieldMetadata(label=''Port'', description=''The
+            port to connect to for this connection.'', field_type=''number'', encrypt=False,
+            depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
+            value=1433), database: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Database'',
             description=''The database to connect to for this connection.'', field_type=''text'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''''), encrypt:
-            schemas.fields.BooleanField.BooleanField = BooleanField(metadata=BooleanFieldMetadata(label=''Encrypt'',
-            description=''Whether the use of encryption is enabled.'', field_type=''hidden'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericBooleanValidation(required=False)),
-            value=True), trust_cert: schemas.fields.BooleanField.BooleanField = BooleanField(metadata=BooleanFieldMetadata(label=''Trust
-            cert'', description=''Whether the server certificate should be trusted.'',
-            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
-            validation=GenericBooleanValidation(required=False)), value=True), retries:
+            max_length=None, required=True, pattern=None)), value=''''), retries:
             schemas.fields.IntegerField.IntegerField = IntegerField(metadata=IntegerFieldMetadata(label=''Retries'',
             description=''The number of automatic times to retry a query before failing.
             Defaults to 1. Queries with syntax errors will not be retried. This setting
@@ -6249,6 +6092,10 @@ components:
               - type: string
                 format: date-time
               - type: 'null'
+            private_link_endpoint_id:
+              oneOf:
+              - type: string
+              - type: 'null'
             deploy_key:
               oneOf:
               - type: object
@@ -6284,10 +6131,10 @@ components:
             Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
             NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
             = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
-            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
-            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
-            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
-            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, private_link_endpoint_id:
+            Union[str, NoneType] = None, deploy_key: Union[Dict[Any, Any], NoneType]
+            = None, github_repo: Union[str, NoneType] = None, name: Union[str, NoneType]
+            = None, git_provider_id: Union[int, NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
             NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
             NoneType] = None)'
         RepositoryGitlab:
@@ -7082,6 +6929,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            non_native_pull_request_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             schema_override:
               oneOf:
               - type: string
@@ -7140,14 +6991,15 @@ components:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
             = None, azure_pull_request_id: Union[int, NoneType] = None, github_pull_request_id:
             Union[int, NoneType] = None, gitlab_merge_request_id: Union[int, NoneType]
-            = None, schema_override: Union[str, NoneType] = None, dbt_version_override:
-            Union[str, NoneType] = None, threads_override: Union[int, NoneType] =
-            None, target_name_override: Union[str, NoneType] = None, generate_docs_override:
-            Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
-            = None, steps_override: Union[List[str], NoneType] = None, created_at:
-            Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
-            Union[common.constants.RunCauseCategory, NoneType] = None)'
+            = None, non_native_pull_request_id: Union[int, NoneType] = None, schema_override:
+            Union[str, NoneType] = None, dbt_version_override: Union[str, NoneType]
+            = None, threads_override: Union[int, NoneType] = None, target_name_override:
+            Union[str, NoneType] = None, generate_docs_override: Union[bool, NoneType]
+            = None, timeout_seconds_override: Union[int, NoneType] = None, steps_override:
+            Union[List[str], NoneType] = None, created_at: Union[datetime.datetime,
+            NoneType] = None, cause_humanized: Union[str, NoneType] = None, job: Union[Dict[str,
+            Any], NoneType] = None, cause_category: Union[common.constants.RunCauseCategory,
+            NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -7242,6 +7094,10 @@ components:
               oneOf:
               - type: string
               - type: 'null'
+            run_step_command:
+              oneOf:
+              - $ref: '#/definitions/RunStepCommand'
+              - type: 'null'
           additionalProperties: false
           description: 'RunStep(id: Union[int, NoneType], run_id: int, account_id:
             int, index: int, status: int, name: str, logs: Union[str, NoneType] =
@@ -7254,7 +7110,36 @@ components:
             Union[datetime.datetime, NoneType] = None, finished_at: Union[datetime.datetime,
             NoneType] = None, status_color: Union[str, NoneType] = None, status_humanized:
             Union[str, NoneType] = None, duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None)'
+            Union[str, NoneType] = None, run_step_command: ''Optional[RunStepCommand]''
+            = None)'
+        RunStepCommand:
+          type: object
+          required:
+          - run_step_id
+          - dbt_command
+          properties:
+            id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            run_step_id:
+              type: integer
+            dbt_command:
+              type: string
+            created_at:
+              oneOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            updated_at:
+              oneOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+          additionalProperties: false
+          description: 'RunStepCommand(id: Union[int, NoneType], run_step_id: int,
+            dbt_command: str, created_at: Union[datetime.datetime, NoneType] = None,
+            updated_at: Union[datetime.datetime, NoneType] = None)'
         PostgresCredentials:
           type: object
           required:
@@ -7435,6 +7320,9 @@ components:
               oneOf:
               - type: string
               - type: 'null'
+            is_configured_for_oauth:
+              type: boolean
+              default: false
             created_at:
               oneOf:
               - type: string
@@ -7457,8 +7345,8 @@ components:
             Union[models.encrypted_field.DataclassEncryptedField, NoneType] = None,
             private_key_passphrase: Union[str, NoneType] = None, _private_key_passphrase:
             Union[models.encrypted_field.DataclassEncryptedField, NoneType] = None,
-            created_at: Union[datetime.datetime, NoneType] = None, updated_at: Union[datetime.datetime,
-            NoneType] = None)'
+            is_configured_for_oauth: bool = False, created_at: Union[datetime.datetime,
+            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None)'
         BigqueryCredentials:
           type: object
           required:
@@ -7505,6 +7393,10 @@ components:
               oneOf:
               - type: string
               - type: 'null'
+            is_configured_for_oauth:
+              oneOf:
+              - type: boolean
+              - type: 'null'
             has_refresh_token:
               oneOf:
               - type: boolean
@@ -7514,9 +7406,9 @@ components:
             int, project_id: Union[int, NoneType], type: models.connection.common.ConnectionType,
             state: int, threads: int, schema: str, target_name: str = ''default'',
             created_at: Union[datetime.datetime, NoneType] = None, updated_at: Union[datetime.datetime,
-            NoneType] = None, username: Union[str, NoneType] = None, _refresh_token:
-            Union[str, NoneType] = None, has_refresh_token: Union[bool, NoneType]
-            = None)'
+            NoneType] = None, username: Union[str, NoneType] = None, is_configured_for_oauth:
+            Union[bool, NoneType] = None, _refresh_token: Union[str, NoneType] = None,
+            has_refresh_token: Union[bool, NoneType] = None)'
         DbtAdapterCredentials:
           type: object
           required:
@@ -7566,6 +7458,9 @@ components:
             target_name:
               type: string
               default: default
+            is_configured_for_oauth:
+              type: boolean
+              default: false
             adapter:
               oneOf:
               - $ref: '#/definitions/DbtAdapter'
@@ -7589,9 +7484,10 @@ components:
             schemas.adapters.fabric.credentials_schema.FabricCredentialsSchema, NoneType]
             = None, _credential_details: Union[models.encrypted_field.DataclassEncryptedField,
             NoneType] = None, unencrypted_credential_details: Union[Dict[str, Union[str,
-            int]], NoneType] = None, target_name: str = ''default'', adapter: ''Optional[models.dbt_adapter.DbtAdapter]''
-            = None, created_at: Union[datetime.datetime, NoneType] = None, updated_at:
-            Union[datetime.datetime, NoneType] = None)'
+            int]], NoneType] = None, target_name: str = ''default'', is_configured_for_oauth:
+            bool = False, adapter: ''Optional[models.dbt_adapter.DbtAdapter]'' = None,
+            created_at: Union[datetime.datetime, NoneType] = None, updated_at: Union[datetime.datetime,
+            NoneType] = None)'
         BaseSparkAdapterCredentialsSchema:
           type: object
           required: []
@@ -8332,7 +8228,7 @@ components:
                       principal. This is only used when connecting to Azure SQL with
                       an AAD service principal.
                     field_type: text
-                    encrypt: false
+                    encrypt: true
                     depends_on:
                       authentication:
                       - ServicePrincipal
@@ -8432,7 +8328,7 @@ components:
             max_length=None, required=True, pattern=None)), value=''''), client_secret=TextField(metadata=TextFieldMetadata(label=''Client
             secret'', description=''The client secret of the Azure Active Directory
             service principal. This is only used when connecting to Azure SQL with
-            an AAD service principal.'', field_type=''text'', encrypt=False, depends_on={''authentication'':
+            an AAD service principal.'', field_type=''text'', encrypt=True, depends_on={''authentication'':
             [''ServicePrincipal'']}, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), schema_authorization=TextField(metadata=TextFieldMetadata(label=''Schema
             authorization'', description=''Optionally set this to the principal who
@@ -8562,7 +8458,7 @@ components:
                     principal. This is only used when connecting to Azure SQL with
                     an AAD service principal.
                   field_type: text
-                  encrypt: false
+                  encrypt: true
                   depends_on:
                     authentication:
                     - ServicePrincipal
@@ -8668,7 +8564,7 @@ components:
             schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Client
             secret'', description=''The client secret of the Azure Active Directory
             service principal. This is only used when connecting to Azure SQL with
-            an AAD service principal.'', field_type=''text'', encrypt=False, depends_on={''authentication'':
+            an AAD service principal.'', field_type=''text'', encrypt=True, depends_on={''authentication'':
             [''ServicePrincipal'']}, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), schema_authorization:
             schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Schema
@@ -8789,7 +8685,7 @@ components:
                       principal. This is only used when connecting to Azure SQL with
                       an AAD service principal.
                     field_type: text
-                    encrypt: false
+                    encrypt: true
                     depends_on:
                       authentication:
                       - ServicePrincipal
@@ -8852,10 +8748,7 @@ components:
                     depends_on: null
                     overrideable: false
                     validation:
-                      min_length: null
-                      max_length: null
                       required: true
-                      pattern: null
                   value: 6
             field_order:
               oneOf:
@@ -8892,7 +8785,7 @@ components:
             max_length=None, required=True, pattern=None)), value=''''), client_secret=TextField(metadata=TextFieldMetadata(label=''Client
             secret'', description=''The client secret of the Azure Active Directory
             service principal. This is only used when connecting to Azure SQL with
-            an AAD service principal.'', field_type=''text'', encrypt=False, depends_on={''authentication'':
+            an AAD service principal.'', field_type=''text'', encrypt=True, depends_on={''authentication'':
             [''ServicePrincipal'']}, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), schema=TextField(metadata=TextFieldMetadata(label=''Schema'',
             description="User''s schema.", field_type=''text'', encrypt=False, depends_on=None,
@@ -8906,9 +8799,8 @@ components:
             overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=False, pattern=None)), value=''default''), threads=IntegerField(metadata=IntegerFieldMetadata(label=''Threads'',
             description=''The number of threads to use for dbt operations.'', field_type=''number'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=6)), field_order:
-            Union[List[str], NoneType] = None)'
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
+            value=6)), field_order: Union[List[str], NoneType] = None)'
         FabricCredentialsFields:
           type: object
           required: []
@@ -9019,7 +8911,7 @@ components:
                     principal. This is only used when connecting to Azure SQL with
                     an AAD service principal.
                   field_type: text
-                  encrypt: false
+                  encrypt: true
                   depends_on:
                     authentication:
                     - ServicePrincipal
@@ -9090,10 +8982,7 @@ components:
                   depends_on: null
                   overrideable: false
                   validation:
-                    min_length: null
-                    max_length: null
                     required: true
-                    pattern: null
                 value: 6
           additionalProperties: false
           description: 'FabricCredentialsFields(authentication: schemas.fields.SelectField.SelectField
@@ -9128,7 +9017,7 @@ components:
             schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Client
             secret'', description=''The client secret of the Azure Active Directory
             service principal. This is only used when connecting to Azure SQL with
-            an AAD service principal.'', field_type=''text'', encrypt=False, depends_on={''authentication'':
+            an AAD service principal.'', field_type=''text'', encrypt=True, depends_on={''authentication'':
             [''ServicePrincipal'']}, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), schema: schemas.fields.TextField.TextField
             = TextField(metadata=TextFieldMetadata(label=''Schema'', description="User''s
@@ -9146,8 +9035,8 @@ components:
             max_length=None, required=False, pattern=None)), value=''default''), threads:
             schemas.fields.IntegerField.IntegerField = IntegerField(metadata=IntegerFieldMetadata(label=''Threads'',
             description=''The number of threads to use for dbt operations.'', field_type=''number'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=6))'
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
+            value=6))'
         DbtAdapter:
           type: object
           required:
@@ -9837,7 +9726,7 @@ components:
                   metadata:
                     label: Kerberos Service Name
                     description: ''
-                    field_type: text
+                    field_type: hidden
                     encrypt: false
                     depends_on: null
                     overrideable: false
@@ -9886,7 +9775,7 @@ components:
             description='''', field_type=''text'', encrypt=False, depends_on=None,
             overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=False, pattern=None)), value=''''), kerberos_service_name=TextField(metadata=TextFieldMetadata(label=''Kerberos
-            Service Name'', description='''', field_type=''text'', encrypt=False,
+            Service Name'', description='''', field_type=''hidden'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=False, pattern=None)), value='''')), field_order:
             List[str] = <factory>)'
@@ -10059,7 +9948,7 @@ components:
                 metadata:
                   label: Kerberos Service Name
                   description: ''
-                  field_type: text
+                  field_type: hidden
                   encrypt: false
                   depends_on: null
                   overrideable: false
@@ -10112,7 +10001,7 @@ components:
             validation=GenericTextValidation(min_length=None, max_length=None, required=False,
             pattern=None)), value=''''), kerberos_service_name: schemas.fields.TextField.TextField
             = TextField(metadata=TextFieldMetadata(label=''Kerberos Service Name'',
-            description='''', field_type=''text'', encrypt=False, depends_on=None,
+            description='''', field_type=''hidden'', encrypt=False, depends_on=None,
             overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=False, pattern=None)), value=''''))'
         TextField:
@@ -11117,28 +11006,6 @@ components:
                       required: false
                       pattern: null
                   value: ''
-                encrypt:
-                  metadata:
-                    label: Encrypt
-                    description: Whether the use of encryption is enabled.
-                    field_type: hidden
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: true
-                trust_cert:
-                  metadata:
-                    label: Trust cert
-                    description: Whether the server certificate should be trusted.
-                    field_type: hidden
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: true
                 host:
                   metadata:
                     label: Host
@@ -11163,7 +11030,7 @@ components:
                     overrideable: false
                     validation:
                       required: true
-                  value: 1443
+                  value: 1433
                 database:
                   metadata:
                     label: Database
@@ -11231,19 +11098,13 @@ components:
             max_length=None, required=False, pattern=None)), value=''synapse''), driver=TextField(metadata=TextFieldMetadata(label=''Driver'',
             description=''The ODBC driver to use.'', field_type=''hidden'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=False, pattern=None)), value=''''), encrypt=BooleanField(metadata=BooleanFieldMetadata(label=''Encrypt'',
-            description=''Whether the use of encryption is enabled.'', field_type=''hidden'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericBooleanValidation(required=False)),
-            value=True), trust_cert=BooleanField(metadata=BooleanFieldMetadata(label=''Trust
-            cert'', description=''Whether the server certificate should be trusted.'',
-            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
-            validation=GenericBooleanValidation(required=False)), value=True), host=TextField(metadata=TextFieldMetadata(label=''Host'',
+            max_length=None, required=False, pattern=None)), value=''''), host=TextField(metadata=TextFieldMetadata(label=''Host'',
             description=''The hostname of the account to connect to.'', field_type=''text'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), port=IntegerField(metadata=IntegerFieldMetadata(label=''Port'',
             description=''The port to connect to for this connection.'', field_type=''number'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
-            value=1443), database=TextField(metadata=TextFieldMetadata(label=''Database'',
+            value=1433), database=TextField(metadata=TextFieldMetadata(label=''Database'',
             description=''The name of the database.'', field_type=''text'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), retries=IntegerField(metadata=IntegerFieldMetadata(label=''Retries'',
@@ -11298,32 +11159,6 @@ components:
                     required: false
                     pattern: null
                 value: ''
-            encrypt:
-              $ref: '#/definitions/BooleanField'
-              default:
-                metadata:
-                  label: Encrypt
-                  description: Whether the use of encryption is enabled.
-                  field_type: hidden
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: true
-            trust_cert:
-              $ref: '#/definitions/BooleanField'
-              default:
-                metadata:
-                  label: Trust cert
-                  description: Whether the server certificate should be trusted.
-                  field_type: hidden
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: true
             host:
               $ref: '#/definitions/TextField'
               default:
@@ -11352,7 +11187,7 @@ components:
                   overrideable: false
                   validation:
                     required: true
-                value: 1443
+                value: 1433
             database:
               $ref: '#/definitions/TextField'
               default:
@@ -11424,22 +11259,15 @@ components:
             = TextField(metadata=TextFieldMetadata(label=''Driver'', description=''The
             ODBC driver to use.'', field_type=''hidden'', encrypt=False, depends_on=None,
             overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=False, pattern=None)), value=''''), encrypt:
-            schemas.fields.BooleanField.BooleanField = BooleanField(metadata=BooleanFieldMetadata(label=''Encrypt'',
-            description=''Whether the use of encryption is enabled.'', field_type=''hidden'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericBooleanValidation(required=False)),
-            value=True), trust_cert: schemas.fields.BooleanField.BooleanField = BooleanField(metadata=BooleanFieldMetadata(label=''Trust
-            cert'', description=''Whether the server certificate should be trusted.'',
-            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
-            validation=GenericBooleanValidation(required=False)), value=True), host:
-            schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Host'',
-            description=''The hostname of the account to connect to.'', field_type=''text'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
+            max_length=None, required=False, pattern=None)), value=''''), host: schemas.fields.TextField.TextField
+            = TextField(metadata=TextFieldMetadata(label=''Host'', description=''The
+            hostname of the account to connect to.'', field_type=''text'', encrypt=False,
+            depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), port: schemas.fields.IntegerField.IntegerField
             = IntegerField(metadata=IntegerFieldMetadata(label=''Port'', description=''The
             port to connect to for this connection.'', field_type=''number'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
-            value=1443), database: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Database'',
+            value=1433), database: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Database'',
             description=''The name of the database.'', field_type=''text'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), retries:
@@ -11459,72 +11287,6 @@ components:
             or uses the default system settings.'', field_type=''number'', encrypt=False,
             depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
             value=0))'
-        BooleanField:
-          type: object
-          required:
-          - metadata
-          properties:
-            metadata:
-              $ref: '#/definitions/BooleanFieldMetadata'
-            value:
-              type: boolean
-              default: true
-          additionalProperties: false
-          description: 'BooleanField(metadata: schemas.fields.BooleanField.BooleanFieldMetadata,
-            value: bool = True)'
-        BooleanFieldMetadata:
-          type: object
-          required:
-          - label
-          - description
-          properties:
-            label:
-              type: string
-            description:
-              type: string
-            field_type:
-              type: string
-              default: boolean
-            encrypt:
-              type: boolean
-              default: false
-            depends_on:
-              oneOf:
-              - type: object
-                additionalProperties:
-                  oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: string
-              - type: 'null'
-            overrideable:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-            validation:
-              $ref: '#/definitions/GenericBooleanValidation'
-              default:
-                required: false
-          additionalProperties: false
-          description: 'BooleanFieldMetadata(label: str, description: str, field_type:
-            str = ''boolean'', encrypt: bool = False, depends_on: Union[Dict[str,
-            Union[str, List[str]]], NoneType] = None, overrideable: Union[bool, NoneType]
-            = False, validation: schemas.fields.BooleanField.GenericBooleanValidation
-            = GenericBooleanValidation(required=False))'
-        GenericBooleanValidation:
-          type: object
-          required: []
-          properties:
-            required:
-              oneOf:
-              - type: boolean
-              - type: 'null'
-              default: false
-          additionalProperties: false
-          description: 'GenericBooleanValidation(required: Union[bool, NoneType] =
-            False)'
         IntegerField:
           type: object
           required:
@@ -11643,16 +11405,13 @@ components:
                   metadata:
                     label: Port
                     description: The port to connect to for this connection.
-                    field_type: text
+                    field_type: number
                     encrypt: false
                     depends_on: null
                     overrideable: false
                     validation:
-                      min_length: null
-                      max_length: null
                       required: true
-                      pattern: null
-                  value: '1433'
+                  value: 1433
                 database:
                   metadata:
                     label: Database
@@ -11667,28 +11426,6 @@ components:
                       required: true
                       pattern: null
                   value: ''
-                encrypt:
-                  metadata:
-                    label: Encrypt
-                    description: Whether the use of encryption is enabled.
-                    field_type: hidden
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: true
-                trust_cert:
-                  metadata:
-                    label: Trust cert
-                    description: Whether the server certificate should be trusted.
-                    field_type: hidden
-                    encrypt: false
-                    depends_on: null
-                    overrideable: false
-                    validation:
-                      required: false
-                  value: true
                 retries:
                   metadata:
                     label: Retries
@@ -11746,19 +11483,13 @@ components:
             for SQL Server''), server=TextField(metadata=TextFieldMetadata(label=''Server'',
             description=''The server to connect to for this connection.'', field_type=''text'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''''), port=TextField(metadata=TextFieldMetadata(label=''Port'',
-            description=''The port to connect to for this connection.'', field_type=''text'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''1433''), database=TextField(metadata=TextFieldMetadata(label=''Database'',
+            max_length=None, required=True, pattern=None)), value=''''), port=IntegerField(metadata=IntegerFieldMetadata(label=''Port'',
+            description=''The port to connect to for this connection.'', field_type=''number'',
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
+            value=1433), database=TextField(metadata=TextFieldMetadata(label=''Database'',
             description=''The database to connect to for this connection.'', field_type=''text'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''''), encrypt=BooleanField(metadata=BooleanFieldMetadata(label=''Encrypt'',
-            description=''Whether the use of encryption is enabled.'', field_type=''hidden'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericBooleanValidation(required=False)),
-            value=True), trust_cert=BooleanField(metadata=BooleanFieldMetadata(label=''Trust
-            cert'', description=''Whether the server certificate should be trusted.'',
-            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
-            validation=GenericBooleanValidation(required=False)), value=True), retries=IntegerField(metadata=IntegerFieldMetadata(label=''Retries'',
+            max_length=None, required=True, pattern=None)), value=''''), retries=IntegerField(metadata=IntegerFieldMetadata(label=''Retries'',
             description=''The number of automatic times to retry a query before failing.
             Defaults to 1. Queries with syntax errors will not be retried. This setting
             can be used to overcome intermittent network issues.'', field_type=''number'',
@@ -11827,21 +11558,18 @@ components:
                     pattern: null
                 value: ''
             port:
-              $ref: '#/definitions/TextField'
+              $ref: '#/definitions/IntegerField'
               default:
                 metadata:
                   label: Port
                   description: The port to connect to for this connection.
-                  field_type: text
+                  field_type: number
                   encrypt: false
                   depends_on: null
                   overrideable: false
                   validation:
-                    min_length: null
-                    max_length: null
                     required: true
-                    pattern: null
-                value: '1433'
+                value: 1433
             database:
               $ref: '#/definitions/TextField'
               default:
@@ -11858,32 +11586,6 @@ components:
                     required: true
                     pattern: null
                 value: ''
-            encrypt:
-              $ref: '#/definitions/BooleanField'
-              default:
-                metadata:
-                  label: Encrypt
-                  description: Whether the use of encryption is enabled.
-                  field_type: hidden
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: true
-            trust_cert:
-              $ref: '#/definitions/BooleanField'
-              default:
-                metadata:
-                  label: Trust cert
-                  description: Whether the server certificate should be trusted.
-                  field_type: hidden
-                  encrypt: false
-                  depends_on: null
-                  overrideable: false
-                  validation:
-                    required: false
-                value: true
             retries:
               $ref: '#/definitions/IntegerField'
               default:
@@ -11943,22 +11645,14 @@ components:
             for SQL Server''), server: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Server'',
             description=''The server to connect to for this connection.'', field_type=''text'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''''), port: schemas.fields.TextField.TextField
-            = TextField(metadata=TextFieldMetadata(label=''Port'', description=''The
-            port to connect to for this connection.'', field_type=''text'', encrypt=False,
-            depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''1433''), database:
-            schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Database'',
+            max_length=None, required=True, pattern=None)), value=''''), port: schemas.fields.IntegerField.IntegerField
+            = IntegerField(metadata=IntegerFieldMetadata(label=''Port'', description=''The
+            port to connect to for this connection.'', field_type=''number'', encrypt=False,
+            depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
+            value=1433), database: schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Database'',
             description=''The database to connect to for this connection.'', field_type=''text'',
             encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=''''), encrypt:
-            schemas.fields.BooleanField.BooleanField = BooleanField(metadata=BooleanFieldMetadata(label=''Encrypt'',
-            description=''Whether the use of encryption is enabled.'', field_type=''hidden'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericBooleanValidation(required=False)),
-            value=True), trust_cert: schemas.fields.BooleanField.BooleanField = BooleanField(metadata=BooleanFieldMetadata(label=''Trust
-            cert'', description=''Whether the server certificate should be trusted.'',
-            field_type=''hidden'', encrypt=False, depends_on=None, overrideable=False,
-            validation=GenericBooleanValidation(required=False)), value=True), retries:
+            max_length=None, required=True, pattern=None)), value=''''), retries:
             schemas.fields.IntegerField.IntegerField = IntegerField(metadata=IntegerFieldMetadata(label=''Retries'',
             description=''The number of automatic times to retry a query before failing.
             Defaults to 1. Queries with syntax errors will not be retried. This setting
@@ -12057,6 +11751,10 @@ components:
               - type: string
                 format: date-time
               - type: 'null'
+            private_link_endpoint_id:
+              oneOf:
+              - type: string
+              - type: 'null'
             deploy_key:
               oneOf:
               - type: object
@@ -12092,10 +11790,10 @@ components:
             Union[str, NoneType] = None, _github_webhook_secret: Union[models.encrypted_field.DataclassEncryptedField,
             NoneType] = None, pull_request_url_template: Union[PullRequestUrl, NoneType]
             = None, state: int = 1, created_at: Union[datetime.datetime, NoneType]
-            = None, updated_at: Union[datetime.datetime, NoneType] = None, deploy_key:
-            Union[Dict[Any, Any], NoneType] = None, github_repo: Union[str, NoneType]
-            = None, name: Union[str, NoneType] = None, git_provider_id: Union[int,
-            NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
+            = None, updated_at: Union[datetime.datetime, NoneType] = None, private_link_endpoint_id:
+            Union[str, NoneType] = None, deploy_key: Union[Dict[Any, Any], NoneType]
+            = None, github_repo: Union[str, NoneType] = None, name: Union[str, NoneType]
+            = None, git_provider_id: Union[int, NoneType] = None, gitlab: Union[models.repository_gitlab.RepositoryGitlab,
             NoneType] = None, git_provider: Union[models.git_provider.GitProvider,
             NoneType] = None)'
         RepositoryGitlab:
@@ -12890,6 +12588,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            non_native_pull_request_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             schema_override:
               oneOf:
               - type: string
@@ -12948,14 +12650,15 @@ components:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
             = None, azure_pull_request_id: Union[int, NoneType] = None, github_pull_request_id:
             Union[int, NoneType] = None, gitlab_merge_request_id: Union[int, NoneType]
-            = None, schema_override: Union[str, NoneType] = None, dbt_version_override:
-            Union[str, NoneType] = None, threads_override: Union[int, NoneType] =
-            None, target_name_override: Union[str, NoneType] = None, generate_docs_override:
-            Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
-            = None, steps_override: Union[List[str], NoneType] = None, created_at:
-            Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
-            Union[common.constants.RunCauseCategory, NoneType] = None)'
+            = None, non_native_pull_request_id: Union[int, NoneType] = None, schema_override:
+            Union[str, NoneType] = None, dbt_version_override: Union[str, NoneType]
+            = None, threads_override: Union[int, NoneType] = None, target_name_override:
+            Union[str, NoneType] = None, generate_docs_override: Union[bool, NoneType]
+            = None, timeout_seconds_override: Union[int, NoneType] = None, steps_override:
+            Union[List[str], NoneType] = None, created_at: Union[datetime.datetime,
+            NoneType] = None, cause_humanized: Union[str, NoneType] = None, job: Union[Dict[str,
+            Any], NoneType] = None, cause_category: Union[common.constants.RunCauseCategory,
+            NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -13050,6 +12753,10 @@ components:
               oneOf:
               - type: string
               - type: 'null'
+            run_step_command:
+              oneOf:
+              - $ref: '#/definitions/RunStepCommand'
+              - type: 'null'
           additionalProperties: false
           description: 'RunStep(id: Union[int, NoneType], run_id: int, account_id:
             int, index: int, status: int, name: str, logs: Union[str, NoneType] =
@@ -13062,7 +12769,36 @@ components:
             Union[datetime.datetime, NoneType] = None, finished_at: Union[datetime.datetime,
             NoneType] = None, status_color: Union[str, NoneType] = None, status_humanized:
             Union[str, NoneType] = None, duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None)'
+            Union[str, NoneType] = None, run_step_command: ''Optional[RunStepCommand]''
+            = None)'
+        RunStepCommand:
+          type: object
+          required:
+          - run_step_id
+          - dbt_command
+          properties:
+            id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            run_step_id:
+              type: integer
+            dbt_command:
+              type: string
+            created_at:
+              oneOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            updated_at:
+              oneOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+          additionalProperties: false
+          description: 'RunStepCommand(id: Union[int, NoneType], run_step_id: int,
+            dbt_command: str, created_at: Union[datetime.datetime, NoneType] = None,
+            updated_at: Union[datetime.datetime, NoneType] = None)'
         PostgresCredentials:
           type: object
           required:
@@ -13243,6 +12979,9 @@ components:
               oneOf:
               - type: string
               - type: 'null'
+            is_configured_for_oauth:
+              type: boolean
+              default: false
             created_at:
               oneOf:
               - type: string
@@ -13265,8 +13004,8 @@ components:
             Union[models.encrypted_field.DataclassEncryptedField, NoneType] = None,
             private_key_passphrase: Union[str, NoneType] = None, _private_key_passphrase:
             Union[models.encrypted_field.DataclassEncryptedField, NoneType] = None,
-            created_at: Union[datetime.datetime, NoneType] = None, updated_at: Union[datetime.datetime,
-            NoneType] = None)'
+            is_configured_for_oauth: bool = False, created_at: Union[datetime.datetime,
+            NoneType] = None, updated_at: Union[datetime.datetime, NoneType] = None)'
         BigqueryCredentials:
           type: object
           required:
@@ -13313,6 +13052,10 @@ components:
               oneOf:
               - type: string
               - type: 'null'
+            is_configured_for_oauth:
+              oneOf:
+              - type: boolean
+              - type: 'null'
             has_refresh_token:
               oneOf:
               - type: boolean
@@ -13322,9 +13065,9 @@ components:
             int, project_id: Union[int, NoneType], type: models.connection.common.ConnectionType,
             state: int, threads: int, schema: str, target_name: str = ''default'',
             created_at: Union[datetime.datetime, NoneType] = None, updated_at: Union[datetime.datetime,
-            NoneType] = None, username: Union[str, NoneType] = None, _refresh_token:
-            Union[str, NoneType] = None, has_refresh_token: Union[bool, NoneType]
-            = None)'
+            NoneType] = None, username: Union[str, NoneType] = None, is_configured_for_oauth:
+            Union[bool, NoneType] = None, _refresh_token: Union[str, NoneType] = None,
+            has_refresh_token: Union[bool, NoneType] = None)'
         DbtAdapterCredentials:
           type: object
           required:
@@ -13374,6 +13117,9 @@ components:
             target_name:
               type: string
               default: default
+            is_configured_for_oauth:
+              type: boolean
+              default: false
             adapter:
               oneOf:
               - $ref: '#/definitions/DbtAdapter'
@@ -13397,9 +13143,10 @@ components:
             schemas.adapters.fabric.credentials_schema.FabricCredentialsSchema, NoneType]
             = None, _credential_details: Union[models.encrypted_field.DataclassEncryptedField,
             NoneType] = None, unencrypted_credential_details: Union[Dict[str, Union[str,
-            int]], NoneType] = None, target_name: str = ''default'', adapter: ''Optional[models.dbt_adapter.DbtAdapter]''
-            = None, created_at: Union[datetime.datetime, NoneType] = None, updated_at:
-            Union[datetime.datetime, NoneType] = None)'
+            int]], NoneType] = None, target_name: str = ''default'', is_configured_for_oauth:
+            bool = False, adapter: ''Optional[models.dbt_adapter.DbtAdapter]'' = None,
+            created_at: Union[datetime.datetime, NoneType] = None, updated_at: Union[datetime.datetime,
+            NoneType] = None)'
         BaseSparkAdapterCredentialsSchema:
           type: object
           required: []
@@ -14140,7 +13887,7 @@ components:
                       principal. This is only used when connecting to Azure SQL with
                       an AAD service principal.
                     field_type: text
-                    encrypt: false
+                    encrypt: true
                     depends_on:
                       authentication:
                       - ServicePrincipal
@@ -14240,7 +13987,7 @@ components:
             max_length=None, required=True, pattern=None)), value=''''), client_secret=TextField(metadata=TextFieldMetadata(label=''Client
             secret'', description=''The client secret of the Azure Active Directory
             service principal. This is only used when connecting to Azure SQL with
-            an AAD service principal.'', field_type=''text'', encrypt=False, depends_on={''authentication'':
+            an AAD service principal.'', field_type=''text'', encrypt=True, depends_on={''authentication'':
             [''ServicePrincipal'']}, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), schema_authorization=TextField(metadata=TextFieldMetadata(label=''Schema
             authorization'', description=''Optionally set this to the principal who
@@ -14370,7 +14117,7 @@ components:
                     principal. This is only used when connecting to Azure SQL with
                     an AAD service principal.
                   field_type: text
-                  encrypt: false
+                  encrypt: true
                   depends_on:
                     authentication:
                     - ServicePrincipal
@@ -14476,7 +14223,7 @@ components:
             schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Client
             secret'', description=''The client secret of the Azure Active Directory
             service principal. This is only used when connecting to Azure SQL with
-            an AAD service principal.'', field_type=''text'', encrypt=False, depends_on={''authentication'':
+            an AAD service principal.'', field_type=''text'', encrypt=True, depends_on={''authentication'':
             [''ServicePrincipal'']}, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), schema_authorization:
             schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Schema
@@ -14597,7 +14344,7 @@ components:
                       principal. This is only used when connecting to Azure SQL with
                       an AAD service principal.
                     field_type: text
-                    encrypt: false
+                    encrypt: true
                     depends_on:
                       authentication:
                       - ServicePrincipal
@@ -14660,10 +14407,7 @@ components:
                     depends_on: null
                     overrideable: false
                     validation:
-                      min_length: null
-                      max_length: null
                       required: true
-                      pattern: null
                   value: 6
             field_order:
               oneOf:
@@ -14700,7 +14444,7 @@ components:
             max_length=None, required=True, pattern=None)), value=''''), client_secret=TextField(metadata=TextFieldMetadata(label=''Client
             secret'', description=''The client secret of the Azure Active Directory
             service principal. This is only used when connecting to Azure SQL with
-            an AAD service principal.'', field_type=''text'', encrypt=False, depends_on={''authentication'':
+            an AAD service principal.'', field_type=''text'', encrypt=True, depends_on={''authentication'':
             [''ServicePrincipal'']}, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), schema=TextField(metadata=TextFieldMetadata(label=''Schema'',
             description="User''s schema.", field_type=''text'', encrypt=False, depends_on=None,
@@ -14714,9 +14458,8 @@ components:
             overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=False, pattern=None)), value=''default''), threads=IntegerField(metadata=IntegerFieldMetadata(label=''Threads'',
             description=''The number of threads to use for dbt operations.'', field_type=''number'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=6)), field_order:
-            Union[List[str], NoneType] = None)'
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
+            value=6)), field_order: Union[List[str], NoneType] = None)'
         FabricCredentialsFields:
           type: object
           required: []
@@ -14827,7 +14570,7 @@ components:
                     principal. This is only used when connecting to Azure SQL with
                     an AAD service principal.
                   field_type: text
-                  encrypt: false
+                  encrypt: true
                   depends_on:
                     authentication:
                     - ServicePrincipal
@@ -14898,10 +14641,7 @@ components:
                   depends_on: null
                   overrideable: false
                   validation:
-                    min_length: null
-                    max_length: null
                     required: true
-                    pattern: null
                 value: 6
           additionalProperties: false
           description: 'FabricCredentialsFields(authentication: schemas.fields.SelectField.SelectField
@@ -14936,7 +14676,7 @@ components:
             schemas.fields.TextField.TextField = TextField(metadata=TextFieldMetadata(label=''Client
             secret'', description=''The client secret of the Azure Active Directory
             service principal. This is only used when connecting to Azure SQL with
-            an AAD service principal.'', field_type=''text'', encrypt=False, depends_on={''authentication'':
+            an AAD service principal.'', field_type=''text'', encrypt=True, depends_on={''authentication'':
             [''ServicePrincipal'']}, overrideable=False, validation=GenericTextValidation(min_length=None,
             max_length=None, required=True, pattern=None)), value=''''), schema: schemas.fields.TextField.TextField
             = TextField(metadata=TextFieldMetadata(label=''Schema'', description="User''s
@@ -14954,8 +14694,8 @@ components:
             max_length=None, required=False, pattern=None)), value=''default''), threads:
             schemas.fields.IntegerField.IntegerField = IntegerField(metadata=IntegerFieldMetadata(label=''Threads'',
             description=''The number of threads to use for dbt operations.'', field_type=''number'',
-            encrypt=False, depends_on=None, overrideable=False, validation=GenericTextValidation(min_length=None,
-            max_length=None, required=True, pattern=None)), value=6))'
+            encrypt=False, depends_on=None, overrideable=False, validation=GenericIntegerValidation(required=True)),
+            value=6))'
         DbtAdapter:
           type: object
           required:
@@ -15167,6 +14907,10 @@ components:
           oneOf:
           - type: 'null'
           - type: integer
+        private_link_endpoint_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -15253,6 +14997,10 @@ components:
         state:
           type: integer
         git_provider_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+        private_link_endpoint_id:
           oneOf:
           - type: 'null'
           - type: integer
@@ -15524,6 +15272,10 @@ components:
               oneOf:
               - type: integer
               - type: 'null'
+            non_native_pull_request_id:
+              oneOf:
+              - type: integer
+              - type: 'null'
             schema_override:
               oneOf:
               - type: string
@@ -15582,14 +15334,15 @@ components:
             int, git_branch: Union[str, NoneType] = None, git_sha: Union[str, NoneType]
             = None, azure_pull_request_id: Union[int, NoneType] = None, github_pull_request_id:
             Union[int, NoneType] = None, gitlab_merge_request_id: Union[int, NoneType]
-            = None, schema_override: Union[str, NoneType] = None, dbt_version_override:
-            Union[str, NoneType] = None, threads_override: Union[int, NoneType] =
-            None, target_name_override: Union[str, NoneType] = None, generate_docs_override:
-            Union[bool, NoneType] = None, timeout_seconds_override: Union[int, NoneType]
-            = None, steps_override: Union[List[str], NoneType] = None, created_at:
-            Union[datetime.datetime, NoneType] = None, cause_humanized: Union[str,
-            NoneType] = None, job: Union[Dict[str, Any], NoneType] = None, cause_category:
-            Union[common.constants.RunCauseCategory, NoneType] = None)'
+            = None, non_native_pull_request_id: Union[int, NoneType] = None, schema_override:
+            Union[str, NoneType] = None, dbt_version_override: Union[str, NoneType]
+            = None, threads_override: Union[int, NoneType] = None, target_name_override:
+            Union[str, NoneType] = None, generate_docs_override: Union[bool, NoneType]
+            = None, timeout_seconds_override: Union[int, NoneType] = None, steps_override:
+            Union[List[str], NoneType] = None, created_at: Union[datetime.datetime,
+            NoneType] = None, cause_humanized: Union[str, NoneType] = None, job: Union[Dict[str,
+            Any], NoneType] = None, cause_category: Union[common.constants.RunCauseCategory,
+            NoneType] = None)'
         RunStep:
           type: object
           required:
@@ -15684,6 +15437,10 @@ components:
               oneOf:
               - type: string
               - type: 'null'
+            run_step_command:
+              oneOf:
+              - $ref: '#/definitions/RunStepCommand'
+              - type: 'null'
           additionalProperties: false
           description: 'RunStep(id: Union[int, NoneType], run_id: int, account_id:
             int, index: int, status: int, name: str, logs: Union[str, NoneType] =
@@ -15696,7 +15453,36 @@ components:
             Union[datetime.datetime, NoneType] = None, finished_at: Union[datetime.datetime,
             NoneType] = None, status_color: Union[str, NoneType] = None, status_humanized:
             Union[str, NoneType] = None, duration: Union[str, NoneType] = None, duration_humanized:
-            Union[str, NoneType] = None)'
+            Union[str, NoneType] = None, run_step_command: ''Optional[RunStepCommand]''
+            = None)'
+        RunStepCommand:
+          type: object
+          required:
+          - run_step_id
+          - dbt_command
+          properties:
+            id:
+              oneOf:
+              - type: integer
+              - type: 'null'
+            run_step_id:
+              type: integer
+            dbt_command:
+              type: string
+            created_at:
+              oneOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+            updated_at:
+              oneOf:
+              - type: string
+                format: date-time
+              - type: 'null'
+          additionalProperties: false
+          description: 'RunStepCommand(id: Union[int, NoneType], run_step_id: int,
+            dbt_command: str, created_at: Union[datetime.datetime, NoneType] = None,
+            updated_at: Union[datetime.datetime, NoneType] = None)'
       $schema: http://json-schema.org/draft-07/schema#
     RunEnveloped:
       type: object
@@ -15750,6 +15536,10 @@ components:
           - type: integer
           - type: 'null'
         gitlab_merge_request_id:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        non_native_pull_request_id:
           oneOf:
           - type: integer
           - type: 'null'
@@ -15815,6 +15605,8 @@ components:
           oneOf:
           - type: 'null'
           - type: string
+        auth0_database_user_id:
+          type: string
         first_name:
           type: string
         last_name:
@@ -15973,6 +15765,8 @@ components:
           oneOf:
           - type: 'null'
           - type: string
+        auth0_database_user_id:
+          type: string
         first_name:
           type: string
         last_name:
