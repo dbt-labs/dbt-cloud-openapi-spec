@@ -2,35 +2,59 @@ openapi: 3.0.3
 info:
   title: dbt Cloud API v3
   version: 3.0.0
-  description: "# How to use this API\n\nThe dbt Cloud API v3 contains endpoints for\
-    \ programmatic administration of your dbt Cloud account.\nWith it, you can replicate\
-    \ resources across projects, accounts, and environments, or standardize project\n\
-    creation for business teams. For endpoints related to jobs and runs, refer to\
-    \ the\n[Discovery API](/docs/dbt-cloud-apis/discovery-api) or [dbt Cloud API v2](/dbt-cloud/api-v2#/).\n\
-    \nThe API docs are generated from an openapi spec defined in the\n[dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec/blob/master/openapi-v3.yaml)\n\
-    repository. If you find issues in these docs or have questions about using the\
-    \ dbt Cloud\nAPI, please open an issue in the dbt-cloud-openapi-spec repo or contact\
-    \ support@getdbt.com.\n\n# Authentication\n\nTo authenticate an application with\
-    \ the dbt Cloud API, navigate to the\nAPI Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).\n\
-    If you cannot access this page, confirm that your dbt Cloud account has access\
-    \ to the API,\nand that you are using the hosted version of dbt Cloud. If dbt\
-    \ Cloud is running inside of a VPC\nin an Enterprise account, contact your account\
-    \ manager for help finding your API key.\n\n## Token Auth\n\nOnce you've found\
-    \ your API key, use it in the Authorization header of requests to the dbt Cloud\
-    \ API.\nBe sure to include the `Token` prefix in the Authorization header, or\
-    \ the request will fail with a\n\"401 Unauthorized\" error. Note: `Bearer` can\
-    \ be used in place of `Token` in the Authorization header.\nBoth syntaxes are\
-    \ equivalent.\n\n**Headers**\n```\nAccept: application/json\nAuthorization: Token\
-    \ <your token>\n```\n\n## Example request\n\nThe following example will list the\
-    \ Accounts that your token is authorized to access.\nBe sure to replace `<your\
-    \ token>` in the Authorization header with your actual API token.\n\n```bash\n\
-    curl --request GET \\\n  --url https://cloud.getdbt.com/api/v2/accounts/ \\\n\
-    \  --header 'Content-Type: application/json' \\\n  --header 'Authorization: Token\
-    \ <your token>'\n```\n\n&nbsp;  \n\n# Pagination\n\nAll top-level API resources\
-    \ have support for bulk fetches via \"list\" API methods. These list\nAPI methods\
-    \ accept `limit` and `offset` query parameters which can be used together to paginate\
-    \ results.\n\nOffsets begin at 0.\n\nThe maximum limit for a single request is\
-    \ 100.\n"
+  description: |
+    # How to use this API
+
+    The dbt Cloud API v3 contains endpoints for programmatic administration of your dbt Cloud account.
+    With it, you can replicate resources across projects, accounts, and environments, or standardize project
+    creation for business teams. For endpoints related to jobs and runs, refer to the
+    [Discovery API](https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api) or [dbt Cloud API v2](https://docs.getdbt.com/dbt-cloud/api-v2#/).
+
+    The API docs are generated from an openapi spec defined in the
+    [dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec/blob/master/openapi-v3.yaml)
+    repository. If you find issues in these docs or have questions about using the dbt Cloud
+    API, please open an issue in the dbt-cloud-openapi-spec repo or contact support@getdbt.com.
+
+    ## Authentication
+
+    To authenticate an application with the dbt Cloud API, navigate to the
+    API Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).
+    If you cannot access this page, confirm that your dbt Cloud account has access to the API,
+    and that you are using the hosted version of dbt Cloud. If dbt Cloud is running inside of a VPC
+    in an Enterprise account, contact your account manager for help finding your API key.
+
+    Once you've found your API key, use it in the Authorization header of requests to the dbt Cloud API.
+    Be sure to include the `Token` prefix in the Authorization header, or the request will fail with a
+    "401 Unauthorized" error.
+
+    *Note: `Bearer` can be used in place of `Token` in the Authorization header. Both syntaxes are equivalent.*
+
+    **Headers**
+    ```
+    Accept: application/json
+    Authorization: Token <your token>
+    ```
+
+    ## Pagination
+
+    All top-level API resources support bulk fetches using the "list" or `GET` API methods. These API methods accept `limit` and `offset` query parameters that you can use together to paginate results and return a subset of those results.
+
+    * Offset: Specifies how many records to skip. Can be an integer 0 and higher.
+    * Limit: Specifies the maximum records you want to retrieve in a single request. Can be an integer up to 100. This limit makes responses easier to handle for servers and people.
+
+
+    ## Example request
+
+    The following example uses the list projects endpoint to list the projects that your token is authorized to access.
+    This request skips the first 10 projects and lists the next 10 projects.
+    Be sure to replace `<YOUR_TOKEN>` in the Authorization header with your actual API token and `<YOUR_ACCOUNT_ID>` with your actual account ID.
+
+    ```bash
+    curl --request GET \
+      --url 'https://cloud.getdbt.com/api/v3/accounts/<YOUR_ACCOUNT_ID/projects/?limit=10&offset=5' \
+      --header 'Content-Type: application/json' \
+      --header 'Authorization: Token <YOUR_TOKEN>'
+    ```
   termsOfService: https://www.getdbt.com/terms-of-service
   contact:
     email: support@getdbt.com
@@ -38,7 +62,7 @@ paths:
   /api/v3/accounts/:
     get:
       operationId: List Accounts
-      description: List the Accounts that your API Token is authorized to access.
+      description: List accounts
       tags:
       - Accounts
       security:
@@ -92,7 +116,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/PublicAuditLogEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/audit-logs/download/:
     get:
@@ -185,28 +209,6 @@ paths:
         required: true
       tags:
       - Audit Logs
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
-  /api/v3/accounts/{account_id}/codex-token/:
-    get:
-      operationId: Retrieve Codex Token
-      description: Generate an account-level JWT that can be used to authenticate
-        with codex (without a job or project ID)
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Codex Token
       security:
       - BearerAuthentication: []
       responses:
@@ -423,7 +425,8 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/invites/:
     post:
-      operationId: Create Invite
+      operationId: Send user invites
+      description: Send email invites to users who you wish to add to this account
       parameters:
       - in: path
         name: account_id
@@ -432,6 +435,18 @@ paths:
         required: true
       tags:
       - Invites
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteUsersRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InviteUsersRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/InviteUsersRequestRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -439,7 +454,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/InviteUsersResponseEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/license-maps/:
     get:
@@ -639,7 +654,11 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/private-link-endpoints/:
     get:
-      operationId: List Private Link Endpoints
+      operationId: List PrivateLink Endpoints
+      description: |-
+        List PrivateLink Endpoints for an account.
+
+        Note: This API is only available to Enterprise BusinessCritical customers.
       parameters:
       - in: path
         name: account_id
@@ -655,11 +674,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/PrivateLinkEndpointEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/:
     get:
       operationId: List Projects
+      description: List Projects
       parameters:
       - in: path
         name: account_id
@@ -709,6 +729,7 @@ paths:
           description: ''
     post:
       operationId: Create Project
+      description: Create a new Project
       parameters:
       - in: path
         name: account_id
@@ -743,6 +764,7 @@ paths:
   /api/v3/accounts/{account_id}/projects/{id}/:
     get:
       operationId: Retrieve Project
+      description: Retrieve a Project
       parameters:
       - in: path
         name: account_id
@@ -795,6 +817,7 @@ paths:
           description: ''
     post:
       operationId: Update Project
+      description: Update a Project
       parameters:
       - in: path
         name: account_id
@@ -831,6 +854,7 @@ paths:
           description: ''
     delete:
       operationId: Destroy Project
+      description: Delete Project
       parameters:
       - in: path
         name: account_id
@@ -1122,36 +1146,10 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/codex-token/:
-    get:
-      operationId: Retrieve Projects Codex Token
-      description: Generate a token for a project that can be used to authenticate
-        with codex (without a job definition)
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Projects Codex Token
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/connections/:
     get:
-      operationId: List Projects Connections
+      operationId: List Connections
+      description: List Connections
       parameters:
       - in: path
         name: account_id
@@ -1205,7 +1203,8 @@ paths:
                   $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
     post:
-      operationId: Create Projects Connection
+      operationId: Create Connection
+      description: Create a new Connection
       parameters:
       - in: path
         name: account_id
@@ -1244,7 +1243,8 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/connections/{id}/:
     get:
-      operationId: Retrieve Projects Connection
+      operationId: Retrieve Connection
+      description: Retrieve a Connection
       parameters:
       - in: path
         name: account_id
@@ -1301,7 +1301,8 @@ paths:
                 $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
     post:
-      operationId: Update Projects Connection
+      operationId: Update Connection
+      description: Update a Connection
       parameters:
       - in: path
         name: account_id
@@ -1342,7 +1343,8 @@ paths:
                 $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
     delete:
-      operationId: Destroy Projects Connection
+      operationId: Destroy Connection
+      description: Delete a Connection
       parameters:
       - in: path
         name: account_id
@@ -2156,7 +2158,8 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environments/:
     get:
-      operationId: List Projects Environments
+      operationId: List Environments
+      description: List Environments
       parameters:
       - in: path
         name: account_id
@@ -2193,6 +2196,10 @@ paths:
           type: integer
       - in: query
         name: name
+        schema:
+          type: string
+      - in: query
+        name: name__icontains
         schema:
           type: string
       - in: query
@@ -2242,7 +2249,8 @@ paths:
                   $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
     post:
-      operationId: Create Projects Environment
+      operationId: Create Environment
+      description: Create a new Environment
       parameters:
       - in: path
         name: account_id
@@ -2281,7 +2289,8 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environments/{id}/:
     get:
-      operationId: Retrieve Projects Environment
+      operationId: Retrieve Environment
+      description: Retrieve an Environment
       parameters:
       - in: path
         name: account_id
@@ -2323,6 +2332,10 @@ paths:
           type: integer
       - in: query
         name: name
+        schema:
+          type: string
+      - in: query
+        name: name__icontains
         schema:
           type: string
       - in: query
@@ -2370,7 +2383,8 @@ paths:
                 $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
     post:
-      operationId: Update Projects Environment
+      operationId: Update Environment
+      description: Update an Environment
       parameters:
       - in: path
         name: account_id
@@ -2411,7 +2425,8 @@ paths:
                 $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
     delete:
-      operationId: Destroy Projects Environment
+      operationId: Destroy Environment
+      description: Delete an Environment
       parameters:
       - in: path
         name: account_id
@@ -2453,6 +2468,10 @@ paths:
           type: integer
       - in: query
         name: name
+        schema:
+          type: string
+      - in: query
+        name: name__icontains
         schema:
           type: string
       - in: query
@@ -2777,17 +2796,42 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/reports/:
-    get:
-      operationId: Retrieve Report
+  /api/v3/accounts/{account_id}/projects/{project_id}/semantic-layer-configurations/:
+    post:
+      operationId: Create SL Configuration
+      description: |-
+        Create a Semantic Layer Configuration.
+
+        Semantic Layer Configurations are used to specify the Environment and Credentials to use when
+        querying the semantic layer.
+
+        After creation, set the configuration as active on your Project using the `semantic_layer_config_id`
+        field on the Project entity.
       parameters:
       - in: path
         name: account_id
         schema:
           type: integer
         required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
       tags:
-      - Reports
+      - Semantic Layer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerConfigRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerConfigRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerConfigRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -2795,8 +2839,357 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                type: array
+                items:
+                  $ref: '#/components/schemas/SemanticLayerConfigEnveloped'
           description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/semantic-layer-configurations/{id}/:
+    get:
+      operationId: Retrieve SL Configuration
+      description: Retrieve a Semantic Layer Configuration.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: query
+        name: environment_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Semantic Layer
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SemanticLayerConfigEnveloped'
+          description: ''
+    post:
+      operationId: Update SL Configuration
+      description: |-
+        Update a Semantic Layer Configuration.
+
+        Most often used to change the active Semantic Layer Environment
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Semantic Layer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerConfigRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerConfigRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerConfigRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SemanticLayerConfigEnveloped'
+          description: ''
+    delete:
+      operationId: Destroy SL Configuration
+      description: Delete a Semantic Layer Configuration.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: query
+        name: environment_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Semantic Layer
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
+  /api/v3/accounts/{account_id}/semantic-layer-credentials/:
+    post:
+      operationId: Create Semantic Layer Credentials
+      description: |-
+        Create a new Semantic Layer Credentials record.
+
+        Semantic Layer Credentials are the credentials used to connect to your warehouse when making Semantic Layer queries.
+
+        After creation, use the returned ID in the `semantic_layer_credentials_id` field when setting up your Semantic Layer
+        Configuration entity.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Semantic Layer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerCredentialsRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerCredentialsRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerCredentialsRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SemanticLayerCredentialsEnveloped'
+          description: ''
+  /api/v3/accounts/{account_id}/semantic-layer-credentials/{id}/:
+    get:
+      operationId: Retrieve SL Credentials
+      description: Retrieve Semantic Layer Credentials.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Semantic Layer
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SemanticLayerCredentialsEnveloped'
+          description: ''
+    post:
+      operationId: Update SL Credentials
+      description: Update Semantic Layer Credentials.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Semantic Layer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerCredentialsRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerCredentialsRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SemanticLayerCredentialsRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SemanticLayerCredentialsEnveloped'
+          description: ''
+    patch:
+      operationId: Partial Update SL Credentials
+      description: Patch Semantic Layer Credentials.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Semantic Layer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSemanticLayerCredentialsRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSemanticLayerCredentialsRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSemanticLayerCredentialsRequest'
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SemanticLayerCredentialsEnveloped'
+          description: ''
+    delete:
+      operationId: Destroy SL Credentials
+      description: Delete Semantic Layer Credentials.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Semantic Layer
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/service-tokens/:
     get:
       operationId: List Service Tokens
@@ -2815,11 +3208,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/ServiceTokenEnveloped'
           description: ''
     post:
       operationId: Create Service Token
-      description: This route is used for generating a new service account token.
+      description: This endpoint is used to generate a new service token for the account.
       parameters:
       - in: path
         name: account_id
@@ -2828,6 +3221,18 @@ paths:
         required: true
       tags:
       - Service Tokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -2835,7 +3240,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/ServiceTokenEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/service-tokens/{id}/:
     get:
@@ -2860,7 +3265,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/ServiceTokenEnveloped'
           description: ''
     put:
       operationId: Update Service Token
@@ -2877,6 +3282,18 @@ paths:
         required: true
       tags:
       - Service Tokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -2884,7 +3301,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/ServiceTokenEnveloped'
           description: ''
     delete:
       operationId: Destroy Service Token
@@ -2909,6 +3326,7 @@ paths:
   /api/v3/accounts/{account_id}/service-tokens/{service_token_id}/permissions/:
     get:
       operationId: Retrieve Service Tokens Permission
+      description: List permissions of a given ServiceToken for an account.
       parameters:
       - in: path
         name: account_id
@@ -2929,31 +3347,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
-    post:
-      operationId: Create Service Tokens Permission
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: service_token_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Service Tokens
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/ServiceTokenPermissionEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/users/:
     get:
@@ -2978,6 +3372,7 @@ paths:
   /api/v3/accounts/{account_id}/webhooks/event/{event_id}:
     get:
       operationId: Retrieve Webhooks Event
+      description: Get a specific event given an event_id
       parameters:
       - in: path
         name: account_id
@@ -2998,11 +3393,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/EventResponseEnvelope'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
           description: ''
   /api/v3/accounts/{account_id}/webhooks/event/{event_id}/receipts:
     get:
-      operationId: Retrieve Webhooks Event Receipt
+      operationId: List Webhooks Event Receipts
+      description: Get all receipts for a given event id
       parameters:
       - in: path
         name: account_id
@@ -3023,11 +3425,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/ListWebhooksReceiptsResponseEnvelope'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
           description: ''
   /api/v3/accounts/{account_id}/webhooks/receipt/{receipt_id}:
     get:
       operationId: Retrieve Webhooks Receipt
+      description: Get a specific receipt given its id
       parameters:
       - in: path
         name: account_id
@@ -3048,11 +3457,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/GetWebhooksReceiptResponseEnvelope'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
           description: ''
   /api/v3/accounts/{account_id}/webhooks/subscription/{subscription_id}:
     get:
       operationId: Retrieve Webhooks Subscription
+      description: Get a specific subscription with a subscription id
       parameters:
       - in: path
         name: account_id
@@ -3073,10 +3489,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/SubscriptionResponseEnvelope'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
           description: ''
     put:
       operationId: Update Webhooks Subscription
+      description: Edit a subscription given a subcsription id
       parameters:
       - in: path
         name: account_id
@@ -3097,31 +3520,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/UpdateSubscriptionResponseEnvelope'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
           description: ''
     delete:
       operationId: Destroy Webhooks Subscription
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: subscription_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - Webhooks
-      security:
-      - BearerAuthentication: []
-      responses:
-        '204':
-          description: No response body
-  /api/v3/accounts/{account_id}/webhooks/subscription/{subscription_id}/events:
-    get:
-      operationId: Retrieve Webhooks Subscription Event
+      description: Delete a specific subscription
       parameters:
       - in: path
         name: account_id
@@ -3142,11 +3551,50 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/DeleteSubscriptionResponseEnvelope'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+          description: ''
+  /api/v3/accounts/{account_id}/webhooks/subscription/{subscription_id}/events:
+    get:
+      operationId: List Webhooks Events
+      description: Get all events for a specific subscription
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: subscription_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Webhooks
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedWebhooksEvents'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
           description: ''
   /api/v3/accounts/{account_id}/webhooks/subscription/{subscription_id}/test:
     get:
-      operationId: Retrieve Webhooks Subscription Test
+      operationId: Test Webhooks Subscription
+      description: Test the client endpoint for a given subscription
       parameters:
       - in: path
         name: account_id
@@ -3167,11 +3615,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/TestSubscriptionResponseEnvelope'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
           description: ''
   /api/v3/accounts/{account_id}/webhooks/subscriptions:
     get:
       operationId: List Webhooks Subscriptions
+      description: Given an account id list all webhook subscriptions
       parameters:
       - in: path
         name: account_id
@@ -3187,10 +3642,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/PaginatedWebhooksSubscriptions'
           description: ''
     post:
       operationId: Create Webhooks Subscription
+      description: Create a new webhook subscription
       parameters:
       - in: path
         name: account_id
@@ -3202,11 +3658,17 @@ paths:
       security:
       - BearerAuthentication: []
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/CreateSubscriptionResponseEnvelope'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
           description: ''
   /api/v3/adapter-schema/:
     get:
@@ -3466,20 +3928,26 @@ components:
           - type: string
           - minLength: 1
             maxLength: 255
+          description: The name of the account
         state:
           type: integer
         plan:
           type: string
+          description: The active plan type for the account
         pending_cancel:
           type: boolean
         run_slots:
           type: integer
+          description: The total number of run slots the account may use
         developer_seats:
           type: integer
+          description: The total number of developer seats the account may use
         it_seats:
           type: integer
+          description: The total number of IT seats the account may use
         read_only_seats:
           type: integer
+          description: The total number of Read Only seats the account may use
         pod_memory_request_mebibytes:
           type: integer
         run_duration_limit_seconds:
@@ -3508,10 +3976,12 @@ components:
           - type: string
         locked:
           type: boolean
+          description: Whether the account is currently locked
         lock_reason:
           oneOf:
           - type: 'null'
           - type: string
+          description: Why the account is locked
         lock_cause:
           oneOf:
           - type: 'null'
@@ -3519,6 +3989,7 @@ components:
           - {}
           - {}
           - {}
+          description: Why the account is locked
         develop_file_system:
           type: boolean
         unlocked_at:
@@ -3546,6 +4017,7 @@ components:
           oneOf:
           - type: 'null'
           - {}
+          description: The user groups in the account
         created_at:
           oneOf:
           - type: 'null'
@@ -3591,10 +4063,15 @@ components:
           oneOf:
           - type: 'null'
           - type: integer
+          description: (Deprecated)
         freshness_job_id:
           oneOf:
           - type: 'null'
           - type: integer
+          description: (Deprecated)
+        allow_repo_caching:
+          type: boolean
+          description: Repo caching is not currently available. Coming soon!
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -3610,6 +4087,30 @@ components:
       required:
       - data
       - status
+    AdapterVersionEnum:
+      enum:
+      - apache_spark_v0
+      - databricks_spark_v0
+      - databricks_v0
+      - trino_v0
+      - snowflake_v0
+      - bigquery_v0
+      - postgres_v0
+      - redshift_v0
+      - synapse_v0
+      - fabric_v0
+      type: string
+      description: |-
+        * `apache_spark_v0` - apache_spark_v0
+        * `databricks_spark_v0` - databricks_spark_v0
+        * `databricks_v0` - databricks_v0
+        * `trino_v0` - trino_v0
+        * `snowflake_v0` - snowflake_v0
+        * `bigquery_v0` - bigquery_v0
+        * `postgres_v0` - postgres_v0
+        * `redshift_v0` - redshift_v0
+        * `synapse_v0` - synapse_v0
+        * `fabric_v0` - fabric_v0
     BaseConnectionV3:
       type: object
       properties:
@@ -3617,23 +4118,31 @@ components:
           type: integer
         account_id:
           type: integer
+          description: The account the connection is associated with
         project_id:
           type: integer
+          description: The project the connection is associated with
         name:
           type: string
+          description: The name of the connection
+        type:
+          $ref: '#/components/schemas/Type666Enum'
         created_by_id:
           type: integer
         created_by_service_token_id:
           type: integer
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         private_link_endpoint_id:
           type: string
       required:
       - account_id
       - name
       - project_id
-      - state
+      - type
     BaseConnectionV3Enveloped:
       type: object
       properties:
@@ -3651,17 +4160,25 @@ components:
           type: integer
         account_id:
           type: integer
+          description: The account the connection is associated with
         project_id:
           type: integer
+          description: The project the connection is associated with
         name:
           type: string
           minLength: 1
+          description: The name of the connection
+        type:
+          $ref: '#/components/schemas/Type666Enum'
         created_by_id:
           type: integer
         created_by_service_token_id:
           type: integer
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         private_link_endpoint_id:
           type: string
           minLength: 1
@@ -3669,7 +4186,17 @@ components:
       - account_id
       - name
       - project_id
-      - state
+      - type
+    CreateSubscriptionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Subscription'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
     CustomEnvironmentVariable:
       type: object
       properties:
@@ -3679,28 +4206,39 @@ components:
           type: integer
         name:
           type: string
+        type:
+          $ref: '#/components/schemas/CustomEnvironmentVariableTypeEnum'
         state:
           type: integer
+          default: 1
         user_id:
           type: integer
         environment_id:
           type: integer
         job_definition_id:
           type: integer
-        raw_value:
-          type: string
-        _raw_value:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedField'
-          title: ' raw value'
+        environment:
+          type: object
+          additionalProperties: {}
+          readOnly: true
         display_value:
           type: string
         id:
           type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
       required:
-      - account_id
-      - name
-      - project_id
+      - created_at
+      - environment
+      - id
+      - updated_at
     CustomEnvironmentVariableBulkRequest:
       type: object
       properties:
@@ -3742,11 +4280,6 @@ components:
           type: string
         data:
           $ref: '#/components/schemas/ResponseData'
-      required:
-      - data
-      - key_name
-      - status
-      - status_code
     CustomEnvironmentVariableBulkResponseEnveloped:
       type: object
       properties:
@@ -3770,11 +4303,6 @@ components:
           type: string
         reason:
           type: string
-      required:
-      - key_name
-      - reason
-      - status
-      - status_code
     CustomEnvironmentVariableBulkResponseFailEnveloped:
       type: object
       properties:
@@ -3807,8 +4335,11 @@ components:
         name:
           type: string
           minLength: 1
+        type:
+          $ref: '#/components/schemas/CustomEnvironmentVariableTypeEnum'
         state:
           type: integer
+          default: 1
         user_id:
           type: integer
         environment_id:
@@ -3817,36 +4348,38 @@ components:
           type: integer
         raw_value:
           type: string
+          writeOnly: true
           minLength: 1
-        _raw_value:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedFieldRequest'
-          title: ' raw value'
         display_value:
           type: string
           minLength: 1
-        id:
-          type: integer
       required:
       - account_id
       - name
       - project_id
-    DataclassEncryptedField:
-      type: object
-      properties:
-        plaintext:
-          type: string
-        ciphertext:
-          type: string
-    DataclassEncryptedFieldRequest:
-      type: object
-      properties:
-        plaintext:
-          type: string
-          minLength: 1
-        ciphertext:
-          type: string
-          minLength: 1
+      - type
+    CustomEnvironmentVariableTypeEnum:
+      enum:
+      - project
+      - environment
+      - job
+      - user
+      type: string
+      description: |-
+        * `project` - project
+        * `environment` - environment
+        * `job` - job
+        * `user` - user
+    DateEnum:
+      enum:
+      - every_day
+      - days_of_week
+      - custom_cron
+      type: string
+      description: |-
+        * `every_day` - every_day
+        * `days_of_week` - days_of_week
+        * `custom_cron` - custom_cron
     DbtAdapter:
       type: object
       properties:
@@ -3860,12 +4393,25 @@ components:
           type: integer
         created_by_service_token_id:
           type: integer
+        adapter_version:
+          $ref: '#/components/schemas/AdapterVersionEnum'
+        metadata_json:
+          type: object
+          additionalProperties: {}
         state:
           type: integer
+          default: 1
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
       required:
-      - account_id
-      - project_id
-      - state
+      - created_at
+      - updated_at
     DbtAdapterEnveloped:
       type: object
       properties:
@@ -3889,12 +4435,21 @@ components:
           type: integer
         created_by_service_token_id:
           type: integer
+        adapter_version:
+          $ref: '#/components/schemas/AdapterVersionEnum'
+        metadata_json:
+          type: object
+          additionalProperties: {}
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
       - account_id
+      - adapter_version
+      - metadata_json
       - project_id
-      - state
     Defaults:
       type: object
       properties:
@@ -3906,6 +4461,38 @@ components:
       required:
       - data
       - status
+    DeleteSubscriptionResponseData:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    DeleteSubscriptionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DeleteSubscriptionResponseData'
+        status:
+          $ref: '#/components/schemas/DeleteSubscriptionResponseStatus'
+      required:
+      - data
+      - status
+    DeleteSubscriptionResponseStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+        is_success:
+          type: boolean
+      required:
+      - code
+      - is_success
+    DeploymentTypeEnum:
+      enum:
+      - production
+      type: string
+      description: '* `production` - production'
     EnvironmentV3:
       type: object
       properties:
@@ -3913,34 +4500,70 @@ components:
           type: integer
         account_id:
           type: integer
+          description: The account the environment is associated with
         project_id:
           type: integer
+          description: The project the environment is associated with
         credentials_id:
           type: integer
+          description: The id of the associated credentials. Null for development
+            environments.
         extended_attributes_id:
           type: integer
         name:
           type: string
+          default: New Environment
+          description: The name of the environment
         dbt_version:
           type: string
+          default: 1.6.0-latest
+          description: The default dbt Version to use for this environment
         raw_dbt_version:
           type: string
+          readOnly: true
+        type:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentV3TypeEnum'
+          default: deployment
+        use_custom_branch:
+          type: boolean
+          default: false
         custom_branch:
           type: string
+        supports_docs:
+          type: boolean
+          default: false
         state:
           type: integer
+          default: 1
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        project:
+          type: object
+          additionalProperties: {}
+          readOnly: true
         credentials:
-          $ref: '#/components/schemas/PostgresCredentials'
-        custom_environment_variables:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomEnvironmentVariable'
+          allOf:
+          - $ref: '#/components/schemas/PostgresCredentials'
+          readOnly: true
+        deployment_type:
+          $ref: '#/components/schemas/DeploymentTypeEnum'
+        is_deferrable:
+          type: boolean
+          readOnly: true
       required:
-      - account_id
-      - dbt_version
-      - name
-      - project_id
-      - state
+      - created_at
+      - credentials
+      - is_deferrable
+      - project
+      - raw_dbt_version
+      - updated_at
     EnvironmentV3Enveloped:
       type: object
       properties:
@@ -3958,62 +4581,158 @@ components:
           type: integer
         account_id:
           type: integer
+          description: The account the environment is associated with
         project_id:
           type: integer
+          description: The project the environment is associated with
         credentials_id:
           type: integer
+          description: The id of the associated credentials. Null for development
+            environments.
         extended_attributes_id:
           type: integer
         name:
           type: string
           minLength: 1
+          description: The name of the environment
         dbt_version:
           type: string
           minLength: 1
-        raw_dbt_version:
-          type: string
-          minLength: 1
+          description: The default dbt Version to use for this environment
+        type:
+          $ref: '#/components/schemas/EnvironmentV3TypeEnum'
+        use_custom_branch:
+          type: boolean
         custom_branch:
           type: string
           minLength: 1
+        supports_docs:
+          type: boolean
         state:
           type: integer
-        credentials:
-          $ref: '#/components/schemas/PostgresCredentialsRequest'
-        custom_environment_variables:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        deployment_type:
+          $ref: '#/components/schemas/DeploymentTypeEnum'
       required:
       - account_id
       - dbt_version
       - name
       - project_id
-      - state
+      - supports_docs
+      - type
+      - use_custom_branch
+    EnvironmentV3TypeEnum:
+      enum:
+      - development
+      - deployment
+      type: string
+      description: |-
+        * `development` - development
+        * `deployment` - deployment
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+        subscription_id:
+          type: string
+        account_identifier:
+          type: string
+        job_id:
+          type: string
+        trigger_event_type:
+          type: string
+        payload:
+          type: string
+        http_status_code:
+          type: string
+        account_id:
+          type: string
+      required:
+      - account_id
+      - account_identifier
+      - http_status_code
+      - id
+      - job_id
+      - payload
+      - subscription_id
+      - trigger_event_type
+    EventResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Event'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
+    Filters:
+      type: object
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+      required:
+      - limit
+      - offset
+    GetWebhooksReceiptResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Receipt'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
+    GitCloneStrategyEnum:
+      enum:
+      - azure_active_directory_app
+      - deploy_key
+      - deploy_token
+      - github_app
+      - git_token
+      type: string
+      description: |-
+        * `azure_active_directory_app` - azure_active_directory_app
+        * `deploy_key` - deploy_key
+        * `deploy_token` - deploy_token
+        * `github_app` - github_app
+        * `git_token` - git_token
     GitProvider:
       type: object
       properties:
         account_id:
           type: integer
+        provider_type:
+          $ref: '#/components/schemas/ProviderTypeEnum'
         state:
           type: integer
-        id:
-          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
       - account_id
-      - state
+      - provider_type
     GitProviderRequest:
       type: object
       properties:
         account_id:
           type: integer
+        provider_type:
+          $ref: '#/components/schemas/ProviderTypeEnum'
         state:
           type: integer
-        id:
-          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
       - account_id
-      - state
+      - provider_type
     Group:
       type: object
       properties:
@@ -4025,18 +4744,32 @@ components:
           type: integer
         state:
           type: integer
+          default: 1
+        assign_by_default:
+          type: boolean
+          default: false
         sso_mapping_groups:
           type: array
-          items: {}
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
         group_permissions:
           type: array
           items:
             $ref: '#/components/schemas/GroupPermission'
+          readOnly: true
+          default: []
       required:
-      - account_id
+      - created_at
       - group_permissions
-      - name
-      - state
+      - updated_at
     GroupEnveloped:
       type: object
       properties:
@@ -4056,35 +4789,24 @@ components:
           type: integer
         project_id:
           type: integer
+        all_projects:
+          type: boolean
+        permission_set:
+          $ref: '#/components/schemas/PermissionSetEnum'
         permission_level:
           type: integer
         id:
           type: integer
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
       - account_id
+      - all_projects
       - group_id
-      - state
-    GroupPermissionRequest:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        group_id:
-          type: integer
-        project_id:
-          type: integer
-        permission_level:
-          type: integer
-        id:
-          type: integer
-        state:
-          type: integer
-      required:
-      - account_id
-      - group_id
-      - state
+      - permission_set
     GroupRequest:
       type: object
       properties:
@@ -4097,26 +4819,55 @@ components:
           type: integer
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        assign_by_default:
+          type: boolean
         sso_mapping_groups:
           type: array
-          items: {}
-        group_permissions:
-          type: array
           items:
-            $ref: '#/components/schemas/GroupPermissionRequest'
+            type: string
+            minLength: 1
       required:
       - account_id
-      - group_permissions
+      - assign_by_default
       - name
-      - state
-    JobDefinitionExecution:
+    InviteUsersRequestRequest:
       type: object
       properties:
-        timeout_seconds:
+        id:
           type: integer
+        email_addresses:
+          type: array
+          items:
+            type: string
+            minLength: 1
+        license_type:
+          $ref: '#/components/schemas/LicenseTypeEnum'
+        group_ids:
+          type: array
+          items:
+            type: integer
       required:
-      - timeout_seconds
-    JobDefinitionExecutionRequest:
+      - email_addresses
+      - license_type
+    InviteUsersResponse:
+      type: object
+      properties:
+        sent:
+          type: integer
+    InviteUsersResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/InviteUsersResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    JobDefinitionExecution:
       type: object
       properties:
         timeout_seconds:
@@ -4128,16 +4879,14 @@ components:
       properties:
         cron:
           type: string
+        date:
+          $ref: '#/components/schemas/DateEnum'
+        time:
+          $ref: '#/components/schemas/TimeEnum'
       required:
       - cron
-    JobDefinitionScheduleRequest:
-      type: object
-      properties:
-        cron:
-          type: string
-          minLength: 1
-      required:
-      - cron
+      - date
+      - time
     JobDefinitionSettings:
       type: object
       properties:
@@ -4148,17 +4897,20 @@ components:
       required:
       - target_name
       - threads
-    JobDefinitionSettingsRequest:
+    JobDefinitionTriggers:
       type: object
       properties:
-        threads:
-          type: integer
-        target_name:
-          type: string
-          minLength: 1
+        github_webhook:
+          type: boolean
+        schedule:
+          type: boolean
+        git_provider_webhook:
+          type: boolean
+        custom_branch_only:
+          type: boolean
       required:
-      - target_name
-      - threads
+      - github_webhook
+      - schedule
     JobDefinitionV2:
       type: object
       properties:
@@ -4172,16 +4924,23 @@ components:
           type: string
         description:
           type: string
+        generate_docs:
+          type: boolean
+        run_generate_sources:
+          type: boolean
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         dbt_version:
           type: string
-        raw_dbt_version:
-          type: string
-        id:
-          type: integer
+        deactivated:
+          type: boolean
         run_failure_count:
           type: integer
+        triggers:
+          $ref: '#/components/schemas/JobDefinitionTriggers'
         settings:
           $ref: '#/components/schemas/JobDefinitionSettings'
         execution:
@@ -4190,73 +4949,36 @@ components:
           $ref: '#/components/schemas/JobDefinitionSchedule'
         execute_steps:
           type: array
-          items: {}
+          items:
+            type: string
         most_recent_run:
           $ref: '#/components/schemas/Run'
         most_recent_completed_run:
           $ref: '#/components/schemas/Run'
-        custom_environment_variables:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomEnvironmentVariable'
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        triggers_on_draft_pr:
+          type: boolean
+          default: false
       required:
       - account_id
+      - deactivated
       - environment_id
+      - generate_docs
       - name
       - project_id
       - run_failure_count
-      - state
-    JobDefinitionV2Request:
-      type: object
-      properties:
-        environment_id:
-          type: integer
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        name:
-          type: string
-          minLength: 1
-        description:
-          type: string
-          minLength: 1
-        state:
-          type: integer
-        dbt_version:
-          type: string
-          minLength: 1
-        raw_dbt_version:
-          type: string
-          minLength: 1
-        id:
-          type: integer
-        run_failure_count:
-          type: integer
-        settings:
-          $ref: '#/components/schemas/JobDefinitionSettingsRequest'
-        execution:
-          $ref: '#/components/schemas/JobDefinitionExecutionRequest'
-        schedule:
-          $ref: '#/components/schemas/JobDefinitionScheduleRequest'
-        execute_steps:
-          type: array
-          items: {}
-        most_recent_run:
-          $ref: '#/components/schemas/RunRequest'
-        most_recent_completed_run:
-          $ref: '#/components/schemas/RunRequest'
-        custom_environment_variables:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-      required:
-      - account_id
-      - environment_id
-      - name
-      - project_id
-      - run_failure_count
-      - state
+      - run_generate_sources
+    JobTypeEnum:
+      enum:
+      - ci
+      - scheduled
+      - other
+      type: string
+      description: |-
+        * `ci` - ci
+        * `scheduled` - scheduled
+        * `other` - other
     LicenseMap:
       type: object
       properties:
@@ -4264,14 +4986,26 @@ components:
           type: integer
         account_id:
           type: integer
+        license_type:
+          $ref: '#/components/schemas/LicenseTypeEnum'
         state:
           type: integer
+          default: 1
         sso_license_mapping_groups:
           type: array
-          items: {}
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
       required:
-      - account_id
-      - state
+      - created_at
+      - updated_at
     LicenseMapEnveloped:
       type: object
       properties:
@@ -4289,14 +5023,202 @@ components:
           type: integer
         account_id:
           type: integer
+        license_type:
+          $ref: '#/components/schemas/LicenseTypeEnum'
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         sso_license_mapping_groups:
           type: array
-          items: {}
+          items:
+            type: string
+            minLength: 1
       required:
       - account_id
-      - state
+      - license_type
+    LicenseTypeEnum:
+      enum:
+      - developer
+      - read_only
+      - it
+      type: string
+      description: |-
+        * `developer` - developer
+        * `read_only` - read_only
+        * `it` - it
+    ListWebhooksReceiptsResponseEnvelope:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Receipt'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
+    NotFound:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        status:
+          $ref: '#/components/schemas/NotFoundStatus'
+      required:
+      - status
+    NotFoundStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 404
+        is_success:
+          type: boolean
+        user_message:
+          type: string
+        developer_message:
+          type: string
+      required:
+      - developer_message
+      - is_success
+      - user_message
+    PaginatedWebhooksEvents:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        extra:
+          $ref: '#/components/schemas/PaginationExtra'
+      required:
+      - data
+      - extra
+      - status
+    PaginatedWebhooksSubscriptions:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscription'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        extra:
+          $ref: '#/components/schemas/PaginationExtra'
+      required:
+      - data
+      - extra
+      - status
+    Pagination:
+      type: object
+      properties:
+        total_count:
+          type: integer
+        count:
+          type: integer
+      required:
+      - count
+      - total_count
+    PaginationExtra:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        filters:
+          $ref: '#/components/schemas/Filters'
+      required:
+      - filters
+      - pagination
+    PatchedSemanticLayerCredentialsRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+          description: The account the credentials are associated with
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The adapter version. Should match the associated project's adapter version.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+        schema_type:
+          allOf:
+          - $ref: '#/components/schemas/SchemaTypeEnum'
+          description: |-
+            The adapter schema type. Should always be 'semantic_layer_credentials'
+
+            * `connection` - connection
+            * `credential` - credential
+            * `semantic_layer_credentials` - semantic_layer_credentials
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+    PermissionSetEnum:
+      enum:
+      - owner
+      - member
+      - account_admin
+      - security_admin
+      - billing_admin
+      - admin
+      - database_admin
+      - git_admin
+      - team_admin
+      - job_admin
+      - job_viewer
+      - analyst
+      - developer
+      - stakeholder
+      - readonly
+      - project_creator
+      - account_viewer
+      - metadata_only
+      - semantic_layer_only
+      - webhooks_only
+      type: string
+      description: |-
+        * `owner` - owner
+        * `member` - member
+        * `account_admin` - account_admin
+        * `security_admin` - security_admin
+        * `billing_admin` - billing_admin
+        * `admin` - admin
+        * `database_admin` - database_admin
+        * `git_admin` - git_admin
+        * `team_admin` - team_admin
+        * `job_admin` - job_admin
+        * `job_viewer` - job_viewer
+        * `analyst` - analyst
+        * `developer` - developer
+        * `stakeholder` - stakeholder
+        * `readonly` - readonly
+        * `project_creator` - project_creator
+        * `account_viewer` - account_viewer
+        * `metadata_only` - metadata_only
+        * `semantic_layer_only` - semantic_layer_only
+        * `webhooks_only` - webhooks_only
     PostgresCredentials:
       type: object
       properties:
@@ -4306,8 +5228,13 @@ components:
           type: integer
         project_id:
           type: integer
+        type:
+          $ref: '#/components/schemas/Type666Enum'
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         threads:
           type: integer
         username:
@@ -4316,95 +5243,130 @@ components:
           type: string
         target_name:
           type: string
-        password:
-          type: string
-        _password:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedField'
-          title: ' password'
       required:
       - account_id
       - default_schema
-      - state
       - target_name
       - threads
+      - type
       - username
-    PostgresCredentialsRequest:
+    PrivateLinkEndpoint:
       type: object
       properties:
-        id:
-          type: integer
         account_id:
           type: integer
-        project_id:
-          type: integer
+        name:
+          type: string
+        type:
+          type: string
+          description: The warehouse or the git provider type of the PrivateLink endpoint
+        private_link_endpoint:
+          type: string
+        cidr_range:
+          type: string
         state:
           type: integer
-        threads:
-          type: integer
-        username:
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        id:
           type: string
-          minLength: 1
-        default_schema:
+          readOnly: true
+        created_at:
           type: string
-          minLength: 1
-        target_name:
+          format: date-time
+          readOnly: true
+        updated_at:
           type: string
-          minLength: 1
-        password:
-          type: string
-          minLength: 1
-        _password:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedFieldRequest'
-          title: ' password'
+          format: date-time
+          readOnly: true
       required:
-      - account_id
-      - default_schema
-      - state
-      - target_name
-      - threads
-      - username
+      - created_at
+      - id
+      - updated_at
+    PrivateLinkEndpointEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateLinkEndpoint'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     Project:
       type: object
       properties:
         name:
           type: string
+          description: The name of the project
         account_id:
           type: integer
-          description: id of account this project belongs to
+          description: The account the project is associated with
         connection_id:
           type: integer
+          description: The active connection
         repository_id:
           type: integer
+          description: The active repository
         semantic_layer_config_id:
           type: integer
+          description: The active semantic layer configuration
         id:
           type: integer
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        skipped_setup:
+          type: boolean
+          default: false
         state:
           type: integer
+          default: 1
         dbt_project_subdirectory:
           type: string
         connection:
-          $ref: '#/components/schemas/BaseConnectionV3'
+          allOf:
+          - $ref: '#/components/schemas/BaseConnectionV3'
+          readOnly: true
         repository:
-          $ref: '#/components/schemas/RepositoryV3'
+          allOf:
+          - $ref: '#/components/schemas/RepositoryV3'
+          readOnly: true
         group_permissions:
           type: array
           items:
             $ref: '#/components/schemas/GroupPermission'
+          readOnly: true
         docs_job_id:
           type: integer
+          description: The job used for docs generation
         freshness_job_id:
           type: integer
+          description: The job used for source freshness generation
         docs_job:
-          $ref: '#/components/schemas/JobDefinitionV2'
+          allOf:
+          - $ref: '#/components/schemas/JobDefinitionV2'
+          readOnly: true
         freshness_job:
-          $ref: '#/components/schemas/JobDefinitionV2'
+          allOf:
+          - $ref: '#/components/schemas/JobDefinitionV2'
+          readOnly: true
       required:
-      - account_id
-      - name
-      - state
+      - connection
+      - created_at
+      - docs_job
+      - freshness_job
+      - group_permissions
+      - repository
+      - updated_at
     ProjectEnveloped:
       type: object
       properties:
@@ -4421,42 +5383,139 @@ components:
         name:
           type: string
           minLength: 1
+          description: The name of the project
         account_id:
           type: integer
-          description: id of account this project belongs to
+          description: The account the project is associated with
         connection_id:
           type: integer
+          description: The active connection
         repository_id:
           type: integer
+          description: The active repository
         semantic_layer_config_id:
           type: integer
+          description: The active semantic layer configuration
         id:
           type: integer
+        skipped_setup:
+          type: boolean
+          default: false
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         dbt_project_subdirectory:
           type: string
           minLength: 1
-        connection:
-          $ref: '#/components/schemas/BaseConnectionV3Request'
-        repository:
-          $ref: '#/components/schemas/RepositoryV3Request'
-        group_permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupPermissionRequest'
         docs_job_id:
           type: integer
+          description: The job used for docs generation
         freshness_job_id:
           type: integer
-        docs_job:
-          $ref: '#/components/schemas/JobDefinitionV2Request'
-        freshness_job:
-          $ref: '#/components/schemas/JobDefinitionV2Request'
+          description: The job used for source freshness generation
       required:
       - account_id
       - name
-      - state
+    ProviderTypeEnum:
+      enum:
+      - azure_active_directory
+      - github
+      - gitlab
+      - git_url
+      - managed_github
+      - manual_config
+      type: string
+      description: |-
+        * `azure_active_directory` - azure_active_directory
+        * `github` - github
+        * `gitlab` - gitlab
+        * `git_url` - git_url
+        * `managed_github` - managed_github
+        * `manual_config` - manual_config
+    PublicAuditLog:
+      type: object
+      properties:
+        id:
+          type: string
+        account_id:
+          type: integer
+        source:
+          type: string
+        service:
+          type: string
+        actor:
+          type: object
+          additionalProperties: {}
+        event_type:
+          type: string
+        event_context:
+          type: object
+          additionalProperties: {}
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+    PublicAuditLogEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicAuditLog'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    Receipt:
+      type: object
+      properties:
+        id:
+          type: string
+        event_id:
+          type: string
+        subscription_id:
+          type: string
+        dispatched_at:
+          type: string
+        http_status_code:
+          type: string
+        error_info:
+          type: string
+        request_body:
+          type: string
+        request_headers:
+          type: string
+        response_body:
+          type: string
+      required:
+      - dispatched_at
+      - error_info
+      - event_id
+      - http_status_code
+      - id
+      - request_body
+      - request_headers
+      - response_body
+      - subscription_id
+    RemoteBackendEnum:
+      enum:
+      - azure_active_directory
+      - github
+      - managed
+      - gitlab
+      - manual_config
+      type: string
+      description: |-
+        * `azure_active_directory` - azure_active_directory
+        * `github` - github
+        * `managed` - managed
+        * `gitlab` - gitlab
+        * `manual_config` - manual_config
     RepositoryGitlab:
       type: object
       properties:
@@ -4470,18 +5529,14 @@ components:
           type: integer
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         project_access_token_id:
           type: integer
-        project_access_token:
-          type: string
-        _project_access_token:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedField'
-          title: ' project access token'
       required:
       - account_id
       - gitlab_project_id
-      - state
     RepositoryGitlabRequest:
       type: object
       properties:
@@ -4495,19 +5550,18 @@ components:
           type: integer
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         project_access_token_id:
           type: integer
         project_access_token:
           type: string
+          writeOnly: true
           minLength: 1
-        _project_access_token:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedFieldRequest'
-          title: ' project access token'
       required:
       - account_id
       - gitlab_project_id
-      - state
     RepositoryV3:
       type: object
       properties:
@@ -4519,6 +5573,10 @@ components:
           type: integer
         full_name:
           type: string
+        remote_backend:
+          $ref: '#/components/schemas/RemoteBackendEnum'
+        git_clone_strategy:
+          $ref: '#/components/schemas/GitCloneStrategyEnum'
         deploy_key_id:
           type: integer
         repository_credentials_id:
@@ -4527,17 +5585,12 @@ components:
           type: integer
         github_webhook_id:
           type: integer
-        github_webhook_secret:
-          type: string
-        _github_webhook_secret:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedField'
-          title: ' github webhook secret'
         state:
           type: integer
-        github_repo:
-          type: string
-        name:
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        private_link_endpoint_id:
           type: string
         git_provider_id:
           type: integer
@@ -4547,7 +5600,6 @@ components:
           $ref: '#/components/schemas/GitProvider'
       required:
       - account_id
-      - state
     RepositoryV3Enveloped:
       type: object
       properties:
@@ -4570,6 +5622,10 @@ components:
         full_name:
           type: string
           minLength: 1
+        remote_backend:
+          $ref: '#/components/schemas/RemoteBackendEnum'
+        git_clone_strategy:
+          $ref: '#/components/schemas/GitCloneStrategyEnum'
         deploy_key_id:
           type: integer
         repository_credentials_id:
@@ -4580,17 +5636,14 @@ components:
           type: integer
         github_webhook_secret:
           type: string
+          writeOnly: true
           minLength: 1
-        _github_webhook_secret:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedFieldRequest'
-          title: ' github webhook secret'
         state:
           type: integer
-        github_repo:
-          type: string
-          minLength: 1
-        name:
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        private_link_endpoint_id:
           type: string
           minLength: 1
         git_provider_id:
@@ -4601,7 +5654,6 @@ components:
           $ref: '#/components/schemas/GitProviderRequest'
       required:
       - account_id
-      - state
     ResponseData:
       type: object
       properties:
@@ -4609,10 +5661,18 @@ components:
           type: string
         new_var_ids:
           type: array
-          items: {}
+          items:
+            type: integer
       required:
       - message
       - new_var_ids
+    ResponseStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+      required:
+      - code
     Run:
       type: object
       properties:
@@ -4644,119 +5704,322 @@ components:
           type: string
         deferring_run_id:
           type: integer
+        artifacts_saved:
+          type: boolean
         artifact_s3_path:
           type: string
+        has_docs_generated:
+          type: boolean
+        has_sources_generated:
+          type: boolean
+        notifications_sent:
+          type: boolean
         blocked_by:
           type: array
-          items: {}
-        status_humanized:
-          type: string
-        duration:
-          type: string
-        queued_duration:
-          type: string
-        run_duration:
-          type: string
-        duration_humanized:
-          type: string
-        queued_duration_humanized:
-          type: string
-        run_duration_humanized:
-          type: string
-        created_at_humanized:
-          type: string
-        finished_at_humanized:
-          type: string
-        job_id:
-          type: integer
+          items:
+            type: integer
+        scribe_enabled:
+          type: boolean
+        is_running:
+          type: boolean
       required:
       - account_id
+      - artifacts_saved
       - blocked_by
       - dbt_version
       - environment_id
+      - has_docs_generated
+      - has_sources_generated
       - job_definition_id
+      - notifications_sent
       - project_id
+      - scribe_enabled
       - status
-    RunRequest:
+    SchemaTypeEnum:
+      enum:
+      - connection
+      - credential
+      - semantic_layer_credentials
+      type: string
+      description: |-
+        * `connection` - connection
+        * `credential` - credential
+        * `semantic_layer_credentials` - semantic_layer_credentials
+    SemanticLayerConfig:
       type: object
       properties:
         id:
           type: integer
-        trigger_id:
+        account_id:
+          type: integer
+          description: The account the config is associated with
+        project_id:
+          type: integer
+          description: The project the config is associated with
+        environment_id:
+          type: integer
+          description: The environment to run Semantic Layer queries against
+        semantic_layer_credentials_id:
+          type: integer
+          description: The credentials to use when querying the Semantic Layer
+        state:
+          type: integer
+          default: 1
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        semantic_layer_credentials:
+          allOf:
+          - $ref: '#/components/schemas/SemanticLayerCredentials'
+          readOnly: true
+      required:
+      - created_at
+      - semantic_layer_credentials
+      - updated_at
+    SemanticLayerConfigEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SemanticLayerConfig'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    SemanticLayerConfigRequest:
+      type: object
+      properties:
+        id:
           type: integer
         account_id:
           type: integer
+          description: The account the config is associated with
+        project_id:
+          type: integer
+          description: The project the config is associated with
         environment_id:
+          type: integer
+          description: The environment to run Semantic Layer queries against
+        semantic_layer_credentials_id:
+          type: integer
+          description: The credentials to use when querying the Semantic Layer
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+      required:
+      - account_id
+      - environment_id
+      - project_id
+      - semantic_layer_credentials_id
+    SemanticLayerCredentials:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+          description: The account the credentials are associated with
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The adapter version. Should match the associated project's adapter version.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+        schema_type:
+          allOf:
+          - $ref: '#/components/schemas/SchemaTypeEnum'
+          description: |-
+            The adapter schema type. Should always be 'semantic_layer_credentials'
+
+            * `connection` - connection
+            * `credential` - credential
+            * `semantic_layer_credentials` - semantic_layer_credentials
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+      required:
+      - account_id
+      - adapter_version
+      - schema_type
+    SemanticLayerCredentialsEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SemanticLayerCredentials'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    SemanticLayerCredentialsRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+          description: The account the credentials are associated with
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The adapter version. Should match the associated project's adapter version.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+        schema_type:
+          allOf:
+          - $ref: '#/components/schemas/SchemaTypeEnum'
+          description: |-
+            The adapter schema type. Should always be 'semantic_layer_credentials'
+
+            * `connection` - connection
+            * `credential` - credential
+            * `semantic_layer_credentials` - semantic_layer_credentials
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+      required:
+      - account_id
+      - adapter_version
+      - schema_type
+    ServiceToken:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        uid:
+          type: string
+        name:
+          type: string
+        token:
+          type: string
+        state:
+          type: integer
+          default: 1
+        token_string:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        last_used:
+          type: string
+          format: date-time
+        metadata_only:
+          type: boolean
+          default: false
+        webhooks_only:
+          type: boolean
+          default: false
+        service_token_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTokenPermission'
+          readOnly: true
+          default: []
+      required:
+      - created_at
+      - service_token_permissions
+      - token_string
+      - updated_at
+    ServiceTokenEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceToken'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    ServiceTokenPermission:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        service_token_id:
           type: integer
         project_id:
           type: integer
-        job_definition_id:
+        all_projects:
+          type: boolean
+        permission_set:
+          $ref: '#/components/schemas/PermissionSetEnum'
+        state:
           type: integer
-        status:
-          type: integer
-        dbt_version:
-          type: string
-          minLength: 1
-        git_branch:
-          type: string
-          minLength: 1
-        git_sha:
-          type: string
-          minLength: 1
-        status_message:
-          type: string
-          minLength: 1
-        owner_thread_id:
-          type: string
-          minLength: 1
-        executed_by_thread_id:
-          type: string
-          minLength: 1
-        deferring_run_id:
-          type: integer
-        artifact_s3_path:
-          type: string
-          minLength: 1
-        blocked_by:
-          type: array
-          items: {}
-        status_humanized:
-          type: string
-          minLength: 1
-        duration:
-          type: string
-          minLength: 1
-        queued_duration:
-          type: string
-          minLength: 1
-        run_duration:
-          type: string
-          minLength: 1
-        duration_humanized:
-          type: string
-          minLength: 1
-        queued_duration_humanized:
-          type: string
-          minLength: 1
-        run_duration_humanized:
-          type: string
-          minLength: 1
-        created_at_humanized:
-          type: string
-          minLength: 1
-        finished_at_humanized:
-          type: string
-          minLength: 1
-        job_id:
-          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
       - account_id
-      - blocked_by
-      - dbt_version
-      - environment_id
-      - job_definition_id
-      - project_id
+      - all_projects
+      - permission_set
+      - service_token_id
+    ServiceTokenPermissionEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTokenPermission'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
       - status
+    ServiceTokenRequestRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        metadata_only:
+          type: boolean
+        webhooks_only:
+          type: boolean
+      required:
+      - metadata_only
+      - name
+      - webhooks_only
     Status:
       type: object
       properties:
@@ -4773,6 +6036,106 @@ components:
       - developer_message
       - is_success
       - user_message
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: string
+        account_identifier:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        event_types:
+          type: array
+          items:
+            type: string
+        client_url:
+          type: string
+        active:
+          type: boolean
+        http_status_code:
+          type: string
+        dispatched_at:
+          type: string
+        account_id:
+          type: string
+        job_ids:
+          type: array
+          items:
+            type: string
+      required:
+      - account_id
+      - account_identifier
+      - active
+      - client_url
+      - description
+      - dispatched_at
+      - event_types
+      - http_status_code
+      - id
+      - job_ids
+      - name
+    SubscriptionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Subscription'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
+    TestSubscriptionResponseData:
+      type: object
+      properties:
+        verification_error:
+          type: string
+        verification_status_code:
+          type: string
+    TestSubscriptionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TestSubscriptionResponseData'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
+    TimeEnum:
+      enum:
+      - every_hour
+      - at_exact_hours
+      type: string
+      description: |-
+        * `every_hour` - every_hour
+        * `at_exact_hours` - at_exact_hours
+    Type666Enum:
+      enum:
+      - postgres
+      - redshift
+      - snowflake
+      - bigquery
+      - adapter
+      type: string
+      description: |-
+        * `postgres` - postgres
+        * `redshift` - redshift
+        * `snowflake` - snowflake
+        * `bigquery` - bigquery
+        * `adapter` - adapter
+    UpdateSubscriptionResponseEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Subscription'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
     UserCredentials:
       type: object
       properties:
@@ -4788,16 +6151,28 @@ components:
           type: integer
         state:
           type: integer
+          default: 1
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
         credentials:
-          $ref: '#/components/schemas/PostgresCredentials'
+          allOf:
+          - $ref: '#/components/schemas/PostgresCredentials'
+          readOnly: true
         project:
-          $ref: '#/components/schemas/Project'
+          allOf:
+          - $ref: '#/components/schemas/Project'
+          readOnly: true
       required:
-      - account_id
-      - credentials_id
-      - project_id
-      - state
-      - user_id
+      - created_at
+      - credentials
+      - project
+      - updated_at
     UserCredentialsEnveloped:
       type: object
       properties:
@@ -4823,15 +6198,13 @@ components:
           type: integer
         state:
           type: integer
-        credentials:
-          $ref: '#/components/schemas/PostgresCredentialsRequest'
-        project:
-          $ref: '#/components/schemas/ProjectRequest'
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
       - account_id
       - credentials_id
       - project_id
-      - state
       - user_id
   securitySchemes:
     BearerAuthentication:

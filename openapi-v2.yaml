@@ -5,38 +5,59 @@ info:
   description: "# How to use this API\n\nThe dbt Cloud API v2 contains endpoints for\
     \ enqueuing runs from a job, polling for run progress,\nand downloading artifacts\
     \ after jobs have completed running. For operational endpoints to\ncreate, modify,\
-    \ and delete _objects_ in dbt Cloud, consider using [API v3](/dbt-cloud/api-v3#/)\n\
+    \ and delete _objects_ in dbt Cloud, consider using [API v3](https://docs.getdbt.com/dbt-cloud/api-v3#/)\n\
     \nThe API docs are generated from an openapi spec defined in the\n[dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec/blob/master/openapi-v2.yaml)\n\
     repository. If you find issues in these docs or have questions about using the\
     \ dbt Cloud\nAPI, please open an issue in the dbt-cloud-openapi-spec repo or contact\
-    \ support@getdbt.com.\n\n# Authentication\n\nTo authenticate an application with\
+    \ support@getdbt.com.\n\n## Authentication\n\nTo authenticate an application with\
     \ the dbt Cloud API, navigate to the\nAPI Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).\n\
     If you cannot access this page, confirm that your dbt Cloud account has access\
     \ to the API,\nand that you are using the hosted version of dbt Cloud. If dbt\
     \ Cloud is running inside of a VPC\nin an Enterprise account, contact your account\
-    \ manager for help finding your API key.\n\n## Token Auth\n\nOnce you've found\
-    \ your API key, use it in the Authorization header of requests to the dbt Cloud\
-    \ API.\nBe sure to include the `Token` prefix in the Authorization header, or\
-    \ the request will fail with a\n\"401 Unauthorized\" error. Note: `Bearer` can\
-    \ be used in place of `Token` in the Authorization header.\nBoth syntaxes are\
-    \ equivalent.\n\n**Headers**\n```\nAccept: application/json\nAuthorization: Token\
-    \ <your token>\n```\n\n## Example request\n\nThe following example will list the\
-    \ Accounts that your token is authorized to access.\nBe sure to replace `<your\
-    \ token>` in the Authorization header with your actual API token.\n\n```bash\n\
-    curl --request GET \\\n  --url https://cloud.getdbt.com/api/v2/accounts/ \\\n\
-    \  --header 'Content-Type: application/json' \\\n  --header 'Authorization: Token\
-    \ <your token>'\n```\n\n&nbsp;  \n\n# Pagination\n\nAll top-level API resources\
-    \ have support for bulk fetches via \"list\" API methods. These list\nAPI methods\
-    \ accept `limit` and `offset` query parameters which can be used together to paginate\
-    \ results.\n\nOffsets begin at 0.\n\nThe maximum limit for a single request is\
-    \ 100.\n"
+    \ manager for help finding your API key.\n\nOnce you've found your API key, use\
+    \ it in the Authorization header of requests to the dbt Cloud API.\nBe sure to\
+    \ include the `Token` prefix in the Authorization header, or the request will\
+    \ fail with a\n\"401 Unauthorized\" error.\n\n*Note: `Bearer` can be used in place\
+    \ of `Token` in the Authorization header. Both syntaxes are equivalent.*\n\n**Headers**\n\
+    ```\nAccept: application/json\nAuthorization: Token <your token>\n```  \n\n##\
+    \ Pagination\n\nAll top-level API resources support bulk fetches using the \"\
+    list\" or `GET` API methods. These API methods accept `limit` and `offset` query\
+    \ parameters that you can use together to paginate results and return a subset\
+    \ of those results.\n\n* Offset: Specifies how many records to skip. Can be an\
+    \ integer 0 and higher.\n* Limit: Specifies the maximum records you want to retrieve\
+    \ in a single request. Can be an integer up to 100. This limit makes responses\
+    \ easier to handle for servers and people.\n\n\n## Example request\n\nThe following\
+    \ example uses the list projects endpoint to list the projects that your token\
+    \ is authorized to access.\nThis request skips the first 10 projects and lists\
+    \ the next 10 projects.\nBe sure to replace `<YOUR_TOKEN>` in the Authorization\
+    \ header with your actual API token and `<YOUR_ACCOUNT_ID>` with your actual account\
+    \ ID.\n\n```bash\ncurl --request GET \\\n  --url 'https://cloud.getdbt.com/api/v3/accounts/<YOUR_ACCOUNT_ID/projects/?limit=10&offset=5'\
+    \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'Authorization:\
+    \ Token <YOUR_TOKEN>'\n```\n"
   termsOfService: https://www.getdbt.com/terms-of-service
   contact:
     email: support@getdbt.com
 paths:
-  /api/v2/accounts/{account_id}/billing/cards/:
+  /api/v2/accounts/:
     get:
-      operationId: Retrieve Billing Card
+      operationId: List Accounts
+      description: Deprecated. Consider using the v3 API instead.
+      tags:
+      - Accounts
+      security:
+      - BearerAuthentication: []
+      deprecated: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEnveloped'
+          description: ''
+  /api/v2/accounts/{account_id}/:
+    get:
+      operationId: Retrieve Account
+      description: Retrieve an Account
       parameters:
       - in: path
         name: account_id
@@ -44,7 +65,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Billing
+      - Accounts
       security:
       - BearerAuthentication: []
       responses:
@@ -52,11 +73,44 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/AccountEnveloped'
+          description: ''
+    post:
+      operationId: Update Account
+      description: Update an account
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/connections/:
     get:
       operationId: List Connections
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -77,6 +131,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -84,6 +142,7 @@ paths:
       - Connections
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -95,6 +154,7 @@ paths:
           description: ''
     post:
       operationId: Create Connection
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -117,6 +177,7 @@ paths:
         required: true
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -129,6 +190,7 @@ paths:
   /api/v2/accounts/{account_id}/connections/{id}/:
     get:
       operationId: Retrieve Connection
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -154,6 +216,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -161,6 +227,7 @@ paths:
       - Connections
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -170,6 +237,7 @@ paths:
           description: ''
     post:
       operationId: Update Connection
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -197,6 +265,7 @@ paths:
         required: true
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -206,6 +275,7 @@ paths:
           description: ''
     delete:
       operationId: Destroy Connection
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -231,6 +301,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -238,12 +312,14 @@ paths:
       - Connections
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '204':
           description: No response body
   /api/v2/accounts/{account_id}/encryptions/:
     get:
-      operationId: List Connection Encryptions
+      operationId: List SSH Tunnels
+      description: List SSH tunnels
       parameters:
       - in: path
         name: account_id
@@ -275,7 +351,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Connection Encryptions
+      - Connections
       security:
       - BearerAuthentication: []
       responses:
@@ -288,7 +364,8 @@ paths:
                   $ref: '#/components/schemas/ConnectionEncryptionEnveloped'
           description: ''
     post:
-      operationId: Create Connection Encryption
+      operationId: Create SSH Tunnel
+      description: Create a new SSH tunnel to encrypt traffic for a given connection
       parameters:
       - in: path
         name: account_id
@@ -296,7 +373,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Connection Encryptions
+      - Connections
       requestBody:
         content:
           application/json:
@@ -322,7 +399,8 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/encryptions/{id}/:
     get:
-      operationId: Retrieve Connection Encryption
+      operationId: Retrieve SSH Tunnel
+      description: Retrieve an SSH tunnel
       parameters:
       - in: path
         name: account_id
@@ -359,7 +437,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Connection Encryptions
+      - Connections
       security:
       - BearerAuthentication: []
       responses:
@@ -370,7 +448,8 @@ paths:
                 $ref: '#/components/schemas/ConnectionEncryptionEnveloped'
           description: ''
     post:
-      operationId: Update Connection Encryption
+      operationId: Update SSH Tunnel
+      description: Update an SSH tunnel
       parameters:
       - in: path
         name: account_id
@@ -383,7 +462,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Connection Encryptions
+      - Connections
       requestBody:
         content:
           application/json:
@@ -406,7 +485,8 @@ paths:
                 $ref: '#/components/schemas/ConnectionEncryptionEnveloped'
           description: ''
     delete:
-      operationId: Destroy Connection Encryption
+      operationId: Destroy SSH Tunnel
+      description: Delete an SSH tunnel
       parameters:
       - in: path
         name: account_id
@@ -443,7 +523,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Connection Encryptions
+      - Connections
       security:
       - BearerAuthentication: []
       responses:
@@ -452,6 +532,7 @@ paths:
   /api/v2/accounts/{account_id}/environments/:
     get:
       operationId: List Environments
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -476,6 +557,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -483,6 +568,7 @@ paths:
       - Environments
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -494,6 +580,7 @@ paths:
           description: ''
     post:
       operationId: Create Environment
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -516,6 +603,7 @@ paths:
         required: true
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -525,34 +613,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/EnvironmentV2Enveloped'
           description: ''
-  /api/v2/accounts/{account_id}/environments/{environment_id}/develop/:
-    get:
-      operationId: Retrieve Environments Develop
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: environment_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Environments
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
   /api/v2/accounts/{account_id}/environments/{id}/:
     get:
       operationId: Retrieve Environment
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -582,6 +646,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -589,6 +657,7 @@ paths:
       - Environments
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -598,6 +667,7 @@ paths:
           description: ''
     post:
       operationId: Update Environment
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -625,6 +695,7 @@ paths:
         required: true
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -634,6 +705,7 @@ paths:
           description: ''
     delete:
       operationId: Destroy Environment
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -663,6 +735,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -670,6 +746,7 @@ paths:
       - Environments
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '204':
           description: No response body
@@ -691,7 +768,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/InviteEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/invites/{id}/:
     get:
@@ -716,35 +793,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
-    post:
-      operationId: Create Invite
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Invites
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/InviteEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/jobs/:
     get:
       operationId: List Jobs
+      description: Use this endpoint to list jobs for an account.
       parameters:
       - in: query
         name: account__locked
@@ -823,6 +877,7 @@ paths:
           description: ''
     post:
       operationId: Create Job
+      description: Use this endpoint to create a new job.
       parameters:
       - in: path
         name: account_id
@@ -886,6 +941,37 @@ paths:
               schema:
                 $ref: '#/components/schemas/Defaults'
           description: ''
+  /api/v2/accounts/{account_id}/jobs/{job_id}/rerun/:
+    post:
+      operationId: Rerun a failed run or retry a run from point of failure for a job
+      description: Use this endpoint to retry a failed run for a job from the point
+        of failure, if the run failed. Otherwise trigger a new run. When this endpoint
+        returns a successful response, a new run will be enqueued for the account.
+        Users can poll the Get run endpoint to poll the run until it completes. After
+        the run has completed, users can use the Get run artifact endpoint to download
+        artifacts generated by the run.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: job_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Jobs
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v2/accounts/{account_id}/jobs/{job_id}/run/:
     post:
       operationId: Trigger Job Run
@@ -931,6 +1017,7 @@ paths:
   /api/v2/accounts/{account_id}/jobs/{id}/:
     get:
       operationId: Retrieve Job
+      description: Use this endpoint to retrieve the details of a job.
       parameters:
       - in: query
         name: account__locked
@@ -1012,6 +1099,7 @@ paths:
           description: ''
     post:
       operationId: Update Job
+      description: Use this endpoint to update a job.
       parameters:
       - in: path
         name: account_id
@@ -1048,6 +1136,7 @@ paths:
           description: ''
     delete:
       operationId: Destroy Job
+      description: Use this endpoint to delete a job.
       parameters:
       - in: query
         name: account__locked
@@ -1158,6 +1247,10 @@ paths:
           type: integer
         required: true
       - in: query
+        name: external_email
+        schema:
+          type: string
+      - in: query
         name: limit
         schema:
           type: integer
@@ -1165,6 +1258,10 @@ paths:
         name: offset
         schema:
           type: integer
+      - in: query
+        name: slack_channel_id
+        schema:
+          type: string
       - in: query
         name: state
         schema:
@@ -1229,6 +1326,10 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: external_email
+        schema:
+          type: string
       - in: path
         name: id
         schema:
@@ -1242,6 +1343,10 @@ paths:
         name: offset
         schema:
           type: integer
+      - in: query
+        name: slack_channel_id
+        schema:
+          type: string
       - in: query
         name: state
         schema:
@@ -1306,6 +1411,10 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: external_email
+        schema:
+          type: string
       - in: path
         name: id
         schema:
@@ -1319,6 +1428,10 @@ paths:
         name: offset
         schema:
           type: integer
+      - in: query
+        name: slack_channel_id
+        schema:
+          type: string
       - in: query
         name: state
         schema:
@@ -1358,6 +1471,7 @@ paths:
   /api/v2/accounts/{account_id}/projects/:
     get:
       operationId: List Projects
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -1396,6 +1510,7 @@ paths:
       - Projects
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1407,6 +1522,7 @@ paths:
           description: ''
     post:
       operationId: Create Project
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -1429,6 +1545,7 @@ paths:
         required: true
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1441,6 +1558,7 @@ paths:
   /api/v2/accounts/{account_id}/projects/{id}/:
     get:
       operationId: Retrieve Project
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -1484,6 +1602,7 @@ paths:
       - Projects
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1493,6 +1612,7 @@ paths:
           description: ''
     post:
       operationId: Update Project
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -1520,6 +1640,7 @@ paths:
         required: true
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1529,6 +1650,7 @@ paths:
           description: ''
     delete:
       operationId: Destroy Project
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -1572,6 +1694,7 @@ paths:
       - Projects
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '204':
           description: No response body
@@ -1741,6 +1864,7 @@ paths:
   /api/v2/accounts/{account_id}/runs/:
     get:
       operationId: List Runs
+      description: Use this endpoint to list runs for an account.
       parameters:
       - in: path
         name: account_id
@@ -1839,6 +1963,7 @@ paths:
   /api/v2/accounts/{account_id}/runs/{id}/:
     get:
       operationId: Retrieve Run
+      description: Use this endpoint to retrieve details for a run.
       parameters:
       - in: path
         name: account_id
@@ -1940,6 +2065,7 @@ paths:
   /api/v2/accounts/{account_id}/runs/{run_id}/artifacts/:
     get:
       operationId: List Run Artifacts
+      description: Retrieve the list of artifacts generated for a run.
       parameters:
       - in: path
         name: account_id
@@ -2011,6 +2137,62 @@ paths:
   /api/v2/accounts/{account_id}/runs/{run_id}/cancel/:
     post:
       operationId: Cancel Run
+      description: Use this endpoint to cancel a run.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: run_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Runs
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
+  /api/v2/accounts/{account_id}/runs/{run_id}/retry/:
+    get:
+      operationId: Get details of the failed retryable job
+      description: Use this endpoint to details about a retryable job that has failed.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: run_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Runs
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
+    post:
+      operationId: Retry a failed run for a job
+      description: Use this endpoint to retry a failed run for a job. When this endpoint
+        returns a successful response, a new run will be enqueued for the account.
+        Users can poll the Get run endpoint to poll the run until it completes. After
+        the run has completed, users can use the Get run artifact endpoint to download
+        artifacts generated by the run.
       parameters:
       - in: path
         name: account_id
@@ -2036,6 +2218,8 @@ paths:
   /api/v2/accounts/{account_id}/steps/{id}/:
     get:
       operationId: Retrieve Run Step
+      description: Use this endpoint to retrieve the details of a specific step of
+        a run.
       parameters:
       - in: path
         name: account_id
@@ -2162,6 +2346,344 @@ paths:
           description: ''
 components:
   schemas:
+    Account:
+      type: object
+      required:
+      - id
+      - name
+      - state
+      - plan
+      - pending_cancel
+      - run_slots
+      - developer_seats
+      - docs_job_id
+      - freshness_job_id
+      properties:
+        id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+        name:
+          allOf:
+          - type: string
+          - minLength: 1
+            maxLength: 255
+          description: The name of the account
+        state:
+          type: integer
+        plan:
+          type: string
+          description: The active plan type for the account
+        pending_cancel:
+          type: boolean
+        run_slots:
+          type: integer
+          description: The total number of run slots the account may use
+        developer_seats:
+          type: integer
+          description: The total number of developer seats the account may use
+        it_seats:
+          type: integer
+          description: The total number of IT seats the account may use
+        read_only_seats:
+          type: integer
+          description: The total number of Read Only seats the account may use
+        pod_memory_request_mebibytes:
+          type: integer
+        run_duration_limit_seconds:
+          type: integer
+        queue_limit:
+          type: integer
+        stripe_customer_id:
+          oneOf:
+          - type: 'null'
+          - type: string
+        metronome_customer_id:
+          oneOf:
+          - type: 'null'
+          - type: string
+        salesforce_customer_id:
+          oneOf:
+          - type: 'null'
+          - type: string
+        third_party_billing:
+          oneOf:
+          - type: 'null'
+          - {}
+        billing_email_address:
+          oneOf:
+          - type: 'null'
+          - type: string
+        locked:
+          type: boolean
+          description: Whether the account is currently locked
+        lock_reason:
+          oneOf:
+          - type: 'null'
+          - type: string
+          description: Why the account is locked
+        lock_cause:
+          oneOf:
+          - type: 'null'
+          - {}
+          - {}
+          - {}
+          - {}
+          description: Why the account is locked
+        develop_file_system:
+          type: boolean
+        unlocked_at:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        unlock_if_subscription_renewed:
+          type: boolean
+        enterprise_authentication_method:
+          oneOf:
+          - type: 'null'
+          - type: string
+        enterprise_login_slug:
+          oneOf:
+          - type: 'null'
+          - type: string
+        enterprise_unique_identifier:
+          oneOf:
+          - type: 'null'
+          - type: string
+        business_critical:
+          type: boolean
+        groups:
+          oneOf:
+          - type: 'null'
+          - {}
+          description: The user groups in the account
+        created_at:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+          readOnly: true
+        updated_at:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+          readOnly: true
+        starter_repo_url:
+          oneOf:
+          - type: 'null'
+          - type: string
+        git_auth_level:
+          oneOf:
+          - type: 'null'
+          - type: string
+        identifier:
+          oneOf:
+          - type: 'null'
+          - allOf:
+            - type: string
+            - minLength: 31
+              maxLength: 31
+        trial_end_date:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        static_subdomain:
+          oneOf:
+          - type: 'null'
+          - type: string
+        run_locked_until:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        docs_job_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+          description: (Deprecated)
+        freshness_job_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+          description: (Deprecated)
+        allow_repo_caching:
+          type: boolean
+          description: Repo caching is not currently available. Coming soon!
+      additionalProperties: false
+      definitions: {}
+      $schema: http://json-schema.org/draft-07/schema#
+    AccountEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    AccountRequest:
+      type: object
+      required:
+      - id
+      - name
+      - state
+      - plan
+      - pending_cancel
+      - run_slots
+      - developer_seats
+      - docs_job_id
+      - freshness_job_id
+      properties:
+        id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+        name:
+          allOf:
+          - type: string
+          - minLength: 1
+            maxLength: 255
+          description: The name of the account
+        state:
+          type: integer
+        plan:
+          type: string
+          description: The active plan type for the account
+        pending_cancel:
+          type: boolean
+        run_slots:
+          type: integer
+          description: The total number of run slots the account may use
+        developer_seats:
+          type: integer
+          description: The total number of developer seats the account may use
+        it_seats:
+          type: integer
+          description: The total number of IT seats the account may use
+        read_only_seats:
+          type: integer
+          description: The total number of Read Only seats the account may use
+        pod_memory_request_mebibytes:
+          type: integer
+        run_duration_limit_seconds:
+          type: integer
+        queue_limit:
+          type: integer
+        stripe_customer_id:
+          oneOf:
+          - type: 'null'
+          - type: string
+        metronome_customer_id:
+          oneOf:
+          - type: 'null'
+          - type: string
+        salesforce_customer_id:
+          oneOf:
+          - type: 'null'
+          - type: string
+        third_party_billing:
+          oneOf:
+          - type: 'null'
+          - {}
+        billing_email_address:
+          oneOf:
+          - type: 'null'
+          - type: string
+        locked:
+          type: boolean
+          description: Whether the account is currently locked
+        lock_reason:
+          oneOf:
+          - type: 'null'
+          - type: string
+          description: Why the account is locked
+        lock_cause:
+          oneOf:
+          - type: 'null'
+          - {}
+          - {}
+          - {}
+          - {}
+          description: Why the account is locked
+        develop_file_system:
+          type: boolean
+        unlocked_at:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        unlock_if_subscription_renewed:
+          type: boolean
+        enterprise_authentication_method:
+          oneOf:
+          - type: 'null'
+          - type: string
+        enterprise_login_slug:
+          oneOf:
+          - type: 'null'
+          - type: string
+        enterprise_unique_identifier:
+          oneOf:
+          - type: 'null'
+          - type: string
+        business_critical:
+          type: boolean
+        groups:
+          oneOf:
+          - type: 'null'
+          - {}
+          description: The user groups in the account
+        starter_repo_url:
+          oneOf:
+          - type: 'null'
+          - type: string
+        git_auth_level:
+          oneOf:
+          - type: 'null'
+          - type: string
+        identifier:
+          oneOf:
+          - type: 'null'
+          - allOf:
+            - type: string
+            - minLength: 31
+              maxLength: 31
+        trial_end_date:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        static_subdomain:
+          oneOf:
+          - type: 'null'
+          - type: string
+        run_locked_until:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        docs_job_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+          description: (Deprecated)
+        freshness_job_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+          description: (Deprecated)
+        allow_repo_caching:
+          type: boolean
+          description: Repo caching is not currently available. Coming soon!
+      additionalProperties: false
+      definitions: {}
+      $schema: http://json-schema.org/draft-07/schema#
     BaseConnection:
       type: object
       required:
@@ -2263,81 +2785,60 @@ components:
           type: integer
         account_id:
           type: integer
+          description: The account the connection is associated with
         project_id:
           type: integer
+          description: The project the connection is associated with
         name:
           type: string
+          description: The name of the connection
+        type:
+          $ref: '#/components/schemas/TypeEnum'
         created_by_id:
           type: integer
         created_by_service_token_id:
           type: integer
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         private_link_endpoint_id:
           type: string
       required:
       - account_id
       - name
       - project_id
-      - state
-    BaseConnectionV3Request:
-      type: object
-      properties:
-        id:
-          type: integer
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        name:
-          type: string
-          minLength: 1
-        created_by_id:
-          type: integer
-        created_by_service_token_id:
-          type: integer
-        state:
-          type: integer
-        private_link_endpoint_id:
-          type: string
-          minLength: 1
-      required:
-      - account_id
-      - name
-      - project_id
-      - state
+      - type
     ConnectionEncryption:
       type: object
       properties:
         account_id:
           type: integer
+          description: The account the connection is associated with
         connection_id:
           type: integer
+          description: The connection to use the SSH tunnel with
         username:
           type: string
+          description: SSH username
         port:
           type: integer
+          description: SSH port
         hostname:
           type: string
-        public_key:
-          type: string
-        state:
-          type: integer
+          description: SSH hostname
         id:
           type: integer
-        private_key:
+          readOnly: true
+        public_key:
           type: string
-        _private_key:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedField'
-          title: ' private key'
+          description: SSH Public key
+        state:
+          type: integer
+          default: 1
       required:
-      - account_id
-      - connection_id
-      - hostname
-      - port
-      - state
-      - username
+      - id
     ConnectionEncryptionEnveloped:
       type: object
       properties:
@@ -2353,118 +2854,51 @@ components:
       properties:
         account_id:
           type: integer
+          description: The account the connection is associated with
         connection_id:
           type: integer
+          description: The connection to use the SSH tunnel with
         username:
           type: string
           minLength: 1
+          description: SSH username
         port:
           type: integer
+          description: SSH port
         hostname:
           type: string
           minLength: 1
+          description: SSH hostname
         public_key:
           type: string
           minLength: 1
-        state:
-          type: integer
-        id:
-          type: integer
+          description: SSH Public key
         private_key:
           type: string
+          writeOnly: true
           minLength: 1
-        _private_key:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedFieldRequest'
-          title: ' private key'
+          description: SSH private key
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
       - account_id
       - connection_id
       - hostname
       - port
-      - state
       - username
-    CustomEnvironmentVariable:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        name:
-          type: string
-        state:
-          type: integer
-        user_id:
-          type: integer
-        environment_id:
-          type: integer
-        job_definition_id:
-          type: integer
-        raw_value:
-          type: string
-        _raw_value:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedField'
-          title: ' raw value'
-        display_value:
-          type: string
-        id:
-          type: integer
-      required:
-      - account_id
-      - name
-      - project_id
-    CustomEnvironmentVariableRequest:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        name:
-          type: string
-          minLength: 1
-        state:
-          type: integer
-        user_id:
-          type: integer
-        environment_id:
-          type: integer
-        job_definition_id:
-          type: integer
-        raw_value:
-          type: string
-          minLength: 1
-        _raw_value:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedFieldRequest'
-          title: ' raw value'
-        display_value:
-          type: string
-          minLength: 1
-        id:
-          type: integer
-      required:
-      - account_id
-      - name
-      - project_id
-    DataclassEncryptedField:
-      type: object
-      properties:
-        plaintext:
-          type: string
-        ciphertext:
-          type: string
-    DataclassEncryptedFieldRequest:
-      type: object
-      properties:
-        plaintext:
-          type: string
-          minLength: 1
-        ciphertext:
-          type: string
-          minLength: 1
+    DateEnum:
+      enum:
+      - every_day
+      - days_of_week
+      - custom_cron
+      type: string
+      description: |-
+        * `every_day` - every_day
+        * `days_of_week` - days_of_week
+        * `custom_cron` - custom_cron
     Defaults:
       type: object
       properties:
@@ -2479,7 +2913,6 @@ components:
     EnvironmentV2:
       type: object
       required:
-      - id
       - account_id
       - connection_id
       - created_by_id
@@ -2558,6 +2991,12 @@ components:
           oneOf:
           - type: 'null'
           - {}
+        created_at:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+          readOnly: true
         updated_at:
           oneOf:
           - type: 'null'
@@ -2586,7 +3025,6 @@ components:
     EnvironmentV2Request:
       type: object
       required:
-      - id
       - account_id
       - connection_id
       - created_by_id
@@ -2672,30 +3110,35 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    GitCloneStrategyEnum:
+      enum:
+      - azure_active_directory_app
+      - deploy_key
+      - deploy_token
+      - github_app
+      - git_token
+      type: string
+      description: |-
+        * `azure_active_directory_app` - azure_active_directory_app
+        * `deploy_key` - deploy_key
+        * `deploy_token` - deploy_token
+        * `github_app` - github_app
+        * `git_token` - git_token
     GitProvider:
       type: object
       properties:
         account_id:
           type: integer
+        provider_type:
+          $ref: '#/components/schemas/ProviderTypeEnum'
         state:
           type: integer
-        id:
-          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
       - account_id
-      - state
-    GitProviderRequest:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        state:
-          type: integer
-        id:
-          type: integer
-      required:
-      - account_id
-      - state
+      - provider_type
     GroupPermission:
       type: object
       properties:
@@ -2705,35 +3148,24 @@ components:
           type: integer
         project_id:
           type: integer
+        all_projects:
+          type: boolean
+        permission_set:
+          $ref: '#/components/schemas/PermissionSetEnum'
         permission_level:
           type: integer
         id:
           type: integer
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
       - account_id
+      - all_projects
       - group_id
-      - state
-    GroupPermissionRequest:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        group_id:
-          type: integer
-        project_id:
-          type: integer
-        permission_level:
-          type: integer
-        id:
-          type: integer
-        state:
-          type: integer
-      required:
-      - account_id
-      - group_id
-      - state
+      - permission_set
     InternalJobDefinition:
       type: object
       required:
@@ -2986,14 +3418,73 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
-    JobDefinitionExecution:
+    Invite:
+      type: object
+      required:
+      - id
+      - account_id
+      - email_address
+      - license_type
+      - status
+      properties:
+        id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+        account_id:
+          type: integer
+        email_address:
+          oneOf:
+          - type: 'null'
+          - type: string
+        license_type:
+          oneOf:
+          - {}
+          - {}
+          - {}
+        status:
+          oneOf:
+          - {}
+          - {}
+          - {}
+          - {}
+          - {}
+        code:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        redeemed_at:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        group_ids:
+          allOf:
+          - {}
+          - {}
+        account: {}
+        groups:
+          allOf:
+          - {}
+          - {}
+      additionalProperties: false
+      definitions: {}
+      $schema: http://json-schema.org/draft-07/schema#
+    InviteEnveloped:
       type: object
       properties:
-        timeout_seconds:
-          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invite'
+        status:
+          $ref: '#/components/schemas/Status'
       required:
-      - timeout_seconds
-    JobDefinitionExecutionRequest:
+      - data
+      - status
+    JobDefinitionExecution:
       type: object
       properties:
         timeout_seconds:
@@ -3005,16 +3496,14 @@ components:
       properties:
         cron:
           type: string
+        date:
+          $ref: '#/components/schemas/DateEnum'
+        time:
+          $ref: '#/components/schemas/TimeEnum'
       required:
       - cron
-    JobDefinitionScheduleRequest:
-      type: object
-      properties:
-        cron:
-          type: string
-          minLength: 1
-      required:
-      - cron
+      - date
+      - time
     JobDefinitionSettings:
       type: object
       properties:
@@ -3025,17 +3514,20 @@ components:
       required:
       - target_name
       - threads
-    JobDefinitionSettingsRequest:
+    JobDefinitionTriggers:
       type: object
       properties:
-        threads:
-          type: integer
-        target_name:
-          type: string
-          minLength: 1
+        github_webhook:
+          type: boolean
+        schedule:
+          type: boolean
+        git_provider_webhook:
+          type: boolean
+        custom_branch_only:
+          type: boolean
       required:
-      - target_name
-      - threads
+      - github_webhook
+      - schedule
     JobDefinitionV2:
       type: object
       properties:
@@ -3049,16 +3541,23 @@ components:
           type: string
         description:
           type: string
+        generate_docs:
+          type: boolean
+        run_generate_sources:
+          type: boolean
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         dbt_version:
           type: string
-        raw_dbt_version:
-          type: string
-        id:
-          type: integer
+        deactivated:
+          type: boolean
         run_failure_count:
           type: integer
+        triggers:
+          $ref: '#/components/schemas/JobDefinitionTriggers'
         settings:
           $ref: '#/components/schemas/JobDefinitionSettings'
         execution:
@@ -3067,73 +3566,26 @@ components:
           $ref: '#/components/schemas/JobDefinitionSchedule'
         execute_steps:
           type: array
-          items: {}
+          items:
+            type: string
         most_recent_run:
           $ref: '#/components/schemas/Run'
         most_recent_completed_run:
           $ref: '#/components/schemas/Run'
-        custom_environment_variables:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomEnvironmentVariable'
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        triggers_on_draft_pr:
+          type: boolean
+          default: false
       required:
       - account_id
+      - deactivated
       - environment_id
+      - generate_docs
       - name
       - project_id
       - run_failure_count
-      - state
-    JobDefinitionV2Request:
-      type: object
-      properties:
-        environment_id:
-          type: integer
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        name:
-          type: string
-          minLength: 1
-        description:
-          type: string
-          minLength: 1
-        state:
-          type: integer
-        dbt_version:
-          type: string
-          minLength: 1
-        raw_dbt_version:
-          type: string
-          minLength: 1
-        id:
-          type: integer
-        run_failure_count:
-          type: integer
-        settings:
-          $ref: '#/components/schemas/JobDefinitionSettingsRequest'
-        execution:
-          $ref: '#/components/schemas/JobDefinitionExecutionRequest'
-        schedule:
-          $ref: '#/components/schemas/JobDefinitionScheduleRequest'
-        execute_steps:
-          type: array
-          items: {}
-        most_recent_run:
-          $ref: '#/components/schemas/RunRequest'
-        most_recent_completed_run:
-          $ref: '#/components/schemas/RunRequest'
-        custom_environment_variables:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-      required:
-      - account_id
-      - environment_id
-      - name
-      - project_id
-      - run_failure_count
-      - state
+      - run_generate_sources
     JobNotificationSettings:
       type: object
       required:
@@ -3246,46 +3698,131 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    JobTypeEnum:
+      enum:
+      - ci
+      - scheduled
+      - other
+      type: string
+      description: |-
+        * `ci` - ci
+        * `scheduled` - scheduled
+        * `other` - other
+    PermissionSetEnum:
+      enum:
+      - owner
+      - member
+      - account_admin
+      - security_admin
+      - billing_admin
+      - admin
+      - database_admin
+      - git_admin
+      - team_admin
+      - job_admin
+      - job_viewer
+      - analyst
+      - developer
+      - stakeholder
+      - readonly
+      - project_creator
+      - account_viewer
+      - metadata_only
+      - semantic_layer_only
+      - webhooks_only
+      type: string
+      description: |-
+        * `owner` - owner
+        * `member` - member
+        * `account_admin` - account_admin
+        * `security_admin` - security_admin
+        * `billing_admin` - billing_admin
+        * `admin` - admin
+        * `database_admin` - database_admin
+        * `git_admin` - git_admin
+        * `team_admin` - team_admin
+        * `job_admin` - job_admin
+        * `job_viewer` - job_viewer
+        * `analyst` - analyst
+        * `developer` - developer
+        * `stakeholder` - stakeholder
+        * `readonly` - readonly
+        * `project_creator` - project_creator
+        * `account_viewer` - account_viewer
+        * `metadata_only` - metadata_only
+        * `semantic_layer_only` - semantic_layer_only
+        * `webhooks_only` - webhooks_only
     Project:
       type: object
       properties:
         name:
           type: string
+          description: The name of the project
         account_id:
           type: integer
-          description: id of account this project belongs to
+          description: The account the project is associated with
         connection_id:
           type: integer
+          description: The active connection
         repository_id:
           type: integer
+          description: The active repository
         semantic_layer_config_id:
           type: integer
+          description: The active semantic layer configuration
         id:
           type: integer
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        skipped_setup:
+          type: boolean
+          default: false
         state:
           type: integer
+          default: 1
         dbt_project_subdirectory:
           type: string
         connection:
-          $ref: '#/components/schemas/BaseConnectionV3'
+          allOf:
+          - $ref: '#/components/schemas/BaseConnectionV3'
+          readOnly: true
         repository:
-          $ref: '#/components/schemas/RepositoryV3'
+          allOf:
+          - $ref: '#/components/schemas/RepositoryV3'
+          readOnly: true
         group_permissions:
           type: array
           items:
             $ref: '#/components/schemas/GroupPermission'
+          readOnly: true
         docs_job_id:
           type: integer
+          description: The job used for docs generation
         freshness_job_id:
           type: integer
+          description: The job used for source freshness generation
         docs_job:
-          $ref: '#/components/schemas/JobDefinitionV2'
+          allOf:
+          - $ref: '#/components/schemas/JobDefinitionV2'
+          readOnly: true
         freshness_job:
-          $ref: '#/components/schemas/JobDefinitionV2'
+          allOf:
+          - $ref: '#/components/schemas/JobDefinitionV2'
+          readOnly: true
       required:
-      - account_id
-      - name
-      - state
+      - connection
+      - created_at
+      - docs_job
+      - freshness_job
+      - group_permissions
+      - repository
+      - updated_at
     ProjectEnveloped:
       type: object
       properties:
@@ -3302,42 +3839,71 @@ components:
         name:
           type: string
           minLength: 1
+          description: The name of the project
         account_id:
           type: integer
-          description: id of account this project belongs to
+          description: The account the project is associated with
         connection_id:
           type: integer
+          description: The active connection
         repository_id:
           type: integer
+          description: The active repository
         semantic_layer_config_id:
           type: integer
+          description: The active semantic layer configuration
         id:
           type: integer
+        skipped_setup:
+          type: boolean
+          default: false
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         dbt_project_subdirectory:
           type: string
           minLength: 1
-        connection:
-          $ref: '#/components/schemas/BaseConnectionV3Request'
-        repository:
-          $ref: '#/components/schemas/RepositoryV3Request'
-        group_permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupPermissionRequest'
         docs_job_id:
           type: integer
+          description: The job used for docs generation
         freshness_job_id:
           type: integer
-        docs_job:
-          $ref: '#/components/schemas/JobDefinitionV2Request'
-        freshness_job:
-          $ref: '#/components/schemas/JobDefinitionV2Request'
+          description: The job used for source freshness generation
       required:
       - account_id
       - name
-      - state
+    ProviderTypeEnum:
+      enum:
+      - azure_active_directory
+      - github
+      - gitlab
+      - git_url
+      - managed_github
+      - manual_config
+      type: string
+      description: |-
+        * `azure_active_directory` - azure_active_directory
+        * `github` - github
+        * `gitlab` - gitlab
+        * `git_url` - git_url
+        * `managed_github` - managed_github
+        * `manual_config` - manual_config
+    RemoteBackendEnum:
+      enum:
+      - azure_active_directory
+      - github
+      - managed
+      - gitlab
+      - manual_config
+      type: string
+      description: |-
+        * `azure_active_directory` - azure_active_directory
+        * `github` - github
+        * `managed` - managed
+        * `gitlab` - gitlab
+        * `manual_config` - manual_config
     RepositoryGitlab:
       type: object
       properties:
@@ -3351,44 +3917,14 @@ components:
           type: integer
         state:
           type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         project_access_token_id:
           type: integer
-        project_access_token:
-          type: string
-        _project_access_token:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedField'
-          title: ' project access token'
       required:
       - account_id
       - gitlab_project_id
-      - state
-    RepositoryGitlabRequest:
-      type: object
-      properties:
-        id:
-          type: integer
-        account_id:
-          type: integer
-        repository_id:
-          type: integer
-        gitlab_project_id:
-          type: integer
-        state:
-          type: integer
-        project_access_token_id:
-          type: integer
-        project_access_token:
-          type: string
-          minLength: 1
-        _project_access_token:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedFieldRequest'
-          title: ' project access token'
-      required:
-      - account_id
-      - gitlab_project_id
-      - state
     RepositoryV2:
       type: object
       required:
@@ -3468,6 +4004,10 @@ components:
           format: date-time
           readOnly: true
         git_provider_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+        private_link_endpoint_id:
           oneOf:
           - type: 'null'
           - type: integer
@@ -3560,6 +4100,10 @@ components:
           oneOf:
           - type: 'null'
           - type: integer
+        private_link_endpoint_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -3574,6 +4118,10 @@ components:
           type: integer
         full_name:
           type: string
+        remote_backend:
+          $ref: '#/components/schemas/RemoteBackendEnum'
+        git_clone_strategy:
+          $ref: '#/components/schemas/GitCloneStrategyEnum'
         deploy_key_id:
           type: integer
         repository_credentials_id:
@@ -3582,17 +4130,12 @@ components:
           type: integer
         github_webhook_id:
           type: integer
-        github_webhook_secret:
-          type: string
-        _github_webhook_secret:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedField'
-          title: ' github webhook secret'
         state:
           type: integer
-        github_repo:
-          type: string
-        name:
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        private_link_endpoint_id:
           type: string
         git_provider_id:
           type: integer
@@ -3602,51 +4145,6 @@ components:
           $ref: '#/components/schemas/GitProvider'
       required:
       - account_id
-      - state
-    RepositoryV3Request:
-      type: object
-      properties:
-        id:
-          type: integer
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        full_name:
-          type: string
-          minLength: 1
-        deploy_key_id:
-          type: integer
-        repository_credentials_id:
-          type: integer
-        github_installation_id:
-          type: integer
-        github_webhook_id:
-          type: integer
-        github_webhook_secret:
-          type: string
-          minLength: 1
-        _github_webhook_secret:
-          allOf:
-          - $ref: '#/components/schemas/DataclassEncryptedFieldRequest'
-          title: ' github webhook secret'
-        state:
-          type: integer
-        github_repo:
-          type: string
-          minLength: 1
-        name:
-          type: string
-          minLength: 1
-        git_provider_id:
-          type: integer
-        gitlab:
-          $ref: '#/components/schemas/RepositoryGitlabRequest'
-        git_provider:
-          $ref: '#/components/schemas/GitProviderRequest'
-      required:
-      - account_id
-      - state
     Run:
       type: object
       properties:
@@ -3664,8 +4162,10 @@ components:
           type: integer
         status:
           type: integer
+          default: 1
         dbt_version:
           type: string
+          default: 1.6.0-latest
         git_branch:
           type: string
         git_sha:
@@ -3678,39 +4178,152 @@ components:
           type: string
         deferring_run_id:
           type: integer
+        artifacts_saved:
+          type: boolean
+          default: false
         artifact_s3_path:
           type: string
+        has_docs_generated:
+          type: boolean
+          default: false
+        has_sources_generated:
+          type: boolean
+          default: false
+        notifications_sent:
+          type: boolean
+          default: false
         blocked_by:
           type: array
+          items:
+            type: integer
+          default: []
+        scribe_enabled:
+          type: boolean
+          default: false
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        dequeued_at:
+          type: string
+          format: date-time
+          readOnly: true
+        started_at:
+          type: string
+          format: date-time
+          readOnly: true
+        finished_at:
+          type: string
+          format: date-time
+          readOnly: true
+        last_checked_at:
+          type: string
+          format: date-time
+          readOnly: true
+        last_heartbeat_at:
+          type: string
+          format: date-time
+          readOnly: true
+        should_start_at:
+          type: string
+          format: date-time
+          readOnly: true
+        trigger:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        job:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        environment:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        run_steps:
+          type: array
           items: {}
+          readOnly: true
+          default: []
         status_humanized:
           type: string
+          readOnly: true
+        in_progress:
+          type: boolean
+          readOnly: true
+        is_complete:
+          type: boolean
+          readOnly: true
+        is_success:
+          type: boolean
+          readOnly: true
+        is_error:
+          type: boolean
+          readOnly: true
+        is_cancelled:
+          type: boolean
+          readOnly: true
         duration:
           type: string
+          readOnly: true
         queued_duration:
           type: string
+          readOnly: true
         run_duration:
           type: string
+          readOnly: true
         duration_humanized:
           type: string
+          readOnly: true
         queued_duration_humanized:
           type: string
+          readOnly: true
         run_duration_humanized:
           type: string
+          readOnly: true
         created_at_humanized:
           type: string
+          readOnly: true
         finished_at_humanized:
           type: string
+          readOnly: true
         job_id:
           type: integer
+          readOnly: true
+        is_running:
+          type: boolean
       required:
-      - account_id
-      - blocked_by
-      - dbt_version
-      - environment_id
-      - job_definition_id
-      - project_id
-      - status
+      - created_at
+      - created_at_humanized
+      - dequeued_at
+      - duration
+      - duration_humanized
+      - environment
+      - finished_at
+      - finished_at_humanized
+      - in_progress
+      - is_cancelled
+      - is_complete
+      - is_error
+      - is_success
+      - job
+      - job_id
+      - last_checked_at
+      - last_heartbeat_at
+      - queued_duration
+      - queued_duration_humanized
+      - run_duration
+      - run_duration_humanized
+      - run_steps
+      - should_start_at
+      - started_at
+      - status_humanized
+      - trigger
+      - updated_at
     RunEnveloped:
       type: object
       properties:
@@ -3720,86 +4333,6 @@ components:
           $ref: '#/components/schemas/Status'
       required:
       - data
-      - status
-    RunRequest:
-      type: object
-      properties:
-        id:
-          type: integer
-        trigger_id:
-          type: integer
-        account_id:
-          type: integer
-        environment_id:
-          type: integer
-        project_id:
-          type: integer
-        job_definition_id:
-          type: integer
-        status:
-          type: integer
-        dbt_version:
-          type: string
-          minLength: 1
-        git_branch:
-          type: string
-          minLength: 1
-        git_sha:
-          type: string
-          minLength: 1
-        status_message:
-          type: string
-          minLength: 1
-        owner_thread_id:
-          type: string
-          minLength: 1
-        executed_by_thread_id:
-          type: string
-          minLength: 1
-        deferring_run_id:
-          type: integer
-        artifact_s3_path:
-          type: string
-          minLength: 1
-        blocked_by:
-          type: array
-          items: {}
-        status_humanized:
-          type: string
-          minLength: 1
-        duration:
-          type: string
-          minLength: 1
-        queued_duration:
-          type: string
-          minLength: 1
-        run_duration:
-          type: string
-          minLength: 1
-        duration_humanized:
-          type: string
-          minLength: 1
-        queued_duration_humanized:
-          type: string
-          minLength: 1
-        run_duration_humanized:
-          type: string
-          minLength: 1
-        created_at_humanized:
-          type: string
-          minLength: 1
-        finished_at_humanized:
-          type: string
-          minLength: 1
-        job_id:
-          type: integer
-      required:
-      - account_id
-      - blocked_by
-      - dbt_version
-      - environment_id
-      - job_definition_id
-      - project_id
       - status
     Status:
       type: object
@@ -3817,6 +4350,14 @@ components:
       - developer_message
       - is_success
       - user_message
+    TimeEnum:
+      enum:
+      - every_hour
+      - at_exact_hours
+      type: string
+      description: |-
+        * `every_hour` - every_hour
+        * `at_exact_hours` - at_exact_hours
     TriggerRunRequestRequest:
       type: object
       properties:
@@ -3835,6 +4376,8 @@ components:
           type: integer
         gitlab_merge_request_id:
           type: integer
+        non_native_pull_request_id:
+          type: integer
         schema_override:
           type: string
           minLength: 1
@@ -3846,13 +4389,31 @@ components:
         target_name_override:
           type: string
           minLength: 1
+        generate_docs_override:
+          type: boolean
         timeout_seconds_override:
           type: integer
         steps_override:
           type: array
-          items: {}
+          items:
+            type: string
+            minLength: 1
       required:
       - cause
+    TypeEnum:
+      enum:
+      - postgres
+      - redshift
+      - snowflake
+      - bigquery
+      - adapter
+      type: string
+      description: |-
+        * `postgres` - postgres
+        * `redshift` - redshift
+        * `snowflake` - snowflake
+        * `bigquery` - bigquery
+        * `adapter` - adapter
     User:
       type: object
       required:
@@ -3880,6 +4441,8 @@ components:
           oneOf:
           - type: 'null'
           - type: string
+        auth0_database_user_id:
+          type: string
         first_name:
           type: string
         last_name:
@@ -4038,6 +4601,8 @@ components:
           oneOf:
           - type: 'null'
           - type: string
+        auth0_database_user_id:
+          type: string
         first_name:
           type: string
         last_name:
