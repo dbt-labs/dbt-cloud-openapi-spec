@@ -873,7 +873,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InternalJobDefinitionEnveloped'
+                  $ref: '#/components/schemas/HumanReadableJobDefinitionEnveloped'
           description: ''
     post:
       operationId: Create Job
@@ -943,7 +943,7 @@ paths:
           description: ''
   /api/v2/accounts/{account_id}/jobs/{job_id}/rerun/:
     post:
-      operationId: Rerun a failed run or retry a run from point of failure for a job
+      operationId: Retry Failed Job
       description: Use this endpoint to retry a failed run for a job from the point
         of failure, if the run failed. Otherwise trigger a new run. When this endpoint
         returns a successful response, a new run will be enqueued for the account.
@@ -1012,7 +1012,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RunEnveloped'
+                $ref: '#/components/schemas/RunResponseEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/jobs/{id}/:
     get:
@@ -1095,7 +1095,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalJobDefinitionEnveloped'
+                $ref: '#/components/schemas/HumanReadableJobDefinitionEnveloped'
           description: ''
     post:
       operationId: Update Job
@@ -1235,6 +1235,7 @@ paths:
   /api/v2/accounts/{account_id}/notifications/:
     get:
       operationId: List Notifications
+      description: List notification configurations
       parameters:
       - in: path
         name: account_id
@@ -1281,6 +1282,9 @@ paths:
           description: ''
     post:
       operationId: Create Notification
+      description: Create a new Job Notification configuration to trigger notifications
+        for job successes, failures, or cancelations. Notifications can be sent to
+        a dbt Cloud user, an external email address, or a Slack channel.
       parameters:
       - in: path
         name: account_id
@@ -1315,6 +1319,7 @@ paths:
   /api/v2/accounts/{account_id}/notifications/{id}/:
     get:
       operationId: Retrieve Notification
+      description: Fetch notification configurations
       parameters:
       - in: path
         name: account_id
@@ -1364,6 +1369,7 @@ paths:
           description: ''
     post:
       operationId: Update Notification
+      description: Update an existing Job Notification configuration.
       parameters:
       - in: path
         name: account_id
@@ -1701,6 +1707,7 @@ paths:
   /api/v2/accounts/{account_id}/repositories/:
     get:
       operationId: List Repositories
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -1732,6 +1739,7 @@ paths:
       - Repositories
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1743,6 +1751,7 @@ paths:
           description: ''
     post:
       operationId: Create Repository
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -1765,6 +1774,7 @@ paths:
         required: true
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1777,6 +1787,7 @@ paths:
   /api/v2/accounts/{account_id}/repositories/{id}/:
     get:
       operationId: Retrieve Repository
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -1813,6 +1824,7 @@ paths:
       - Repositories
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1822,6 +1834,7 @@ paths:
           description: ''
     delete:
       operationId: Destroy Repository
+      description: Deprecated. Consider using the v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -1858,6 +1871,7 @@ paths:
       - Repositories
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '204':
           description: No response body
@@ -1958,7 +1972,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RunEnveloped'
+                  $ref: '#/components/schemas/RunResponseEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/runs/{id}/:
     get:
@@ -2060,7 +2074,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RunEnveloped'
+                $ref: '#/components/schemas/RunResponseEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/runs/{run_id}/artifacts/:
     get:
@@ -2086,7 +2100,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/ListOfStringsEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/runs/{run_id}/artifacts/{remainder}:
     get:
@@ -2158,12 +2172,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/RunResponseEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/runs/{run_id}/retry/:
     get:
-      operationId: Get details of the failed retryable job
-      description: Use this endpoint to details about a retryable job that has failed.
+      operationId: Retrieve Run Failure Details
+      description: Use this endpoint to get details about a retryable run that has
+        failed.
       parameters:
       - in: path
         name: account_id
@@ -2187,12 +2202,11 @@ paths:
                 $ref: '#/components/schemas/Defaults'
           description: ''
     post:
-      operationId: Retry a failed run for a job
-      description: Use this endpoint to retry a failed run for a job. When this endpoint
-        returns a successful response, a new run will be enqueued for the account.
-        Users can poll the Get run endpoint to poll the run until it completes. After
-        the run has completed, users can use the Get run artifact endpoint to download
-        artifacts generated by the run.
+      operationId: Retry Run
+      description: Use this endpoint to retry a failed run. When this endpoint returns
+        a successful response, a new run will be enqueued. Users can poll the Get
+        Run endpoint until it completes. After the run has completed, users can use
+        the Get Run Artifact endpoint to download artifacts generated by the run.
       parameters:
       - in: path
         name: account_id
@@ -2240,7 +2254,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/RunStepEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/users/:
     get:
@@ -2260,11 +2274,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/UserEnveloped'
           description: ''
   /api/v2/notifications/unsubscribe/:
     post:
       operationId: Unsubscribe from Notifications
+      description: Clear out all email notification configurations for the user making
+        the request.
       tags:
       - Notifications
       security:
@@ -2512,6 +2528,8 @@ components:
         allow_repo_caching:
           type: boolean
           description: Repo caching is not currently available. Coming soon!
+        allow_partial_parsing:
+          type: boolean
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -2681,6 +2699,8 @@ components:
         allow_repo_caching:
           type: boolean
           description: Repo caching is not currently available. Coming soon!
+        allow_partial_parsing:
+          type: boolean
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -3166,6 +3186,144 @@ components:
       - all_projects
       - group_id
       - permission_set
+    HumanReadableJobDefinition:
+      type: object
+      required:
+      - id
+      - environment_id
+      - account_id
+      - project_id
+      - name
+      - dbt_version
+      - triggers
+      - schedule
+      - settings
+      - execution
+      - state
+      - generate_docs
+      - run_generate_sources
+      properties:
+        id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+        environment_id:
+          type: integer
+        deferring_job_definition_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+        deferring_environment_id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+        lifecycle_webhooks:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        lifecycle_webhooks_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        name:
+          allOf:
+          - type: string
+          - minLength: 1
+            maxLength: 255
+        description:
+          allOf:
+          - type: string
+          - minLength: 0
+            maxLength: 255
+        dbt_version:
+          oneOf:
+          - type: string
+          - type: 'null'
+        raw_dbt_version:
+          oneOf:
+          - type: string
+          - type: 'null'
+        triggers:
+          description: 'only one of the following fields can be true: triggers.github_webhook,
+            triggers.schedule, & triggers.git_provider_webhook'
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        execute_steps:
+          allOf:
+          - {}
+          - minLength: 1
+            maxLength: 100
+          - {}
+        schedule:
+          description: schedule is only required if triggers.schedule is true
+        settings: {}
+        execution: {}
+        state:
+          oneOf:
+          - {}
+          - {}
+        generate_docs:
+          type: boolean
+        run_generate_sources:
+          type: boolean
+        environment: {}
+        account:
+          oneOf:
+          - {}
+          - type: 'null'
+        project:
+          oneOf:
+          - {}
+          - type: 'null'
+        most_recent_completed_run:
+          oneOf:
+          - {}
+          - type: 'null'
+        most_recent_run:
+          oneOf:
+          - {}
+          - type: 'null'
+        is_deferrable:
+          type: boolean
+        deactivated:
+          type: boolean
+        run_failure_count:
+          type: integer
+        job_type:
+          oneOf:
+          - {}
+          - {}
+          - {}
+          - type: 'null'
+        triggers_on_draft_pr:
+          type: boolean
+        generate_sources:
+          type: boolean
+      additionalProperties: false
+      definitions: {}
+      $schema: http://json-schema.org/draft-07/schema#
+    HumanReadableJobDefinitionEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/HumanReadableJobDefinition'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     InternalJobDefinition:
       type: object
       required:
@@ -3609,11 +3767,17 @@ components:
           - {}
           - {}
           - {}
+          description: "\n                The destination type.\n                1:\
+            \ Internal Email\n                2: Slack\n                3: Deprecated\
+            \ - do not use\n                4: External Email\n                "
         state:
           type: integer
-        on_cancel: {}
-        on_failure: {}
-        on_success: {}
+        on_cancel:
+          description: List of job IDs to send notifications for when the job is cancelled.
+        on_failure:
+          description: List of job IDs to send notifications for when the job fails.
+        on_success:
+          description: List of job IDs to send notifications for when the job succeeds.
         created_at:
           type: string
           format: date-time
@@ -3624,19 +3788,33 @@ components:
           readOnly: true
         user_id:
           type: integer
+          description: For internal email notifications, the ID of the user to send
+            notifications to. For all other notifications, the ID of the user who
+            created the configuration.
         external_email:
           oneOf:
           - type: string
           - type: 'null'
-        user: {}
+          description: The external email to send notifications to. Required for External
+            Email types.
+        user:
+          oneOf:
+          - {}
+          - type: 'null'
+          description: For internal email notifications, the user to send notifications
+            to. For all other notifications, the user who created the configuration.
         slack_channel_id:
           oneOf:
           - type: string
           - type: 'null'
+          description: The ID of the Slack channel to send notifications to. Required
+            for Slack notification types.
         slack_channel_name:
           oneOf:
           - type: string
           - type: 'null'
+          description: The name of the Slack channel to send notifications to. Required
+            for Slack notification types.
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -3675,26 +3853,46 @@ components:
           - {}
           - {}
           - {}
+          description: "\n                The destination type.\n                1:\
+            \ Internal Email\n                2: Slack\n                3: Deprecated\
+            \ - do not use\n                4: External Email\n                "
         state:
           type: integer
-        on_cancel: {}
-        on_failure: {}
-        on_success: {}
+        on_cancel:
+          description: List of job IDs to send notifications for when the job is cancelled.
+        on_failure:
+          description: List of job IDs to send notifications for when the job fails.
+        on_success:
+          description: List of job IDs to send notifications for when the job succeeds.
         user_id:
           type: integer
+          description: For internal email notifications, the ID of the user to send
+            notifications to. For all other notifications, the ID of the user who
+            created the configuration.
         external_email:
           oneOf:
           - type: string
           - type: 'null'
-        user: {}
+          description: The external email to send notifications to. Required for External
+            Email types.
+        user:
+          oneOf:
+          - {}
+          - type: 'null'
+          description: For internal email notifications, the user to send notifications
+            to. For all other notifications, the user who created the configuration.
         slack_channel_id:
           oneOf:
           - type: string
           - type: 'null'
+          description: The ID of the Slack channel to send notifications to. Required
+            for Slack notification types.
         slack_channel_name:
           oneOf:
           - type: string
           - type: 'null'
+          description: The name of the Slack channel to send notifications to. Required
+            for Slack notification types.
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -3708,6 +3906,30 @@ components:
         * `ci` - ci
         * `scheduled` - scheduled
         * `other` - other
+    ListOfStringsEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: string
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    LogLocationEnum:
+      enum:
+      - legacy
+      - s3
+      - db
+      - empty
+      type: string
+      description: |-
+        * `legacy` - legacy
+        * `s3` - s3
+        * `db` - db
+        * `empty` - empty
     PermissionSetEnum:
       enum:
       - owner
@@ -4114,14 +4336,35 @@ components:
           type: integer
         account_id:
           type: integer
+          description: The account the repo is associated with
         project_id:
           type: integer
+          description: The project the repo is associated with
         full_name:
           type: string
+          description: The name of the repo
         remote_backend:
-          $ref: '#/components/schemas/RemoteBackendEnum'
+          allOf:
+          - $ref: '#/components/schemas/RemoteBackendEnum'
+          description: |-
+            The associated git provider
+
+            * `azure_active_directory` - azure_active_directory
+            * `github` - github
+            * `managed` - managed
+            * `gitlab` - gitlab
+            * `manual_config` - manual_config
         git_clone_strategy:
-          $ref: '#/components/schemas/GitCloneStrategyEnum'
+          allOf:
+          - $ref: '#/components/schemas/GitCloneStrategyEnum'
+          description: |-
+            The strategy to use when cloning the repo
+
+            * `azure_active_directory_app` - azure_active_directory_app
+            * `deploy_key` - deploy_key
+            * `deploy_token` - deploy_token
+            * `github_app` - github_app
+            * `git_token` - git_token
         deploy_key_id:
           type: integer
         repository_credentials_id:
@@ -4145,6 +4388,18 @@ components:
           $ref: '#/components/schemas/GitProvider'
       required:
       - account_id
+    RetryNotSupportedReasonEnum:
+      enum:
+      - RETRY_UNSUPPORTED_CMD
+      - RETRY_UNSUPPORTED_VERSION
+      - RETRY_NOT_LATEST_RUN
+      - RETRY_NOT_FAILED_RUN
+      type: string
+      description: |-
+        * `RETRY_UNSUPPORTED_CMD` - RETRY_UNSUPPORTED_CMD
+        * `RETRY_UNSUPPORTED_VERSION` - RETRY_UNSUPPORTED_VERSION
+        * `RETRY_NOT_LATEST_RUN` - RETRY_NOT_LATEST_RUN
+        * `RETRY_NOT_FAILED_RUN` - RETRY_NOT_FAILED_RUN
     Run:
       type: object
       properties:
@@ -4162,10 +4417,8 @@ components:
           type: integer
         status:
           type: integer
-          default: 1
         dbt_version:
           type: string
-          default: 1.6.0-latest
         git_branch:
           type: string
         git_sha:
@@ -4180,26 +4433,82 @@ components:
           type: integer
         artifacts_saved:
           type: boolean
-          default: false
         artifact_s3_path:
           type: string
         has_docs_generated:
           type: boolean
-          default: false
         has_sources_generated:
           type: boolean
-          default: false
         notifications_sent:
           type: boolean
-          default: false
         blocked_by:
           type: array
           items:
             type: integer
-          default: []
         scribe_enabled:
           type: boolean
-          default: false
+        is_running:
+          type: boolean
+      required:
+      - account_id
+      - artifacts_saved
+      - blocked_by
+      - dbt_version
+      - environment_id
+      - has_docs_generated
+      - has_sources_generated
+      - job_definition_id
+      - notifications_sent
+      - project_id
+      - scribe_enabled
+      - status
+    RunResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        trigger_id:
+          type: integer
+        account_id:
+          type: integer
+        environment_id:
+          type: integer
+        project_id:
+          type: integer
+        job_definition_id:
+          type: integer
+        status:
+          type: integer
+        dbt_version:
+          type: string
+        git_branch:
+          type: string
+        git_sha:
+          type: string
+        status_message:
+          type: string
+        owner_thread_id:
+          type: string
+        executed_by_thread_id:
+          type: string
+        deferring_run_id:
+          type: integer
+        artifacts_saved:
+          type: boolean
+        artifact_s3_path:
+          type: string
+        has_docs_generated:
+          type: boolean
+        has_sources_generated:
+          type: boolean
+        notifications_sent:
+          type: boolean
+        blocked_by:
+          type: array
+          items:
+            type: integer
+        scribe_enabled:
+          type: boolean
         created_at:
           type: string
           format: date-time
@@ -4211,6 +4520,120 @@ components:
         dequeued_at:
           type: string
           format: date-time
+        started_at:
+          type: string
+          format: date-time
+        finished_at:
+          type: string
+          format: date-time
+        last_checked_at:
+          type: string
+          format: date-time
+        last_heartbeat_at:
+          type: string
+          format: date-time
+        should_start_at:
+          type: string
+          format: date-time
+        job:
+          type: object
+          additionalProperties: {}
+        environment:
+          type: object
+          additionalProperties: {}
+        status_humanized:
+          type: string
+        in_progress:
+          type: boolean
+        is_complete:
+          type: boolean
+        is_success:
+          type: boolean
+        is_error:
+          type: boolean
+        is_cancelled:
+          type: boolean
+        duration:
+          type: string
+        queued_duration:
+          type: string
+        run_duration:
+          type: string
+        duration_humanized:
+          type: string
+        queued_duration_humanized:
+          type: string
+        run_duration_humanized:
+          type: string
+        created_at_humanized:
+          type: string
+        finished_at_humanized:
+          type: string
+        retrying_run_id:
+          type: integer
+        can_retry:
+          type: boolean
+        retry_not_supported_reason:
+          $ref: '#/components/schemas/RetryNotSupportedReasonEnum'
+        job_id:
+          type: integer
+        is_running:
+          type: boolean
+        href:
+          type: string
+      required:
+      - created_at
+      - updated_at
+    RunResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    RunStep:
+      type: object
+      properties:
+        id:
+          type: integer
+        run_id:
+          type: integer
+        account_id:
+          type: integer
+        index:
+          type: integer
+        status:
+          type: integer
+        name:
+          type: string
+        logs:
+          type: string
+        debug_logs:
+          type: string
+        log_location:
+          allOf:
+          - $ref: '#/components/schemas/LogLocationEnum'
+          default: db
+        log_path:
+          type: string
+        debug_log_path:
+          type: string
+        log_archive_type:
+          type: string
+          default: db_flushed
+        truncated_debug_logs:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
           readOnly: true
         started_at:
           type: string
@@ -4220,115 +4643,33 @@ components:
           type: string
           format: date-time
           readOnly: true
-        last_checked_at:
+        status_color:
           type: string
-          format: date-time
           readOnly: true
-        last_heartbeat_at:
-          type: string
-          format: date-time
-          readOnly: true
-        should_start_at:
-          type: string
-          format: date-time
-          readOnly: true
-        trigger:
-          type: object
-          additionalProperties: {}
-          readOnly: true
-        job:
-          type: object
-          additionalProperties: {}
-          readOnly: true
-        environment:
-          type: object
-          additionalProperties: {}
-          readOnly: true
-        run_steps:
-          type: array
-          items: {}
-          readOnly: true
-          default: []
         status_humanized:
           type: string
           readOnly: true
-        in_progress:
-          type: boolean
-          readOnly: true
-        is_complete:
-          type: boolean
-          readOnly: true
-        is_success:
-          type: boolean
-          readOnly: true
-        is_error:
-          type: boolean
-          readOnly: true
-        is_cancelled:
-          type: boolean
-          readOnly: true
         duration:
-          type: string
-          readOnly: true
-        queued_duration:
-          type: string
-          readOnly: true
-        run_duration:
           type: string
           readOnly: true
         duration_humanized:
           type: string
           readOnly: true
-        queued_duration_humanized:
-          type: string
-          readOnly: true
-        run_duration_humanized:
-          type: string
-          readOnly: true
-        created_at_humanized:
-          type: string
-          readOnly: true
-        finished_at_humanized:
-          type: string
-          readOnly: true
-        job_id:
-          type: integer
-          readOnly: true
-        is_running:
-          type: boolean
       required:
       - created_at
-      - created_at_humanized
-      - dequeued_at
       - duration
       - duration_humanized
-      - environment
       - finished_at
-      - finished_at_humanized
-      - in_progress
-      - is_cancelled
-      - is_complete
-      - is_error
-      - is_success
-      - job
-      - job_id
-      - last_checked_at
-      - last_heartbeat_at
-      - queued_duration
-      - queued_duration_humanized
-      - run_duration
-      - run_duration_humanized
-      - run_steps
-      - should_start_at
       - started_at
+      - status_color
       - status_humanized
-      - trigger
+      - truncated_debug_logs
       - updated_at
-    RunEnveloped:
+    RunStepEnveloped:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/Run'
+          $ref: '#/components/schemas/RunStep'
         status:
           $ref: '#/components/schemas/Status'
       required:

@@ -902,62 +902,10 @@ paths:
         '204':
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/adapters/:
-    get:
-      operationId: List Projects Adapters
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      tags:
-      - Projects Adapters
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DbtAdapterEnveloped'
-          description: ''
     post:
-      operationId: Create Projects Adapter
+      operationId: Create Adapter
+      description: Create a new adapter for a project. The ID from this adapter can
+        be used to create Connections or Credentials when necessary.
       parameters:
       - in: path
         name: account_id
@@ -970,7 +918,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Projects Adapters
+      - Adapters
       requestBody:
         content:
           application/json:
@@ -996,7 +944,8 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/adapters/{id}/:
     get:
-      operationId: Retrieve Projects Adapter
+      operationId: Retrieve Adapter
+      description: Get an adapter by ID.
       parameters:
       - in: path
         name: account_id
@@ -1042,7 +991,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Projects Adapters
+      - Adapters
       security:
       - BearerAuthentication: []
       responses:
@@ -1053,7 +1002,8 @@ paths:
                 $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
     post:
-      operationId: Update Projects Adapter
+      operationId: Update Adapter
+      description: Update an adapter.
       parameters:
       - in: path
         name: account_id
@@ -1071,7 +1021,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Projects Adapters
+      - Adapters
       requestBody:
         content:
           application/json:
@@ -1094,7 +1044,8 @@ paths:
                 $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
     delete:
-      operationId: Destroy Projects Adapter
+      operationId: Destroy Adapter
+      description: Delete an adapter.
       parameters:
       - in: path
         name: account_id
@@ -1140,7 +1091,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Projects Adapters
+      - Adapters
       security:
       - BearerAuthentication: []
       responses:
@@ -1399,6 +1350,7 @@ paths:
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/:
     get:
       operationId: List Projects Credentials
+      description: List the credentials for a given project.
       parameters:
       - in: path
         name: account_id
@@ -1453,6 +1405,7 @@ paths:
           description: ''
     post:
       operationId: Create Projects Credential
+      description: Create new credentials
       parameters:
       - in: path
         name: account_id
@@ -1480,6 +1433,7 @@ paths:
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/{id}/:
     get:
       operationId: Retrieve Projects Credential
+      description: Fetch a specific set of credentials.
       parameters:
       - in: path
         name: account_id
@@ -1537,6 +1491,7 @@ paths:
           description: ''
     post:
       operationId: Update Projects Credential
+      description: Update a set of credentials
       parameters:
       - in: path
         name: account_id
@@ -1566,10 +1521,7 @@ paths:
           description: ''
     patch:
       operationId: Partial Update Projects Credential
-      description: |-
-        Overriding the default patch behavior is primarily motivated by the DbtAdapterCredentials model.
-        This model stores its credential values in nested json fields and that requires us to patch with
-        bespoke merge logic
+      description: Partially update a set of credentials
       parameters:
       - in: path
         name: account_id
@@ -1627,6 +1579,7 @@ paths:
           description: ''
     delete:
       operationId: Destroy Projects Credential
+      description: Delete a set of credentials
       parameters:
       - in: path
         name: account_id
@@ -2514,6 +2467,205 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/:
+    post:
+      operationId: Create Extended Attributes
+      description: Create a new Extended Attributes record.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Extended Attributes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtendedAttributesRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExtendedAttributesRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExtendedAttributesRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExtendedAttributesEnveloped'
+          description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/{id}/:
+    get:
+      operationId: Retrieve Extended Attributes
+      description: 'Given an account_id, project_id, and primary key: retrieve an
+        existing Extended Attributes record.'
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Extended Attributes
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedAttributesEnveloped'
+          description: ''
+    patch:
+      operationId: Update Extended Attributes
+      description: Update an existing Extended Attributes record by ID.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Extended Attributes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedExtendedAttributesRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedExtendedAttributesRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedExtendedAttributesRequest'
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedAttributesEnveloped'
+          description: ''
+    delete:
+      operationId: Destroy Extended Attributes
+      description: Delete an existing Extended Attributes record by ID.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Extended Attributes
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/group-permissions/:
     post:
       operationId: Assign Project Group Permissions
@@ -2539,9 +2691,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/Defaults'
           description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/managed-repositories/:
+    post:
+      operationId: Create Managed Repository
+      description: Create a new dbt Cloud managed repository.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Repositories
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepositoryV3Enveloped'
+          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/repositories/:
     get:
       operationId: List Repositories
+      description: List repositories for the given project
       parameters:
       - in: path
         name: account_id
@@ -2600,6 +2779,7 @@ paths:
           description: ''
     post:
       operationId: Create Repository
+      description: Create a new repository for the given project
       parameters:
       - in: path
         name: account_id
@@ -2639,6 +2819,7 @@ paths:
   /api/v3/accounts/{account_id}/projects/{project_id}/repositories/{id}/:
     get:
       operationId: Retrieve Repository
+      description: Get a repository by ID
       parameters:
       - in: path
         name: account_id
@@ -2700,6 +2881,7 @@ paths:
           description: ''
     post:
       operationId: Update Repository
+      description: Update a repository
       parameters:
       - in: path
         name: account_id
@@ -2741,6 +2923,7 @@ paths:
           description: ''
     delete:
       operationId: Destroy Repository
+      description: Delete a repository
       parameters:
       - in: path
         name: account_id
@@ -3352,6 +3535,7 @@ paths:
   /api/v3/accounts/{account_id}/users/:
     get:
       operationId: Retrieve User
+      description: List users for a given account.
       parameters:
       - in: path
         name: account_id
@@ -3367,7 +3551,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/UserEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/webhooks/event/{event_id}:
     get:
@@ -3673,6 +3857,26 @@ paths:
   /api/v3/adapter-schema/:
     get:
       operationId: Retrieve Adapter Schema
+      description: Fetch the schema for a given adapter. The schema will include details
+        on available fields for connections and credentials.
+      parameters:
+      - in: query
+        name: adapter_version
+        schema:
+          type: string
+          enum:
+          - apache_spark_v0
+          - bigquery_v0
+          - databricks_spark_v0
+          - databricks_v0
+          - fabric_v0
+          - postgres_v0
+          - redshift_v0
+          - snowflake_v0
+          - synapse_v0
+          - trino_v0
+        description: The adapter to fetch the schema for
+        required: true
       tags:
       - Adapter Schema
       security:
@@ -3682,11 +3886,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/AdapterSchemaResponseEnveloped'
           description: ''
   /api/v3/users/{user_id}/credentials/:
     get:
       operationId: List Users Credentials
+      description: List the development credentials associated with a given user.
       parameters:
       - in: query
         name: account_id
@@ -3736,6 +3941,7 @@ paths:
           description: ''
     post:
       operationId: Create Users Credential
+      description: Associate a set of development credentials with a given user.
       parameters:
       - in: path
         name: user_id
@@ -3770,6 +3976,7 @@ paths:
   /api/v3/users/{user_id}/credentials/{id}/:
     get:
       operationId: Retrieve Users Credential
+      description: Get a development credentials association for a given user.
       parameters:
       - in: query
         name: account_id
@@ -3822,6 +4029,8 @@ paths:
           description: ''
     post:
       operationId: Update Users Credential
+      description: Update which development credentials are associated with a specific
+        user.
       parameters:
       - in: path
         name: id
@@ -3858,6 +4067,7 @@ paths:
           description: ''
     delete:
       operationId: Destroy Users Credential
+      description: Delete a development credentials / user association.
       parameters:
       - in: query
         name: account_id
@@ -4072,6 +4282,8 @@ components:
         allow_repo_caching:
           type: boolean
           description: Repo caching is not currently available. Coming soon!
+        allow_partial_parsing:
+          type: boolean
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -4082,6 +4294,56 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Account'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    Adapter:
+      type: object
+      properties:
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/AdapterMetadata'
+          description: High level information about the adapter
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/Schema'
+          description: The set of connection-level fields for this adapter
+        credential:
+          allOf:
+          - $ref: '#/components/schemas/Schema'
+          description: The set of credential-level fields for this adapter
+        semantic_layer_credentials:
+          allOf:
+          - $ref: '#/components/schemas/Schema'
+          description: The set of semantic layer credential-level fields for this
+            adapter
+      required:
+      - metadata
+    AdapterMetadata:
+      type: object
+      properties:
+        title:
+          type: string
+        docs_link:
+          type: string
+        image_link:
+          type: string
+      required:
+      - docs_link
+      - image_link
+      - title
+    AdapterSchemaResponse:
+      type: object
+      properties:
+        adapter:
+          $ref: '#/components/schemas/Adapter'
+    AdapterSchemaResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AdapterSchemaResponse'
         status:
           $ref: '#/components/schemas/Status'
       required:
@@ -4669,6 +4931,63 @@ components:
       required:
       - data
       - status
+    ExtendedAttributes:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        extended_attributes:
+          type: object
+          additionalProperties: {}
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        state:
+          type: integer
+          default: 1
+      required:
+      - created_at
+      - updated_at
+    ExtendedAttributesEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ExtendedAttributes'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    ExtendedAttributesRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        extended_attributes:
+          type: object
+          additionalProperties: {}
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+      required:
+      - account_id
+      - extended_attributes
+      - project_id
     Filters:
       type: object
       properties:
@@ -5137,6 +5456,23 @@ components:
       required:
       - filters
       - pagination
+    PatchedExtendedAttributesRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        extended_attributes:
+          type: object
+          additionalProperties: {}
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
     PatchedSemanticLayerCredentialsRequest:
       type: object
       properties:
@@ -5569,14 +5905,35 @@ components:
           type: integer
         account_id:
           type: integer
+          description: The account the repo is associated with
         project_id:
           type: integer
+          description: The project the repo is associated with
         full_name:
           type: string
+          description: The name of the repo
         remote_backend:
-          $ref: '#/components/schemas/RemoteBackendEnum'
+          allOf:
+          - $ref: '#/components/schemas/RemoteBackendEnum'
+          description: |-
+            The associated git provider
+
+            * `azure_active_directory` - azure_active_directory
+            * `github` - github
+            * `managed` - managed
+            * `gitlab` - gitlab
+            * `manual_config` - manual_config
         git_clone_strategy:
-          $ref: '#/components/schemas/GitCloneStrategyEnum'
+          allOf:
+          - $ref: '#/components/schemas/GitCloneStrategyEnum'
+          description: |-
+            The strategy to use when cloning the repo
+
+            * `azure_active_directory_app` - azure_active_directory_app
+            * `deploy_key` - deploy_key
+            * `deploy_token` - deploy_token
+            * `github_app` - github_app
+            * `git_token` - git_token
         deploy_key_id:
           type: integer
         repository_credentials_id:
@@ -5617,15 +5974,36 @@ components:
           type: integer
         account_id:
           type: integer
+          description: The account the repo is associated with
         project_id:
           type: integer
+          description: The project the repo is associated with
         full_name:
           type: string
           minLength: 1
+          description: The name of the repo
         remote_backend:
-          $ref: '#/components/schemas/RemoteBackendEnum'
+          allOf:
+          - $ref: '#/components/schemas/RemoteBackendEnum'
+          description: |-
+            The associated git provider
+
+            * `azure_active_directory` - azure_active_directory
+            * `github` - github
+            * `managed` - managed
+            * `gitlab` - gitlab
+            * `manual_config` - manual_config
         git_clone_strategy:
-          $ref: '#/components/schemas/GitCloneStrategyEnum'
+          allOf:
+          - $ref: '#/components/schemas/GitCloneStrategyEnum'
+          description: |-
+            The strategy to use when cloning the repo
+
+            * `azure_active_directory_app` - azure_active_directory_app
+            * `deploy_key` - deploy_key
+            * `deploy_token` - deploy_token
+            * `github_app` - github_app
+            * `git_token` - git_token
         deploy_key_id:
           type: integer
         repository_credentials_id:
@@ -5735,6 +6113,14 @@ components:
       - project_id
       - scribe_enabled
       - status
+    Schema:
+      type: object
+      properties:
+        field_order:
+          type: array
+          items:
+            type: string
+          description: The field order for display in the UI
     SchemaTypeEnum:
       enum:
       - connection
@@ -6136,6 +6522,154 @@ components:
       required:
       - data
       - status
+    User:
+      type: object
+      required:
+      - id
+      - first_name
+      - last_name
+      - email
+      - is_staff
+      - github_connected
+      - github_username
+      - gitlab_connected
+      - gitlab_username
+      - azure_active_directory_connected
+      - azure_active_directory_username
+      - email_connected
+      - email_verified
+      - slack_connected
+      - enterprise_connected
+      properties:
+        id:
+          oneOf:
+          - type: 'null'
+          - type: integer
+        auth0_user_id:
+          oneOf:
+          - type: 'null'
+          - type: string
+        auth0_database_user_id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        is_staff:
+          type: boolean
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        github_connected:
+          oneOf:
+          - type: 'null'
+          - type: boolean
+        github_token_retrieval_failure:
+          oneOf:
+          - type: 'null'
+          - type: boolean
+        github_access_token:
+          oneOf:
+          - type: 'null'
+          - type: string
+        github_username:
+          oneOf:
+          - type: 'null'
+          - type: string
+        gitlab_connected:
+          oneOf:
+          - type: 'null'
+          - type: boolean
+        gitlab_token_retrieval_failure:
+          oneOf:
+          - type: 'null'
+          - type: boolean
+        gitlab_access_token:
+          oneOf:
+          - type: 'null'
+          - type: string
+        gitlab_username:
+          oneOf:
+          - type: 'null'
+          - type: string
+        azure_active_directory_connected:
+          oneOf:
+          - type: 'null'
+          - type: boolean
+        azure_active_directory_access_token:
+          oneOf:
+          - type: 'null'
+          - type: string
+        azure_active_directory_username:
+          oneOf:
+          - type: 'null'
+          - type: string
+        azure_active_directory_token_retrieval_failure:
+          oneOf:
+          - type: 'null'
+          - type: boolean
+        email_connected:
+          oneOf:
+          - type: 'null'
+          - type: boolean
+        email_verified:
+          type: boolean
+        slack_connected:
+          oneOf:
+          - type: 'null'
+          - type: boolean
+        slack_team_name:
+          oneOf:
+          - type: 'null'
+          - type: string
+        slack_avatar_url:
+          oneOf:
+          - type: 'null'
+          - type: string
+        slack_access_token:
+          oneOf:
+          - type: 'null'
+          - type: string
+        enterprise_connected:
+          oneOf:
+          - type: 'null'
+          - type: boolean
+        enterprise_authentication_method:
+          oneOf:
+          - type: 'null'
+          - type: string
+        enterprise_idp_attributes:
+          oneOf:
+          - type: 'null'
+          - {}
+        auth_provider_infos:
+          oneOf:
+          - type: 'null'
+          - {}
+        api_key:
+          type: string
+        password:
+          allOf:
+          - minLength: 9
+          - type: string
+        confirm_password:
+          type: string
+        permissions: {}
+        licenses: {}
+        user_feature_flags: {}
+      additionalProperties: false
+      definitions: {}
+      $schema: http://json-schema.org/draft-07/schema#
     UserCredentials:
       type: object
       properties:
@@ -6143,12 +6677,16 @@ components:
           type: integer
         account_id:
           type: integer
+          description: The account the user credentials are associated with
         user_id:
           type: integer
+          description: The user the user credentials are associated with
         project_id:
           type: integer
+          description: The project the user credentials are associated with
         credentials_id:
           type: integer
+          description: The credentials the user is associated with
         state:
           type: integer
           default: 1
@@ -6190,12 +6728,16 @@ components:
           type: integer
         account_id:
           type: integer
+          description: The account the user credentials are associated with
         user_id:
           type: integer
+          description: The user the user credentials are associated with
         project_id:
           type: integer
+          description: The project the user credentials are associated with
         credentials_id:
           type: integer
+          description: The credentials the user is associated with
         state:
           type: integer
           default: 1
@@ -6206,6 +6748,18 @@ components:
       - credentials_id
       - project_id
       - user_id
+    UserEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
   securitySchemes:
     BearerAuthentication:
       type: http
