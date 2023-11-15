@@ -2516,7 +2516,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/:
     post:
-      operationId: Create Projects Extended Attribute
+      operationId: Create Extended Attributes
       description: Create a new Extended Attributes record.
       parameters:
       - in: path
@@ -2530,7 +2530,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Projects Extended Attributes
+      - Extended Attributes
       requestBody:
         content:
           application/json:
@@ -2556,7 +2556,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/{id}/:
     get:
-      operationId: Retrieve Projects Extended Attribute
+      operationId: Retrieve Extended Attributes
       description: 'Given an account_id, project_id, and primary key: retrieve an
         existing Extended Attributes record.'
       parameters:
@@ -2596,7 +2596,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Projects Extended Attributes
+      - Extended Attributes
       security:
       - BearerAuthentication: []
       responses:
@@ -2607,7 +2607,7 @@ paths:
                 $ref: '#/components/schemas/ExtendedAttributesEnveloped'
           description: ''
     patch:
-      operationId: Partial Update Projects Extended Attribute
+      operationId: Partial Update Extended Attributes
       description: Update an existing Extended Attributes record.
       parameters:
       - in: path
@@ -2646,7 +2646,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Projects Extended Attributes
+      - Extended Attributes
       requestBody:
         content:
           application/json:
@@ -2668,7 +2668,7 @@ paths:
                 $ref: '#/components/schemas/ExtendedAttributesEnveloped'
           description: ''
     delete:
-      operationId: Destroy Projects Extended Attribute
+      operationId: Destroy Extended Attributes
       description: Delete an existing Extended Attributes record.
       parameters:
       - in: path
@@ -2707,7 +2707,7 @@ paths:
         schema:
           type: integer
       tags:
-      - Projects Extended Attributes
+      - Extended Attributes
       security:
       - BearerAuthentication: []
       responses:
