@@ -2514,6 +2514,205 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/:
+    post:
+      operationId: Create Projects Extended Attribute
+      description: Create a new Extended Attributes record.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects Extended Attributes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtendedAttributesRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExtendedAttributesRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExtendedAttributesRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExtendedAttributesEnveloped'
+          description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/{id}/:
+    get:
+      operationId: Retrieve Projects Extended Attribute
+      description: 'Given an account_id, project_id, and primary key: retrieve an
+        existing Extended Attributes record.'
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Projects Extended Attributes
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedAttributesEnveloped'
+          description: ''
+    patch:
+      operationId: Partial Update Projects Extended Attribute
+      description: Update an existing Extended Attributes record.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Projects Extended Attributes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedExtendedAttributesRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedExtendedAttributesRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedExtendedAttributesRequest'
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedAttributesEnveloped'
+          description: ''
+    delete:
+      operationId: Destroy Projects Extended Attribute
+      description: Delete an existing Extended Attributes record.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Projects Extended Attributes
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/group-permissions/:
     post:
       operationId: Assign Project Group Permissions
@@ -4669,6 +4868,63 @@ components:
       required:
       - data
       - status
+    ExtendedAttributes:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        extended_attributes:
+          type: object
+          additionalProperties: {}
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        state:
+          type: integer
+          default: 1
+      required:
+      - created_at
+      - updated_at
+    ExtendedAttributesEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ExtendedAttributes'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    ExtendedAttributesRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        extended_attributes:
+          type: object
+          additionalProperties: {}
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+      required:
+      - account_id
+      - extended_attributes
+      - project_id
     Filters:
       type: object
       properties:
@@ -5137,6 +5393,23 @@ components:
       required:
       - filters
       - pagination
+    PatchedExtendedAttributesRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        extended_attributes:
+          type: object
+          additionalProperties: {}
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
     PatchedSemanticLayerCredentialsRequest:
       type: object
       properties:
