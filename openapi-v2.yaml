@@ -1718,7 +1718,6 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
         name: limit
         schema:
@@ -1727,6 +1726,18 @@ paths:
         name: offset
         schema:
           type: integer
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
       - in: query
         name: remote_url
         schema:
@@ -1798,7 +1809,6 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: path
         name: id
         schema:
@@ -1812,6 +1822,18 @@ paths:
         name: offset
         schema:
           type: integer
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
       - in: query
         name: remote_url
         schema:
@@ -1845,7 +1867,6 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: path
         name: id
         schema:
@@ -1859,6 +1880,18 @@ paths:
         name: offset
         schema:
           type: integer
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
       - in: query
         name: remote_url
         schema:
@@ -2406,6 +2439,8 @@ components:
           description: The total number of Read Only seats the account may use
         pod_memory_request_mebibytes:
           type: integer
+        develop_pod_memory_request_mebibytes:
+          type: integer
         run_duration_limit_seconds:
           type: integer
         queue_limit:
@@ -2530,6 +2565,15 @@ components:
           description: Repo caching is not currently available. Coming soon!
         allow_partial_parsing:
           type: boolean
+        migration_scheduled_at:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        account_migration_events:
+          oneOf:
+          - type: 'null'
+          - {}
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -2588,6 +2632,8 @@ components:
           type: integer
           description: The total number of Read Only seats the account may use
         pod_memory_request_mebibytes:
+          type: integer
+        develop_pod_memory_request_mebibytes:
           type: integer
         run_duration_limit_seconds:
           type: integer
@@ -2701,6 +2747,15 @@ components:
           description: Repo caching is not currently available. Coming soon!
         allow_partial_parsing:
           type: boolean
+        migration_scheduled_at:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        account_migration_events:
+          oneOf:
+          - type: 'null'
+          - {}
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -3248,8 +3303,9 @@ components:
           - type: string
           - type: 'null'
         triggers:
-          description: 'only one of the following fields can be true: triggers.github_webhook,
-            triggers.schedule, & triggers.git_provider_webhook'
+          description: 'Only one of the following fields can be true: triggers.github_webhook,
+            triggers.schedule, & triggers.git_provider_webhook. The triggers.custom_branch_only
+            field is now deprecated.'
         created_at:
           type: string
           format: date-time
@@ -3307,6 +3363,23 @@ components:
           - type: 'null'
         triggers_on_draft_pr:
           type: boolean
+        job_completion_trigger_condition:
+          oneOf:
+          - {}
+          - type: 'null'
+          description: "Use this to set up job completion triggers which would trigger\
+            \ a run of a job when another \n            run finishes. If you have\
+            \ a child job that you want triggered on the completion of a parent job,\
+            \ \n            then configure the trigger on the child job to be on job\
+            \ completion and select the project, parent job \n            and the\
+            \ statuses of the parent job on which to trigger the child job. The statuses\
+            \ which is an array \n            can be one or more of - success (10),\
+            \ error (20), canceled (30). Once the parent job completes, \n       \
+            \     a new run will be enqueued for the child job.\n            Example\
+            \ of a job completion trigger: \n                {\n                 \
+            \   \"condition\": {\n                        \"job_id\": 1,\n       \
+            \                 \"project_id\": 1,\n                        \"statuses\"\
+            : [10, 20],\n                    }\n                }\n            "
         generate_sources:
           type: boolean
       additionalProperties: false
@@ -3386,8 +3459,9 @@ components:
           - type: string
           - type: 'null'
         triggers:
-          description: 'only one of the following fields can be true: triggers.github_webhook,
-            triggers.schedule, & triggers.git_provider_webhook'
+          description: 'Only one of the following fields can be true: triggers.github_webhook,
+            triggers.schedule, & triggers.git_provider_webhook. The triggers.custom_branch_only
+            field is now deprecated.'
         created_at:
           type: string
           format: date-time
@@ -3445,6 +3519,23 @@ components:
           - type: 'null'
         triggers_on_draft_pr:
           type: boolean
+        job_completion_trigger_condition:
+          oneOf:
+          - {}
+          - type: 'null'
+          description: "Use this to set up job completion triggers which would trigger\
+            \ a run of a job when another \n            run finishes. If you have\
+            \ a child job that you want triggered on the completion of a parent job,\
+            \ \n            then configure the trigger on the child job to be on job\
+            \ completion and select the project, parent job \n            and the\
+            \ statuses of the parent job on which to trigger the child job. The statuses\
+            \ which is an array \n            can be one or more of - success (10),\
+            \ error (20), canceled (30). Once the parent job completes, \n       \
+            \     a new run will be enqueued for the child job.\n            Example\
+            \ of a job completion trigger: \n                {\n                 \
+            \   \"condition\": {\n                        \"job_id\": 1,\n       \
+            \                 \"project_id\": 1,\n                        \"statuses\"\
+            : [10, 20],\n                    }\n                }\n            "
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -3522,8 +3613,9 @@ components:
           - type: string
           - type: 'null'
         triggers:
-          description: 'only one of the following fields can be true: triggers.github_webhook,
-            triggers.schedule, & triggers.git_provider_webhook'
+          description: 'Only one of the following fields can be true: triggers.github_webhook,
+            triggers.schedule, & triggers.git_provider_webhook. The triggers.custom_branch_only
+            field is now deprecated.'
         execute_steps:
           allOf:
           - {}
@@ -3573,6 +3665,23 @@ components:
           - type: 'null'
         triggers_on_draft_pr:
           type: boolean
+        job_completion_trigger_condition:
+          oneOf:
+          - {}
+          - type: 'null'
+          description: "Use this to set up job completion triggers which would trigger\
+            \ a run of a job when another \n            run finishes. If you have\
+            \ a child job that you want triggered on the completion of a parent job,\
+            \ \n            then configure the trigger on the child job to be on job\
+            \ completion and select the project, parent job \n            and the\
+            \ statuses of the parent job on which to trigger the child job. The statuses\
+            \ which is an array \n            can be one or more of - success (10),\
+            \ error (20), canceled (30). Once the parent job completes, \n       \
+            \     a new run will be enqueued for the child job.\n            Example\
+            \ of a job completion trigger: \n                {\n                 \
+            \   \"condition\": {\n                        \"job_id\": 1,\n       \
+            \                 \"project_id\": 1,\n                        \"statuses\"\
+            : [10, 20],\n                    }\n                }\n            "
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -3680,8 +3789,6 @@ components:
         schedule:
           type: boolean
         git_provider_webhook:
-          type: boolean
-        custom_branch_only:
           type: boolean
       required:
       - github_webhook
@@ -3942,6 +4049,7 @@ components:
       - git_admin
       - team_admin
       - job_admin
+      - job_runner
       - job_viewer
       - analyst
       - developer
@@ -3964,6 +4072,7 @@ components:
         * `git_admin` - git_admin
         * `team_admin` - team_admin
         * `job_admin` - job_admin
+        * `job_runner` - job_runner
         * `job_viewer` - job_viewer
         * `analyst` - analyst
         * `developer` - developer
@@ -4581,6 +4690,8 @@ components:
           type: boolean
         href:
           type: string
+        used_repo_cache:
+          type: boolean
       required:
       - created_at
       - updated_at

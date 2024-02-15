@@ -456,6 +456,244 @@ paths:
               schema:
                 $ref: '#/components/schemas/InviteUsersResponseEnveloped'
           description: ''
+  /api/v3/accounts/{account_id}/ip-restrictions/:
+    get:
+      operationId: List IP Restrictions
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - IP Restriction Endpoints
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPRestrictionRuleEnveloped'
+          description: ''
+    post:
+      operationId: Save IP Restriction
+      description: |-
+        Save net-new ip restriction rule
+
+        Note: As long as at least one cidr was successfully saved a 2XX will be returned.
+        Check the `extra` key within the response for a list of cidrs that failed to save.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - IP Restriction Endpoints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IPRestrictionRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IPRestrictionRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/IPRestrictionRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPRestrictionRuleEnveloped'
+          description: ''
+  /api/v3/accounts/{account_id}/ip-restrictions-set/:
+    post:
+      operationId: Enable IP Restrictions
+      description: Toggle the enablement of the IP restriction feature.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - IP Restriction Endpoints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IPRestrictionSetRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IPRestrictionSetRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/IPRestrictionSetRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
+  /api/v3/accounts/{account_id}/ip-restrictions-set/{id}/validate/:
+    get:
+      operationId: Validate Client IP Against IP Restrictions
+      description: |-
+        This endpoint returns whether the client ip is acceptable based on the
+        configured ip restriction rules associated to the rule set.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - IP Restriction Endpoints
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPRestrictionSetValidate'
+          description: ''
+  /api/v3/accounts/{account_id}/ip-restrictions-set/{id}/validate/{rule_id}:
+    get:
+      operationId: Validate Client IP Against IP Restrictions Excluding Specified
+        IP Rule
+      description: |-
+        This endpoint returns whether the client ip is acceptable based on the
+        configured ip restriction rules associated to the rule set - excluding the ip rule id
+        passed into the url
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: rule_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - IP Restriction Endpoints
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPRestrictionSetValidate'
+          description: ''
+  /api/v3/accounts/{account_id}/ip-restrictions/{id}:
+    get:
+      operationId: Retrieve IP Restriction
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - IP Restriction Endpoints
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPRestrictionRuleEnveloped'
+          description: ''
+    put:
+      operationId: Update IP Restriction
+      description: |-
+        Update an existing ip restriction rule
+
+        Note: As long as at least one cidr was successfully saved a 2XX will be returned.
+        Check the `extra` key within the response for a list of cidrs that failed to save.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - IP Restriction Endpoints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIPRestrictionRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateIPRestrictionRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateIPRestrictionRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPRestrictionRule'
+          description: ''
+    delete:
+      operationId: Delete IP Restriction
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - IP Restriction Endpoints
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/license-maps/:
     get:
       operationId: List License Maps
@@ -1399,9 +1637,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/Defaults'
           description: ''
     post:
       operationId: Create Projects Credential
@@ -1426,9 +1662,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Defaults'
+                $ref: '#/components/schemas/Defaults'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/{id}/:
     get:
@@ -1490,7 +1724,7 @@ paths:
                 $ref: '#/components/schemas/Defaults'
           description: ''
     post:
-      operationId: Update Projects Credential
+      operationId: Updates Project Credentials
       description: Update a set of credentials
       parameters:
       - in: path
@@ -2140,6 +2374,10 @@ paths:
         schema:
           type: string
       - in: query
+        name: deployment_type__in
+        schema:
+          type: array
+      - in: query
         name: id__gt
         schema:
           type: integer
@@ -2270,6 +2508,10 @@ paths:
         name: deployment_type
         schema:
           type: string
+      - in: query
+        name: deployment_type__in
+        schema:
+          type: array
       - in: path
         name: id
         schema:
@@ -2406,6 +2648,10 @@ paths:
         name: deployment_type
         schema:
           type: string
+      - in: query
+        name: deployment_type__in
+        schema:
+          type: array
       - in: path
         name: id
         schema:
@@ -4160,6 +4406,8 @@ components:
           description: The total number of Read Only seats the account may use
         pod_memory_request_mebibytes:
           type: integer
+        develop_pod_memory_request_mebibytes:
+          type: integer
         run_duration_limit_seconds:
           type: integer
         queue_limit:
@@ -4284,6 +4532,15 @@ components:
           description: Repo caching is not currently available. Coming soon!
         allow_partial_parsing:
           type: boolean
+        migration_scheduled_at:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
+        account_migration_events:
+          oneOf:
+          - type: 'null'
+          - {}
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -4753,8 +5010,11 @@ components:
     DeploymentTypeEnum:
       enum:
       - production
+      - staging
       type: string
-      description: '* `production` - production'
+      description: |-
+        * `production` - production
+        * `staging` - staging
     EnvironmentV3:
       type: object
       properties:
@@ -4778,7 +5038,7 @@ components:
           description: The name of the environment
         dbt_version:
           type: string
-          default: 1.6.0-latest
+          default: 1.7.0-latest
           description: The default dbt Version to use for this environment
         raw_dbt_version:
           type: string
@@ -5152,6 +5412,134 @@ components:
       - account_id
       - assign_by_default
       - name
+    IPRestrictionCidr:
+      type: object
+      properties:
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        ip_restriction_rule_id:
+          type: integer
+        enabled:
+          type: boolean
+        cidr:
+          type: string
+        cidr_ipv6:
+          type: string
+      required:
+      - cidr
+      - enabled
+      - ip_restriction_rule_id
+    IPRestrictionCidrRequestRequest:
+      type: object
+      properties:
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        cidr:
+          type: string
+          minLength: 1
+        id:
+          type: integer
+      required:
+      - cidr
+    IPRestrictionRequestRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        rule_set_enabled:
+          type: boolean
+        account_id:
+          type: integer
+        cidrs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPRestrictionCidrRequestRequest'
+        description:
+          type: string
+          minLength: 1
+      required:
+      - account_id
+      - cidrs
+      - name
+      - rule_set_enabled
+    IPRestrictionRule:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        ip_restriction_rule_set_id:
+          type: integer
+        rule_set_enabled:
+          type: boolean
+        account_id:
+          type: integer
+        cidrs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPRestrictionCidr'
+        created_by_id:
+          type: integer
+        created_by_service_token_id:
+          type: integer
+        id:
+          type: integer
+          readOnly: true
+        enabled_for_service_tokens:
+          type: boolean
+          readOnly: true
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - enabled_for_service_tokens
+      - id
+      - updated_at
+    IPRestrictionRuleEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/IPRestrictionRule'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    IPRestrictionSetRequestRequest:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+      required:
+      - enabled
+    IPRestrictionSetValidate:
+      type: object
+      properties:
+        is_valid_for_admin:
+          type: boolean
+      required:
+      - is_valid_for_admin
     InviteUsersRequestRequest:
       type: object
       properties:
@@ -5224,8 +5612,6 @@ components:
         schedule:
           type: boolean
         git_provider_webhook:
-          type: boolean
-        custom_branch_only:
           type: boolean
       required:
       - github_webhook
@@ -5523,6 +5909,7 @@ components:
       - git_admin
       - team_admin
       - job_admin
+      - job_runner
       - job_viewer
       - analyst
       - developer
@@ -5545,6 +5932,7 @@ components:
         * `git_admin` - git_admin
         * `team_admin` - team_admin
         * `job_admin` - job_admin
+        * `job_runner` - job_runner
         * `job_viewer` - job_viewer
         * `analyst` - analyst
         * `developer` - developer
@@ -6121,6 +6509,11 @@ components:
           items:
             type: string
           description: The field order for display in the UI
+        field_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+          description: Specification of how certain fields should be grouped
     SchemaTypeEnum:
       enum:
       - connection
@@ -6328,6 +6721,13 @@ components:
         last_used:
           type: string
           format: date-time
+        user_id:
+          type: integer
+        type:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
         metadata_only:
           type: boolean
           default: false
@@ -6512,6 +6912,31 @@ components:
         * `snowflake` - snowflake
         * `bigquery` - bigquery
         * `adapter` - adapter
+    UpdateIPRestrictionRequestRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        rule_set_enabled:
+          type: boolean
+        account_id:
+          type: integer
+        cidrs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPRestrictionCidrRequestRequest'
+        description:
+          type: string
+          minLength: 1
+        id:
+          type: integer
+      required:
+      - account_id
+      - cidrs
+      - id
+      - name
+      - rule_set_enabled
     UpdateSubscriptionResponseEnvelope:
       type: object
       properties:
