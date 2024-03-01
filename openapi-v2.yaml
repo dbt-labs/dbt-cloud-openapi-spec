@@ -4466,12 +4466,8 @@ components:
         should_start_at:
           type: string
           format: date-time
-        job:
-          type: object
-          additionalProperties: {}
-        environment:
-          type: object
-          additionalProperties: {}
+        job: {}
+        environment: {}
         status_humanized:
           type: string
         in_progress:

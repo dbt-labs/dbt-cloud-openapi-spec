@@ -4641,7 +4641,7 @@ components:
           type: string
           description: The name of the connection
         type:
-          $ref: '#/components/schemas/Type666Enum'
+          $ref: '#/components/schemas/Type32eEnum'
         created_by_id:
           type: integer
         created_by_service_token_id:
@@ -4684,7 +4684,7 @@ components:
           minLength: 1
           description: The name of the connection
         type:
-          $ref: '#/components/schemas/Type666Enum'
+          $ref: '#/components/schemas/Type32eEnum'
         created_by_id:
           type: integer
         created_by_service_token_id:
@@ -4733,8 +4733,6 @@ components:
         job_definition_id:
           type: integer
         environment:
-          type: object
-          additionalProperties: {}
           readOnly: true
         display_value:
           type: string
@@ -4912,9 +4910,7 @@ components:
           type: integer
         adapter_version:
           $ref: '#/components/schemas/AdapterVersionEnum'
-        metadata_json:
-          type: object
-          additionalProperties: {}
+        metadata_json: {}
         state:
           type: integer
           default: 1
@@ -4954,9 +4950,7 @@ components:
           type: integer
         adapter_version:
           $ref: '#/components/schemas/AdapterVersionEnum'
-        metadata_json:
-          type: object
-          additionalProperties: {}
+        metadata_json: {}
         state:
           type: integer
           default: 1
@@ -5065,8 +5059,6 @@ components:
           format: date-time
           readOnly: true
         project:
-          type: object
-          additionalProperties: {}
           readOnly: true
         credentials:
           allOf:
@@ -5198,9 +5190,7 @@ components:
           type: integer
         project_id:
           type: integer
-        extended_attributes:
-          type: object
-          additionalProperties: {}
+        extended_attributes: {}
         created_at:
           type: string
           format: date-time
@@ -5234,9 +5224,7 @@ components:
           type: integer
         project_id:
           type: integer
-        extended_attributes:
-          type: object
-          additionalProperties: {}
+        extended_attributes: {}
         state:
           type: integer
           default: 1
@@ -5852,9 +5840,7 @@ components:
           type: integer
         project_id:
           type: integer
-        extended_attributes:
-          type: object
-          additionalProperties: {}
+        extended_attributes: {}
         state:
           type: integer
           default: 1
@@ -5954,7 +5940,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type666Enum'
+          $ref: '#/components/schemas/Type32eEnum'
         state:
           type: integer
           default: 1
@@ -6170,14 +6156,10 @@ components:
           type: string
         service:
           type: string
-        actor:
-          type: object
-          additionalProperties: {}
+        actor: {}
         event_type:
           type: string
-        event_context:
-          type: object
-          additionalProperties: {}
+        event_context: {}
         created_at:
           type: string
           format: date-time
@@ -6431,8 +6413,6 @@ components:
           items:
             type: integer
         failures:
-          type: object
-          additionalProperties: {}
           description: This field will detail specific failures within a single environment
             variable you are attempting to create.
       required:
@@ -6904,7 +6884,7 @@ components:
       description: |-
         * `every_hour` - every_hour
         * `at_exact_hours` - at_exact_hours
-    Type666Enum:
+    Type32eEnum:
       enum:
       - postgres
       - redshift
