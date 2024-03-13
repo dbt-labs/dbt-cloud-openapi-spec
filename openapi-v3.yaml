@@ -4136,7 +4136,7 @@ paths:
           description: ''
   /api/v3/users/{user_id}/credentials/:
     get:
-      operationId: List Users Credentials
+      operationId: List Users Credential
       description: List the development credentials associated with a given user.
       parameters:
       - in: query
@@ -4181,9 +4181,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserCredentialsEnveloped'
+                $ref: '#/components/schemas/UserCredentialsEnveloped'
           description: ''
     post:
       operationId: Create Users Credential
@@ -4215,9 +4213,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserCredentialsEnveloped'
+                $ref: '#/components/schemas/UserCredentialsEnveloped'
           description: ''
   /api/v3/users/{user_id}/credentials/{id}/:
     get:
@@ -4894,11 +4890,13 @@ components:
       - every_day
       - days_of_week
       - custom_cron
+      - interval_cron
       type: string
       description: |-
         * `every_day` - every_day
         * `days_of_week` - days_of_week
         * `custom_cron` - custom_cron
+        * `interval_cron` - interval_cron
     DbtAdapter:
       type: object
       properties:
@@ -5665,6 +5663,9 @@ components:
         triggers_on_draft_pr:
           type: boolean
           default: false
+        run_audit_helper:
+          type: boolean
+          default: false
       required:
       - account_id
       - deactivated
@@ -6429,6 +6430,11 @@ components:
           type: array
           items:
             type: integer
+        failures:
+          type: object
+          additionalProperties: {}
+          description: This field will detail specific failures within a single environment
+            variable you are attempting to create.
       required:
       - message
       - new_var_ids
@@ -7092,6 +7098,11 @@ components:
         permissions: {}
         licenses: {}
         user_feature_flags: {}
+        apitoken_last_used:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
