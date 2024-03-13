@@ -152,170 +152,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/BaseConnectionEnveloped'
           description: ''
-    post:
-      operationId: Create Connection
-      description: Deprecated. Consider using the v3 API instead.
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Connections
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BaseConnectionRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BaseConnectionRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BaseConnectionRequest'
-        required: true
-      security:
-      - BearerAuthentication: []
-      deprecated: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/BaseConnectionEnveloped'
-          description: ''
-  /api/v2/accounts/{account_id}/connections/{id}/:
-    get:
-      operationId: Retrieve Connection
-      description: Deprecated. Consider using the v3 API instead.
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
-      tags:
-      - Connections
-      security:
-      - BearerAuthentication: []
-      deprecated: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BaseConnectionEnveloped'
-          description: ''
-    post:
-      operationId: Update Connection
-      description: Deprecated. Consider using the v3 API instead.
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Connections
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BaseConnectionRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BaseConnectionRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BaseConnectionRequest'
-        required: true
-      security:
-      - BearerAuthentication: []
-      deprecated: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BaseConnectionEnveloped'
-          description: ''
-    delete:
-      operationId: Destroy Connection
-      description: Deprecated. Consider using the v3 API instead.
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
-      tags:
-      - Connections
-      security:
-      - BearerAuthentication: []
-      deprecated: true
-      responses:
-        '204':
-          description: No response body
   /api/v2/accounts/{account_id}/encryptions/:
     get:
       operationId: List SSH Tunnels
@@ -1246,7 +1082,6 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
         name: external_email
         schema:
@@ -1260,11 +1095,23 @@ paths:
         schema:
           type: integer
       - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
         name: slack_channel_id
         schema:
           type: string
       - in: query
         name: state
+        schema:
+          type: integer
+      - in: query
+        name: type
+        schema:
+          type: integer
+      - in: query
+        name: user_id
         schema:
           type: integer
       tags:
@@ -1330,7 +1177,6 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
         name: external_email
         schema:
@@ -1349,11 +1195,23 @@ paths:
         schema:
           type: integer
       - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
         name: slack_channel_id
         schema:
           type: string
       - in: query
         name: state
+        schema:
+          type: integer
+      - in: query
+        name: type
+        schema:
+          type: integer
+      - in: query
+        name: user_id
         schema:
           type: integer
       tags:
@@ -1416,7 +1274,6 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
         name: external_email
         schema:
@@ -1435,11 +1292,23 @@ paths:
         schema:
           type: integer
       - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
         name: slack_channel_id
         schema:
           type: string
       - in: query
         name: state
+        schema:
+          type: integer
+      - in: query
+        name: type
+        schema:
+          type: integer
+      - in: query
+        name: user_id
         schema:
           type: integer
       tags:
@@ -2333,7 +2202,6 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: path
         name: id
         schema:
@@ -2345,6 +2213,10 @@ paths:
           type: integer
       - in: query
         name: offset
+        schema:
+          type: integer
+      - in: query
+        name: pk
         schema:
           type: integer
       - in: query
@@ -2816,43 +2688,6 @@ components:
       required:
       - data
       - status
-    BaseConnectionRequest:
-      type: object
-      required:
-      - id
-      - account_id
-      - name
-      - type
-      - state
-      properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        account_id:
-          type: integer
-        dbt_project_id:
-          type: integer
-        created_by_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        created_by_service_token_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        name:
-          allOf:
-          - type: string
-          - minLength: 1
-            maxLength: 255
-        type:
-          type: string
-        state:
-          type: integer
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
     BaseConnectionV3:
       type: object
       properties:
@@ -2969,11 +2804,13 @@ components:
       - every_day
       - days_of_week
       - custom_cron
+      - interval_cron
       type: string
       description: |-
         * `every_day` - every_day
         * `days_of_week` - days_of_week
         * `custom_cron` - custom_cron
+        * `interval_cron` - interval_cron
     Defaults:
       type: object
       properties:
@@ -3257,6 +3094,7 @@ components:
       - state
       - generate_docs
       - run_generate_sources
+      - run_audit_helper
       properties:
         id:
           oneOf:
@@ -3332,6 +3170,10 @@ components:
           type: boolean
         run_generate_sources:
           type: boolean
+        run_audit_helper:
+          oneOf:
+          - type: 'null'
+          - type: boolean
         environment: {}
         account:
           oneOf:
@@ -3413,6 +3255,7 @@ components:
       - state
       - generate_docs
       - run_generate_sources
+      - run_audit_helper
       properties:
         id:
           oneOf:
@@ -3488,6 +3331,10 @@ components:
           type: boolean
         run_generate_sources:
           type: boolean
+        run_audit_helper:
+          oneOf:
+          - type: 'null'
+          - type: boolean
         environment: {}
         account:
           oneOf:
@@ -3567,6 +3414,7 @@ components:
       - state
       - generate_docs
       - run_generate_sources
+      - run_audit_helper
       properties:
         id:
           oneOf:
@@ -3634,6 +3482,10 @@ components:
           type: boolean
         run_generate_sources:
           type: boolean
+        run_audit_helper:
+          oneOf:
+          - type: 'null'
+          - type: boolean
         environment: {}
         account:
           oneOf:
@@ -3842,6 +3694,9 @@ components:
         triggers_on_draft_pr:
           type: boolean
           default: false
+        run_audit_helper:
+          type: boolean
+          default: false
       required:
       - account_id
       - deactivated
@@ -3861,6 +3716,7 @@ components:
       - on_cancel
       - on_failure
       - on_success
+      - user_id
       properties:
         id:
           oneOf:
@@ -3947,6 +3803,7 @@ components:
       - on_cancel
       - on_failure
       - on_success
+      - user_id
       properties:
         id:
           oneOf:
@@ -4836,6 +4693,8 @@ components:
         dbt_version_override:
           type: string
           minLength: 1
+          description: 'Allowed values are: 1.0.0, 1.1.0-latest, 1.2.0-latest, 1.3.0-latest,
+            1.4.0-latest, 1.5.0-latest, 1.6.0-latest, 1.7.0-latest'
         threads_override:
           type: integer
         target_name_override:
@@ -5011,6 +4870,11 @@ components:
         permissions: {}
         licenses: {}
         user_feature_flags: {}
+        apitoken_last_used:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -5167,6 +5031,11 @@ components:
         permissions: {}
         licenses: {}
         user_feature_flags: {}
+        apitoken_last_used:
+          oneOf:
+          - type: 'null'
+          - type: string
+            format: date-time
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
