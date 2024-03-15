@@ -51,7 +51,7 @@ info:
 
     ```bash
     curl --request GET \
-      --url 'https://cloud.getdbt.com/api/v3/accounts/<YOUR_ACCOUNT_ID/projects/?limit=10&offset=5' \
+      --url 'https://cloud.getdbt.com/api/v3/accounts/<YOUR_ACCOUNT_ID>/projects/?limit=10&offset=5' \
       --header 'Content-Type: application/json' \
       --header 'Authorization: Token <YOUR_TOKEN>'
     ```
