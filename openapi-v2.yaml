@@ -31,7 +31,7 @@ info:
     \ is authorized to access.\nThis request skips the first 10 projects and lists\
     \ the next 10 projects.\nBe sure to replace `<YOUR_TOKEN>` in the Authorization\
     \ header with your actual API token and `<YOUR_ACCOUNT_ID>` with your actual account\
-    \ ID.\n\n```bash\ncurl --request GET \\\n  --url 'https://cloud.getdbt.com/api/v3/accounts/<YOUR_ACCOUNT_ID/projects/?limit=10&offset=5'\
+    \ ID.\n\n```bash\ncurl --request GET \\\n  --url 'https://cloud.getdbt.com/api/v3/accounts/<YOUR_ACCOUNT_ID>/projects/?limit=10&offset=5'\
     \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'Authorization:\
     \ Token <YOUR_TOKEN>'\n```\n"
   termsOfService: https://www.getdbt.com/terms-of-service
@@ -3210,18 +3210,18 @@ components:
           - {}
           - type: 'null'
           description: "Use this to set up job completion triggers which would trigger\
-            \ a run of a job when another \n            run finishes. If you have\
-            \ a child job that you want triggered on the completion of a parent job,\
-            \ \n            then configure the trigger on the child job to be on job\
-            \ completion and select the project, parent job \n            and the\
-            \ statuses of the parent job on which to trigger the child job. The statuses\
-            \ which is an array \n            can be one or more of - success (10),\
-            \ error (20), canceled (30). Once the parent job completes, \n       \
-            \     a new run will be enqueued for the child job.\n            Example\
-            \ of a job completion trigger: \n                {\n                 \
-            \   \"condition\": {\n                        \"job_id\": 1,\n       \
-            \                 \"project_id\": 1,\n                        \"statuses\"\
-            : [10, 20],\n                    }\n                }\n            "
+            \ a run of a job when another\n            run finishes. If you have a\
+            \ child job that you want triggered on the completion of a parent job,\n\
+            \            then configure the trigger on the child job to be on job\
+            \ completion and select the project, parent job\n            and the statuses\
+            \ of the parent job on which to trigger the child job. The statuses which\
+            \ is an array\n            can be one or more of - success (10), error\
+            \ (20), canceled (30). Once the parent job completes,\n            a new\
+            \ run will be enqueued for the child job.\n            Example of a job\
+            \ completion trigger:\n                {\n                    \"condition\"\
+            : {\n                        \"job_id\": 1,\n                        \"\
+            project_id\": 1,\n                        \"statuses\": [10, 20],\n  \
+            \                  }\n                }\n            "
         generate_sources:
           type: boolean
       additionalProperties: false
@@ -3371,18 +3371,18 @@ components:
           - {}
           - type: 'null'
           description: "Use this to set up job completion triggers which would trigger\
-            \ a run of a job when another \n            run finishes. If you have\
-            \ a child job that you want triggered on the completion of a parent job,\
-            \ \n            then configure the trigger on the child job to be on job\
-            \ completion and select the project, parent job \n            and the\
-            \ statuses of the parent job on which to trigger the child job. The statuses\
-            \ which is an array \n            can be one or more of - success (10),\
-            \ error (20), canceled (30). Once the parent job completes, \n       \
-            \     a new run will be enqueued for the child job.\n            Example\
-            \ of a job completion trigger: \n                {\n                 \
-            \   \"condition\": {\n                        \"job_id\": 1,\n       \
-            \                 \"project_id\": 1,\n                        \"statuses\"\
-            : [10, 20],\n                    }\n                }\n            "
+            \ a run of a job when another\n            run finishes. If you have a\
+            \ child job that you want triggered on the completion of a parent job,\n\
+            \            then configure the trigger on the child job to be on job\
+            \ completion and select the project, parent job\n            and the statuses\
+            \ of the parent job on which to trigger the child job. The statuses which\
+            \ is an array\n            can be one or more of - success (10), error\
+            \ (20), canceled (30). Once the parent job completes,\n            a new\
+            \ run will be enqueued for the child job.\n            Example of a job\
+            \ completion trigger:\n                {\n                    \"condition\"\
+            : {\n                        \"job_id\": 1,\n                        \"\
+            project_id\": 1,\n                        \"statuses\": [10, 20],\n  \
+            \                  }\n                }\n            "
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -3522,18 +3522,18 @@ components:
           - {}
           - type: 'null'
           description: "Use this to set up job completion triggers which would trigger\
-            \ a run of a job when another \n            run finishes. If you have\
-            \ a child job that you want triggered on the completion of a parent job,\
-            \ \n            then configure the trigger on the child job to be on job\
-            \ completion and select the project, parent job \n            and the\
-            \ statuses of the parent job on which to trigger the child job. The statuses\
-            \ which is an array \n            can be one or more of - success (10),\
-            \ error (20), canceled (30). Once the parent job completes, \n       \
-            \     a new run will be enqueued for the child job.\n            Example\
-            \ of a job completion trigger: \n                {\n                 \
-            \   \"condition\": {\n                        \"job_id\": 1,\n       \
-            \                 \"project_id\": 1,\n                        \"statuses\"\
-            : [10, 20],\n                    }\n                }\n            "
+            \ a run of a job when another\n            run finishes. If you have a\
+            \ child job that you want triggered on the completion of a parent job,\n\
+            \            then configure the trigger on the child job to be on job\
+            \ completion and select the project, parent job\n            and the statuses\
+            \ of the parent job on which to trigger the child job. The statuses which\
+            \ is an array\n            can be one or more of - success (10), error\
+            \ (20), canceled (30). Once the parent job completes,\n            a new\
+            \ run will be enqueued for the child job.\n            Example of a job\
+            \ completion trigger:\n                {\n                    \"condition\"\
+            : {\n                        \"job_id\": 1,\n                        \"\
+            project_id\": 1,\n                        \"statuses\": [10, 20],\n  \
+            \                  }\n                }\n            "
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
