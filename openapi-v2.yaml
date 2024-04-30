@@ -107,58 +107,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccountEnveloped'
           description: ''
-  /api/v2/accounts/{account_id}/connections/:
-    get:
-      operationId: List Connections
-      description: Deprecated. Consider using the v3 API instead.
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      tags:
-      - Connections
-      security:
-      - BearerAuthentication: []
-      deprecated: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Defaults'
-          description: ''
   /api/v2/accounts/{account_id}/encryptions/:
     get:
       operationId: List SSH Tunnels
