@@ -890,56 +890,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/oauth/authorize/{integration}/:
-    get:
-      operationId: Retrieve Oauth Authorize
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: integration
-        schema:
-          type: string
-        required: true
-      tags:
-      - Oauth
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
-  /api/v3/accounts/{account_id}/oauth/callback/{integration}/:
-    get:
-      operationId: Retrieve Oauth Callback
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: integration
-        schema:
-          type: string
-        required: true
-      tags:
-      - Oauth
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
   /api/v3/accounts/{account_id}/private-link-endpoints/:
     get:
       operationId: List PrivateLink Endpoints
