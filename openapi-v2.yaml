@@ -121,7 +121,6 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
         name: limit
         schema:
@@ -131,9 +130,17 @@ paths:
         schema:
           type: integer
       - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
         name: project_id
         schema:
           type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
       - in: query
         name: state
         schema:
@@ -150,7 +157,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BaseConnectionEnveloped'
+                  $ref: '#/components/schemas/Defaults'
           description: ''
   /api/v2/accounts/{account_id}/encryptions/:
     get:
@@ -379,11 +386,14 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
         name: dbt_version
         schema:
           type: string
+      - in: query
+        name: dbt_version__in
+        schema:
+          type: array
       - in: query
         name: limit
         schema:
@@ -393,9 +403,17 @@ paths:
         schema:
           type: integer
       - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
         name: project_id
         schema:
           type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
       - in: query
         name: state
         schema:
@@ -463,11 +481,14 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
         name: dbt_version
         schema:
           type: string
+      - in: query
+        name: dbt_version__in
+        schema:
+          type: array
       - in: path
         name: id
         schema:
@@ -482,9 +503,17 @@ paths:
         schema:
           type: integer
       - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
         name: project_id
         schema:
           type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
       - in: query
         name: state
         schema:
@@ -552,11 +581,14 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
         name: dbt_version
         schema:
           type: string
+      - in: query
+        name: dbt_version__in
+        schema:
+          type: array
       - in: path
         name: id
         schema:
@@ -571,9 +603,17 @@ paths:
         schema:
           type: integer
       - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
         name: project_id
         schema:
           type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
       - in: query
         name: state
         schema:
@@ -636,14 +676,6 @@ paths:
       operationId: List Jobs
       description: Use this endpoint to list jobs for an account.
       parameters:
-      - in: query
-        name: account__locked
-        schema:
-          type: boolean
-      - in: query
-        name: account__state
-        schema:
-          type: integer
       - in: path
         name: account_id
         schema:
@@ -653,21 +685,12 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
-        name: deactivated
+        name: dbt_version__in
         schema:
-          type: boolean
-      - in: query
-        name: environment__state
-        schema:
-          type: integer
+          type: array
       - in: query
         name: environment_id
-        schema:
-          type: integer
-      - in: query
-        name: id__gt
         schema:
           type: integer
       - in: query
@@ -683,13 +706,17 @@ paths:
         schema:
           type: integer
       - in: query
-        name: project__state
+        name: pk
         schema:
           type: integer
       - in: query
         name: project_id
         schema:
           type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
       - in: query
         name: state
         schema:
@@ -855,14 +882,6 @@ paths:
       operationId: Retrieve Job
       description: Use this endpoint to retrieve the details of a job.
       parameters:
-      - in: query
-        name: account__locked
-        schema:
-          type: boolean
-      - in: query
-        name: account__state
-        schema:
-          type: integer
       - in: path
         name: account_id
         schema:
@@ -872,15 +891,10 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
-        name: deactivated
+        name: dbt_version__in
         schema:
-          type: boolean
-      - in: query
-        name: environment__state
-        schema:
-          type: integer
+          type: array
       - in: query
         name: environment_id
         schema:
@@ -890,10 +904,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: id__gt
-        schema:
-          type: integer
       - in: query
         name: limit
         schema:
@@ -907,13 +917,17 @@ paths:
         schema:
           type: integer
       - in: query
-        name: project__state
+        name: pk
         schema:
           type: integer
       - in: query
         name: project_id
         schema:
           type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
       - in: query
         name: state
         schema:
@@ -974,14 +988,6 @@ paths:
       operationId: Destroy Job
       description: Use this endpoint to delete a job.
       parameters:
-      - in: query
-        name: account__locked
-        schema:
-          type: boolean
-      - in: query
-        name: account__state
-        schema:
-          type: integer
       - in: path
         name: account_id
         schema:
@@ -991,15 +997,10 @@ paths:
         name: account_id
         schema:
           type: integer
-        required: true
       - in: query
-        name: deactivated
+        name: dbt_version__in
         schema:
-          type: boolean
-      - in: query
-        name: environment__state
-        schema:
-          type: integer
+          type: array
       - in: query
         name: environment_id
         schema:
@@ -1009,10 +1010,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: id__gt
-        schema:
-          type: integer
       - in: query
         name: limit
         schema:
@@ -1026,13 +1023,17 @@ paths:
         schema:
           type: integer
       - in: query
-        name: project__state
+        name: pk
         schema:
           type: integer
       - in: query
         name: project_id
         schema:
           type: integer
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
       - in: query
         name: state
         schema:
@@ -2352,6 +2353,7 @@ components:
           - {}
           - {}
           - {}
+          - {}
           description: Why the account is locked
         develop_file_system:
           type: boolean
@@ -2546,6 +2548,7 @@ components:
           - {}
           - {}
           - {}
+          - {}
           description: Why the account is locked
         develop_file_system:
           type: boolean
@@ -2631,63 +2634,6 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
-    BaseConnection:
-      type: object
-      required:
-      - id
-      - account_id
-      - name
-      - type
-      - state
-      properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        account_id:
-          type: integer
-        dbt_project_id:
-          type: integer
-        created_by_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        created_by_service_token_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        name:
-          allOf:
-          - type: string
-          - minLength: 1
-            maxLength: 255
-        type:
-          type: string
-        state:
-          type: integer
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
-    BaseConnectionEnveloped:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BaseConnection'
-        status:
-          $ref: '#/components/schemas/Status'
-      required:
-      - data
-      - status
     BaseConnectionV3:
       type: object
       properties:
@@ -3095,6 +3041,7 @@ components:
       - generate_docs
       - run_generate_sources
       - run_audit_helper
+      - run_compare_changes
       properties:
         id:
           oneOf:
@@ -3174,6 +3121,10 @@ components:
           oneOf:
           - type: 'null'
           - type: boolean
+        run_compare_changes:
+          oneOf:
+          - type: 'null'
+          - type: boolean
         environment: {}
         account:
           oneOf:
@@ -3199,6 +3150,7 @@ components:
           type: integer
         job_type:
           oneOf:
+          - {}
           - {}
           - {}
           - {}
@@ -3256,6 +3208,7 @@ components:
       - generate_docs
       - run_generate_sources
       - run_audit_helper
+      - run_compare_changes
       properties:
         id:
           oneOf:
@@ -3335,6 +3288,10 @@ components:
           oneOf:
           - type: 'null'
           - type: boolean
+        run_compare_changes:
+          oneOf:
+          - type: 'null'
+          - type: boolean
         environment: {}
         account:
           oneOf:
@@ -3360,6 +3317,7 @@ components:
           type: integer
         job_type:
           oneOf:
+          - {}
           - {}
           - {}
           - {}
@@ -3415,6 +3373,7 @@ components:
       - generate_docs
       - run_generate_sources
       - run_audit_helper
+      - run_compare_changes
       properties:
         id:
           oneOf:
@@ -3486,6 +3445,10 @@ components:
           oneOf:
           - type: 'null'
           - type: boolean
+        run_compare_changes:
+          oneOf:
+          - type: 'null'
+          - type: boolean
         environment: {}
         account:
           oneOf:
@@ -3511,6 +3474,7 @@ components:
           type: integer
         job_type:
           oneOf:
+          - {}
           - {}
           - {}
           - {}
@@ -3642,6 +3606,8 @@ components:
           type: boolean
         git_provider_webhook:
           type: boolean
+        on_merge:
+          type: boolean
       required:
       - github_webhook
       - schedule
@@ -3669,10 +3635,6 @@ components:
             this entity is deleted
         dbt_version:
           type: string
-        deactivated:
-          type: boolean
-        run_failure_count:
-          type: integer
         triggers:
           $ref: '#/components/schemas/JobDefinitionTriggers'
         settings:
@@ -3697,14 +3659,15 @@ components:
         run_audit_helper:
           type: boolean
           default: false
+        run_compare_changes:
+          type: boolean
+          default: false
       required:
       - account_id
-      - deactivated
       - environment_id
       - generate_docs
       - name
       - project_id
-      - run_failure_count
       - run_generate_sources
     JobNotificationSettings:
       type: object
@@ -3865,11 +3828,13 @@ components:
       - ci
       - scheduled
       - other
+      - merge
       type: string
       description: |-
         * `ci` - ci
         * `scheduled` - scheduled
         * `other` - other
+        * `merge` - merge
     ListOfStringsEnveloped:
       type: object
       properties:
@@ -4501,12 +4466,8 @@ components:
         should_start_at:
           type: string
           format: date-time
-        job:
-          type: object
-          additionalProperties: {}
-        environment:
-          type: object
-          additionalProperties: {}
+        job: {}
+        environment: {}
         status_humanized:
           type: string
         in_progress:
@@ -4875,6 +4836,10 @@ components:
           - type: 'null'
           - type: string
             format: date-time
+        sso_only_user:
+          oneOf:
+          - type: 'null'
+          - type: boolean
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -5036,6 +5001,10 @@ components:
           - type: 'null'
           - type: string
             format: date-time
+        sso_only_user:
+          oneOf:
+          - type: 'null'
+          - type: boolean
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#

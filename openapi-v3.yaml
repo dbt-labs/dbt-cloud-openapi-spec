@@ -890,6 +890,56 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/oauth/authorize/{integration}/:
+    get:
+      operationId: Retrieve Oauth Authorize
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: integration
+        schema:
+          type: string
+        required: true
+      tags:
+      - Oauth
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
+  /api/v3/accounts/{account_id}/oauth/callback/{integration}/:
+    get:
+      operationId: Retrieve Oauth Callback
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: integration
+        schema:
+          type: string
+        required: true
+      tags:
+      - Oauth
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Defaults'
+          description: ''
   /api/v3/accounts/{account_id}/private-link-endpoints/:
     get:
       operationId: List PrivateLink Endpoints
@@ -2850,13 +2900,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedExtendedAttributesRequest'
+              $ref: '#/components/schemas/ExtendedAttributesRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedExtendedAttributesRequest'
+              $ref: '#/components/schemas/ExtendedAttributesRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedExtendedAttributesRequest'
+              $ref: '#/components/schemas/ExtendedAttributesRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -3570,13 +3621,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedSemanticLayerCredentialsRequest'
+              $ref: '#/components/schemas/SemanticLayerCredentialsRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedSemanticLayerCredentialsRequest'
+              $ref: '#/components/schemas/SemanticLayerCredentialsRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedSemanticLayerCredentialsRequest'
+              $ref: '#/components/schemas/SemanticLayerCredentialsRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -3929,7 +3981,7 @@ paths:
           description: ''
     put:
       operationId: Update Webhooks Subscription
-      description: Edit a subscription given a subcsription id
+      description: Edit a subscription given a subscription id
       parameters:
       - in: path
         name: account_id
@@ -3943,6 +3995,18 @@ paths:
         required: true
       tags:
       - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -4085,6 +4149,18 @@ paths:
         required: true
       tags:
       - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -4443,6 +4519,7 @@ components:
           - {}
           - {}
           - {}
+          - {}
           description: Why the account is locked
         develop_file_system:
           type: boolean
@@ -4641,7 +4718,7 @@ components:
           type: string
           description: The name of the connection
         type:
-          $ref: '#/components/schemas/Type666Enum'
+          $ref: '#/components/schemas/Type32eEnum'
         created_by_id:
           type: integer
         created_by_service_token_id:
@@ -4684,7 +4761,7 @@ components:
           minLength: 1
           description: The name of the connection
         type:
-          $ref: '#/components/schemas/Type666Enum'
+          $ref: '#/components/schemas/Type32eEnum'
         created_by_id:
           type: integer
         created_by_service_token_id:
@@ -4733,8 +4810,6 @@ components:
         job_definition_id:
           type: integer
         environment:
-          type: object
-          additionalProperties: {}
           readOnly: true
         display_value:
           type: string
@@ -4912,9 +4987,7 @@ components:
           type: integer
         adapter_version:
           $ref: '#/components/schemas/AdapterVersionEnum'
-        metadata_json:
-          type: object
-          additionalProperties: {}
+        metadata_json: {}
         state:
           type: integer
           default: 1
@@ -4954,9 +5027,7 @@ components:
           type: integer
         adapter_version:
           $ref: '#/components/schemas/AdapterVersionEnum'
-        metadata_json:
-          type: object
-          additionalProperties: {}
+        metadata_json: {}
         state:
           type: integer
           default: 1
@@ -5065,8 +5136,6 @@ components:
           format: date-time
           readOnly: true
         project:
-          type: object
-          additionalProperties: {}
           readOnly: true
         credentials:
           allOf:
@@ -5149,8 +5218,8 @@ components:
       - deployment
       type: string
       description: |-
-        * `development` - development
-        * `deployment` - deployment
+        * `development` - DEVELOPMENT
+        * `deployment` - DEPLOYMENT
     Event:
       type: object
       properties:
@@ -5198,9 +5267,7 @@ components:
           type: integer
         project_id:
           type: integer
-        extended_attributes:
-          type: object
-          additionalProperties: {}
+        extended_attributes: {}
         created_at:
           type: string
           format: date-time
@@ -5234,9 +5301,7 @@ components:
           type: integer
         project_id:
           type: integer
-        extended_attributes:
-          type: object
-          additionalProperties: {}
+        extended_attributes: {}
         state:
           type: integer
           default: 1
@@ -5611,6 +5676,8 @@ components:
           type: boolean
         git_provider_webhook:
           type: boolean
+        on_merge:
+          type: boolean
       required:
       - github_webhook
       - schedule
@@ -5638,10 +5705,6 @@ components:
             this entity is deleted
         dbt_version:
           type: string
-        deactivated:
-          type: boolean
-        run_failure_count:
-          type: integer
         triggers:
           $ref: '#/components/schemas/JobDefinitionTriggers'
         settings:
@@ -5666,25 +5729,28 @@ components:
         run_audit_helper:
           type: boolean
           default: false
+        run_compare_changes:
+          type: boolean
+          default: false
       required:
       - account_id
-      - deactivated
       - environment_id
       - generate_docs
       - name
       - project_id
-      - run_failure_count
       - run_generate_sources
     JobTypeEnum:
       enum:
       - ci
       - scheduled
       - other
+      - merge
       type: string
       description: |-
         * `ci` - ci
         * `scheduled` - scheduled
         * `other` - other
+        * `merge` - merge
     LicenseMap:
       type: object
       properties:
@@ -5751,9 +5817,9 @@ components:
       - it
       type: string
       description: |-
-        * `developer` - developer
-        * `read_only` - read_only
-        * `it` - it
+        * `developer` - DEVELOPER
+        * `read_only` - READ_ONLY
+        * `it` - IT
     ListWebhooksReceiptsResponseEnvelope:
       type: object
       properties:
@@ -5843,61 +5909,6 @@ components:
       required:
       - filters
       - pagination
-    PatchedExtendedAttributesRequest:
-      type: object
-      properties:
-        id:
-          type: integer
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        extended_attributes:
-          type: object
-          additionalProperties: {}
-        state:
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-    PatchedSemanticLayerCredentialsRequest:
-      type: object
-      properties:
-        id:
-          type: integer
-        account_id:
-          type: integer
-          description: The account the credentials are associated with
-        adapter_version:
-          allOf:
-          - $ref: '#/components/schemas/AdapterVersionEnum'
-          description: |-
-            The adapter version. Should match the associated project's adapter version.
-
-            * `apache_spark_v0` - apache_spark_v0
-            * `databricks_spark_v0` - databricks_spark_v0
-            * `databricks_v0` - databricks_v0
-            * `trino_v0` - trino_v0
-            * `snowflake_v0` - snowflake_v0
-            * `bigquery_v0` - bigquery_v0
-            * `postgres_v0` - postgres_v0
-            * `redshift_v0` - redshift_v0
-            * `synapse_v0` - synapse_v0
-            * `fabric_v0` - fabric_v0
-        schema_type:
-          allOf:
-          - $ref: '#/components/schemas/SchemaTypeEnum'
-          description: |-
-            The adapter schema type. Should always be 'semantic_layer_credentials'
-
-            * `connection` - connection
-            * `credential` - credential
-            * `semantic_layer_credentials` - semantic_layer_credentials
-        state:
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
     PermissionSetEnum:
       enum:
       - owner
@@ -5954,7 +5965,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type666Enum'
+          $ref: '#/components/schemas/Type32eEnum'
         state:
           type: integer
           default: 1
@@ -6170,14 +6181,10 @@ components:
           type: string
         service:
           type: string
-        actor:
-          type: object
-          additionalProperties: {}
+        actor: {}
         event_type:
           type: string
-        event_context:
-          type: object
-          additionalProperties: {}
+        event_context: {}
         created_at:
           type: string
           format: date-time
@@ -6431,8 +6438,6 @@ components:
           items:
             type: integer
         failures:
-          type: object
-          additionalProperties: {}
           description: This field will detail specific failures within a single environment
             variable you are attempting to create.
       required:
@@ -6833,41 +6838,100 @@ components:
       properties:
         id:
           type: string
-        account_identifier:
-          type: string
         name:
           type: string
+          description: Webhook name
         description:
           type: string
+          description: Webhook description
         event_types:
           type: array
-          items:
-            type: string
-        client_url:
-          type: string
-        active:
-          type: boolean
-        http_status_code:
-          type: string
-        dispatched_at:
-          type: string
-        account_id:
-          type: string
+          items: {}
+          description: Event types that trigger this webhook. Must not be empty.
         job_ids:
           type: array
           items:
-            type: string
+            type: integer
+          description: Job IDs that trigger this webhook. Leave empty to trigger for
+            all jobs.
+        client_url:
+          type: string
+          description: Endpoint where events are sent
+        active:
+          type: boolean
+          description: Whether or not this Webhook is currently active
+        http_status_code:
+          type: string
+          description: The latest HTTP status code received from the client URL. 0
+            indicates that the webhook has not been dispatched.
+        dispatched_at:
+          type: string
+          description: Timestamp of when the webhook was last dispatched.
+        deactivate_reason:
+          type: string
+          description: Reason for deactivation
+        account_id:
+          type: integer
+        account_identifier:
+          type: string
       required:
-      - account_id
-      - account_identifier
       - active
       - client_url
-      - description
-      - dispatched_at
       - event_types
-      - http_status_code
-      - id
-      - job_ids
+      - name
+    SubscriptionRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+          description: Webhook name
+        description:
+          type: string
+          minLength: 1
+          description: Webhook description
+        event_types:
+          type: array
+          items: {}
+          description: Event types that trigger this webhook. Must not be empty.
+        job_ids:
+          type: array
+          items:
+            type: integer
+          description: Job IDs that trigger this webhook. Leave empty to trigger for
+            all jobs.
+        client_url:
+          type: string
+          minLength: 1
+          description: Endpoint where events are sent
+        active:
+          type: boolean
+          description: Whether or not this Webhook is currently active
+        http_status_code:
+          type: string
+          minLength: 1
+          description: The latest HTTP status code received from the client URL. 0
+            indicates that the webhook has not been dispatched.
+        dispatched_at:
+          type: string
+          minLength: 1
+          description: Timestamp of when the webhook was last dispatched.
+        deactivate_reason:
+          type: string
+          minLength: 1
+          description: Reason for deactivation
+        account_id:
+          type: integer
+        account_identifier:
+          type: string
+          minLength: 1
+      required:
+      - active
+      - client_url
+      - event_types
       - name
     SubscriptionResponseEnvelope:
       type: object
@@ -6904,7 +6968,7 @@ components:
       description: |-
         * `every_hour` - every_hour
         * `at_exact_hours` - at_exact_hours
-    Type666Enum:
+    Type32eEnum:
       enum:
       - postgres
       - redshift
@@ -7103,6 +7167,10 @@ components:
           - type: 'null'
           - type: string
             format: date-time
+        sso_only_user:
+          oneOf:
+          - type: 'null'
+          - type: boolean
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
