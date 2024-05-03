@@ -701,13 +701,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InternalJobDefinitionRequest'
+              $ref: '#/components/schemas/HumanReadableJobDefinitionRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/InternalJobDefinitionRequest'
+              $ref: '#/components/schemas/HumanReadableJobDefinitionRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/InternalJobDefinitionRequest'
+              $ref: '#/components/schemas/HumanReadableJobDefinitionRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -718,7 +718,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InternalJobDefinitionEnveloped'
+                  $ref: '#/components/schemas/HumanReadableJobDefinitionEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/jobs/{job_id}/artifacts/{remainder}:
     get:
@@ -915,13 +915,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InternalJobDefinitionRequest'
+              $ref: '#/components/schemas/HumanReadableJobDefinitionRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/InternalJobDefinitionRequest'
+              $ref: '#/components/schemas/HumanReadableJobDefinitionRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/InternalJobDefinitionRequest'
+              $ref: '#/components/schemas/HumanReadableJobDefinitionRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -930,7 +930,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalJobDefinitionEnveloped'
+                $ref: '#/components/schemas/HumanReadableJobDefinitionEnveloped'
           description: ''
     delete:
       operationId: Destroy Job
@@ -3139,172 +3139,7 @@ components:
       required:
       - data
       - status
-    InternalJobDefinition:
-      type: object
-      required:
-      - id
-      - environment_id
-      - account_id
-      - project_id
-      - name
-      - dbt_version
-      - triggers
-      - schedule
-      - settings
-      - execution
-      - state
-      - generate_docs
-      - run_generate_sources
-      - run_audit_helper
-      - run_compare_changes
-      properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        environment_id:
-          type: integer
-        deferring_job_definition_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        deferring_environment_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        lifecycle_webhooks:
-          oneOf:
-          - type: boolean
-          - type: 'null'
-        lifecycle_webhooks_url:
-          oneOf:
-          - type: string
-          - type: 'null'
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        name:
-          allOf:
-          - type: string
-          - minLength: 1
-            maxLength: 255
-        description:
-          allOf:
-          - type: string
-          - minLength: 0
-            maxLength: 255
-        dbt_version:
-          oneOf:
-          - type: string
-          - type: 'null'
-        raw_dbt_version:
-          oneOf:
-          - type: string
-          - type: 'null'
-        triggers:
-          description: 'Only one of the following fields can be true: triggers.github_webhook,
-            triggers.schedule, & triggers.git_provider_webhook. The triggers.custom_branch_only
-            field is now deprecated.'
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-        execute_steps:
-          allOf:
-          - {}
-          - minLength: 1
-            maxLength: 100
-          - {}
-        schedule:
-          description: schedule is only required if triggers.schedule is true
-        settings: {}
-        execution: {}
-        state:
-          oneOf:
-          - {}
-          - {}
-        generate_docs:
-          type: boolean
-        run_generate_sources:
-          type: boolean
-        run_audit_helper:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        run_compare_changes:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        environment: {}
-        account:
-          oneOf:
-          - {}
-          - type: 'null'
-        project:
-          oneOf:
-          - {}
-          - type: 'null'
-        most_recent_completed_run:
-          oneOf:
-          - {}
-          - type: 'null'
-        most_recent_run:
-          oneOf:
-          - {}
-          - type: 'null'
-        is_deferrable:
-          type: boolean
-        deactivated:
-          type: boolean
-        run_failure_count:
-          type: integer
-        job_type:
-          oneOf:
-          - {}
-          - {}
-          - {}
-          - {}
-          - type: 'null'
-        triggers_on_draft_pr:
-          type: boolean
-        job_completion_trigger_condition:
-          oneOf:
-          - {}
-          - type: 'null'
-          description: "Use this to set up job completion triggers which would trigger\
-            \ a run of a job when another\n            run finishes. If you have a\
-            \ child job that you want triggered on the completion of a parent job,\n\
-            \            then configure the trigger on the child job to be on job\
-            \ completion and select the project, parent job\n            and the statuses\
-            \ of the parent job on which to trigger the child job. The statuses which\
-            \ is an array\n            can be one or more of - success (10), error\
-            \ (20), canceled (30). Once the parent job completes,\n            a new\
-            \ run will be enqueued for the child job.\n            Example of a job\
-            \ completion trigger:\n                {\n                    \"condition\"\
-            : {\n                        \"job_id\": 1,\n                        \"\
-            project_id\": 1,\n                        \"statuses\": [10, 20],\n  \
-            \                  }\n                }\n            "
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
-    InternalJobDefinitionEnveloped:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/InternalJobDefinition'
-        status:
-          $ref: '#/components/schemas/Status'
-      required:
-      - data
-      - status
-    InternalJobDefinitionRequest:
+    HumanReadableJobDefinitionRequest:
       type: object
       required:
       - id
@@ -3446,6 +3281,8 @@ components:
             : {\n                        \"job_id\": 1,\n                        \"\
             project_id\": 1,\n                        \"statuses\": [10, 20],\n  \
             \                  }\n                }\n            "
+        generate_sources:
+          type: boolean
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
