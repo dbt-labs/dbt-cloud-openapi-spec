@@ -89,11 +89,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v3/accounts/{account_id}/audit-logs/:
     get:
       operationId: List Recent Audit Log Events
@@ -137,11 +133,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v3/accounts/{account_id}/audit-logs/export/:
     get:
       operationId: Get Bulk Audit Log Export Status
@@ -161,11 +153,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
     post:
       operationId: Submit Bulk Audit Log Export Request
       description: |-
@@ -184,11 +172,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v3/accounts/{account_id}/audit-logs/export/{job_id}/download/:
     get:
       operationId: Download Bulk Audit Log Export
@@ -213,11 +197,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v3/accounts/{account_id}/group-permissions/{group_id}/:
     post:
       operationId: Assign Group Permissions
@@ -238,11 +218,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v3/accounts/{account_id}/groups/:
     get:
       operationId: List Groups
@@ -326,9 +302,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/GroupEnveloped'
+                $ref: '#/components/schemas/GroupEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/groups/{id}/:
     get:
@@ -339,43 +313,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: name
-        schema:
-          type: string
-      - in: query
-        name: name__icontains
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: pk__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Groups
       security:
@@ -540,11 +482,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v3/accounts/{account_id}/ip-restrictions-set/{id}/validate/:
     get:
       operationId: Validate Client IP Against IP Restrictions
@@ -765,9 +703,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/LicenseMapEnveloped'
+                $ref: '#/components/schemas/LicenseMapEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/license-maps/{id}/:
     get:
@@ -778,31 +714,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - License Maps
       security:
@@ -858,31 +774,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - License Maps
       security:
@@ -995,9 +891,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProjectEnveloped'
+                $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{id}/:
     get:
@@ -1009,39 +903,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: name__icontains
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: pk__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Projects
       security:
@@ -1099,39 +965,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: name__icontains
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: pk__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Projects
       security:
@@ -1176,9 +1014,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DbtAdapterEnveloped'
+                $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/adapters/{id}/:
     get:
@@ -1190,44 +1026,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Adapters
       security:
@@ -1290,44 +1098,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Adapters
       security:
@@ -1426,9 +1206,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/BaseConnectionV3Enveloped'
+                $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/connections/{id}/:
     get:
@@ -1440,44 +1218,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Connections
       security:
@@ -1540,44 +1290,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Connections
       security:
@@ -1595,50 +1317,18 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Credentials
       security:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
     post:
       operationId: Create Projects Credential
       description: Create new credentials
@@ -1659,11 +1349,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/{id}/:
     get:
       operationId: Retrieve Projects Credential
@@ -1674,55 +1360,23 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Credentials
       security:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
     post:
       operationId: Updates Project Credentials
       description: Update a set of credentials
@@ -1748,11 +1402,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
     patch:
       operationId: Partial Update Projects Credential
       description: Partially update a set of credentials
@@ -1762,55 +1412,23 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Credentials
       security:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
     delete:
       operationId: Destroy Projects Credential
       description: Delete a set of credentials
@@ -1820,44 +1438,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Credentials
       security:
@@ -1900,9 +1490,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
+                $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/{id}/:
     post:
@@ -1954,64 +1542,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: environment_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: job_definition_id
-        schema:
-          type: integer
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: name
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      - in: query
-        name: type
-        schema:
-          type: string
-      - in: query
-        name: user_id
-        schema:
-          type: integer
       tags:
       - Environment Variables
       security:
@@ -2474,9 +2014,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/EnvironmentV3Enveloped'
+                $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environments/{id}/:
     get:
@@ -2488,84 +2026,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: credentials_id
-        schema:
-          type: integer
-      - in: query
-        name: dbt_version
-        schema:
-          type: string
-      - in: query
-        name: dbt_version__in
-        schema:
-          type: array
-      - in: query
-        name: deployment_type
-        schema:
-          type: string
-      - in: query
-        name: deployment_type__in
-        schema:
-          type: array
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: id__gt
-        schema:
-          type: integer
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: name
-        schema:
-          type: string
-      - in: query
-        name: name__icontains
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: pk__in
-        schema:
-          type: array
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      - in: query
-        name: type
-        schema:
-          type: string
       tags:
       - Environments
       security:
@@ -2628,84 +2098,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: credentials_id
-        schema:
-          type: integer
-      - in: query
-        name: dbt_version
-        schema:
-          type: string
-      - in: query
-        name: dbt_version__in
-        schema:
-          type: array
-      - in: query
-        name: deployment_type
-        schema:
-          type: string
-      - in: query
-        name: deployment_type__in
-        schema:
-          type: array
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: id__gt
-        schema:
-          type: integer
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: name
-        schema:
-          type: string
-      - in: query
-        name: name__icontains
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: pk__in
-        schema:
-          type: array
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      - in: query
-        name: type
-        schema:
-          type: string
       tags:
       - Environments
       security:
@@ -2749,9 +2151,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ExtendedAttributesEnveloped'
+                $ref: '#/components/schemas/ExtendedAttributesEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/{id}/:
     get:
@@ -2764,36 +2164,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Extended Attributes
       security:
@@ -2814,36 +2194,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Extended Attributes
       requestBody:
@@ -2876,36 +2236,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Extended Attributes
       security:
@@ -2933,11 +2273,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/managed-repositories/:
     post:
       operationId: Create Managed Repository
@@ -3059,9 +2395,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/RepositoryV3Enveloped'
+                $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/repositories/{id}/:
     get:
@@ -3073,48 +2407,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: remote_url
-        schema:
-          type: string
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Repositories
       security:
@@ -3177,48 +2479,16 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: remote_url
-        schema:
-          type: string
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Repositories
       security:
@@ -3770,39 +3040,11 @@ paths:
       operationId: List Users Credential
       description: List the development credentials associated with a given user.
       parameters:
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
       - in: path
         name: user_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: user_id
-        schema:
-          type: integer
       tags:
       - Users
       security:
@@ -3851,44 +3093,16 @@ paths:
       operationId: Retrieve Users Credential
       description: Get a development credentials association for a given user.
       parameters:
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
       - in: path
         name: user_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: user_id
-        schema:
-          type: integer
       tags:
       - Users
       security:
@@ -3942,44 +3156,16 @@ paths:
       operationId: Destroy Users Credential
       description: Delete a development credentials / user association.
       parameters:
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
       - in: path
         name: user_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: user_id
-        schema:
-          type: integer
       tags:
       - Users
       security:
@@ -4593,17 +3779,6 @@ components:
       - adapter_version
       - metadata_json
       - project_id
-    Defaults:
-      type: object
-      properties:
-        data:
-          type: object
-          additionalProperties: {}
-        status:
-          $ref: '#/components/schemas/Status'
-      required:
-      - data
-      - status
     DeleteSubscriptionResponseData:
       type: object
       properties:
@@ -4999,11 +4174,16 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
+        writable_environment_categories:
+          type: array
+          items:
+            type: string
       required:
       - account_id
       - all_projects
       - group_id
       - permission_set
+      - writable_environment_categories
     GroupRequest:
       type: object
       properties:
@@ -6050,8 +5230,6 @@ components:
           type: array
           items:
             type: integer
-        scribe_enabled:
-          type: boolean
         is_running:
           type: boolean
       required:
@@ -6065,7 +5243,6 @@ components:
       - job_definition_id
       - notifications_sent
       - project_id
-      - scribe_enabled
       - status
     Schema:
       type: object
