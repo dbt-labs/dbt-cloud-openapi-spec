@@ -184,9 +184,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ConnectionEncryptionEnveloped'
+                $ref: '#/components/schemas/ConnectionEncryptionEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/encryptions/{id}/:
     get:
@@ -198,35 +196,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: connection_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Connections
       security:
@@ -284,35 +258,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: connection_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Connections
       security:
@@ -411,9 +361,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/EnvironmentV2Enveloped'
+                $ref: '#/components/schemas/EnvironmentV2Enveloped'
           description: ''
   /api/v2/accounts/{account_id}/environments/{id}/:
     get:
@@ -425,47 +373,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: dbt_version
-        schema:
-          type: string
-      - in: query
-        name: dbt_version__in
-        schema:
-          type: array
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Environments
       security:
@@ -525,47 +437,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: dbt_version
-        schema:
-          type: string
-      - in: query
-        name: dbt_version__in
-        schema:
-          type: array
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Environments
       security:
@@ -716,9 +592,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/HumanReadableJobDefinitionEnveloped'
+                $ref: '#/components/schemas/HumanReadableJobDefinitionEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/jobs/{job_id}/artifacts/{remainder}:
     get:
@@ -747,11 +621,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            text/html:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v2/accounts/{account_id}/jobs/{job_id}/rerun/:
     post:
       operationId: Retry Failed Job
@@ -778,11 +648,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v2/accounts/{account_id}/jobs/{job_id}/run/:
     post:
       operationId: Trigger Job Run
@@ -835,55 +701,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: dbt_version__in
-        schema:
-          type: array
-      - in: query
-        name: environment_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: name__icontains
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      - in: query
-        name: triggers_schedule
-        schema:
-          type: boolean
       tags:
       - Jobs
       security:
@@ -941,55 +763,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: dbt_version__in
-        schema:
-          type: array
-      - in: query
-        name: environment_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: name__icontains
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      - in: query
-        name: triggers_schedule
-        schema:
-          type: boolean
       tags:
       - Jobs
       security:
@@ -1012,11 +790,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v2/accounts/{account_id}/notifications/:
     get:
       operationId: List Notifications
@@ -1108,9 +882,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobNotificationSettingsEnveloped'
+                $ref: '#/components/schemas/JobNotificationSettingsEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/notifications/{id}/:
     get:
@@ -1122,47 +894,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: external_email
-        schema:
-          type: string
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: slack_channel_id
-        schema:
-          type: string
-      - in: query
-        name: state
-        schema:
-          type: integer
-      - in: query
-        name: type
-        schema:
-          type: integer
-      - in: query
-        name: user_id
-        schema:
-          type: integer
       tags:
       - Notifications
       security:
@@ -1219,47 +955,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: external_email
-        schema:
-          type: string
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: slack_channel_id
-        schema:
-          type: string
-      - in: query
-        name: state
-        schema:
-          type: integer
-      - in: query
-        name: type
-        schema:
-          type: integer
-      - in: query
-        name: user_id
-        schema:
-          type: integer
       tags:
       - Notifications
       security:
@@ -1287,11 +987,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v2/accounts/{account_id}/projects/:
     get:
       operationId: List Projects
@@ -1375,9 +1071,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProjectEnveloped'
+                $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/projects/{id}/:
     get:
@@ -1389,39 +1083,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: name__icontains
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: pk__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Projects
       security:
@@ -1481,39 +1147,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: name__icontains
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: pk__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Projects
       security:
@@ -1609,9 +1247,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/RepositoryV2Enveloped'
+                $ref: '#/components/schemas/RepositoryV2Enveloped'
           description: ''
   /api/v2/accounts/{account_id}/repositories/{id}/:
     get:
@@ -1623,43 +1259,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: remote_url
-        schema:
-          type: string
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Repositories
       security:
@@ -1681,43 +1285,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: remote_url
-        schema:
-          type: string
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Repositories
       security:
@@ -1835,87 +1407,11 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
-        name: created_at__range
-        schema:
-          type: array
-      - in: query
-        name: dbt_version
-        schema:
-          type: string
-      - in: query
-        name: dbt_version__in
-        schema:
-          type: array
-      - in: query
-        name: deferring_run_id
-        schema:
-          type: integer
-      - in: query
-        name: environment_id
-        schema:
-          type: integer
-      - in: query
-        name: finished_at__range
-        schema:
-          type: array
-      - in: query
-        name: has_docs_generated
-        schema:
-          type: boolean
-      - in: query
-        name: has_sources_generated
-        schema:
-          type: boolean
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: id__gt
-        schema:
-          type: integer
-      - in: query
-        name: job_definition_id
-        schema:
-          type: integer
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: project_id
-        schema:
-          type: integer
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-      - in: query
-        name: state
-        schema:
-          type: integer
-      - in: query
-        name: status
-        schema:
-          type: integer
-      - in: query
-        name: status__in
-        schema:
-          type: array
       tags:
       - Runs
       security:
@@ -1994,11 +1490,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            text/html:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v2/accounts/{account_id}/runs/{run_id}/cancel/:
     post:
       operationId: Cancel Run
@@ -2047,11 +1539,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
     post:
       operationId: Retry Run
       description: Use this endpoint to retry a failed run. When this endpoint returns
@@ -2075,11 +1563,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v2/accounts/{account_id}/steps/{id}/:
     get:
       operationId: Retrieve Run Step
@@ -2138,40 +1622,16 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Defaults'
-          description: ''
+          description: No response body
   /api/v2/users/{id}/:
     get:
       operationId: Retrieve User
       parameters:
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-      - in: query
-        name: offset
-        schema:
-          type: integer
-      - in: query
-        name: pk
-        schema:
-          type: integer
-      - in: query
-        name: state
-        schema:
-          type: integer
       tags:
       - Users
       security:
@@ -2705,17 +2165,6 @@ components:
         * `days_of_week` - days_of_week
         * `custom_cron` - custom_cron
         * `interval_cron` - interval_cron
-    Defaults:
-      type: object
-      properties:
-        data:
-          type: object
-          additionalProperties: {}
-        status:
-          $ref: '#/components/schemas/Status'
-      required:
-      - data
-      - status
     EnvironmentV2:
       type: object
       required:
@@ -2967,11 +2416,16 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
+        writable_environment_categories:
+          type: array
+          items:
+            type: string
       required:
       - account_id
       - all_projects
       - group_id
       - permission_set
+      - writable_environment_categories
     HumanReadableJobDefinition:
       type: object
       required:
@@ -3632,18 +3086,6 @@ components:
       required:
       - data
       - status
-    LogLocationEnum:
-      enum:
-      - legacy
-      - s3
-      - db
-      - empty
-      type: string
-      description: |-
-        * `legacy` - legacy
-        * `s3` - s3
-        * `db` - db
-        * `empty` - empty
     PermissionSetEnum:
       enum:
       - owner
@@ -4161,8 +3603,6 @@ components:
           type: array
           items:
             type: integer
-        scribe_enabled:
-          type: boolean
         is_running:
           type: boolean
       required:
@@ -4176,7 +3616,6 @@ components:
       - job_definition_id
       - notifications_sent
       - project_id
-      - scribe_enabled
       - status
     RunResponse:
       type: object
@@ -4223,8 +3662,6 @@ components:
           type: array
           items:
             type: integer
-        scribe_enabled:
-          type: boolean
         created_at:
           type: string
           format: date-time
@@ -4327,17 +3764,10 @@ components:
           type: string
         debug_logs:
           type: string
-        log_location:
-          allOf:
-          - $ref: '#/components/schemas/LogLocationEnum'
-          default: db
         log_path:
           type: string
         debug_log_path:
           type: string
-        log_archive_type:
-          type: string
-          default: db_flushed
         truncated_debug_logs:
           type: string
           readOnly: true
@@ -4439,8 +3869,7 @@ components:
         dbt_version_override:
           type: string
           minLength: 1
-          description: 'Allowed values are: 1.0.0, 1.1.0-latest, 1.2.0-latest, 1.3.0-latest,
-            1.4.0-latest, 1.5.0-latest, 1.6.0-latest, 1.7.0-latest'
+          description: 'Allowed values are: '
         threads_override:
           type: integer
         target_name_override:
