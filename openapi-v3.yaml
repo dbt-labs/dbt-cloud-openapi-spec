@@ -3341,11 +3341,6 @@ components:
           - type: 'null'
           - type: integer
           description: (Deprecated)
-        allow_repo_caching:
-          type: boolean
-          description: Repo caching is not currently available. Coming soon!
-        allow_partial_parsing:
-          type: boolean
         migration_scheduled_at:
           oneOf:
           - type: 'null'
@@ -3833,56 +3828,33 @@ components:
           type: integer
         name:
           type: string
-          default: New Environment
           description: The name of the environment
         dbt_version:
           type: string
-          default: versionless
           description: The default dbt Version to use for this environment
-        raw_dbt_version:
-          type: string
-          readOnly: true
         type:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentV3TypeEnum'
-          default: deployment
+          $ref: '#/components/schemas/EnvironmentV3TypeEnum'
         use_custom_branch:
           type: boolean
-          default: false
         custom_branch:
           type: string
         supports_docs:
           type: boolean
-          default: false
         state:
           type: integer
           default: 1
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-        project:
-          readOnly: true
-        credentials:
-          allOf:
-          - $ref: '#/components/schemas/PostgresCredentials'
-          readOnly: true
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         deployment_type:
           $ref: '#/components/schemas/DeploymentTypeEnum'
-        is_deferrable:
-          type: boolean
-          readOnly: true
       required:
-      - created_at
-      - credentials
-      - is_deferrable
-      - project
-      - raw_dbt_version
-      - updated_at
+      - account_id
+      - dbt_version
+      - name
+      - project_id
+      - supports_docs
+      - type
+      - use_custom_branch
     EnvironmentV3Enveloped:
       type: object
       properties:
@@ -4273,7 +4245,7 @@ components:
         name:
           type: string
         type:
-          type: string
+          type: integer
         state:
           type: integer
           default: 1
@@ -4807,6 +4779,11 @@ components:
           allOf:
           - $ref: '#/components/schemas/BaseConnectionV3'
           readOnly: true
+        environments:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentV3'
+          readOnly: true
         repository:
           allOf:
           - $ref: '#/components/schemas/RepositoryV3'
@@ -4834,6 +4811,7 @@ components:
       - connection
       - created_at
       - docs_job
+      - environments
       - freshness_job
       - group_permissions
       - repository
@@ -5832,6 +5810,13 @@ components:
 servers:
 - url: https://cloud.getdbt.com/
   description: Production (US)
+- url: https://{account_prefix}.us1.dbt.com/
+  description: Production (US)
+  variables:
+    account_prefix:
+      default: ab123
+      description: Your unique account prefix. Can be found on your account settings
+        page.
 - url: https://emea.dbt.com/
   description: Production (Europe)
 - url: https://au.dbt.com/
