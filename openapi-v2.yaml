@@ -1842,11 +1842,6 @@ components:
           - type: 'null'
           - type: integer
           description: (Deprecated)
-        allow_repo_caching:
-          type: boolean
-          description: Repo caching is not currently available. Coming soon!
-        allow_partial_parsing:
-          type: boolean
         migration_scheduled_at:
           oneOf:
           - type: 'null'
@@ -2025,11 +2020,6 @@ components:
           - type: 'null'
           - type: integer
           description: (Deprecated)
-        allow_repo_caching:
-          type: boolean
-          description: Repo caching is not currently available. Coming soon!
-        allow_partial_parsing:
-          type: boolean
         migration_scheduled_at:
           oneOf:
           - type: 'null'
@@ -2057,7 +2047,7 @@ components:
           type: string
           description: The name of the connection
         type:
-          $ref: '#/components/schemas/TypeEnum'
+          $ref: '#/components/schemas/BaseConnectionV3TypeEnum'
         created_by_id:
           type: integer
         created_by_service_token_id:
@@ -2074,6 +2064,20 @@ components:
       - name
       - project_id
       - type
+    BaseConnectionV3TypeEnum:
+      enum:
+      - postgres
+      - redshift
+      - snowflake
+      - bigquery
+      - adapter
+      type: string
+      description: |-
+        * `postgres` - postgres
+        * `redshift` - redshift
+        * `snowflake` - snowflake
+        * `bigquery` - bigquery
+        * `adapter` - adapter
     ConnectionEncryption:
       type: object
       properties:
@@ -2165,6 +2169,14 @@ components:
         * `days_of_week` - days_of_week
         * `custom_cron` - custom_cron
         * `interval_cron` - interval_cron
+    DeploymentTypeEnum:
+      enum:
+      - production
+      - staging
+      type: string
+      description: |-
+        * `production` - production
+        * `staging` - staging
     EnvironmentV2:
       type: object
       required:
@@ -2262,6 +2274,14 @@ components:
           oneOf:
           - type: 'null'
           - type: integer
+        deployment_type:
+          oneOf:
+          - type: 'null'
+          - type: string
+        type:
+          oneOf:
+          - type: 'null'
+          - type: string
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
@@ -2362,9 +2382,71 @@ components:
           oneOf:
           - type: 'null'
           - type: integer
+        deployment_type:
+          oneOf:
+          - type: 'null'
+          - type: string
+        type:
+          oneOf:
+          - type: 'null'
+          - type: string
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    EnvironmentV3:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+          description: The account the environment is associated with
+        project_id:
+          type: integer
+          description: The project the environment is associated with
+        credentials_id:
+          type: integer
+          description: The id of the associated credentials. Null for development
+            environments.
+        extended_attributes_id:
+          type: integer
+        name:
+          type: string
+          description: The name of the environment
+        dbt_version:
+          type: string
+          description: The default dbt Version to use for this environment
+        type:
+          $ref: '#/components/schemas/EnvironmentV3TypeEnum'
+        use_custom_branch:
+          type: boolean
+        custom_branch:
+          type: string
+        supports_docs:
+          type: boolean
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        deployment_type:
+          $ref: '#/components/schemas/DeploymentTypeEnum'
+      required:
+      - account_id
+      - dbt_version
+      - name
+      - project_id
+      - supports_docs
+      - type
+      - use_custom_branch
+    EnvironmentV3TypeEnum:
+      enum:
+      - development
+      - deployment
+      type: string
+      description: |-
+        * `development` - DEVELOPMENT
+        * `deployment` - DEPLOYMENT
     GitCloneStrategyEnum:
       enum:
       - azure_active_directory_app
@@ -3172,6 +3254,11 @@ components:
           allOf:
           - $ref: '#/components/schemas/BaseConnectionV3'
           readOnly: true
+        environments:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentV3'
+          readOnly: true
         repository:
           allOf:
           - $ref: '#/components/schemas/RepositoryV3'
@@ -3199,6 +3286,7 @@ components:
       - connection
       - created_at
       - docs_job
+      - environments
       - freshness_job
       - group_permissions
       - repository
@@ -3886,20 +3974,6 @@ components:
             minLength: 1
       required:
       - cause
-    TypeEnum:
-      enum:
-      - postgres
-      - redshift
-      - snowflake
-      - bigquery
-      - adapter
-      type: string
-      description: |-
-        * `postgres` - postgres
-        * `redshift` - redshift
-        * `snowflake` - snowflake
-        * `bigquery` - bigquery
-        * `adapter` - adapter
     User:
       type: object
       required:
@@ -4230,6 +4304,13 @@ components:
 servers:
 - url: https://cloud.getdbt.com/
   description: Production (US)
+- url: https://{account_prefix}.us1.dbt.com/
+  description: Production (US)
+  variables:
+    account_prefix:
+      default: ab123
+      description: Your unique account prefix. Can be found on your account settings
+        page.
 - url: https://emea.dbt.com/
   description: Production (Europe)
 - url: https://au.dbt.com/
