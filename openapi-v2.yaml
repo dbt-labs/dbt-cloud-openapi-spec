@@ -1453,8 +1453,8 @@ paths:
     get:
       operationId: Retrieve Run Artifact
       description: Use this endpoint to fetch artifacts from a completed run. Once
-        a run has completed, you can use this endpoint to download the `manifest.json`,
-        run `results.json` or `catalog.json` files from dbt Cloud. These artifacts
+        a run has been completed, you can use this endpoint to download the `manifest.json`,
+        `run_results.json`, or `catalog.json` files from dbt Cloud. These artifacts
         contain information about the models in your dbt project, timing information
         around their execution, and a status message indicating the result of the
         model build. By default, this endpoint returns artifacts from the last step
@@ -3000,6 +3000,7 @@ components:
       - on_cancel
       - on_failure
       - on_success
+      - on_warning
       - user_id
       properties:
         id:
@@ -3025,6 +3026,11 @@ components:
           description: List of job IDs to send notifications for when the job fails.
         on_success:
           description: List of job IDs to send notifications for when the job succeeds.
+        on_warning:
+          oneOf:
+          - {}
+          - type: 'null'
+          description: List of job IDs to send notifications for when the job warns.
         created_at:
           type: string
           format: date-time
@@ -3087,6 +3093,7 @@ components:
       - on_cancel
       - on_failure
       - on_success
+      - on_warning
       - user_id
       properties:
         id:
@@ -3112,6 +3119,11 @@ components:
           description: List of job IDs to send notifications for when the job fails.
         on_success:
           description: List of job IDs to send notifications for when the job succeeds.
+        on_warning:
+          oneOf:
+          - {}
+          - type: 'null'
+          description: List of job IDs to send notifications for when the job warns.
         user_id:
           type: integer
           description: For internal email notifications, the ID of the user to send
@@ -3223,6 +3235,9 @@ components:
         account_id:
           type: integer
           description: The account the project is associated with
+        description:
+          type: string
+          description: The description of the project
         connection_id:
           type: integer
           description: The active connection
@@ -3311,6 +3326,10 @@ components:
         account_id:
           type: integer
           description: The account the project is associated with
+        description:
+          type: string
+          minLength: 1
+          description: The description of the project
         connection_id:
           type: integer
           description: The active connection
@@ -3390,6 +3409,9 @@ components:
             this entity is deleted
         project_access_token_id:
           type: integer
+        expires_at:
+          type: string
+          format: date-time
       required:
       - account_id
       - gitlab_project_id
