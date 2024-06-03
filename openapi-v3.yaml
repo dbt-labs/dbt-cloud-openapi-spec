@@ -2496,6 +2496,40 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/semantic-layer-credentials/:
+    get:
+      operationId: List Semantic Layer Credentials
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
+        name: state
+        schema:
+          type: integer
+      tags:
+      - Semantic Layer Credentials
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SemanticLayerCredentialsEnveloped'
+          description: ''
   /api/v3/accounts/{account_id}/service-tokens/:
     get:
       operationId: List Service Tokens
@@ -4748,6 +4782,9 @@ components:
         account_id:
           type: integer
           description: The account the project is associated with
+        description:
+          type: string
+          description: The description of the project
         connection_id:
           type: integer
           description: The active connection
@@ -4836,6 +4873,10 @@ components:
         account_id:
           type: integer
           description: The account the project is associated with
+        description:
+          type: string
+          minLength: 1
+          description: The description of the project
         connection_id:
           type: integer
           description: The active connection
@@ -4979,6 +5020,9 @@ components:
             this entity is deleted
         project_access_token_id:
           type: integer
+        expires_at:
+          type: string
+          format: date-time
       required:
       - account_id
       - gitlab_project_id
@@ -5004,6 +5048,9 @@ components:
           type: string
           writeOnly: true
           minLength: 1
+        expires_at:
+          type: string
+          format: date-time
       required:
       - account_id
       - gitlab_project_id
@@ -5235,6 +5282,73 @@ components:
           items:
             $ref: '#/components/schemas/Group'
           description: Specification of how certain fields should be grouped
+    SchemaTypeEnum:
+      enum:
+      - connection
+      - credential
+      - semantic_layer_credentials
+      type: string
+      description: |-
+        * `connection` - connection
+        * `credential` - credential
+        * `semantic_layer_credentials` - semantic_layer_credentials
+    SemanticLayerCredentials:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+          description: The account the credentials are associated with
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The adapter version. Should match the associated project's adapter version.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+        schema_type:
+          allOf:
+          - $ref: '#/components/schemas/SchemaTypeEnum'
+          description: |-
+            The adapter schema type. Should always be 'semantic_layer_credentials'
+
+            * `connection` - connection
+            * `credential` - credential
+            * `semantic_layer_credentials` - semantic_layer_credentials
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        state:
+          type: integer
+          default: 1
+      required:
+      - created_at
+      - updated_at
+    SemanticLayerCredentialsEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SemanticLayerCredentials'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     ServiceToken:
       type: object
       properties:
