@@ -5685,7 +5685,6 @@ components:
       - azure_active_directory_username
       - email_connected
       - email_verified
-      - slack_connected
       - enterprise_connected
       properties:
         id:
@@ -5771,22 +5770,6 @@ components:
           - type: boolean
         email_verified:
           type: boolean
-        slack_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        slack_team_name:
-          oneOf:
-          - type: 'null'
-          - type: string
-        slack_avatar_url:
-          oneOf:
-          - type: 'null'
-          - type: string
-        slack_access_token:
-          oneOf:
-          - type: 'null'
-          - type: string
         enterprise_connected:
           oneOf:
           - type: 'null'
