@@ -18,12 +18,12 @@ info:
     ## Authentication
 
     To authenticate an application with the dbt Cloud API, navigate to the
-    API Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).
+    Account Settings page and go to Personal Tokens from the left sidebar. Create one if you don't have one already.
     If you cannot access this page, confirm that your dbt Cloud account has access to the API,
     and that you are using the hosted version of dbt Cloud. If dbt Cloud is running inside of a VPC
-    in an Enterprise account, contact your account manager for help finding your API key.
+    in an Enterprise account, contact your account manager for help finding your account-scoped Personal Access Token.
 
-    Once you've found your API key, use it in the Authorization header of requests to the dbt Cloud API.
+    Once you've found your Personal Access Token (PAT) for your account, use it in the Authorization header of requests to the dbt Cloud API.
     Be sure to include the `Token` prefix in the Authorization header, or the request will fail with a
     "401 Unauthorized" error.
 
@@ -197,6 +197,164 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
+          description: No response body
+  /api/v3/accounts/{account_id}/connections/:
+    get:
+      operationId: List Account Connections
+      description: This is our new list endpoint for connections. Connections are
+        now account-scoped
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: adapter_version
+        schema:
+          type: string
+          enum:
+          - apache_spark_v0
+          - athena_v0
+          - bigquery_v0
+          - databricks_spark_v0
+          - databricks_v0
+          - fabric_v0
+          - postgres_v0
+          - redshift_v0
+          - snowflake_v0
+          - synapse_v0
+          - trino_v0
+        description: The adapter to fetch the connections for
+      tags:
+      - Connections
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListListAccountConnectionResponse'
+          description: ''
+    post:
+      operationId: Create Account Connection
+      description: This our new post endpoint for connections. Connections are now
+        account-scoped
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Connections
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostAccountConnectionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostAccountConnectionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostAccountConnectionRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountConnectionResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/connections/{id}/:
+    get:
+      operationId: Get Account Connection
+      description: This our new get endpoint for connections. Connections are now
+        account-scoped
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Connections
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountConnectionResponse'
+          description: ''
+    patch:
+      operationId: Update Account Connection
+      description: This our new patch endpoint for connections. Connections are now
+        account-scoped
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Connections
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchAccountConnectionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchAccountConnectionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchAccountConnectionRequest'
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountConnectionResponse'
+          description: ''
+    delete:
+      operationId: Delete Account Connection
+      description: This our new delete endpoint for connections. Connections are now
+        account-scoped
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Connections
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
           description: No response body
   /api/v3/accounts/{account_id}/group-permissions/{group_id}/:
     post:
@@ -786,6 +944,173 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/oauth-configurations/:
+    get:
+      operationId: List OAuthConfigurations
+      description: List OAuthConfigurations
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: account_id
+        schema:
+          type: integer
+      - in: query
+        name: client_id
+        schema:
+          type: string
+      - in: query
+        name: limit
+        schema:
+          type: integer
+      - in: query
+        name: offset
+        schema:
+          type: integer
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: query
+        name: state
+        schema:
+          type: integer
+      - in: query
+        name: type
+        schema:
+          type: string
+      tags:
+      - OAuth Configurations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OAuthConfigurationEnveloped'
+          description: ''
+    post:
+      operationId: Create OAuthConfiguration
+      description: Create a new OAuthConfiguration
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - OAuth Configurations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthConfigurationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OAuthConfigurationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OAuthConfigurationRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthConfigurationEnveloped'
+          description: ''
+  /api/v3/accounts/{account_id}/oauth-configurations/{id}/:
+    get:
+      operationId: Retrieve OAuth Configuration
+      description: Retrieve an OAuth Configuration
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - OAuth Configurations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthConfigurationEnveloped'
+          description: ''
+    post:
+      operationId: Update OAuth Configuration
+      description: Update an OAuthConfiguration
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - OAuth Configurations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthConfigurationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OAuthConfigurationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OAuthConfigurationRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthConfigurationEnveloped'
+          description: ''
+    delete:
+      operationId: Destroy OAuth Configuration
+      description: Delete an OAuth Configuration
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - OAuth Configurations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/private-link-endpoints/:
     get:
       operationId: List PrivateLink Endpoints
@@ -1162,6 +1487,7 @@ paths:
       - Connections
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1201,6 +1527,7 @@ paths:
         required: true
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1232,6 +1559,7 @@ paths:
       - Connections
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1274,6 +1602,7 @@ paths:
         required: true
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -1304,6 +1633,7 @@ paths:
       - Connections
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '204':
           description: No response body
@@ -1471,18 +1801,6 @@ paths:
         required: true
       tags:
       - Environment Variables
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -1513,18 +1831,6 @@ paths:
         required: true
       tags:
       - Environment Variables
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -1617,18 +1923,6 @@ paths:
         required: true
       tags:
       - Environment Variables
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
-        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -1995,18 +2289,6 @@ paths:
         required: true
       tags:
       - Environments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EnvironmentV3Request'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/EnvironmentV3Request'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/EnvironmentV3Request'
-        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -2068,18 +2350,6 @@ paths:
         required: true
       tags:
       - Environments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EnvironmentV3Request'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/EnvironmentV3Request'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/EnvironmentV3Request'
-        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -2274,6 +2544,268 @@ paths:
       responses:
         '200':
           description: No response body
+  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/:
+    get:
+      operationId: List Integrations
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects Integrations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListIntegrationResponseResponse'
+          description: ''
+    post:
+      operationId: Create Integration
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects Integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostIntegrationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostIntegrationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostIntegrationRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIntegrationResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/{id}/:
+    get:
+      operationId: Get Integration
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects Integrations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIntegrationResponse'
+          description: ''
+    patch:
+      operationId: Update Integration
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects Integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchIntegrationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchIntegrationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchIntegrationRequest'
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIntegrationResponse'
+          description: ''
+    delete:
+      operationId: Delete Integration
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects Integrations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
+  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/{id}/collections/:
+    get:
+      operationId: List collections from BI tool
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects Integrations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListIntegrationCollection'
+          description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/{id}/collections/{collection_id}/:
+    get:
+      operationId: List collections from BI tool_2
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: collection_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects Integrations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListIntegrationCollection'
+          description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/{id}/selections:
+    post:
+      operationId: Update Integration Selections
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects Integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostIntegrationWatchSelectionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostIntegrationWatchSelectionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostIntegrationWatchSelectionRequest'
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIntegrationWatchSelectionResponse'
+          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/managed-repositories/:
     post:
       operationId: Create Managed Repository
@@ -2514,6 +3046,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
         name: state
         schema:
           type: integer
@@ -2710,6 +3246,151 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserEnveloped'
           description: ''
+  /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys/:
+    get:
+      operationId: List Account Scoped PATs
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Users
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceTokenEnveloped'
+          description: ''
+    post:
+      operationId: Create Account Scoped PAT
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountScopedPATRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccountScopedPATRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccountScopedPATRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceToken'
+          description: ''
+  /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys/{id}/:
+    get:
+      operationId: Get Account Scoped PAT
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Users
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountScopedPATResponseEnveloped'
+          description: ''
+    post:
+      operationId: Rotate Account Scoped PAT
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Users
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceTokenEnveloped'
+          description: ''
+    delete:
+      operationId: Delete Account Scoped PAT
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Users
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/webhooks/event/{event_id}:
     get:
       operationId: Retrieve Webhooks Event
@@ -3047,6 +3728,7 @@ paths:
           type: string
           enum:
           - apache_spark_v0
+          - athena_v0
           - bigquery_v0
           - databricks_spark_v0
           - databricks_v0
@@ -3219,6 +3901,7 @@ components:
       - pending_cancel
       - run_slots
       - developer_seats
+      - explorer_seats
       - docs_job_id
       - freshness_job_id
       properties:
@@ -3245,6 +3928,9 @@ components:
         developer_seats:
           type: integer
           description: The total number of developer seats the account may use
+        explorer_seats:
+          type: integer
+          description: The total number of explorer seats the account may use
         it_seats:
           type: integer
           description: The total number of IT seats the account may use
@@ -3399,6 +4085,78 @@ components:
       required:
       - data
       - status
+    AccountScopedPATRequestRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+      required:
+      - name
+    AccountScopedPATResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        uid:
+          type: string
+        name:
+          type: string
+        token:
+          type: string
+        state:
+          type: integer
+          default: 1
+        token_string:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        last_used:
+          type: string
+          format: date-time
+        user_id:
+          type: integer
+        type:
+          type: integer
+        expires_at:
+          type: string
+          format: date-time
+        metadata_only:
+          type: boolean
+          default: false
+        webhooks_only:
+          type: boolean
+          default: false
+        service_token_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTokenPermission'
+          readOnly: true
+          default: []
+      required:
+      - created_at
+      - service_token_permissions
+      - token_string
+      - updated_at
+    AccountScopedPATResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountScopedPATResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
     Adapter:
       type: object
       properties:
@@ -3461,6 +4219,7 @@ components:
       - redshift_v0
       - synapse_v0
       - fabric_v0
+      - athena_v0
       type: string
       description: |-
         * `apache_spark_v0` - apache_spark_v0
@@ -3473,6 +4232,106 @@ components:
         * `redshift_v0` - redshift_v0
         * `synapse_v0` - synapse_v0
         * `fabric_v0` - fabric_v0
+        * `athena_v0` - athena_v0
+    ApacheSparkConnection:
+      title: ApacheSparkConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        cluster:
+          title: Cluster
+          type: string
+        method:
+          default: http
+          allOf:
+          - $ref: '#/components/schemas/ConnectionMethod'
+        connect_timeout:
+          title: Connect Timeout
+          default: 10
+          type: integer
+        connect_retries:
+          title: Connect Retries
+          default: 0
+          type: integer
+        organization:
+          title: Organization
+          default: ''
+          type: string
+        user:
+          title: User
+          default: ''
+          type: string
+        auth:
+          title: Auth
+          default: ''
+          type: string
+        kerberos_service_name:
+          title: Kerberos Service Name
+          default: ''
+          type: string
+        port:
+          title: Port
+          default: 443
+          minimum: 1
+          maximum: 65535
+          type: integer
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use connection_details.adapter_version
+          type: integer
+      required:
+      - host
+      - cluster
+    AthenaConnection:
+      title: AthenaConnection
+      type: object
+      properties:
+        region_name:
+          title: Region Name
+          type: string
+        database:
+          title: Database
+          type: string
+        work_group:
+          title: Work Group
+          type: string
+        spark_work_group:
+          title: Spark Work Group
+          type: string
+        s3_staging_dir:
+          title: S3 Staging Dir
+          type: string
+        s3_data_dir:
+          title: S3 Data Dir
+          type: string
+        s3_data_naming:
+          title: S3 Data Naming
+          type: string
+        s3_tmp_table_dir:
+          title: S3 Tmp Table Dir
+          type: string
+        poll_interval:
+          title: Poll Interval
+          type: integer
+        num_retries:
+          title: Num Retries
+          type: integer
+        num_boto3_retries:
+          title: Num Boto3 Retries
+          type: integer
+        num_iceberg_retries:
+          title: Num Iceberg Retries
+          type: integer
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use connection_details.adapter_version
+          type: integer
+      required:
+      - region_name
+      - database
+      - s3_staging_dir
     BaseConnectionV3:
       type: object
       properties:
@@ -3489,6 +4348,8 @@ components:
           description: The name of the connection
         type:
           $ref: '#/components/schemas/Type32eEnum'
+        adapter_version:
+          $ref: '#/components/schemas/AdapterVersionEnum'
         created_by_id:
           type: integer
         created_by_service_token_id:
@@ -3500,6 +4361,10 @@ components:
             this entity is deleted
         private_link_endpoint_id:
           type: string
+        oauth_configuration_id:
+          type: integer
+          description: The OAuth Configuration associated with this connection. When
+            set,developer credentials leveraging OAuth may be created.
       required:
       - account_id
       - name
@@ -3532,6 +4397,8 @@ components:
           description: The name of the connection
         type:
           $ref: '#/components/schemas/Type32eEnum'
+        adapter_version:
+          $ref: '#/components/schemas/AdapterVersionEnum'
         created_by_id:
           type: integer
         created_by_service_token_id:
@@ -3544,11 +4411,134 @@ components:
         private_link_endpoint_id:
           type: string
           minLength: 1
+        oauth_configuration_id:
+          type: integer
+          description: The OAuth Configuration associated with this connection. When
+            set,developer credentials leveraging OAuth may be created.
       required:
       - account_id
       - name
       - project_id
       - type
+    BigqueryConnection:
+      title: BigqueryConnection
+      type: object
+      properties:
+        project_id:
+          title: Project Id
+          maxLength: 255
+          minLength: 1
+          type: string
+        timeout_seconds:
+          title: Timeout Seconds
+          exclusiveMinimum: 0
+          maximum: 86400
+          type: integer
+        private_key_id:
+          title: Private Key Id
+          maxLength: 255
+          minLength: 1
+          type: string
+        private_key:
+          title: Private Key
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+        client_email:
+          title: Client Email
+          maxLength: 1024
+          minLength: 1
+          type: string
+        client_id:
+          title: Client Id
+          maxLength: 255
+          minLength: 1
+          type: string
+        auth_uri:
+          title: Auth Uri
+          type: string
+        token_uri:
+          title: Token Uri
+          type: string
+        auth_provider_x509_cert_url:
+          title: Auth Provider X509 Cert Url
+          type: string
+        client_x509_cert_url:
+          title: Client X509 Cert Url
+          type: string
+        priority:
+          $ref: '#/components/schemas/Priority'
+        scopes:
+          title: Scopes
+          type: array
+          items:
+            type: string
+        location:
+          title: Location
+          maxLength: 255
+          minLength: 1
+          type: string
+        maximum_bytes_billed:
+          title: Maximum Bytes Billed
+          type: integer
+        execution_project:
+          title: Execution Project
+          type: string
+        impersonate_service_account:
+          title: Impersonate Service Account
+          type: string
+        retries:
+          title: Retries
+          default: 1
+          minimum: 0
+          maximum: 60
+          type: integer
+        job_retry_deadline_seconds:
+          title: Job Retry Deadline Seconds
+          type: integer
+        job_creation_timeout_seconds:
+          title: Job Creation Timeout Seconds
+          type: integer
+        application_id:
+          title: Application Id
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+        application_secret:
+          title: Application Secret
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+        gcs_bucket:
+          title: Gcs Bucket
+          type: string
+        dataproc_region:
+          title: Dataproc Region
+          type: string
+        dataproc_cluster_name:
+          title: Dataproc Cluster Name
+          type: string
+      required:
+      - project_id
+      - timeout_seconds
+      - private_key_id
+      - private_key
+      - client_email
+      - client_id
+      - auth_uri
+      - token_uri
+      - auth_provider_x509_cert_url
+      - client_x509_cert_url
+    ConnectionMethod:
+      title: ConnectionMethod
+      description: An enumeration.
+      enum:
+      - http
+      - thrift
+      type: string
     CreateSubscriptionResponseEnvelope:
       type: object
       properties:
@@ -3559,46 +4549,6 @@ components:
       required:
       - data
       - status
-    CustomEnvironmentVariable:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        name:
-          type: string
-        type:
-          $ref: '#/components/schemas/CustomEnvironmentVariableTypeEnum'
-        state:
-          type: integer
-          default: 1
-        user_id:
-          type: integer
-        environment_id:
-          type: integer
-        job_definition_id:
-          type: integer
-        environment:
-          readOnly: true
-        display_value:
-          type: string
-        id:
-          type: integer
-          readOnly: true
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-      required:
-      - created_at
-      - environment
-      - id
-      - updated_at
     CustomEnvironmentVariableBulkRequest:
       type: object
       properties:
@@ -3678,70 +4628,88 @@ components:
     CustomEnvironmentVariableEnveloped:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/CustomEnvironmentVariable'
         status:
           $ref: '#/components/schemas/Status'
       required:
-      - data
       - status
-    CustomEnvironmentVariableRequest:
+    DatabricksConnection:
+      title: DatabricksConnection
       type: object
       properties:
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        name:
+        host:
+          title: Host
+          pattern: .*databricks.*
           type: string
-          minLength: 1
-        type:
-          $ref: '#/components/schemas/CustomEnvironmentVariableTypeEnum'
-        state:
-          type: integer
-          default: 1
-        user_id:
-          type: integer
-        environment_id:
-          type: integer
-        job_definition_id:
-          type: integer
-        raw_value:
+        http_path:
+          title: Http Path
+          pattern: ^(\/sql\/|sql\/)
+          type: string
+        catalog:
+          title: Catalog
+          default: ''
+          type: string
+        client_id:
+          title: Client Id
+          write_only: true
           type: string
           writeOnly: true
-          minLength: 1
-        display_value:
+          format: password
+        client_secret:
+          title: Client Secret
+          write_only: true
           type: string
-          minLength: 1
+          writeOnly: true
+          format: password
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use connection_details.adapter_version
+          type: integer
       required:
-      - account_id
-      - name
-      - project_id
-      - type
-    CustomEnvironmentVariableTypeEnum:
-      enum:
-      - project
-      - environment
-      - job
-      - user
-      type: string
-      description: |-
-        * `project` - project
-        * `environment` - environment
-        * `job` - job
-        * `user` - user
-    DateEnum:
-      enum:
-      - every_day
-      - days_of_week
-      - custom_cron
-      - interval_cron
-      type: string
-      description: |-
-        * `every_day` - every_day
-        * `days_of_week` - days_of_week
-        * `custom_cron` - custom_cron
-        * `interval_cron` - interval_cron
+      - host
+      - http_path
+    DatabricksSparkConnection:
+      title: DatabricksSparkConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        method:
+          default: odbc
+          allOf:
+          - $ref: '#/components/schemas/Method'
+        port:
+          title: Port
+          default: 443
+          minimum: 1
+          maximum: 65535
+          type: integer
+        cluster:
+          title: Cluster
+          default: ''
+          type: string
+        endpoint:
+          title: Endpoint
+          default: ''
+          type: string
+        driver:
+          title: Driver
+          default: /opt/simba/spark/lib/64/libsparkodbc_sb64.so
+          type: string
+        organization:
+          title: Organization
+          default: ''
+          type: string
+        user:
+          title: User
+          default: ''
+          type: string
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use connection_details.adapter_version
+          type: integer
+      required:
+      - host
     DbtAdapter:
       type: object
       properties:
@@ -3808,6 +4776,22 @@ components:
       - adapter_version
       - metadata_json
       - project_id
+    DbtAdapterVersion:
+      title: DbtAdapterVersion
+      description: An enumeration.
+      enum:
+      - apache_spark_v0
+      - databricks_spark_v0
+      - databricks_v0
+      - trino_v0
+      - snowflake_v0
+      - bigquery_v0
+      - postgres_v0
+      - redshift_v0
+      - synapse_v0
+      - fabric_v0
+      - athena_v0
+      type: string
     DeleteSubscriptionResponseData:
       type: object
       properties:
@@ -3835,127 +4819,13 @@ components:
       required:
       - code
       - is_success
-    DeploymentTypeEnum:
-      enum:
-      - production
-      - staging
-      type: string
-      description: |-
-        * `production` - production
-        * `staging` - staging
-    EnvironmentV3:
-      type: object
-      properties:
-        id:
-          type: integer
-        account_id:
-          type: integer
-          description: The account the environment is associated with
-        project_id:
-          type: integer
-          description: The project the environment is associated with
-        credentials_id:
-          type: integer
-          description: The id of the associated credentials. Null for development
-            environments.
-        extended_attributes_id:
-          type: integer
-        name:
-          type: string
-          description: The name of the environment
-        dbt_version:
-          type: string
-          description: The default dbt Version to use for this environment
-        type:
-          $ref: '#/components/schemas/EnvironmentV3TypeEnum'
-        use_custom_branch:
-          type: boolean
-        custom_branch:
-          type: string
-        supports_docs:
-          type: boolean
-        state:
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-        deployment_type:
-          $ref: '#/components/schemas/DeploymentTypeEnum'
-      required:
-      - account_id
-      - dbt_version
-      - name
-      - project_id
-      - supports_docs
-      - type
-      - use_custom_branch
     EnvironmentV3Enveloped:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/EnvironmentV3'
         status:
           $ref: '#/components/schemas/Status'
       required:
-      - data
       - status
-    EnvironmentV3Request:
-      type: object
-      properties:
-        id:
-          type: integer
-        account_id:
-          type: integer
-          description: The account the environment is associated with
-        project_id:
-          type: integer
-          description: The project the environment is associated with
-        credentials_id:
-          type: integer
-          description: The id of the associated credentials. Null for development
-            environments.
-        extended_attributes_id:
-          type: integer
-        name:
-          type: string
-          minLength: 1
-          description: The name of the environment
-        dbt_version:
-          type: string
-          minLength: 1
-          description: The default dbt Version to use for this environment
-        type:
-          $ref: '#/components/schemas/EnvironmentV3TypeEnum'
-        use_custom_branch:
-          type: boolean
-        custom_branch:
-          type: string
-          minLength: 1
-        supports_docs:
-          type: boolean
-        state:
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-        deployment_type:
-          $ref: '#/components/schemas/DeploymentTypeEnum'
-      required:
-      - account_id
-      - dbt_version
-      - name
-      - project_id
-      - supports_docs
-      - type
-      - use_custom_branch
-    EnvironmentV3TypeEnum:
-      enum:
-      - development
-      - deployment
-      type: string
-      description: |-
-        * `development` - DEVELOPMENT
-        * `deployment` - DEPLOYMENT
     Event:
       type: object
       properties:
@@ -4047,6 +4917,45 @@ components:
       - account_id
       - extended_attributes
       - project_id
+    FabricConnection:
+      title: FabricConnection
+      type: object
+      properties:
+        server:
+          title: Server
+          type: string
+        database:
+          title: Database
+          type: string
+        driver:
+          title: Driver
+          default: ODBC Driver 18 for SQL Server
+          type: string
+        port:
+          title: Port
+          default: 1433
+          minimum: 1
+          maximum: 65535
+          type: integer
+        retries:
+          title: Retries
+          default: 1
+          type: integer
+        login_timeout:
+          title: Login Timeout
+          default: 0
+          type: integer
+        query_timeout:
+          title: Query Timeout
+          default: 0
+          type: integer
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use connection_details.adapter_version
+          type: integer
+      required:
+      - server
+      - database
     Filters:
       type: object
       properties:
@@ -4057,6 +4966,164 @@ components:
       required:
       - limit
       - offset
+    GetAccountConnection:
+      title: GetAccountConnection
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        account_id:
+          title: Account Id
+          description: The account the connection is associated with
+          type: integer
+        name:
+          title: Name
+          description: The name of the connection
+          type: string
+        adapter_version:
+          description: Identifies the warehouse and version of its adapter
+          allOf:
+          - $ref: '#/components/schemas/DbtAdapterVersion'
+        private_link_endpoint_id:
+          title: Private Link Endpoint Id
+          type: string
+        is_ssh_tunnel_enabled:
+          title: Is Ssh Tunnel Enabled
+          default: false
+          type: boolean
+        oauth_redirect_uri:
+          title: Oauth Redirect Uri
+          description: If OAuth is enabled for this connection, this field is used
+            internally by dbt Cloud
+          type: string
+        oauth_configuration_id:
+          title: Oauth Configuration Id
+          type: integer
+        is_configured_for_native_oauth:
+          title: Is Configured For Native Oauth
+          type: boolean
+        config:
+          title: Config
+          description: The adapter-specific configuration for the connection
+          anyOf:
+          - $ref: '#/components/schemas/SnowflakeConnection'
+          - $ref: '#/components/schemas/PostgresConnection'
+          - $ref: '#/components/schemas/RedshiftConnection'
+          - $ref: '#/components/schemas/BigqueryConnection'
+          - $ref: '#/components/schemas/DatabricksConnection'
+          - $ref: '#/components/schemas/DatabricksSparkConnection'
+          - $ref: '#/components/schemas/TrinoConnection'
+          - $ref: '#/components/schemas/FabricConnection'
+          - $ref: '#/components/schemas/SynapseConnection'
+          - $ref: '#/components/schemas/ApacheSparkConnection'
+          - $ref: '#/components/schemas/AthenaConnection'
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_id
+      - name
+      - adapter_version
+      - oauth_redirect_uri
+      - config
+    GetAccountConnectionResponse:
+      title: GetAccountConnectionResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/GetAccountConnection'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
+    GetIntegration:
+      title: GetIntegration
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        account_id:
+          title: Account Id
+          description: The account the integration is associated with
+          type: integer
+        project_id:
+          title: Project Id
+          description: The project the integration is associated with
+          type: integer
+        name:
+          title: Name
+          description: The name of the integration
+          type: string
+        config:
+          title: Config
+          description: The integration config
+          allOf:
+          - $ref: '#/components/schemas/TableauIntegration'
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_id
+      - project_id
+      - name
+      - config
+    GetIntegrationResponse:
+      title: GetIntegrationResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/GetIntegration'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
+    GetIntegrationWatchSelectionResponse:
+      title: GetIntegrationWatchSelectionResponse
+      type: object
+      properties:
+        added:
+          title: Added
+          description: Number of collections additionally being watched
+          type: integer
+        removed:
+          title: Removed
+          description: Number of collections no longer being watched
+          type: integer
+      required:
+      - added
+      - removed
     GetWebhooksReceiptResponseEnvelope:
       type: object
       properties:
@@ -4257,6 +5324,8 @@ components:
         name:
           type: string
           minLength: 1
+        type:
+          $ref: '#/components/schemas/TypeEdaEnum'
         rule_set_enabled:
           type: boolean
         account_id:
@@ -4273,6 +5342,7 @@ components:
       - cidrs
       - name
       - rule_set_enabled
+      - type
     IPRestrictionRule:
       type: object
       properties:
@@ -4344,6 +5414,12 @@ components:
           type: boolean
       required:
       - is_valid_for_admin
+    IntegrationType:
+      title: IntegrationType
+      description: An enumeration.
+      enum:
+      - tableau
+      type: string
     InviteUsersRequestRequest:
       type: object
       properties:
@@ -4378,120 +5454,6 @@ components:
       required:
       - data
       - status
-    JobDefinitionExecution:
-      type: object
-      properties:
-        timeout_seconds:
-          type: integer
-      required:
-      - timeout_seconds
-    JobDefinitionSchedule:
-      type: object
-      properties:
-        cron:
-          type: string
-        date:
-          $ref: '#/components/schemas/DateEnum'
-        time:
-          $ref: '#/components/schemas/TimeEnum'
-      required:
-      - cron
-      - date
-      - time
-    JobDefinitionSettings:
-      type: object
-      properties:
-        threads:
-          type: integer
-        target_name:
-          type: string
-      required:
-      - target_name
-      - threads
-    JobDefinitionTriggers:
-      type: object
-      properties:
-        github_webhook:
-          type: boolean
-        schedule:
-          type: boolean
-        git_provider_webhook:
-          type: boolean
-        on_merge:
-          type: boolean
-      required:
-      - github_webhook
-      - schedule
-    JobDefinitionV2:
-      type: object
-      properties:
-        environment_id:
-          type: integer
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        generate_docs:
-          type: boolean
-        run_generate_sources:
-          type: boolean
-        state:
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-        dbt_version:
-          type: string
-        triggers:
-          $ref: '#/components/schemas/JobDefinitionTriggers'
-        settings:
-          $ref: '#/components/schemas/JobDefinitionSettings'
-        execution:
-          $ref: '#/components/schemas/JobDefinitionExecution'
-        schedule:
-          $ref: '#/components/schemas/JobDefinitionSchedule'
-        execute_steps:
-          type: array
-          items:
-            type: string
-        most_recent_run:
-          $ref: '#/components/schemas/Run'
-        most_recent_completed_run:
-          $ref: '#/components/schemas/Run'
-        job_type:
-          $ref: '#/components/schemas/JobTypeEnum'
-        triggers_on_draft_pr:
-          type: boolean
-          default: false
-        run_audit_helper:
-          type: boolean
-          default: false
-        run_compare_changes:
-          type: boolean
-          default: false
-      required:
-      - account_id
-      - environment_id
-      - generate_docs
-      - name
-      - project_id
-      - run_generate_sources
-    JobTypeEnum:
-      enum:
-      - ci
-      - scheduled
-      - other
-      - merge
-      type: string
-      description: |-
-        * `ci` - ci
-        * `scheduled` - scheduled
-        * `other` - other
-        * `merge` - merge
     LicenseMap:
       type: object
       properties:
@@ -4556,11 +5518,148 @@ components:
       - developer
       - read_only
       - it
+      - explorer
       type: string
       description: |-
         * `developer` - DEVELOPER
         * `read_only` - READ_ONLY
         * `it` - IT
+        * `explorer` - EXPLORER
+    ListAccountConnection:
+      title: ListAccountConnection
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        account_id:
+          title: Account Id
+          description: The account the connection is associated with
+          type: integer
+        name:
+          title: Name
+          description: The name of the connection
+          type: string
+        adapter_version:
+          description: Identifies the warehouse and version of its adapter
+          allOf:
+          - $ref: '#/components/schemas/DbtAdapterVersion'
+        private_link_endpoint_id:
+          title: Private Link Endpoint Id
+          type: string
+        is_ssh_tunnel_enabled:
+          title: Is Ssh Tunnel Enabled
+          default: false
+          type: boolean
+        oauth_configuration_id:
+          title: Oauth Configuration Id
+          description: The OAuth Configuration associated with this connection. When
+            set,developer credentials leveraging OAuth may be created.
+          type: integer
+        environment__count:
+          title: Environment  Count
+          description: The number of environments using this connection
+          type: integer
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_id
+      - name
+      - adapter_version
+      - environment__count
+    ListIntegrationCollection:
+      title: ListIntegrationCollection
+      type: object
+      properties:
+        collections:
+          title: Collections
+          description: List of collections
+          type: array
+          items:
+            $ref: '#/components/schemas/WatchSelectionItem'
+      required:
+      - collections
+    ListIntegrationResponse:
+      title: ListIntegrationResponse
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The integration's ID
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        account_id:
+          title: Account Id
+          description: The account the integration is associated with
+          type: integer
+        project_id:
+          title: Project Id
+          description: The project the integration is associated with
+          type: integer
+        name:
+          title: Name
+          description: The name of the integration
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_id
+      - project_id
+      - name
+    ListIntegrationResponseResponse:
+      title: ListIntegrationResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/ListIntegrationResponse'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
+    ListListAccountConnectionResponse:
+      title: ListListAccountConnectionResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/ListAccountConnection'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
     ListWebhooksReceiptsResponseEnvelope:
       type: object
       properties:
@@ -4573,6 +5672,12 @@ components:
       required:
       - data
       - status
+    Method:
+      title: Method
+      description: An enumeration.
+      enum:
+      - odbc
+      type: string
     NotFound:
       type: object
       properties:
@@ -4600,6 +5705,444 @@ components:
       - developer_message
       - is_success
       - user_message
+    OAuthConfiguration:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        type:
+          type: string
+        name:
+          type: string
+        client_id:
+          type: string
+        authorize_url:
+          type: string
+        token_url:
+          type: string
+        redirect_uri:
+          type: string
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - updated_at
+    OAuthConfigurationEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/OAuthConfiguration'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    OAuthConfigurationRequest:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        type:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        client_id:
+          type: string
+          minLength: 1
+        client_secret:
+          type: string
+          writeOnly: true
+          minLength: 1
+        authorize_url:
+          type: string
+          minLength: 1
+        token_url:
+          type: string
+          minLength: 1
+        redirect_uri:
+          type: string
+          minLength: 1
+      required:
+      - account_id
+      - type
+    OptionalApacheSparkConnection:
+      title: OptionalApacheSparkConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        cluster:
+          title: Cluster
+          type: string
+        method:
+          $ref: '#/components/schemas/ConnectionMethod'
+        connect_timeout:
+          title: Connect Timeout
+          type: integer
+        connect_retries:
+          title: Connect Retries
+          type: integer
+        organization:
+          title: Organization
+          type: string
+        user:
+          title: User
+          type: string
+        auth:
+          title: Auth
+          type: string
+        kerberos_service_name:
+          title: Kerberos Service Name
+          type: string
+        port:
+          title: Port
+          type: integer
+        adapter_id:
+          title: Adapter Id
+          type: integer
+    OptionalAthenaConnection:
+      title: OptionalAthenaConnection
+      type: object
+      properties:
+        region_name:
+          title: Region Name
+          type: string
+        database:
+          title: Database
+          type: string
+        work_group:
+          title: Work Group
+          type: string
+        spark_work_group:
+          title: Spark Work Group
+          type: string
+        s3_staging_dir:
+          title: S3 Staging Dir
+          type: string
+        s3_data_dir:
+          title: S3 Data Dir
+          type: string
+        s3_data_naming:
+          title: S3 Data Naming
+          type: string
+        s3_tmp_table_dir:
+          title: S3 Tmp Table Dir
+          type: string
+        poll_interval:
+          title: Poll Interval
+          type: integer
+        num_retries:
+          title: Num Retries
+          type: integer
+        num_boto3_retries:
+          title: Num Boto3 Retries
+          type: integer
+        num_iceberg_retries:
+          title: Num Iceberg Retries
+          type: integer
+        adapter_id:
+          title: Adapter Id
+          type: integer
+    OptionalBigqueryConnection:
+      title: OptionalBigqueryConnection
+      type: object
+      properties:
+        project_id:
+          title: Project Id
+          type: string
+        timeout_seconds:
+          title: Timeout Seconds
+          type: integer
+        private_key_id:
+          title: Private Key Id
+          type: string
+        private_key:
+          title: Private Key
+          type: string
+          writeOnly: true
+          format: password
+        client_email:
+          title: Client Email
+          type: string
+        client_id:
+          title: Client Id
+          type: string
+        auth_uri:
+          title: Auth Uri
+          type: string
+        token_uri:
+          title: Token Uri
+          type: string
+        auth_provider_x509_cert_url:
+          title: Auth Provider X509 Cert Url
+          type: string
+        client_x509_cert_url:
+          title: Client X509 Cert Url
+          type: string
+        priority:
+          $ref: '#/components/schemas/Priority'
+        scopes:
+          title: Scopes
+          type: array
+          items:
+            type: string
+        location:
+          title: Location
+          type: string
+        maximum_bytes_billed:
+          title: Maximum Bytes Billed
+          type: integer
+        execution_project:
+          title: Execution Project
+          type: string
+        impersonate_service_account:
+          title: Impersonate Service Account
+          type: string
+        retries:
+          title: Retries
+          type: integer
+        job_retry_deadline_seconds:
+          title: Job Retry Deadline Seconds
+          type: integer
+        job_creation_timeout_seconds:
+          title: Job Creation Timeout Seconds
+          type: integer
+        application_id:
+          title: Application Id
+          type: string
+          writeOnly: true
+          format: password
+        application_secret:
+          title: Application Secret
+          type: string
+          writeOnly: true
+          format: password
+        gcs_bucket:
+          title: Gcs Bucket
+          type: string
+        dataproc_region:
+          title: Dataproc Region
+          type: string
+        dataproc_cluster_name:
+          title: Dataproc Cluster Name
+          type: string
+    OptionalDatabricksConnection:
+      title: OptionalDatabricksConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        http_path:
+          title: Http Path
+          type: string
+        catalog:
+          title: Catalog
+          type: string
+        client_id:
+          title: Client Id
+          type: string
+          writeOnly: true
+          format: password
+        client_secret:
+          title: Client Secret
+          type: string
+          writeOnly: true
+          format: password
+        adapter_id:
+          title: Adapter Id
+          type: integer
+    OptionalDatabricksSparkConnection:
+      title: OptionalDatabricksSparkConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        method:
+          $ref: '#/components/schemas/Method'
+        port:
+          title: Port
+          type: integer
+        cluster:
+          title: Cluster
+          type: string
+        endpoint:
+          title: Endpoint
+          type: string
+        driver:
+          title: Driver
+          type: string
+        organization:
+          title: Organization
+          type: string
+        user:
+          title: User
+          type: string
+        adapter_id:
+          title: Adapter Id
+          type: integer
+    OptionalFabricConnection:
+      title: OptionalFabricConnection
+      type: object
+      properties:
+        server:
+          title: Server
+          type: string
+        database:
+          title: Database
+          type: string
+        driver:
+          title: Driver
+          type: string
+        port:
+          title: Port
+          type: integer
+        retries:
+          title: Retries
+          type: integer
+        login_timeout:
+          title: Login Timeout
+          type: integer
+        query_timeout:
+          title: Query Timeout
+          type: integer
+        adapter_id:
+          title: Adapter Id
+          type: integer
+    OptionalPostgresConnection:
+      title: OptionalPostgresConnection
+      type: object
+      properties:
+        hostname:
+          title: Hostname
+          type: string
+        dbname:
+          title: Dbname
+          type: string
+        port:
+          title: Port
+          type: integer
+    OptionalRedshiftConnection:
+      title: OptionalRedshiftConnection
+      type: object
+      properties:
+        hostname:
+          title: Hostname
+          type: string
+        dbname:
+          title: Dbname
+          type: string
+        port:
+          title: Port
+          type: integer
+    OptionalSnowflakeConnection:
+      title: OptionalSnowflakeConnection
+      type: object
+      properties:
+        account:
+          title: Account
+          type: string
+        database:
+          title: Database
+          type: string
+        warehouse:
+          title: Warehouse
+          type: string
+        client_session_keep_alive:
+          title: Client Session Keep Alive
+          type: boolean
+        role:
+          title: Role
+          type: string
+        allow_sso:
+          title: Allow Sso
+          type: boolean
+        oauth_client_id:
+          title: Oauth Client Id
+          type: string
+          writeOnly: true
+          format: password
+        oauth_client_secret:
+          title: Oauth Client Secret
+          type: string
+          writeOnly: true
+          format: password
+    OptionalSynapseConnection:
+      title: OptionalSynapseConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        database:
+          title: Database
+          type: string
+        driver:
+          title: Driver
+          type: string
+        port:
+          title: Port
+          type: integer
+        retries:
+          title: Retries
+          type: integer
+        login_timeout:
+          title: Login Timeout
+          type: integer
+        query_timeout:
+          title: Query Timeout
+          type: integer
+        adapter_id:
+          title: Adapter Id
+          type: integer
+    OptionalTableauIntegration:
+      title: OptionalTableauIntegration
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        site_id:
+          title: Site Id
+          type: string
+        token_name:
+          title: Token Name
+          type: string
+        token:
+          title: Token
+          type: string
+          writeOnly: true
+          format: password
+    OptionalTrinoConnection:
+      title: OptionalTrinoConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        method:
+          title: Method
+          type: string
+        port:
+          title: Port
+          type: integer
+        adapter_id:
+          title: Adapter Id
+          type: integer
     PaginatedWebhooksEvents:
       type: object
       properties:
@@ -4650,6 +6193,68 @@ components:
       required:
       - filters
       - pagination
+    PatchAccountConnectionRequest:
+      title: PatchAccountConnection
+      description: parent class for all request bodies, to be extended by each endpoint
+      type: object
+      properties:
+        account_id:
+          title: Account Id
+          description: The account the connection is associated with
+          type: integer
+        name:
+          title: Name
+          description: The name of the connection
+          type: string
+        private_link_endpoint_id:
+          title: Private Link Endpoint Id
+          type: string
+        is_ssh_tunnel_enabled:
+          title: Is Ssh Tunnel Enabled
+          default: false
+          type: boolean
+        oauth_configuration_id:
+          title: Oauth Configuration Id
+          type: integer
+        config:
+          title: Config
+          description: The adapter-specific configuration for the connection
+          anyOf:
+          - $ref: '#/components/schemas/OptionalSnowflakeConnection'
+          - $ref: '#/components/schemas/OptionalPostgresConnection'
+          - $ref: '#/components/schemas/OptionalRedshiftConnection'
+          - $ref: '#/components/schemas/OptionalBigqueryConnection'
+          - $ref: '#/components/schemas/OptionalDatabricksConnection'
+          - $ref: '#/components/schemas/OptionalDatabricksSparkConnection'
+          - $ref: '#/components/schemas/OptionalTrinoConnection'
+          - $ref: '#/components/schemas/OptionalFabricConnection'
+          - $ref: '#/components/schemas/OptionalSynapseConnection'
+          - $ref: '#/components/schemas/OptionalApacheSparkConnection'
+          - $ref: '#/components/schemas/OptionalAthenaConnection'
+      additionalProperties: false
+    PatchIntegrationRequest:
+      title: PatchIntegration
+      description: parent class for all request bodies, to be extended by each endpoint
+      type: object
+      properties:
+        name:
+          description: The name of the integration
+          allOf:
+          - $ref: '#/components/schemas/IntegrationType'
+        account_id:
+          title: Account Id
+          description: The account the integration is associated with
+          type: integer
+        project_id:
+          title: Project Id
+          description: The project the integration is associated with
+          type: integer
+        config:
+          title: Config
+          description: The integration configuration for this type of integration
+          allOf:
+          - $ref: '#/components/schemas/OptionalTableauIntegration'
+      additionalProperties: false
     PermissionSetEnum:
       enum:
       - owner
@@ -4673,35 +6278,151 @@ components:
       - metadata_only
       - semantic_layer_only
       - webhooks_only
+      - manage_marketplace_apps
       type: string
       description: |-
-        * `owner` - owner
-        * `member` - member
-        * `account_admin` - account_admin
-        * `security_admin` - security_admin
-        * `billing_admin` - billing_admin
-        * `admin` - admin
-        * `database_admin` - database_admin
-        * `git_admin` - git_admin
-        * `team_admin` - team_admin
-        * `job_admin` - job_admin
-        * `job_runner` - job_runner
-        * `job_viewer` - job_viewer
-        * `analyst` - analyst
-        * `developer` - developer
-        * `stakeholder` - stakeholder
-        * `readonly` - readonly
-        * `project_creator` - project_creator
-        * `account_viewer` - account_viewer
-        * `metadata_only` - metadata_only
-        * `semantic_layer_only` - semantic_layer_only
-        * `webhooks_only` - webhooks_only
+        * `owner` - OWNER
+        * `member` - MEMBER
+        * `account_admin` - ACCOUNT_ADMIN
+        * `security_admin` - SECURITY_ADMIN
+        * `billing_admin` - BILLING_ADMIN
+        * `admin` - ADMIN
+        * `database_admin` - DATABASE_ADMIN
+        * `git_admin` - GIT_ADMIN
+        * `team_admin` - TEAM_ADMIN
+        * `job_admin` - JOB_ADMIN
+        * `job_runner` - JOB_RUNNER
+        * `job_viewer` - JOB_VIEWER
+        * `analyst` - ANALYST
+        * `developer` - DEVELOPER
+        * `stakeholder` - STAKEHOLDER
+        * `readonly` - READONLY
+        * `project_creator` - PROJECT_CREATOR
+        * `account_viewer` - ACCOUNT_VIEWER
+        * `metadata_only` - METADATA_ONLY
+        * `semantic_layer_only` - SEMANTIC_LAYER_ONLY
+        * `webhooks_only` - WEBHOOKS_ONLY
+        * `manage_marketplace_apps` - MANAGE_MARKETPLACE_APPS
+    PostAccountConnectionRequest:
+      title: PostAccountConnection
+      description: parent class for all request bodies, to be extended by each endpoint
+      type: object
+      properties:
+        account_id:
+          title: Account Id
+          description: The account the connection is associated with
+          type: integer
+        name:
+          title: Name
+          description: The name of the connection
+          type: string
+        adapter_version:
+          description: Identifies the warehouse and version of its adapter
+          allOf:
+          - $ref: '#/components/schemas/DbtAdapterVersion'
+        private_link_endpoint_id:
+          title: Private Link Endpoint Id
+          type: string
+        is_ssh_tunnel_enabled:
+          title: Is Ssh Tunnel Enabled
+          default: false
+          type: boolean
+        oauth_configuration_id:
+          title: Oauth Configuration Id
+          type: integer
+        config:
+          title: Config
+          description: The adapter-specific configuration for the connection
+          anyOf:
+          - $ref: '#/components/schemas/SnowflakeConnection'
+          - $ref: '#/components/schemas/PostgresConnection'
+          - $ref: '#/components/schemas/RedshiftConnection'
+          - $ref: '#/components/schemas/BigqueryConnection'
+          - $ref: '#/components/schemas/DatabricksConnection'
+          - $ref: '#/components/schemas/DatabricksSparkConnection'
+          - $ref: '#/components/schemas/TrinoConnection'
+          - $ref: '#/components/schemas/FabricConnection'
+          - $ref: '#/components/schemas/SynapseConnection'
+          - $ref: '#/components/schemas/ApacheSparkConnection'
+          - $ref: '#/components/schemas/AthenaConnection'
+      required:
+      - account_id
+      - name
+      - adapter_version
+      additionalProperties: false
+    PostIntegrationRequest:
+      title: PostIntegration
+      description: parent class for all request bodies, to be extended by each endpoint
+      type: object
+      properties:
+        name:
+          description: The name of the integration
+          allOf:
+          - $ref: '#/components/schemas/IntegrationType'
+        account_id:
+          title: Account Id
+          description: The account the integration is associated with
+          type: integer
+        project_id:
+          title: Project Id
+          description: The project the integration is associated with
+          type: integer
+        config:
+          title: Config
+          description: The integration configuration for this type of integration
+          allOf:
+          - $ref: '#/components/schemas/TableauIntegration'
+      required:
+      - name
+      - account_id
+      additionalProperties: false
+    PostIntegrationWatchSelectionRequest:
+      title: PostIntegrationWatchSelection
+      description: parent class for all request bodies, to be extended by each endpoint
+      type: object
+      properties:
+        to_add:
+          title: To Add
+          description: Collections to start watching
+          type: array
+          items:
+            $ref: '#/components/schemas/WatchSelectionItem'
+        to_remove:
+          title: To Remove
+          description: Identifiers of collections to stop watching
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+    PostgresConnection:
+      title: PostgresConnection
+      type: object
+      properties:
+        hostname:
+          title: Hostname
+          maxLength: 1024
+          minLength: 1
+          type: string
+        dbname:
+          title: Dbname
+          maxLength: 63
+          minLength: 1
+          type: string
+        port:
+          title: Port
+          default: 5432
+          exclusiveMinimum: 0
+          maximum: 65535
+          type: integer
+      required:
+      - hostname
+      - dbname
     PostgresCredentials:
       type: object
       properties:
-        id:
-          type: integer
         account_id:
+          type: integer
+        id:
           type: integer
         project_id:
           type: integer
@@ -4720,6 +6441,23 @@ components:
           type: string
         target_name:
           type: string
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The version of the adapter used to create this connection. Can use instead of adapter_id.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
       required:
       - account_id
       - default_schema
@@ -4727,6 +6465,13 @@ components:
       - threads
       - type
       - username
+    Priority:
+      title: Priority
+      description: An enumeration.
+      enum:
+      - interactive
+      - batch
+      type: string
     PrivateLinkEndpoint:
       type: object
       properties:
@@ -4816,11 +6561,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/BaseConnectionV3'
           readOnly: true
-        environments:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentV3'
-          readOnly: true
         repository:
           allOf:
           - $ref: '#/components/schemas/RepositoryV3'
@@ -4836,20 +6576,9 @@ components:
         freshness_job_id:
           type: integer
           description: The job used for source freshness generation
-        docs_job:
-          allOf:
-          - $ref: '#/components/schemas/JobDefinitionV2'
-          readOnly: true
-        freshness_job:
-          allOf:
-          - $ref: '#/components/schemas/JobDefinitionV2'
-          readOnly: true
       required:
       - connection
       - created_at
-      - docs_job
-      - environments
-      - freshness_job
       - group_permissions
       - repository
       - updated_at
@@ -4988,6 +6717,24 @@ components:
       - request_headers
       - response_body
       - subscription_id
+    RedshiftConnection:
+      title: RedshiftConnection
+      type: object
+      properties:
+        hostname:
+          title: Hostname
+          type: string
+        dbname:
+          title: Dbname
+          type: string
+        port:
+          title: Port
+          default: 5432
+          exclusiveMinimum: 0
+          maximum: 65535
+          type: integer
+      required:
+      - hostname
     RemoteBackendEnum:
       enum:
       - azure_active_directory
@@ -5210,65 +6957,6 @@ components:
           type: integer
       required:
       - code
-    Run:
-      type: object
-      properties:
-        id:
-          type: integer
-        trigger_id:
-          type: integer
-        account_id:
-          type: integer
-        environment_id:
-          type: integer
-        project_id:
-          type: integer
-        job_definition_id:
-          type: integer
-        status:
-          type: integer
-        dbt_version:
-          type: string
-        git_branch:
-          type: string
-        git_sha:
-          type: string
-        status_message:
-          type: string
-        owner_thread_id:
-          type: string
-        executed_by_thread_id:
-          type: string
-        deferring_run_id:
-          type: integer
-        artifacts_saved:
-          type: boolean
-        artifact_s3_path:
-          type: string
-        has_docs_generated:
-          type: boolean
-        has_sources_generated:
-          type: boolean
-        notifications_sent:
-          type: boolean
-        blocked_by:
-          type: array
-          items:
-            type: integer
-        is_running:
-          type: boolean
-      required:
-      - account_id
-      - artifacts_saved
-      - blocked_by
-      - dbt_version
-      - environment_id
-      - has_docs_generated
-      - has_sources_generated
-      - job_definition_id
-      - notifications_sent
-      - project_id
-      - status
     Schema:
       type: object
       properties:
@@ -5300,6 +6988,9 @@ components:
         account_id:
           type: integer
           description: The account the credentials are associated with
+        project_id:
+          type: integer
+          description: The project the credentials are associated with
         adapter_version:
           allOf:
           - $ref: '#/components/schemas/AdapterVersionEnum'
@@ -5316,6 +7007,7 @@ components:
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
         schema_type:
           allOf:
           - $ref: '#/components/schemas/SchemaTypeEnum'
@@ -5325,6 +7017,14 @@ components:
             * `connection` - connection
             * `credential` - credential
             * `semantic_layer_credentials` - semantic_layer_credentials
+        name:
+          type: string
+          description: The user-facing name to identify these credentials.
+        service_tokens:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTokenLite'
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -5338,6 +7038,7 @@ components:
           default: 1
       required:
       - created_at
+      - service_tokens
       - updated_at
     SemanticLayerCredentialsEnveloped:
       type: object
@@ -5382,7 +7083,7 @@ components:
         user_id:
           type: integer
         type:
-          type: string
+          type: integer
         expires_at:
           type: string
           format: date-time
@@ -5415,6 +7116,21 @@ components:
       required:
       - data
       - status
+    ServiceTokenLite:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        uid:
+          type: string
+        name:
+          type: string
+      required:
+      - account_id
+      - name
+      - uid
     ServiceTokenPermission:
       type: object
       properties:
@@ -5469,6 +7185,54 @@ components:
       - metadata_only
       - name
       - webhooks_only
+    SnowflakeConnection:
+      title: SnowflakeConnection
+      type: object
+      properties:
+        account:
+          title: Account
+          maxLength: 255
+          minLength: 1
+          type: string
+        database:
+          title: Database
+          maxLength: 255
+          minLength: 1
+          type: string
+        warehouse:
+          title: Warehouse
+          maxLength: 255
+          minLength: 1
+          type: string
+        client_session_keep_alive:
+          title: Client Session Keep Alive
+          default: false
+          type: boolean
+        role:
+          title: Role
+          maxLength: 255
+          minLength: 1
+          type: string
+        allow_sso:
+          title: Allow Sso
+          default: false
+          type: boolean
+        oauth_client_id:
+          title: Oauth Client Id
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+        oauth_client_secret:
+          title: Oauth Client Secret
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+      required:
+      - account
+      - database
+      - warehouse
     Status:
       type: object
       properties:
@@ -5595,6 +7359,71 @@ components:
       required:
       - data
       - status
+    SynapseConnection:
+      title: SynapseConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        database:
+          title: Database
+          type: string
+        driver:
+          title: Driver
+          default: ODBC Driver 18 for SQL Server
+          type: string
+        port:
+          title: Port
+          default: 1433
+          exclusiveMinimum: 0
+          maximum: 65535
+          type: integer
+        retries:
+          title: Retries
+          default: 1
+          type: integer
+        login_timeout:
+          title: Login Timeout
+          default: 0
+          type: integer
+        query_timeout:
+          title: Query Timeout
+          default: 0
+          type: integer
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use connection_details.adapter_version
+          type: integer
+      required:
+      - host
+      - database
+    TableauIntegration:
+      title: TableauIntegration
+      type: object
+      properties:
+        host:
+          title: Host
+          maxLength: 255
+          type: string
+        site_id:
+          title: Site Id
+          maxLength: 255
+          type: string
+        token_name:
+          title: Token Name
+          maxLength: 255
+          type: string
+        token:
+          title: Token
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+      required:
+      - host
+      - site_id
+      - token_name
     TestSubscriptionResponseData:
       type: object
       properties:
@@ -5612,14 +7441,29 @@ components:
       required:
       - data
       - status
-    TimeEnum:
-      enum:
-      - every_hour
-      - at_exact_hours
-      type: string
-      description: |-
-        * `every_hour` - every_hour
-        * `at_exact_hours` - at_exact_hours
+    TrinoConnection:
+      title: TrinoConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        method:
+          title: Method
+          default: ldap
+          type: string
+        port:
+          title: Port
+          default: 443
+          exclusiveMinimum: 0
+          maximum: 65535
+          type: integer
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use connection_details.adapter_version
+          type: integer
+      required:
+      - host
     Type32eEnum:
       enum:
       - postgres
@@ -5634,12 +7478,22 @@ components:
         * `snowflake` - snowflake
         * `bigquery` - bigquery
         * `adapter` - adapter
+    TypeEdaEnum:
+      enum:
+      - 1
+      - 2
+      type: integer
+      description: |-
+        * `1` - ALLOW
+        * `2` - DENY
     UpdateIPRestrictionRequestRequest:
       type: object
       properties:
         name:
           type: string
           minLength: 1
+        type:
+          $ref: '#/components/schemas/TypeEdaEnum'
         rule_set_enabled:
           type: boolean
         account_id:
@@ -5659,6 +7513,7 @@ components:
       - id
       - name
       - rule_set_enabled
+      - type
     UpdateSubscriptionResponseEnvelope:
       type: object
       properties:
@@ -5669,146 +7524,6 @@ components:
       required:
       - data
       - status
-    User:
-      type: object
-      required:
-      - id
-      - first_name
-      - last_name
-      - email
-      - is_staff
-      - github_connected
-      - github_username
-      - gitlab_connected
-      - gitlab_username
-      - azure_active_directory_connected
-      - azure_active_directory_username
-      - email_connected
-      - email_verified
-      - enterprise_connected
-      properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        auth0_user_id:
-          oneOf:
-          - type: 'null'
-          - type: string
-        auth0_database_user_id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        email:
-          type: string
-        is_staff:
-          type: boolean
-        is_active:
-          type: boolean
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        last_login:
-          oneOf:
-          - type: 'null'
-          - type: string
-            format: date-time
-        github_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        github_token_retrieval_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        github_access_token:
-          oneOf:
-          - type: 'null'
-          - type: string
-        github_username:
-          oneOf:
-          - type: 'null'
-          - type: string
-        gitlab_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        gitlab_token_retrieval_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        gitlab_access_token:
-          oneOf:
-          - type: 'null'
-          - type: string
-        gitlab_username:
-          oneOf:
-          - type: 'null'
-          - type: string
-        azure_active_directory_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        azure_active_directory_access_token:
-          oneOf:
-          - type: 'null'
-          - type: string
-        azure_active_directory_username:
-          oneOf:
-          - type: 'null'
-          - type: string
-        azure_active_directory_token_retrieval_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        email_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        email_verified:
-          type: boolean
-        enterprise_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        enterprise_authentication_method:
-          oneOf:
-          - type: 'null'
-          - type: string
-        enterprise_idp_attributes:
-          oneOf:
-          - type: 'null'
-          - {}
-        auth_provider_infos:
-          oneOf:
-          - type: 'null'
-          - {}
-        api_key:
-          type: string
-        password:
-          allOf:
-          - minLength: 9
-          - type: string
-        confirm_password:
-          type: string
-        permissions: {}
-        licenses: {}
-        user_feature_flags: {}
-        apitoken_last_used:
-          oneOf:
-          - type: 'null'
-          - type: string
-            format: date-time
-        sso_only_user:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
     UserCredentials:
       type: object
       properties:
@@ -5890,15 +7605,36 @@ components:
     UserEnveloped:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
         status:
           $ref: '#/components/schemas/Status'
       required:
-      - data
       - status
+    WatchSelectionItem:
+      title: WatchSelectionItem
+      type: object
+      properties:
+        identifier:
+          title: Identifier
+          type: string
+        name:
+          title: Name
+          type: string
+        type:
+          $ref: '#/components/schemas/WatchSelectionType'
+        watching:
+          title: Watching
+          type: boolean
+      required:
+      - identifier
+      - name
+      - type
+    WatchSelectionType:
+      title: WatchSelectionType
+      description: An enumeration.
+      enum:
+      - folder
+      - dashboard
+      type: string
   securitySchemes:
     BearerAuthentication:
       type: http

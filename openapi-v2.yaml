@@ -10,15 +10,17 @@ info:
     repository. If you find issues in these docs or have questions about using the\
     \ dbt Cloud\nAPI, please open an issue in the dbt-cloud-openapi-spec repo or contact\
     \ support@getdbt.com.\n\n## Authentication\n\nTo authenticate an application with\
-    \ the dbt Cloud API, navigate to the\nAPI Settings page in your [dbt Cloud profile](https://cloud.getdbt.com/#/profile/api/).\n\
-    If you cannot access this page, confirm that your dbt Cloud account has access\
+    \ the dbt Cloud API, navigate to the\nAccount Settings page and go to Personal\
+    \ Tokens from the left sidebar. Create one if you don't have one already.\nIf\
+    \ you cannot access this page, confirm that your dbt Cloud account has access\
     \ to the API,\nand that you are using the hosted version of dbt Cloud. If dbt\
     \ Cloud is running inside of a VPC\nin an Enterprise account, contact your account\
-    \ manager for help finding your API key.\n\nOnce you've found your API key, use\
-    \ it in the Authorization header of requests to the dbt Cloud API.\nBe sure to\
-    \ include the `Token` prefix in the Authorization header, or the request will\
-    \ fail with a\n\"401 Unauthorized\" error.\n\n*Note: `Bearer` can be used in place\
-    \ of `Token` in the Authorization header. Both syntaxes are equivalent.*\n\n**Headers**\n\
+    \ manager for help finding your account-scoped Personal Access Token.\n\nOnce\
+    \ you've found your Personal Access Token (PAT) for your account, use it in the\
+    \ Authorization header of requests to the dbt Cloud API.\nBe sure to include the\
+    \ `Token` prefix in the Authorization header, or the request will fail with a\n\
+    \"401 Unauthorized\" error.\n\n*Note: `Bearer` can be used in place of `Token`\
+    \ in the Authorization header. Both syntaxes are equivalent.*\n\n**Headers**\n\
     ```\nAccept: application/json\nAuthorization: Token <your token>\n```  \n\n##\
     \ Pagination\n\nAll top-level API resources support bulk fetches using the \"\
     list\" or `GET` API methods. These API methods accept `limit` and `offset` query\
@@ -1653,18 +1655,6 @@ paths:
         required: true
       tags:
       - Users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UserRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/UserRequest'
-        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -1686,6 +1676,7 @@ components:
       - pending_cancel
       - run_slots
       - developer_seats
+      - explorer_seats
       - docs_job_id
       - freshness_job_id
       properties:
@@ -1712,6 +1703,9 @@ components:
         developer_seats:
           type: integer
           description: The total number of developer seats the account may use
+        explorer_seats:
+          type: integer
+          description: The total number of explorer seats the account may use
         it_seats:
           type: integer
           description: The total number of IT seats the account may use
@@ -1876,6 +1870,7 @@ components:
       - pending_cancel
       - run_slots
       - developer_seats
+      - explorer_seats
       - docs_job_id
       - freshness_job_id
       properties:
@@ -1902,6 +1897,9 @@ components:
         developer_seats:
           type: integer
           description: The total number of developer seats the account may use
+        explorer_seats:
+          type: integer
+          description: The total number of explorer seats the account may use
         it_seats:
           type: integer
           description: The total number of IT seats the account may use
@@ -2032,6 +2030,32 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
+    AdapterVersionEnum:
+      enum:
+      - apache_spark_v0
+      - databricks_spark_v0
+      - databricks_v0
+      - trino_v0
+      - snowflake_v0
+      - bigquery_v0
+      - postgres_v0
+      - redshift_v0
+      - synapse_v0
+      - fabric_v0
+      - athena_v0
+      type: string
+      description: |-
+        * `apache_spark_v0` - apache_spark_v0
+        * `databricks_spark_v0` - databricks_spark_v0
+        * `databricks_v0` - databricks_v0
+        * `trino_v0` - trino_v0
+        * `snowflake_v0` - snowflake_v0
+        * `bigquery_v0` - bigquery_v0
+        * `postgres_v0` - postgres_v0
+        * `redshift_v0` - redshift_v0
+        * `synapse_v0` - synapse_v0
+        * `fabric_v0` - fabric_v0
+        * `athena_v0` - athena_v0
     BaseConnectionV3:
       type: object
       properties:
@@ -2048,6 +2072,8 @@ components:
           description: The name of the connection
         type:
           $ref: '#/components/schemas/BaseConnectionV3TypeEnum'
+        adapter_version:
+          $ref: '#/components/schemas/AdapterVersionEnum'
         created_by_id:
           type: integer
         created_by_service_token_id:
@@ -2059,6 +2085,10 @@ components:
             this entity is deleted
         private_link_endpoint_id:
           type: string
+        oauth_configuration_id:
+          type: integer
+          description: The OAuth Configuration associated with this connection. When
+            set,developer credentials leveraging OAuth may be created.
       required:
       - account_id
       - name
@@ -2157,26 +2187,6 @@ components:
       - hostname
       - port
       - username
-    DateEnum:
-      enum:
-      - every_day
-      - days_of_week
-      - custom_cron
-      - interval_cron
-      type: string
-      description: |-
-        * `every_day` - every_day
-        * `days_of_week` - days_of_week
-        * `custom_cron` - custom_cron
-        * `interval_cron` - interval_cron
-    DeploymentTypeEnum:
-      enum:
-      - production
-      - staging
-      type: string
-      description: |-
-        * `production` - production
-        * `staging` - staging
     EnvironmentV2:
       type: object
       required:
@@ -2393,60 +2403,6 @@ components:
       additionalProperties: false
       definitions: {}
       $schema: http://json-schema.org/draft-07/schema#
-    EnvironmentV3:
-      type: object
-      properties:
-        id:
-          type: integer
-        account_id:
-          type: integer
-          description: The account the environment is associated with
-        project_id:
-          type: integer
-          description: The project the environment is associated with
-        credentials_id:
-          type: integer
-          description: The id of the associated credentials. Null for development
-            environments.
-        extended_attributes_id:
-          type: integer
-        name:
-          type: string
-          description: The name of the environment
-        dbt_version:
-          type: string
-          description: The default dbt Version to use for this environment
-        type:
-          $ref: '#/components/schemas/EnvironmentV3TypeEnum'
-        use_custom_branch:
-          type: boolean
-        custom_branch:
-          type: string
-        supports_docs:
-          type: boolean
-        state:
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-        deployment_type:
-          $ref: '#/components/schemas/DeploymentTypeEnum'
-      required:
-      - account_id
-      - dbt_version
-      - name
-      - project_id
-      - supports_docs
-      - type
-      - use_custom_branch
-    EnvironmentV3TypeEnum:
-      enum:
-      - development
-      - deployment
-      type: string
-      description: |-
-        * `development` - DEVELOPMENT
-        * `deployment` - DEPLOYMENT
     GitCloneStrategyEnum:
       enum:
       - azure_active_directory_app
@@ -2476,6 +2432,30 @@ components:
       required:
       - account_id
       - provider_type
+    Group:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        name:
+          type: string
+        id:
+          type: integer
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        assign_by_default:
+          type: boolean
+        sso_mapping_groups:
+          type: array
+          items:
+            type: string
+      required:
+      - account_id
+      - assign_by_default
+      - name
     GroupPermission:
       type: object
       properties:
@@ -2524,7 +2504,6 @@ components:
       - state
       - generate_docs
       - run_generate_sources
-      - run_audit_helper
       - run_compare_changes
       properties:
         id:
@@ -2573,8 +2552,8 @@ components:
           - type: 'null'
         triggers:
           description: 'Only one of the following fields can be true: triggers.github_webhook,
-            triggers.schedule, & triggers.git_provider_webhook. The triggers.custom_branch_only
-            field is now deprecated.'
+            triggers.schedule, triggers.on_merge & triggers.git_provider_webhook.
+            The triggers.custom_branch_only field is now deprecated.'
         created_at:
           type: string
           format: date-time
@@ -2601,10 +2580,6 @@ components:
           type: boolean
         run_generate_sources:
           type: boolean
-        run_audit_helper:
-          oneOf:
-          - type: 'null'
-          - type: boolean
         run_compare_changes:
           oneOf:
           - type: 'null'
@@ -2639,6 +2614,7 @@ components:
           - {}
           - {}
           - type: 'null'
+          description: Available job types are 'ci', 'merge', 'scheduled', and 'other'
         triggers_on_draft_pr:
           type: boolean
         job_completion_trigger_condition:
@@ -2691,7 +2667,6 @@ components:
       - state
       - generate_docs
       - run_generate_sources
-      - run_audit_helper
       - run_compare_changes
       properties:
         id:
@@ -2740,8 +2715,8 @@ components:
           - type: 'null'
         triggers:
           description: 'Only one of the following fields can be true: triggers.github_webhook,
-            triggers.schedule, & triggers.git_provider_webhook. The triggers.custom_branch_only
-            field is now deprecated.'
+            triggers.schedule, triggers.on_merge & triggers.git_provider_webhook.
+            The triggers.custom_branch_only field is now deprecated.'
         execute_steps:
           allOf:
           - {}
@@ -2760,10 +2735,6 @@ components:
           type: boolean
         run_generate_sources:
           type: boolean
-        run_audit_helper:
-          oneOf:
-          - type: 'null'
-          - type: boolean
         run_compare_changes:
           oneOf:
           - type: 'null'
@@ -2798,6 +2769,7 @@ components:
           - {}
           - {}
           - type: 'null'
+          description: Available job types are 'ci', 'merge', 'scheduled', and 'other'
         triggers_on_draft_pr:
           type: boolean
         job_completion_trigger_condition:
@@ -2824,213 +2796,85 @@ components:
       $schema: http://json-schema.org/draft-07/schema#
     Invite:
       type: object
-      required:
-      - id
-      - account_id
-      - email_address
-      - license_type
-      - status
       properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
         account_id:
           type: integer
         email_address:
-          oneOf:
-          - type: 'null'
-          - type: string
-        license_type:
-          oneOf:
-          - {}
-          - {}
-          - {}
-        status:
-          oneOf:
-          - {}
-          - {}
-          - {}
-          - {}
-          - {}
-        code:
           type: string
+        license_type:
+          $ref: '#/components/schemas/LicenseTypeEnum'
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        id:
+          type: integer
+        group_ids:
+          type: array
+          items:
+            type: integer
+          default: []
         created_at:
           type: string
           format: date-time
           readOnly: true
         redeemed_at:
-          oneOf:
-          - type: 'null'
-          - type: string
-            format: date-time
-        group_ids:
-          allOf:
-          - {}
-          - {}
-        account: {}
+          type: string
+          format: date-time
+          readOnly: true
+        account:
+          readOnly: true
         groups:
-          allOf:
-          - {}
-          - {}
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+          readOnly: true
+          default: []
+      required:
+      - account
+      - created_at
+      - groups
+      - redeemed_at
     InviteEnveloped:
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Invite'
+          $ref: '#/components/schemas/Invite'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
       - status
-    JobDefinitionExecution:
-      type: object
-      properties:
-        timeout_seconds:
-          type: integer
-      required:
-      - timeout_seconds
-    JobDefinitionSchedule:
-      type: object
-      properties:
-        cron:
-          type: string
-        date:
-          $ref: '#/components/schemas/DateEnum'
-        time:
-          $ref: '#/components/schemas/TimeEnum'
-      required:
-      - cron
-      - date
-      - time
-    JobDefinitionSettings:
-      type: object
-      properties:
-        threads:
-          type: integer
-        target_name:
-          type: string
-      required:
-      - target_name
-      - threads
-    JobDefinitionTriggers:
-      type: object
-      properties:
-        github_webhook:
-          type: boolean
-        schedule:
-          type: boolean
-        git_provider_webhook:
-          type: boolean
-        on_merge:
-          type: boolean
-      required:
-      - github_webhook
-      - schedule
-    JobDefinitionV2:
-      type: object
-      properties:
-        environment_id:
-          type: integer
-        account_id:
-          type: integer
-        project_id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        generate_docs:
-          type: boolean
-        run_generate_sources:
-          type: boolean
-        state:
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-        dbt_version:
-          type: string
-        triggers:
-          $ref: '#/components/schemas/JobDefinitionTriggers'
-        settings:
-          $ref: '#/components/schemas/JobDefinitionSettings'
-        execution:
-          $ref: '#/components/schemas/JobDefinitionExecution'
-        schedule:
-          $ref: '#/components/schemas/JobDefinitionSchedule'
-        execute_steps:
-          type: array
-          items:
-            type: string
-        most_recent_run:
-          $ref: '#/components/schemas/Run'
-        most_recent_completed_run:
-          $ref: '#/components/schemas/Run'
-        job_type:
-          $ref: '#/components/schemas/JobTypeEnum'
-        triggers_on_draft_pr:
-          type: boolean
-          default: false
-        run_audit_helper:
-          type: boolean
-          default: false
-        run_compare_changes:
-          type: boolean
-          default: false
-      required:
-      - account_id
-      - environment_id
-      - generate_docs
-      - name
-      - project_id
-      - run_generate_sources
     JobNotificationSettings:
       type: object
-      required:
-      - id
-      - account_id
-      - type
-      - state
-      - on_cancel
-      - on_failure
-      - on_success
-      - on_warning
-      - user_id
       properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
         account_id:
           type: integer
+          description: The account the job notification setting is associated with
+        user_id:
+          type: integer
+          description: For internal email notifications, the ID of the user to send
+            notifications to. For all other notifications, the ID of the user who
+            created the configuration.
         type:
-          oneOf:
-          - {}
-          - {}
-          - {}
-          - {}
+          allOf:
+          - $ref: '#/components/schemas/JobNotificationSettingsTypeEnum'
           description: "\n                The destination type.\n                1:\
             \ Internal Email\n                2: Slack\n                3: Deprecated\
-            \ - do not use\n                4: External Email\n                "
-        state:
+            \ - do not use\n                4: External Email\n            \n\n* `1`\
+            \ - EMAIL\n* `2` - SLACK\n* `3` - WEBHOOK\n* `4` - EXTERNAL_EMAIL"
+        external_email:
+          type: string
+          description: The external email to send notifications to. Required for External
+            Email types.
+        slack_channel_id:
+          type: string
+          description: The ID of the Slack channel to send notifications to. Required
+            for Slack notification types.
+        slack_channel_name:
+          type: string
+          description: The name of the Slack channel to send notifications to. Required
+            for Slack notification types.
+        id:
           type: integer
-        on_cancel:
-          description: List of job IDs to send notifications for when the job is cancelled.
-        on_failure:
-          description: List of job IDs to send notifications for when the job fails.
-        on_success:
-          description: List of job IDs to send notifications for when the job succeeds.
-        on_warning:
-          oneOf:
-          - {}
-          - type: 'null'
-          description: List of job IDs to send notifications for when the job warns.
         created_at:
           type: string
           format: date-time
@@ -3039,45 +2883,41 @@ components:
           type: string
           format: date-time
           readOnly: true
-        user_id:
+        state:
           type: integer
-          description: For internal email notifications, the ID of the user to send
-            notifications to. For all other notifications, the ID of the user who
-            created the configuration.
-        external_email:
-          oneOf:
-          - type: string
-          - type: 'null'
-          description: The external email to send notifications to. Required for External
-            Email types.
-        user:
-          oneOf:
-          - {}
-          - type: 'null'
-          description: For internal email notifications, the user to send notifications
-            to. For all other notifications, the user who created the configuration.
-        slack_channel_id:
-          oneOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the Slack channel to send notifications to. Required
-            for Slack notification types.
-        slack_channel_name:
-          oneOf:
-          - type: string
-          - type: 'null'
-          description: The name of the Slack channel to send notifications to. Required
-            for Slack notification types.
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
+          default: 1
+        on_cancel:
+          type: array
+          items:
+            type: integer
+          default: []
+          description: List of job IDs to send notifications for when the job is cancelled.
+        on_failure:
+          type: array
+          items:
+            type: integer
+          default: []
+          description: List of job IDs to send notifications for when the job fails.
+        on_success:
+          type: array
+          items:
+            type: integer
+          default: []
+          description: List of job IDs to send notifications for when the job succeeds.
+        on_warning:
+          type: array
+          items:
+            type: integer
+          default: []
+          description: List of job IDs to send notifications for when the job warns.
+      required:
+      - created_at
+      - updated_at
     JobNotificationSettingsEnveloped:
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/JobNotificationSettings'
+          $ref: '#/components/schemas/JobNotificationSettings'
         status:
           $ref: '#/components/schemas/Status'
       required:
@@ -3085,89 +2925,96 @@ components:
       - status
     JobNotificationSettingsRequest:
       type: object
-      required:
-      - id
-      - account_id
-      - type
-      - state
-      - on_cancel
-      - on_failure
-      - on_success
-      - on_warning
-      - user_id
       properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
         account_id:
           type: integer
-        type:
-          oneOf:
-          - {}
-          - {}
-          - {}
-          - {}
-          description: "\n                The destination type.\n                1:\
-            \ Internal Email\n                2: Slack\n                3: Deprecated\
-            \ - do not use\n                4: External Email\n                "
-        state:
-          type: integer
-        on_cancel:
-          description: List of job IDs to send notifications for when the job is cancelled.
-        on_failure:
-          description: List of job IDs to send notifications for when the job fails.
-        on_success:
-          description: List of job IDs to send notifications for when the job succeeds.
-        on_warning:
-          oneOf:
-          - {}
-          - type: 'null'
-          description: List of job IDs to send notifications for when the job warns.
+          description: The account the job notification setting is associated with
         user_id:
           type: integer
           description: For internal email notifications, the ID of the user to send
             notifications to. For all other notifications, the ID of the user who
             created the configuration.
+        type:
+          allOf:
+          - $ref: '#/components/schemas/JobNotificationSettingsTypeEnum'
+          description: "\n                The destination type.\n                1:\
+            \ Internal Email\n                2: Slack\n                3: Deprecated\
+            \ - do not use\n                4: External Email\n            \n\n* `1`\
+            \ - EMAIL\n* `2` - SLACK\n* `3` - WEBHOOK\n* `4` - EXTERNAL_EMAIL"
         external_email:
-          oneOf:
-          - type: string
-          - type: 'null'
+          type: string
+          minLength: 1
           description: The external email to send notifications to. Required for External
             Email types.
-        user:
-          oneOf:
-          - {}
-          - type: 'null'
-          description: For internal email notifications, the user to send notifications
-            to. For all other notifications, the user who created the configuration.
         slack_channel_id:
-          oneOf:
-          - type: string
-          - type: 'null'
+          type: string
+          minLength: 1
           description: The ID of the Slack channel to send notifications to. Required
             for Slack notification types.
         slack_channel_name:
-          oneOf:
-          - type: string
-          - type: 'null'
+          type: string
+          minLength: 1
           description: The name of the Slack channel to send notifications to. Required
             for Slack notification types.
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
-    JobTypeEnum:
+        id:
+          type: integer
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        on_cancel:
+          type: array
+          items:
+            type: integer
+          description: List of job IDs to send notifications for when the job is cancelled.
+        on_failure:
+          type: array
+          items:
+            type: integer
+          description: List of job IDs to send notifications for when the job fails.
+        on_success:
+          type: array
+          items:
+            type: integer
+          description: List of job IDs to send notifications for when the job succeeds.
+        on_warning:
+          type: array
+          items:
+            type: integer
+          description: List of job IDs to send notifications for when the job warns.
+      required:
+      - account_id
+      - on_cancel
+      - on_failure
+      - on_success
+      - on_warning
+      - type
+      - user_id
+    JobNotificationSettingsTypeEnum:
       enum:
-      - ci
-      - scheduled
-      - other
-      - merge
+      - 1
+      - 2
+      - 3
+      - 4
+      type: integer
+      description: |-
+        * `1` - EMAIL
+        * `2` - SLACK
+        * `3` - WEBHOOK
+        * `4` - EXTERNAL_EMAIL
+    LicenseTypeEnum:
+      enum:
+      - developer
+      - read_only
+      - it
+      - explorer
       type: string
       description: |-
-        * `ci` - ci
-        * `scheduled` - scheduled
-        * `other` - other
-        * `merge` - merge
+        * `developer` - DEVELOPER
+        * `read_only` - READ_ONLY
+        * `it` - IT
+        * `explorer` - EXPLORER
     ListOfStringsEnveloped:
       type: object
       properties:
@@ -3203,29 +3050,31 @@ components:
       - metadata_only
       - semantic_layer_only
       - webhooks_only
+      - manage_marketplace_apps
       type: string
       description: |-
-        * `owner` - owner
-        * `member` - member
-        * `account_admin` - account_admin
-        * `security_admin` - security_admin
-        * `billing_admin` - billing_admin
-        * `admin` - admin
-        * `database_admin` - database_admin
-        * `git_admin` - git_admin
-        * `team_admin` - team_admin
-        * `job_admin` - job_admin
-        * `job_runner` - job_runner
-        * `job_viewer` - job_viewer
-        * `analyst` - analyst
-        * `developer` - developer
-        * `stakeholder` - stakeholder
-        * `readonly` - readonly
-        * `project_creator` - project_creator
-        * `account_viewer` - account_viewer
-        * `metadata_only` - metadata_only
-        * `semantic_layer_only` - semantic_layer_only
-        * `webhooks_only` - webhooks_only
+        * `owner` - OWNER
+        * `member` - MEMBER
+        * `account_admin` - ACCOUNT_ADMIN
+        * `security_admin` - SECURITY_ADMIN
+        * `billing_admin` - BILLING_ADMIN
+        * `admin` - ADMIN
+        * `database_admin` - DATABASE_ADMIN
+        * `git_admin` - GIT_ADMIN
+        * `team_admin` - TEAM_ADMIN
+        * `job_admin` - JOB_ADMIN
+        * `job_runner` - JOB_RUNNER
+        * `job_viewer` - JOB_VIEWER
+        * `analyst` - ANALYST
+        * `developer` - DEVELOPER
+        * `stakeholder` - STAKEHOLDER
+        * `readonly` - READONLY
+        * `project_creator` - PROJECT_CREATOR
+        * `account_viewer` - ACCOUNT_VIEWER
+        * `metadata_only` - METADATA_ONLY
+        * `semantic_layer_only` - SEMANTIC_LAYER_ONLY
+        * `webhooks_only` - WEBHOOKS_ONLY
+        * `manage_marketplace_apps` - MANAGE_MARKETPLACE_APPS
     Project:
       type: object
       properties:
@@ -3269,11 +3118,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/BaseConnectionV3'
           readOnly: true
-        environments:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentV3'
-          readOnly: true
         repository:
           allOf:
           - $ref: '#/components/schemas/RepositoryV3'
@@ -3289,20 +3133,9 @@ components:
         freshness_job_id:
           type: integer
           description: The job used for source freshness generation
-        docs_job:
-          allOf:
-          - $ref: '#/components/schemas/JobDefinitionV2'
-          readOnly: true
-        freshness_job:
-          allOf:
-          - $ref: '#/components/schemas/JobDefinitionV2'
-          readOnly: true
       required:
       - connection
       - created_at
-      - docs_job
-      - environments
-      - freshness_job
       - group_permissions
       - repository
       - updated_at
@@ -3462,7 +3295,10 @@ components:
           - {}
           - {}
           - {}
-        deploy_key: {}
+        deploy_key:
+          oneOf:
+          - type: 'null'
+          - {}
         deploy_key_id:
           oneOf:
           - type: 'null'
@@ -3563,7 +3399,10 @@ components:
           - {}
           - {}
           - {}
-        deploy_key: {}
+        deploy_key:
+          oneOf:
+          - type: 'null'
+          - {}
         deploy_key_id:
           oneOf:
           - type: 'null'
@@ -3656,278 +3495,19 @@ components:
           $ref: '#/components/schemas/GitProvider'
       required:
       - account_id
-    RetryNotSupportedReasonEnum:
-      enum:
-      - RETRY_UNSUPPORTED_CMD
-      - RETRY_UNSUPPORTED_VERSION
-      - RETRY_NOT_LATEST_RUN
-      - RETRY_NOT_FAILED_RUN
-      type: string
-      description: |-
-        * `RETRY_UNSUPPORTED_CMD` - RETRY_UNSUPPORTED_CMD
-        * `RETRY_UNSUPPORTED_VERSION` - RETRY_UNSUPPORTED_VERSION
-        * `RETRY_NOT_LATEST_RUN` - RETRY_NOT_LATEST_RUN
-        * `RETRY_NOT_FAILED_RUN` - RETRY_NOT_FAILED_RUN
-    Run:
-      type: object
-      properties:
-        id:
-          type: integer
-        trigger_id:
-          type: integer
-        account_id:
-          type: integer
-        environment_id:
-          type: integer
-        project_id:
-          type: integer
-        job_definition_id:
-          type: integer
-        status:
-          type: integer
-        dbt_version:
-          type: string
-        git_branch:
-          type: string
-        git_sha:
-          type: string
-        status_message:
-          type: string
-        owner_thread_id:
-          type: string
-        executed_by_thread_id:
-          type: string
-        deferring_run_id:
-          type: integer
-        artifacts_saved:
-          type: boolean
-        artifact_s3_path:
-          type: string
-        has_docs_generated:
-          type: boolean
-        has_sources_generated:
-          type: boolean
-        notifications_sent:
-          type: boolean
-        blocked_by:
-          type: array
-          items:
-            type: integer
-        is_running:
-          type: boolean
-      required:
-      - account_id
-      - artifacts_saved
-      - blocked_by
-      - dbt_version
-      - environment_id
-      - has_docs_generated
-      - has_sources_generated
-      - job_definition_id
-      - notifications_sent
-      - project_id
-      - status
-    RunResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-        trigger_id:
-          type: integer
-        account_id:
-          type: integer
-        environment_id:
-          type: integer
-        project_id:
-          type: integer
-        job_definition_id:
-          type: integer
-        status:
-          type: integer
-        dbt_version:
-          type: string
-        git_branch:
-          type: string
-        git_sha:
-          type: string
-        status_message:
-          type: string
-        owner_thread_id:
-          type: string
-        executed_by_thread_id:
-          type: string
-        deferring_run_id:
-          type: integer
-        artifacts_saved:
-          type: boolean
-        artifact_s3_path:
-          type: string
-        has_docs_generated:
-          type: boolean
-        has_sources_generated:
-          type: boolean
-        notifications_sent:
-          type: boolean
-        blocked_by:
-          type: array
-          items:
-            type: integer
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-        dequeued_at:
-          type: string
-          format: date-time
-        started_at:
-          type: string
-          format: date-time
-        finished_at:
-          type: string
-          format: date-time
-        last_checked_at:
-          type: string
-          format: date-time
-        last_heartbeat_at:
-          type: string
-          format: date-time
-        should_start_at:
-          type: string
-          format: date-time
-        job: {}
-        environment: {}
-        status_humanized:
-          type: string
-        in_progress:
-          type: boolean
-        is_complete:
-          type: boolean
-        is_success:
-          type: boolean
-        is_error:
-          type: boolean
-        is_cancelled:
-          type: boolean
-        duration:
-          type: string
-        queued_duration:
-          type: string
-        run_duration:
-          type: string
-        duration_humanized:
-          type: string
-        queued_duration_humanized:
-          type: string
-        run_duration_humanized:
-          type: string
-        created_at_humanized:
-          type: string
-        finished_at_humanized:
-          type: string
-        retrying_run_id:
-          type: integer
-        can_retry:
-          type: boolean
-        retry_not_supported_reason:
-          $ref: '#/components/schemas/RetryNotSupportedReasonEnum'
-        job_id:
-          type: integer
-        is_running:
-          type: boolean
-        href:
-          type: string
-        used_repo_cache:
-          type: boolean
-      required:
-      - created_at
-      - updated_at
     RunResponseEnveloped:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/RunResponse'
         status:
           $ref: '#/components/schemas/Status'
       required:
-      - data
       - status
-    RunStep:
-      type: object
-      properties:
-        id:
-          type: integer
-        run_id:
-          type: integer
-        account_id:
-          type: integer
-        index:
-          type: integer
-        status:
-          type: integer
-        name:
-          type: string
-        logs:
-          type: string
-        debug_logs:
-          type: string
-        log_path:
-          type: string
-        debug_log_path:
-          type: string
-        truncated_debug_logs:
-          type: string
-          readOnly: true
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-        started_at:
-          type: string
-          format: date-time
-          readOnly: true
-        finished_at:
-          type: string
-          format: date-time
-          readOnly: true
-        status_color:
-          type: string
-          readOnly: true
-        status_humanized:
-          type: string
-          readOnly: true
-        duration:
-          type: string
-          readOnly: true
-        duration_humanized:
-          type: string
-          readOnly: true
-      required:
-      - created_at
-      - duration
-      - duration_humanized
-      - finished_at
-      - started_at
-      - status_color
-      - status_humanized
-      - truncated_debug_logs
-      - updated_at
     RunStepEnveloped:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/RunStep'
         status:
           $ref: '#/components/schemas/Status'
       required:
-      - data
       - status
     Status:
       type: object
@@ -3945,14 +3525,20 @@ components:
       - developer_message
       - is_success
       - user_message
-    TimeEnum:
+    StatusEnum:
       enum:
-      - every_hour
-      - at_exact_hours
-      type: string
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      type: integer
       description: |-
-        * `every_hour` - every_hour
-        * `at_exact_hours` - at_exact_hours
+        * `1` - PENDING
+        * `2` - REDEEMED
+        * `3` - EXPIRED
+        * `4` - PENDING_EMAIL_VERIFICATION
+        * `5` - EMAIL_VERIFIED_SSO
     TriggerRunRequestRequest:
       type: object
       properties:
@@ -3996,294 +3582,13 @@ components:
             minLength: 1
       required:
       - cause
-    User:
-      type: object
-      required:
-      - id
-      - first_name
-      - last_name
-      - email
-      - is_staff
-      - github_connected
-      - github_username
-      - gitlab_connected
-      - gitlab_username
-      - azure_active_directory_connected
-      - azure_active_directory_username
-      - email_connected
-      - email_verified
-      - enterprise_connected
-      properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        auth0_user_id:
-          oneOf:
-          - type: 'null'
-          - type: string
-        auth0_database_user_id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        email:
-          type: string
-        is_staff:
-          type: boolean
-        is_active:
-          type: boolean
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        last_login:
-          oneOf:
-          - type: 'null'
-          - type: string
-            format: date-time
-        github_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        github_token_retrieval_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        github_access_token:
-          oneOf:
-          - type: 'null'
-          - type: string
-        github_username:
-          oneOf:
-          - type: 'null'
-          - type: string
-        gitlab_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        gitlab_token_retrieval_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        gitlab_access_token:
-          oneOf:
-          - type: 'null'
-          - type: string
-        gitlab_username:
-          oneOf:
-          - type: 'null'
-          - type: string
-        azure_active_directory_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        azure_active_directory_access_token:
-          oneOf:
-          - type: 'null'
-          - type: string
-        azure_active_directory_username:
-          oneOf:
-          - type: 'null'
-          - type: string
-        azure_active_directory_token_retrieval_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        email_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        email_verified:
-          type: boolean
-        enterprise_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        enterprise_authentication_method:
-          oneOf:
-          - type: 'null'
-          - type: string
-        enterprise_idp_attributes:
-          oneOf:
-          - type: 'null'
-          - {}
-        auth_provider_infos:
-          oneOf:
-          - type: 'null'
-          - {}
-        api_key:
-          type: string
-        password:
-          allOf:
-          - minLength: 9
-          - type: string
-        confirm_password:
-          type: string
-        permissions: {}
-        licenses: {}
-        user_feature_flags: {}
-        apitoken_last_used:
-          oneOf:
-          - type: 'null'
-          - type: string
-            format: date-time
-        sso_only_user:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
     UserEnveloped:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
         status:
           $ref: '#/components/schemas/Status'
       required:
-      - data
       - status
-    UserRequest:
-      type: object
-      required:
-      - id
-      - first_name
-      - last_name
-      - email
-      - is_staff
-      - github_connected
-      - github_username
-      - gitlab_connected
-      - gitlab_username
-      - azure_active_directory_connected
-      - azure_active_directory_username
-      - email_connected
-      - email_verified
-      - enterprise_connected
-      properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        auth0_user_id:
-          oneOf:
-          - type: 'null'
-          - type: string
-        auth0_database_user_id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        email:
-          type: string
-        is_staff:
-          type: boolean
-        is_active:
-          type: boolean
-        last_login:
-          oneOf:
-          - type: 'null'
-          - type: string
-            format: date-time
-        github_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        github_token_retrieval_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        github_access_token:
-          oneOf:
-          - type: 'null'
-          - type: string
-        github_username:
-          oneOf:
-          - type: 'null'
-          - type: string
-        gitlab_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        gitlab_token_retrieval_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        gitlab_access_token:
-          oneOf:
-          - type: 'null'
-          - type: string
-        gitlab_username:
-          oneOf:
-          - type: 'null'
-          - type: string
-        azure_active_directory_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        azure_active_directory_access_token:
-          oneOf:
-          - type: 'null'
-          - type: string
-        azure_active_directory_username:
-          oneOf:
-          - type: 'null'
-          - type: string
-        azure_active_directory_token_retrieval_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        email_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        email_verified:
-          type: boolean
-        enterprise_connected:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        enterprise_authentication_method:
-          oneOf:
-          - type: 'null'
-          - type: string
-        enterprise_idp_attributes:
-          oneOf:
-          - type: 'null'
-          - {}
-        auth_provider_infos:
-          oneOf:
-          - type: 'null'
-          - {}
-        api_key:
-          type: string
-        password:
-          allOf:
-          - minLength: 9
-          - type: string
-        confirm_password:
-          type: string
-        permissions: {}
-        licenses: {}
-        user_feature_flags: {}
-        apitoken_last_used:
-          oneOf:
-          - type: 'null'
-          - type: string
-            format: date-time
-        sso_only_user:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
   securitySchemes:
     BearerAuthentication:
       type: http
