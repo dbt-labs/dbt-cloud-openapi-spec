@@ -1696,10 +1696,6 @@ components:
           type: string
           minLength: 1
           description: The name of the account
-        stripe_customer_id:
-          type: string
-          writeOnly: true
-          minLength: 1
         state:
           type: integer
           default: 1
@@ -3965,40 +3961,6 @@ components:
           minLength: 1
         last_name:
           type: string
-          minLength: 1
-        auth0_database_user_id:
-          type: string
-          writeOnly: true
-          minLength: 1
-        auth0_user_id:
-          type: string
-          writeOnly: true
-          minLength: 1
-        api_key:
-          type: string
-          writeOnly: true
-          minLength: 1
-        azure_active_directory_access_token:
-          type: string
-          writeOnly: true
-          minLength: 1
-        confirm_password:
-          type: string
-          writeOnly: true
-          minLength: 1
-        enterprise_idp_attributes:
-          writeOnly: true
-        password:
-          type: string
-          writeOnly: true
-          minLength: 1
-        github_access_token:
-          type: string
-          writeOnly: true
-          minLength: 1
-        gitlab_access_token:
-          type: string
-          writeOnly: true
           minLength: 1
       required:
       - first_name
