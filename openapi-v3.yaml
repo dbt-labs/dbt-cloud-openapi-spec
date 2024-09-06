@@ -4364,9 +4364,6 @@ components:
           readOnly: true
           default: false
           description: Whether the account is pending cancellation
-        id:
-          type: integer
-          readOnly: true
         billing_email_address:
           type: string
           readOnly: true
@@ -4437,6 +4434,15 @@ components:
           type: string
           format: date-time
           readOnly: true
+        state:
+          type: integer
+          default: 1
+        docs_job_id:
+          type: integer
+          description: (Deprecated)
+        freshness_job_id:
+          type: integer
+          description: (Deprecated)
         account_migration_events:
           type: array
           items:
@@ -4449,6 +4455,9 @@ components:
           readOnly: true
           default: []
           description: The user groups in the account
+        id:
+          type: integer
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -4457,15 +4466,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-        state:
-          type: integer
-          default: 1
-        docs_job_id:
-          type: integer
-          description: (Deprecated)
-        freshness_job_id:
-          type: integer
-          description: (Deprecated)
       required:
       - account_migration_events
       - billing_email_address
@@ -6747,6 +6747,10 @@ components:
           title: Environment Id
           description: The environment the notification setting is associated with
           type: integer
+        enabled:
+          title: Enabled
+          description: Whether model notification are enabled
+          type: boolean
         on_success:
           title: On Success
           description: Whether to notify on successful model executions
@@ -6769,6 +6773,7 @@ components:
       - updated_at
       - account_id
       - environment_id
+      - enabled
       - on_success
       - on_failure
       - on_warning
@@ -8132,10 +8137,6 @@ components:
           type: integer
         github_webhook_id:
           type: integer
-        github_webhook_secret:
-          type: string
-          writeOnly: true
-          minLength: 1
         state:
           type: integer
           default: 1
