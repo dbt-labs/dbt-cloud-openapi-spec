@@ -1780,6 +1780,7 @@ components:
       - rerun
       - job completion
       - merge
+      - exposures generated
       type: string
       description: |-
         * `api` - api
@@ -1789,6 +1790,7 @@ components:
         * `rerun` - rerun
         * `job completion` - job_completion
         * `merge` - merge
+        * `exposures generated` - exposures_generated
     ConnectionEncryptionEnveloped:
       type: object
       properties:
