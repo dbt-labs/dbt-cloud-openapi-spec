@@ -581,6 +581,137 @@ paths:
               schema:
                 $ref: '#/components/schemas/GroupEnveloped'
           description: ''
+  /api/v3/accounts/{account_id}/integrations/open-ai/:
+    get:
+      operationId: List OpenAI keys
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Integrations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOpenAIKeyResponseResponse'
+          description: ''
+    post:
+      operationId: Create OpenAI key
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostOpenAIKeyRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostOpenAIKeyRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostOpenAIKeyRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIKeyResponseResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/integrations/open-ai/{id}/:
+    get:
+      operationId: Get OpenAI key
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Integrations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIKeyResponseResponse'
+          description: ''
+    patch:
+      operationId: Update OpenAI key
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchOpenAIKeyRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchOpenAIKeyRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchOpenAIKeyRequestRequest'
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIKeyResponseResponse'
+          description: ''
+    delete:
+      operationId: Delete OpenAI key
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Integrations
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/invites/:
     post:
       operationId: Send user invites
@@ -6692,6 +6823,26 @@ components:
       required:
       - status
       - data
+    ListOpenAIKeyResponseResponse:
+      title: ListOpenAIKeyResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenAIKeyResponse'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
     ListWebhooksReceiptsResponseEnvelope:
       type: object
       properties:
@@ -6893,6 +7044,60 @@ components:
       - created_at
       - id
       - updated_at
+    OpenAIKeyResponse:
+      title: OpenAIKeyResponse
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The ID for the OpenAI key
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        account_id:
+          title: Account Id
+          description: The account the OpenAI key is associated with
+          type: integer
+        key_type:
+          description: The type of the OpenAI key
+          allOf:
+          - $ref: '#/components/schemas/OpenAIKeyType'
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_id
+      - key_type
+    OpenAIKeyResponseResponse:
+      title: OpenAIKeyResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/OpenAIKeyResponse'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
+    OpenAIKeyType:
+      title: OpenAIKeyType
+      description: An enumeration.
+      enum:
+      - openai
+      - azure_openai
+      type: string
     OptionalApacheSparkConnection:
       title: OptionalApacheSparkConnection
       type: object
@@ -7371,6 +7576,20 @@ components:
           allOf:
           - $ref: '#/components/schemas/OptionalTableauIntegration'
       additionalProperties: false
+    PatchOpenAIKeyRequestRequest:
+      title: PatchOpenAIKeyRequest
+      description: parent class for all request bodies, to be extended by each endpoint
+      type: object
+      properties:
+        key_type:
+          description: The type of the OpenAI key
+          allOf:
+          - $ref: '#/components/schemas/OpenAIKeyType'
+        key_value:
+          title: Key Value
+          description: The value for the OpenAI key
+          type: string
+      additionalProperties: false
     PermissionSetEnum:
       enum:
       - owner
@@ -7563,6 +7782,23 @@ components:
           title: On Skipped
           description: Whether to notify on skipped model executions
           type: boolean
+      additionalProperties: false
+    PostOpenAIKeyRequestRequest:
+      title: PostOpenAIKeyRequest
+      description: parent class for all request bodies, to be extended by each endpoint
+      type: object
+      properties:
+        key_type:
+          description: The type of the OpenAI key
+          allOf:
+          - $ref: '#/components/schemas/OpenAIKeyType'
+        key_value:
+          title: Key Value
+          description: The value for the OpenAI key
+          type: string
+      required:
+      - key_type
+      - key_value
       additionalProperties: false
     PostgresConnection:
       title: PostgresConnection
