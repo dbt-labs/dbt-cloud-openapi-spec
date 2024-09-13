@@ -2808,7 +2808,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListIntegrationResponseResponse'
+                $ref: '#/components/schemas/ListLineageIntegrationResponseResponse'
           description: ''
     post:
       operationId: Create Integration
@@ -2829,13 +2829,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostIntegrationRequest'
+              $ref: '#/components/schemas/PostLineageIntegrationRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PostIntegrationRequest'
+              $ref: '#/components/schemas/PostLineageIntegrationRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PostIntegrationRequest'
+              $ref: '#/components/schemas/PostLineageIntegrationRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -2844,7 +2844,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetIntegrationResponse'
+                $ref: '#/components/schemas/GetLineageIntegrationResponse'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/:
     get:
@@ -2874,7 +2874,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetIntegrationResponse'
+                $ref: '#/components/schemas/GetLineageIntegrationResponse'
           description: ''
     patch:
       operationId: Update Integration
@@ -2900,13 +2900,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchIntegrationRequest'
+              $ref: '#/components/schemas/PatchLineageIntegrationRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchIntegrationRequest'
+              $ref: '#/components/schemas/PatchLineageIntegrationRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchIntegrationRequest'
+              $ref: '#/components/schemas/PatchLineageIntegrationRequest'
       security:
       - BearerAuthentication: []
       responses:
@@ -2914,7 +2914,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetIntegrationResponse'
+                $ref: '#/components/schemas/GetLineageIntegrationResponse'
           description: ''
     delete:
       operationId: Delete Integration
@@ -2969,7 +2969,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListIntegrationCollection'
+                $ref: '#/components/schemas/ListLineageIntegrationCollection'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/collections/{collection_id}/:
     get:
@@ -3004,7 +3004,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListIntegrationCollection'
+                $ref: '#/components/schemas/ListLineageIntegrationCollection'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/selections:
     post:
@@ -3031,13 +3031,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostIntegrationWatchSelectionRequest'
+              $ref: '#/components/schemas/PostLineageIntegrationWatchSelectionRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PostIntegrationWatchSelectionRequest'
+              $ref: '#/components/schemas/PostLineageIntegrationWatchSelectionRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PostIntegrationWatchSelectionRequest'
+              $ref: '#/components/schemas/PostLineageIntegrationWatchSelectionRequest'
       security:
       - BearerAuthentication: []
       responses:
@@ -3045,7 +3045,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetIntegrationWatchSelectionResponse'
+                $ref: '#/components/schemas/GetLineageIntegrationWatchSelectionResponse'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/managed-repositories/:
     post:
@@ -5755,8 +5755,8 @@ components:
       required:
       - status
       - data
-    GetIntegration:
-      title: GetIntegration
+    GetLineageIntegration:
+      title: GetLineageIntegration
       type: object
       properties:
         id:
@@ -5795,14 +5795,14 @@ components:
       - project_id
       - name
       - config
-    GetIntegrationResponse:
-      title: GetIntegrationResponse
+    GetLineageIntegrationResponse:
+      title: GetLineageIntegrationResponse
       type: object
       properties:
         status:
           $ref: '#/components/schemas/Status'
         data:
-          $ref: '#/components/schemas/GetIntegration'
+          $ref: '#/components/schemas/GetLineageIntegration'
         extra:
           title: Extra
           type: object
@@ -5812,8 +5812,8 @@ components:
       required:
       - status
       - data
-    GetIntegrationWatchSelectionResponse:
-      title: GetIntegrationWatchSelectionResponse
+    GetLineageIntegrationWatchSelectionResponse:
+      title: GetLineageIntegrationWatchSelectionResponse
       type: object
       properties:
         added:
@@ -6168,12 +6168,6 @@ components:
           type: boolean
       required:
       - is_valid_for_admin
-    IntegrationType:
-      title: IntegrationType
-      description: An enumeration.
-      enum:
-      - tableau
-      type: string
     InviteUsersRequestRequest:
       type: object
       properties:
@@ -6426,6 +6420,12 @@ components:
         * `read_only` - READ_ONLY
         * `it` - IT
         * `explorer` - EXPLORER
+    LineageIntegrationType:
+      title: LineageIntegrationType
+      description: An enumeration.
+      enum:
+      - tableau
+      type: string
     ListAccountConnection:
       title: ListAccountConnection
       type: object
@@ -6477,8 +6477,8 @@ components:
       - name
       - adapter_version
       - environment__count
-    ListIntegrationCollection:
-      title: ListIntegrationCollection
+    ListLineageIntegrationCollection:
+      title: ListLineageIntegrationCollection
       type: object
       properties:
         collections:
@@ -6489,8 +6489,8 @@ components:
             $ref: '#/components/schemas/WatchSelectionItem'
       required:
       - collections
-    ListIntegrationResponse:
-      title: ListIntegrationResponse
+    ListLineageIntegrationResponse:
+      title: ListLineageIntegrationResponse
       type: object
       properties:
         id:
@@ -6524,14 +6524,14 @@ components:
       - account_id
       - project_id
       - name
-    ListIntegrationResponseResponse:
-      title: ListIntegrationResponseResponse
+    ListLineageIntegrationResponseResponse:
+      title: ListLineageIntegrationResponseResponse
       type: object
       properties:
         status:
           $ref: '#/components/schemas/Status'
         data:
-          $ref: '#/components/schemas/ListIntegrationResponse'
+          $ref: '#/components/schemas/ListLineageIntegrationResponse'
         extra:
           title: Extra
           type: object
@@ -7291,15 +7291,15 @@ components:
           - $ref: '#/components/schemas/OptionalApacheSparkConnection'
           - $ref: '#/components/schemas/OptionalAthenaConnection'
       additionalProperties: false
-    PatchIntegrationRequest:
-      title: PatchIntegration
+    PatchLineageIntegrationRequest:
+      title: PatchLineageIntegration
       description: parent class for all request bodies, to be extended by each endpoint
       type: object
       properties:
         name:
           description: The name of the integration
           allOf:
-          - $ref: '#/components/schemas/IntegrationType'
+          - $ref: '#/components/schemas/LineageIntegrationType'
         account_id:
           title: Account Id
           description: The account the integration is associated with
@@ -7451,15 +7451,15 @@ components:
       - name
       - adapter_version
       additionalProperties: false
-    PostIntegrationRequest:
-      title: PostIntegration
+    PostLineageIntegrationRequest:
+      title: PostLineageIntegration
       description: parent class for all request bodies, to be extended by each endpoint
       type: object
       properties:
         name:
           description: The name of the integration
           allOf:
-          - $ref: '#/components/schemas/IntegrationType'
+          - $ref: '#/components/schemas/LineageIntegrationType'
         account_id:
           title: Account Id
           description: The account the integration is associated with
@@ -7477,8 +7477,8 @@ components:
       - name
       - account_id
       additionalProperties: false
-    PostIntegrationWatchSelectionRequest:
-      title: PostIntegrationWatchSelection
+    PostLineageIntegrationWatchSelectionRequest:
+      title: PostLineageIntegrationWatchSelection
       description: parent class for all request bodies, to be extended by each endpoint
       type: object
       properties:
