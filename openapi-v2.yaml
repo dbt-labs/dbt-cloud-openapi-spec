@@ -566,7 +566,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HumanReadableJobDefinitionEnveloped'
+                $ref: '#/components/schemas/HumanReadableJobDefinitionListEnveloped'
           description: ''
     post:
       operationId: Create Job
@@ -598,7 +598,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HumanReadableJobDefinitionEnveloped'
+                $ref: '#/components/schemas/HumanReadableJobDefinitionListEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/jobs/{job_id}/artifacts/{remainder}:
     get:
@@ -2125,7 +2125,8 @@ components:
           readOnly: true
         jobs:
           type: array
-          items: {}
+          items:
+            $ref: '#/components/schemas/HumanReadableJobDefinition'
           readOnly: true
         custom_environment_variables:
           type: array
@@ -2257,78 +2258,333 @@ components:
       - group_id
       - permission_set
       - writable_environment_categories
+    HumanReadableDateStrategy:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/TypeE72Enum'
+        days:
+          type: array
+          items:
+            type: integer
+        cron:
+          type: string
+      required:
+      - type
+    HumanReadableDateStrategyRequest:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/TypeE72Enum'
+        days:
+          type: array
+          items:
+            type: integer
+        cron:
+          type: string
+          minLength: 1
+      required:
+      - type
     HumanReadableJobDefinition:
       type: object
-      required:
-      - id
-      - environment_id
-      - account_id
-      - project_id
-      - name
-      - dbt_version
-      - triggers
-      - schedule
-      - settings
-      - execution
-      - state
-      - generate_docs
-      - run_generate_sources
-      - run_compare_changes
-      - run_lint
-      - errors_on_lint_failure
       properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        environment_id:
-          type: integer
-        deferring_job_definition_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        deferring_environment_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        lifecycle_webhooks:
-          oneOf:
-          - type: boolean
-          - type: 'null'
-        lifecycle_webhooks_url:
-          oneOf:
-          - type: string
-          - type: 'null'
         account_id:
           type: integer
         project_id:
           type: integer
-        integration_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
+        environment_id:
+          type: integer
         name:
-          allOf:
-          - type: string
-          - minLength: 1
-            maxLength: 255
-        description:
-          allOf:
-          - type: string
-          - minLength: 0
-            maxLength: 255
+          type: string
         dbt_version:
-          oneOf:
-          - type: string
-          - type: 'null'
-        raw_dbt_version:
-          oneOf:
-          - type: string
-          - type: 'null'
+          type: string
+        deferring_environment_id:
+          type: integer
+        deferring_job_definition_id:
+          type: integer
+        description:
+          type: string
+          default: ''
+        execute_steps:
+          type: array
+          items:
+            type: string
+        execution:
+          $ref: '#/components/schemas/JobDefinitionExecution'
+        generate_docs:
+          type: boolean
+        integration_id:
+          type: integer
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        lifecycle_webhooks:
+          type: boolean
+        run_compare_changes:
+          type: boolean
+        run_generate_sources:
+          type: boolean
+        run_lint:
+          type: boolean
+        errors_on_lint_failure:
+          type: boolean
+        settings:
+          $ref: '#/components/schemas/JobDefinitionSettings'
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        triggers_on_draft_pr:
+          type: boolean
+          default: false
         triggers:
-          description: 'Only one of the following fields can be true: triggers.github_webhook,
-            triggers.schedule, triggers.on_merge & triggers.git_provider_webhook.
-            The triggers.custom_branch_only field is now deprecated.'
+          $ref: '#/components/schemas/JobDefinitionTriggers'
+        schedule:
+          allOf:
+          - $ref: '#/components/schemas/HumanReadableSchedule'
+          default:
+            date:
+              type: every_day
+              days: null
+              cron: null
+            time:
+              type: every_hour
+              hours: null
+              interval: 1
+            cron: null
+        generate_sources:
+          type: boolean
+          default: false
+      required:
+      - account_id
+      - environment_id
+      - errors_on_lint_failure
+      - execution
+      - generate_docs
+      - lifecycle_webhooks
+      - name
+      - project_id
+      - run_compare_changes
+      - run_generate_sources
+      - run_lint
+      - settings
+      - triggers
+    HumanReadableJobDefinitionEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/HumanReadableJobDefinitionResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    HumanReadableJobDefinitionListEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/HumanReadableJobDefinitionResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    HumanReadableJobDefinitionRequest:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        environment_id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+        dbt_version:
+          type: string
+          minLength: 1
+        deferring_environment_id:
+          type: integer
+        deferring_job_definition_id:
+          type: integer
+        description:
+          type: string
+          minLength: 1
+          default: ''
+        execute_steps:
+          type: array
+          items:
+            type: string
+            minLength: 1
+        execution:
+          $ref: '#/components/schemas/JobDefinitionExecutionRequest'
+        generate_docs:
+          type: boolean
+        integration_id:
+          type: integer
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        lifecycle_webhooks:
+          type: boolean
+        run_compare_changes:
+          type: boolean
+        run_generate_sources:
+          type: boolean
+        run_lint:
+          type: boolean
+        errors_on_lint_failure:
+          type: boolean
+        settings:
+          $ref: '#/components/schemas/JobDefinitionSettingsRequest'
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        triggers_on_draft_pr:
+          type: boolean
+          default: false
+        triggers:
+          $ref: '#/components/schemas/JobDefinitionTriggersRequest'
+        schedule:
+          allOf:
+          - $ref: '#/components/schemas/HumanReadableScheduleRequest'
+          default:
+            date:
+              type: every_day
+              days: null
+              cron: null
+            time:
+              type: every_hour
+              hours: null
+              interval: 1
+            cron: null
+        generate_sources:
+          type: boolean
+          default: false
+      required:
+      - account_id
+      - environment_id
+      - errors_on_lint_failure
+      - execution
+      - generate_docs
+      - lifecycle_webhooks
+      - name
+      - project_id
+      - run_compare_changes
+      - run_generate_sources
+      - run_lint
+      - settings
+      - triggers
+    HumanReadableJobDefinitionResponse:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        environment_id:
+          type: integer
+        name:
+          type: string
+        dbt_version:
+          type: string
+        deferring_environment_id:
+          type: integer
+        deferring_job_definition_id:
+          type: integer
+        description:
+          type: string
+          default: ''
+        execute_steps:
+          type: array
+          items:
+            type: string
+        execution:
+          allOf:
+          - $ref: '#/components/schemas/JobDefinitionExecution'
+          default:
+            timeout_seconds: 0
+        generate_docs:
+          type: boolean
+          default: false
+        integration_id:
+          type: integer
+        is_deferrable:
+          type: boolean
+          readOnly: true
+          default: false
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        lifecycle_webhooks_url:
+          type: string
+          readOnly: true
+        lifecycle_webhooks:
+          type: boolean
+          default: false
+        raw_dbt_version:
+          type: string
+          readOnly: true
+        run_compare_changes:
+          type: boolean
+          default: false
+        run_failure_count:
+          type: integer
+          readOnly: true
+          default: 0
+        run_generate_sources:
+          type: boolean
+          default: false
+        run_lint:
+          type: boolean
+          default: false
+        errors_on_lint_failure:
+          type: boolean
+          default: true
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/JobDefinitionSettings'
+          default:
+            threads: 1
+            target_name: default
+        state:
+          type: integer
+          default: 1
+        triggers_on_draft_pr:
+          type: boolean
+          default: false
+        triggers:
+          allOf:
+          - $ref: '#/components/schemas/JobDefinitionTriggers'
+          default:
+            github_webhook: false
+            schedule: false
+            git_provider_webhook: null
+            on_merge: null
+        job_completion_trigger_condition:
+          readOnly: true
+          description: "Use this to set up job completion triggers\n            which\
+            \ would trigger a run of a job when another run finishes. If you have\
+            \ a\n            child job that you want triggered on the completion of\
+            \ a parent job, then\n            configure the trigger on the child job\
+            \ to be on job completion and select\n            the project, parent\
+            \ job and the statuses of the parent job on which to\n            trigger\
+            \ the child job.\n            The statuses which is an array can be one\
+            \ or more of:\n            <ul>\n              <li>success (10)</li>\n\
+            \              <li>error (20)</li>\n              <li>canceled (30)</li>\n\
+            \            </ul>\n            Once the parent job completes, a new run\
+            \ will be enqueued for the child job.\n            <br/>\n           \
+            \ Example of a job completion trigger:<br/>\n            <pre>\n     \
+            \       {\n                \"condition\": {\n                    \"job_id\"\
+            : 1,\n                    \"project_id\": 1,\n                    \"statuses\"\
+            : [10, 20],\n                }\n            }\n            </pre>\n  \
+            \          "
+        id:
+          type: integer
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -2337,272 +2593,169 @@ components:
           type: string
           format: date-time
           readOnly: true
-        execute_steps:
-          allOf:
-          - {}
-          - minLength: 1
-            maxLength: 100
-          - {}
-        schedule:
-          description: schedule is only required if triggers.schedule is true
-        settings: {}
-        execution: {}
-        state:
-          oneOf:
-          - {}
-          - {}
-        generate_docs:
-          type: boolean
-        run_generate_sources:
-          type: boolean
-        run_compare_changes:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        run_lint:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        errors_on_lint_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        environment:
-          oneOf:
-          - {}
-          - type: 'null'
         account:
-          oneOf:
-          - {}
-          - type: 'null'
+          allOf:
+          - $ref: '#/components/schemas/Account'
+          readOnly: true
         project:
-          oneOf:
-          - {}
-          - type: 'null'
-        most_recent_completed_run:
-          oneOf:
-          - {}
-          - type: 'null'
-        most_recent_run:
-          oneOf:
-          - {}
-          - type: 'null'
-        is_deferrable:
-          type: boolean
-        deactivated:
-          type: boolean
-        is_system:
-          type: boolean
-        run_failure_count:
-          type: integer
-        job_type:
-          oneOf:
-          - {}
-          - {}
-          - {}
-          - {}
-          - {}
-          - type: 'null'
-          description: Available job types are 'ci', 'merge', 'scheduled', and 'other'
-        triggers_on_draft_pr:
-          type: boolean
-        job_completion_trigger_condition:
-          oneOf:
-          - {}
-          - type: 'null'
-          description: "Use this to set up job completion triggers which would trigger\
-            \ a run of a job when another\n            run finishes. If you have a\
-            \ child job that you want triggered on the completion of a parent job,\n\
-            \            then configure the trigger on the child job to be on job\
-            \ completion and select the project, parent job\n            and the statuses\
-            \ of the parent job on which to trigger the child job. The statuses which\
-            \ is an array\n            can be one or more of - success (10), error\
-            \ (20), canceled (30). Once the parent job completes,\n            a new\
-            \ run will be enqueued for the child job.\n            Example of a job\
-            \ completion trigger:\n                {\n                    \"condition\"\
-            : {\n                        \"job_id\": 1,\n                        \"\
-            project_id\": 1,\n                        \"statuses\": [10, 20],\n  \
-            \                  }\n                }\n            "
+          allOf:
+          - $ref: '#/components/schemas/Project'
+          readOnly: true
+        environment:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentV2'
+          readOnly: true
+        schedule:
+          allOf:
+          - $ref: '#/components/schemas/HumanReadableSchedule'
+          default:
+            date:
+              type: every_day
+              days: null
+              cron: null
+            time:
+              type: every_hour
+              hours: null
+              interval: 1
+            cron: null
         generate_sources:
           type: boolean
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
-    HumanReadableJobDefinitionEnveloped:
+          default: false
+      required:
+      - account
+      - created_at
+      - environment
+      - id
+      - is_deferrable
+      - job_completion_trigger_condition
+      - lifecycle_webhooks_url
+      - project
+      - raw_dbt_version
+      - run_failure_count
+      - updated_at
+    HumanReadableSchedule:
       type: object
       properties:
-        data:
+        date:
+          $ref: '#/components/schemas/HumanReadableDateStrategy'
+        time:
+          $ref: '#/components/schemas/HumanReadableTimeStrategy'
+        cron:
+          type: string
+      required:
+      - date
+      - time
+    HumanReadableScheduleRequest:
+      type: object
+      properties:
+        date:
+          $ref: '#/components/schemas/HumanReadableDateStrategyRequest'
+        time:
+          $ref: '#/components/schemas/HumanReadableTimeStrategyRequest'
+        cron:
+          type: string
+          minLength: 1
+      required:
+      - date
+      - time
+    HumanReadableTimeStrategy:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type13aEnum'
+        hours:
           type: array
           items:
-            $ref: '#/components/schemas/HumanReadableJobDefinition'
-        status:
-          $ref: '#/components/schemas/Status'
-      required:
-      - data
-      - status
-    HumanReadableJobDefinitionRequest:
-      type: object
-      required:
-      - id
-      - environment_id
-      - account_id
-      - project_id
-      - name
-      - dbt_version
-      - triggers
-      - schedule
-      - settings
-      - execution
-      - state
-      - generate_docs
-      - run_generate_sources
-      - run_compare_changes
-      - run_lint
-      - errors_on_lint_failure
-      properties:
-        id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        environment_id:
+            type: integer
+        interval:
           type: integer
-        deferring_job_definition_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        deferring_environment_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
-        lifecycle_webhooks:
-          oneOf:
-          - type: boolean
-          - type: 'null'
-        lifecycle_webhooks_url:
-          oneOf:
-          - type: string
-          - type: 'null'
+          default: 1
+      required:
+      - type
+    HumanReadableTimeStrategyRequest:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type13aEnum'
+        hours:
+          type: array
+          items:
+            type: integer
+        interval:
+          type: integer
+          default: 1
+      required:
+      - type
+    InternalJobDefinition:
+      type: object
+      properties:
         account_id:
           type: integer
         project_id:
           type: integer
-        integration_id:
-          oneOf:
-          - type: 'null'
-          - type: integer
+        environment_id:
+          type: integer
         name:
-          allOf:
-          - type: string
-          - minLength: 1
-            maxLength: 255
-        description:
-          allOf:
-          - type: string
-          - minLength: 0
-            maxLength: 255
+          type: string
         dbt_version:
-          oneOf:
-          - type: string
-          - type: 'null'
-        raw_dbt_version:
-          oneOf:
-          - type: string
-          - type: 'null'
-        triggers:
-          description: 'Only one of the following fields can be true: triggers.github_webhook,
-            triggers.schedule, triggers.on_merge & triggers.git_provider_webhook.
-            The triggers.custom_branch_only field is now deprecated.'
+          type: string
+        deferring_environment_id:
+          type: integer
+        deferring_job_definition_id:
+          type: integer
+        description:
+          type: string
+          default: ''
         execute_steps:
-          allOf:
-          - {}
-          - minLength: 1
-            maxLength: 100
-          - {}
-        schedule:
-          description: schedule is only required if triggers.schedule is true
-        settings: {}
-        execution: {}
-        state:
-          oneOf:
-          - {}
-          - {}
+          type: array
+          items:
+            type: string
+        execution:
+          $ref: '#/components/schemas/JobDefinitionExecution'
         generate_docs:
+          type: boolean
+        integration_id:
+          type: integer
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        lifecycle_webhooks:
+          type: boolean
+        run_compare_changes:
           type: boolean
         run_generate_sources:
           type: boolean
-        run_compare_changes:
-          oneOf:
-          - type: 'null'
-          - type: boolean
         run_lint:
-          oneOf:
-          - type: 'null'
-          - type: boolean
+          type: boolean
         errors_on_lint_failure:
-          oneOf:
-          - type: 'null'
-          - type: boolean
-        environment:
-          oneOf:
-          - {}
-          - type: 'null'
-        account:
-          oneOf:
-          - {}
-          - type: 'null'
-        project:
-          oneOf:
-          - {}
-          - type: 'null'
-        most_recent_completed_run:
-          oneOf:
-          - {}
-          - type: 'null'
-        most_recent_run:
-          oneOf:
-          - {}
-          - type: 'null'
-        is_deferrable:
           type: boolean
-        deactivated:
-          type: boolean
-        is_system:
-          type: boolean
-        run_failure_count:
+        settings:
+          $ref: '#/components/schemas/JobDefinitionSettings'
+        state:
           type: integer
-        job_type:
-          oneOf:
-          - {}
-          - {}
-          - {}
-          - {}
-          - {}
-          - type: 'null'
-          description: Available job types are 'ci', 'merge', 'scheduled', and 'other'
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         triggers_on_draft_pr:
           type: boolean
-        job_completion_trigger_condition:
-          oneOf:
-          - {}
-          - type: 'null'
-          description: "Use this to set up job completion triggers which would trigger\
-            \ a run of a job when another\n            run finishes. If you have a\
-            \ child job that you want triggered on the completion of a parent job,\n\
-            \            then configure the trigger on the child job to be on job\
-            \ completion and select the project, parent job\n            and the statuses\
-            \ of the parent job on which to trigger the child job. The statuses which\
-            \ is an array\n            can be one or more of - success (10), error\
-            \ (20), canceled (30). Once the parent job completes,\n            a new\
-            \ run will be enqueued for the child job.\n            Example of a job\
-            \ completion trigger:\n                {\n                    \"condition\"\
-            : {\n                        \"job_id\": 1,\n                        \"\
-            project_id\": 1,\n                        \"statuses\": [10, 20],\n  \
-            \                  }\n                }\n            "
-        generate_sources:
-          type: boolean
-      additionalProperties: false
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
+          default: false
+        triggers:
+          $ref: '#/components/schemas/JobDefinitionTriggers'
+        schedule:
+          $ref: '#/components/schemas/JobDefinitionSchedule'
+      required:
+      - account_id
+      - environment_id
+      - errors_on_lint_failure
+      - execution
+      - generate_docs
+      - lifecycle_webhooks
+      - name
+      - project_id
+      - run_compare_changes
+      - run_generate_sources
+      - run_lint
+      - settings
+      - triggers
     InviteEnveloped:
       type: object
       properties:
@@ -2667,6 +2820,13 @@ components:
           type: integer
       required:
       - timeout_seconds
+    JobDefinitionExecutionRequest:
+      type: object
+      properties:
+        timeout_seconds:
+          type: integer
+      required:
+      - timeout_seconds
     JobDefinitionSchedule:
       type: object
       properties:
@@ -2690,7 +2850,32 @@ components:
       required:
       - target_name
       - threads
+    JobDefinitionSettingsRequest:
+      type: object
+      properties:
+        threads:
+          type: integer
+        target_name:
+          type: string
+          minLength: 1
+      required:
+      - target_name
+      - threads
     JobDefinitionTriggers:
+      type: object
+      properties:
+        github_webhook:
+          type: boolean
+        schedule:
+          type: boolean
+        git_provider_webhook:
+          type: boolean
+        on_merge:
+          type: boolean
+      required:
+      - github_webhook
+      - schedule
+    JobDefinitionTriggersRequest:
       type: object
       properties:
         github_webhook:
@@ -2761,6 +2946,7 @@ components:
       required:
       - account_id
       - environment_id
+      - execution
       - generate_docs
       - name
       - project_id
@@ -3074,6 +3260,46 @@ components:
       - port
       - tunnel_enabled
       - type
+    Project:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the project
+        account_id:
+          type: integer
+          description: The account the project is associated with
+        description:
+          type: string
+          description: The description of the project
+        connection_id:
+          type: integer
+          description: The active connection
+        repository_id:
+          type: integer
+          description: The active repository
+        semantic_layer_config_id:
+          type: integer
+          description: The active semantic layer configuration
+        skipped_setup:
+          type: boolean
+          default: false
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        dbt_project_subdirectory:
+          type: string
+        docs_job_id:
+          type: integer
+          description: The job used for docs generation
+        freshness_job_id:
+          type: integer
+          description: The job used for source freshness generation
+      required:
+      - account_id
+      - name
     ProjectEnveloped:
       type: object
       properties:
@@ -3594,7 +3820,8 @@ components:
           format: date-time
         trigger:
           $ref: '#/components/schemas/RunTrigger'
-        job: {}
+        job:
+          $ref: '#/components/schemas/InternalJobDefinition'
         environment:
           $ref: '#/components/schemas/EnvironmentV2'
         run_steps:
@@ -3885,6 +4112,14 @@ components:
             minLength: 1
       required:
       - cause
+    Type13aEnum:
+      enum:
+      - every_hour
+      - at_exact_hours
+      type: string
+      description: |-
+        * `every_hour` - every_hour
+        * `at_exact_hours` - at_exact_hours
     Type2e2Enum:
       enum:
       - 1
@@ -3919,6 +4154,18 @@ components:
       description: |-
         * `development` - DEVELOPMENT
         * `deployment` - DEPLOYMENT
+    TypeE72Enum:
+      enum:
+      - every_day
+      - days_of_week
+      - custom_cron
+      - interval_cron
+      type: string
+      description: |-
+        * `every_day` - every_day
+        * `days_of_week` - days_of_week
+        * `custom_cron` - custom_cron
+        * `interval_cron` - interval_cron
     User:
       type: object
       properties:
