@@ -5659,6 +5659,18 @@ components:
       required:
       - server
       - database
+    FieldGroup:
+      type: object
+      properties:
+        name:
+          type: string
+        members:
+          type: array
+          items:
+            type: string
+      required:
+      - members
+      - name
     Filters:
       type: object
       properties:
@@ -6303,6 +6315,7 @@ components:
       required:
       - account_id
       - environment_id
+      - execution
       - generate_docs
       - name
       - project_id
@@ -8243,7 +8256,7 @@ components:
         field_groups:
           type: array
           items:
-            $ref: '#/components/schemas/Group'
+            $ref: '#/components/schemas/FieldGroup'
           description: Specification of how certain fields should be grouped
     SchemaTypeEnum:
       enum:
