@@ -2340,18 +2340,7 @@ components:
         triggers:
           $ref: '#/components/schemas/JobDefinitionTriggers'
         schedule:
-          allOf:
-          - $ref: '#/components/schemas/HumanReadableSchedule'
-          default:
-            date:
-              type: every_day
-              days: null
-              cron: null
-            time:
-              type: every_hour
-              hours: null
-              interval: 1
-            cron: null
+          $ref: '#/components/schemas/HumanReadableSchedule'
         generate_sources:
           type: boolean
           default: false
@@ -2450,18 +2439,7 @@ components:
         triggers:
           $ref: '#/components/schemas/JobDefinitionTriggersRequest'
         schedule:
-          allOf:
-          - $ref: '#/components/schemas/HumanReadableScheduleRequest'
-          default:
-            date:
-              type: every_day
-              days: null
-              cron: null
-            time:
-              type: every_hour
-              hours: null
-              interval: 1
-            cron: null
+          $ref: '#/components/schemas/HumanReadableScheduleRequest'
         generate_sources:
           type: boolean
           default: false
@@ -2606,18 +2584,7 @@ components:
           - $ref: '#/components/schemas/EnvironmentV2'
           readOnly: true
         schedule:
-          allOf:
-          - $ref: '#/components/schemas/HumanReadableSchedule'
-          default:
-            date:
-              type: every_day
-              days: null
-              cron: null
-            time:
-              type: every_hour
-              hours: null
-              interval: 1
-            cron: null
+          $ref: '#/components/schemas/HumanReadableSchedule'
         generate_sources:
           type: boolean
           default: false
