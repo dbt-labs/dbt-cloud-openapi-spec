@@ -2542,6 +2542,7 @@ components:
             schedule: false
             git_provider_webhook: null
             on_merge: null
+            custom_branch_only: null
         job_completion_trigger_condition:
           readOnly: true
           description: "Use this to set up job completion triggers\n            which\
@@ -2839,6 +2840,9 @@ components:
           type: boolean
         on_merge:
           type: boolean
+        custom_branch_only:
+          type: boolean
+          description: (Deprecated)
       required:
       - github_webhook
       - schedule
@@ -2853,6 +2857,9 @@ components:
           type: boolean
         on_merge:
           type: boolean
+        custom_branch_only:
+          type: boolean
+          description: (Deprecated)
       required:
       - github_webhook
       - schedule
