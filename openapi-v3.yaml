@@ -6219,7 +6219,9 @@ components:
       type: object
       properties:
         sent:
-          type: integer
+          type: array
+          items:
+            type: string
     JobDefinitionExecution:
       type: object
       properties:
