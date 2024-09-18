@@ -7973,6 +7973,7 @@ components:
           type: integer
       required:
       - hostname
+      - dbname
     RemoteBackendEnum:
       enum:
       - azure_active_directory
