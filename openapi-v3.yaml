@@ -224,6 +224,7 @@ paths:
           - redshift_v0
           - snowflake_v0
           - synapse_v0
+          - teradata_v0
           - trino_v0
         description: The adapter to fetch the connections for
       tags:
@@ -3974,6 +3975,7 @@ paths:
           - redshift_v0
           - snowflake_v0
           - synapse_v0
+          - teradata_v0
           - trino_v0
         description: The adapter to fetch the schema for
         required: true
@@ -4519,6 +4521,7 @@ components:
       - synapse_v0
       - fabric_v0
       - athena_v0
+      - teradata_v0
       type: string
       description: |-
         * `apache_spark_v0` - apache_spark_v0
@@ -4532,6 +4535,7 @@ components:
         * `synapse_v0` - synapse_v0
         * `fabric_v0` - fabric_v0
         * `athena_v0` - athena_v0
+        * `teradata_v0` - teradata_v0
     ApacheSparkConnection:
       title: ApacheSparkConnection
       type: object
@@ -5262,6 +5266,7 @@ components:
       - synapse_v0
       - fabric_v0
       - athena_v0
+      - teradata_v0
       type: string
     DeleteSubscriptionResponseData:
       type: object
@@ -5741,6 +5746,7 @@ components:
           - $ref: '#/components/schemas/SynapseConnection'
           - $ref: '#/components/schemas/ApacheSparkConnection'
           - $ref: '#/components/schemas/AthenaConnection'
+          - $ref: '#/components/schemas/TeradataConnection'
       required:
       - id
       - created_at
@@ -7202,6 +7208,28 @@ components:
           type: string
           writeOnly: true
           format: password
+    OptionalTeradataConnection:
+      title: OptionalTeradataConnection
+      type: object
+      properties:
+        port:
+          title: Port
+          type: string
+        tmode:
+          title: Tmode
+          type: string
+        host:
+          title: Host
+          type: string
+        retries:
+          title: Retries
+          type: integer
+        request_timeout:
+          title: Request Timeout
+          type: string
+        adapter_id:
+          title: Adapter Id
+          type: integer
     OptionalTrinoConnection:
       title: OptionalTrinoConnection
       type: object
@@ -7306,6 +7334,7 @@ components:
           - $ref: '#/components/schemas/OptionalSynapseConnection'
           - $ref: '#/components/schemas/OptionalApacheSparkConnection'
           - $ref: '#/components/schemas/OptionalAthenaConnection'
+          - $ref: '#/components/schemas/OptionalTeradataConnection'
       additionalProperties: false
     PatchLineageIntegrationRequest:
       title: PatchLineageIntegration
@@ -7462,6 +7491,7 @@ components:
           - $ref: '#/components/schemas/SynapseConnection'
           - $ref: '#/components/schemas/ApacheSparkConnection'
           - $ref: '#/components/schemas/AthenaConnection'
+          - $ref: '#/components/schemas/TeradataConnection'
       required:
       - account_id
       - name
@@ -7616,6 +7646,7 @@ components:
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
       required:
       - account_id
       - default_schema
@@ -8310,6 +8341,7 @@ components:
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
         schema_type:
           allOf:
           - $ref: '#/components/schemas/SchemaTypeEnum'
@@ -8812,6 +8844,36 @@ components:
       - host
       - site_id
       - token_name
+    TeradataConnection:
+      title: TeradataConnection
+      type: object
+      properties:
+        port:
+          title: Port
+          default: '1025'
+          type: string
+        tmode:
+          title: Tmode
+          default: ANSI
+          const: ANSI
+          type: string
+        host:
+          title: Host
+          type: string
+        retries:
+          title: Retries
+          default: 0
+          type: integer
+        request_timeout:
+          title: Request Timeout
+          default: '0'
+          type: string
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use connection_details.adapter_version
+          type: integer
+      required:
+      - host
     TestSubscriptionResponseData:
       type: object
       properties:
