@@ -6255,6 +6255,9 @@ components:
           type: boolean
         on_merge:
           type: boolean
+        custom_branch_only:
+          type: boolean
+          description: (Deprecated)
       required:
       - github_webhook
       - schedule
