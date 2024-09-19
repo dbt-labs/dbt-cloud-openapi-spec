@@ -4286,6 +4286,8 @@ components:
           readOnly: true
         auth_provider_infos:
           readOnly: true
+        licenses:
+          readOnly: true
       required:
       - apitoken_last_used
       - auth_provider_infos
@@ -4308,6 +4310,7 @@ components:
       - is_active
       - is_staff
       - last_login
+      - licenses
       - permissions
       - sso_only_user
   securitySchemes:
