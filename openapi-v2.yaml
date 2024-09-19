@@ -54,9 +54,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/AccountListEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/:
     get:
@@ -77,9 +75,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/AccountEnveloped'
           description: ''
     post:
       operationId: Update Account
@@ -111,9 +107,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/AccountEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/encryptions/:
     get:
@@ -1693,6 +1687,56 @@ components:
           description: (Deprecated)
       required:
       - name
+    AccountEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    AccountListEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    AccountMigrationEvent:
+      type: object
+      properties:
+        type:
+          type: string
+        account_identifier:
+          type: string
+        key:
+          type: string
+        is_minidump:
+          type: boolean
+        account_has_static_subdomain:
+          type: boolean
+          default: false
+        background_job_id:
+          type: integer
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        failed_at:
+          type: string
+          format: date-time
+      required:
+      - account_identifier
+      - type
     AccountRequest:
       type: object
       properties:
@@ -1713,6 +1757,229 @@ components:
           description: (Deprecated)
       required:
       - name
+    AccountResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the account
+        plan:
+          allOf:
+          - $ref: '#/components/schemas/PlanEnum'
+          readOnly: true
+          description: |-
+            The active plan type for the account
+
+            * `cancelled` - CANCELLED
+            * `cancelled_2022` - CANCELLED_2022
+            * `developer` - DEVELOPER
+            * `developer_2022` - DEVELOPER_2022
+            * `enterprise` - ENTERPRISE
+            * `free` - FREE
+            * `team` - TEAM
+            * `team_2022` - TEAM_2022
+            * `team_annual` - TEAM_ANNUAL
+            * `trial` - TRIAL
+            * `trial_2022` - TRIAL_2022
+        run_slots:
+          type: integer
+          readOnly: true
+          default: 1
+          description: The total number of run slots the account may use
+        developer_seats:
+          type: integer
+          readOnly: true
+          default: 0
+          description: The total number of developer seats the account may use
+        it_seats:
+          type: integer
+          readOnly: true
+          default: 0
+          description: The total number of IT seats the account may use
+        explorer_seats:
+          type: integer
+          readOnly: true
+          default: 0
+          description: The total number of explorer seats the account may use
+        read_only_seats:
+          type: integer
+          readOnly: true
+          default: 0
+          description: The total number of Read Only seats the account may use
+        locked:
+          type: boolean
+          readOnly: true
+          default: false
+          description: Whether the account is currently locked
+        lock_reason:
+          type: string
+          readOnly: true
+          description: Why the account is locked
+        lock_cause:
+          allOf:
+          - $ref: '#/components/schemas/LockCauseEnum'
+          readOnly: true
+          description: |-
+            Why the account is locked
+
+            * `trial_expired` - TRIAL_EXPIRED
+            * `cancelled` - CANCELLED
+            * `unpaid` - UNPAID
+            * `provisioned_team_annual` - PROVISIONED_TEAM_ANNUAL
+            * `other` - OTHER
+        unlocked_at:
+          type: string
+          format: date-time
+          readOnly: true
+        unlock_if_subscription_renewed:
+          type: boolean
+          readOnly: true
+          default: false
+        pending_cancel:
+          type: boolean
+          readOnly: true
+          default: false
+          description: Whether the account is pending cancellation
+        billing_email_address:
+          type: string
+          readOnly: true
+        pod_memory_request_mebibytes:
+          type: integer
+          readOnly: true
+          default: 600
+        develop_pod_memory_request_mebibytes:
+          type: integer
+          readOnly: true
+          default: 0
+        run_duration_limit_seconds:
+          type: integer
+          readOnly: true
+          default: 86400
+        queue_limit:
+          type: integer
+          readOnly: true
+          default: 50
+        metronome_customer_id:
+          type: string
+          readOnly: true
+        salesforce_customer_id:
+          type: string
+          readOnly: true
+        third_party_billing:
+          allOf:
+          - $ref: '#/components/schemas/ThirdPartyBillingEnum'
+          readOnly: true
+        develop_file_system:
+          type: boolean
+          readOnly: true
+          default: true
+        enterprise_authentication_method:
+          type: string
+          readOnly: true
+        enterprise_login_slug:
+          type: string
+          readOnly: true
+        enterprise_unique_identifier:
+          type: string
+          readOnly: true
+        business_critical:
+          type: boolean
+          readOnly: true
+          default: false
+        starter_repo_url:
+          type: string
+          readOnly: true
+        git_auth_level:
+          type: string
+          readOnly: true
+        identifier:
+          type: string
+          readOnly: true
+        trial_end_date:
+          type: string
+          format: date-time
+          readOnly: true
+        static_subdomain:
+          type: string
+          readOnly: true
+        run_locked_until:
+          type: string
+          format: date-time
+          readOnly: true
+        migration_scheduled_at:
+          type: string
+          format: date-time
+          readOnly: true
+        state:
+          type: integer
+          default: 1
+        docs_job_id:
+          type: integer
+          description: (Deprecated)
+        freshness_job_id:
+          type: integer
+          description: (Deprecated)
+        account_migration_events:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountMigrationEvent'
+          readOnly: true
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+          readOnly: true
+          default: []
+          description: The user groups in the account
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - account_migration_events
+      - billing_email_address
+      - business_critical
+      - created_at
+      - develop_file_system
+      - develop_pod_memory_request_mebibytes
+      - developer_seats
+      - enterprise_authentication_method
+      - enterprise_login_slug
+      - enterprise_unique_identifier
+      - explorer_seats
+      - git_auth_level
+      - groups
+      - id
+      - identifier
+      - it_seats
+      - lock_cause
+      - lock_reason
+      - locked
+      - metronome_customer_id
+      - migration_scheduled_at
+      - pending_cancel
+      - plan
+      - pod_memory_request_mebibytes
+      - queue_limit
+      - read_only_seats
+      - run_duration_limit_seconds
+      - run_locked_until
+      - run_slots
+      - salesforce_customer_id
+      - starter_repo_url
+      - static_subdomain
+      - third_party_billing
+      - trial_end_date
+      - unlock_if_subscription_renewed
+      - unlocked_at
+      - updated_at
     AdapterVersionEnum:
       enum:
       - apache_spark_v0
@@ -3148,6 +3415,20 @@ components:
       required:
       - data
       - status
+    LockCauseEnum:
+      enum:
+      - trial_expired
+      - cancelled
+      - unpaid
+      - provisioned_team_annual
+      - other
+      type: string
+      description: |-
+        * `trial_expired` - TRIAL_EXPIRED
+        * `cancelled` - CANCELLED
+        * `unpaid` - UNPAID
+        * `provisioned_team_annual` - PROVISIONED_TEAM_ANNUAL
+        * `other` - OTHER
     PermissionSetEnum:
       enum:
       - owner
@@ -3198,6 +3479,32 @@ components:
         * `webhooks_only` - WEBHOOKS_ONLY
         * `manage_marketplace_apps` - MANAGE_MARKETPLACE_APPS
         * `explorer` - EXPLORER
+    PlanEnum:
+      enum:
+      - cancelled
+      - cancelled_2022
+      - developer
+      - developer_2022
+      - enterprise
+      - free
+      - team
+      - team_2022
+      - team_annual
+      - trial
+      - trial_2022
+      type: string
+      description: |-
+        * `cancelled` - CANCELLED
+        * `cancelled_2022` - CANCELLED_2022
+        * `developer` - DEVELOPER
+        * `developer_2022` - DEVELOPER_2022
+        * `enterprise` - ENTERPRISE
+        * `free` - FREE
+        * `team` - TEAM
+        * `team_2022` - TEAM_2022
+        * `team_annual` - TEAM_ANNUAL
+        * `trial` - TRIAL
+        * `trial_2022` - TRIAL_2022
     PostgresConnection:
       type: object
       properties:
@@ -4037,6 +4344,11 @@ components:
         * `3` - EXPIRED
         * `4` - PENDING_EMAIL_VERIFICATION
         * `5` - EMAIL_VERIFIED_SSO
+    ThirdPartyBillingEnum:
+      enum:
+      - 5x
+      type: string
+      description: '* `5x` - FIVE_X'
     TimeEnum:
       enum:
       - every_hour
