@@ -1359,6 +1359,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: pk__in
+        schema:
+          type: array
+      - in: query
         name: project_id
         schema:
           type: integer
