@@ -1686,7 +1686,6 @@ components:
           description: The name of the account
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         docs_job_id:
@@ -1697,6 +1696,7 @@ components:
           description: (Deprecated)
       required:
       - name
+      - state
     AccountEnveloped:
       type: object
       properties:
@@ -1759,7 +1759,6 @@ components:
           description: The name of the account
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         docs_job_id:
@@ -1770,6 +1769,7 @@ components:
           description: (Deprecated)
       required:
       - name
+      - state
     AccountResponse:
       type: object
       properties:
@@ -1926,6 +1926,8 @@ components:
         state:
           type: integer
           default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         docs_job_id:
           type: integer
           description: (Deprecated)
@@ -2043,7 +2045,6 @@ components:
           type: integer
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         private_link_endpoint_id:
@@ -2056,6 +2057,7 @@ components:
       - account_id
       - name
       - project_id
+      - state
       - type
     CauseCategoryEnum:
       enum:
@@ -2133,7 +2135,6 @@ components:
           description: SSH private key
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
       required:
@@ -2141,6 +2142,7 @@ components:
       - connection_id
       - hostname
       - port
+      - state
       - username
     ConnectionEncryptionResponse:
       type: object
@@ -2166,6 +2168,8 @@ components:
         state:
           type: integer
           default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         id:
           type: integer
           readOnly: true
@@ -2193,6 +2197,8 @@ components:
         state:
           type: integer
           default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
       - account_id
       - name
@@ -2277,13 +2283,13 @@ components:
           type: integer
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
       required:
       - account_id
       - name
       - project_id
+      - state
       - supports_docs
       - type
       - use_custom_branch
@@ -2351,13 +2357,13 @@ components:
           type: integer
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
       required:
       - account_id
       - name
       - project_id
+      - state
       - supports_docs
       - type
       - use_custom_branch
@@ -2404,6 +2410,8 @@ components:
         state:
           type: integer
           default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         id:
           type: integer
           readOnly: true
@@ -2481,7 +2489,6 @@ components:
           default: false
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
       required:
@@ -2489,6 +2496,7 @@ components:
       - dbt_version
       - name
       - project_id
+      - state
       - supports_docs
       - type
       - use_custom_branch
@@ -2531,7 +2539,6 @@ components:
           type: string
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         assign_by_default:
@@ -2544,6 +2551,7 @@ components:
       - account_id
       - assign_by_default
       - name
+      - state
     GroupPermission:
       type: object
       properties:
@@ -2561,7 +2569,6 @@ components:
           type: integer
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         writable_environment_categories:
@@ -2573,6 +2580,7 @@ components:
       - all_projects
       - group_id
       - permission_set
+      - state
       - writable_environment_categories
     HumanReadableDateStrategy:
       type: object
@@ -2647,7 +2655,6 @@ components:
           $ref: '#/components/schemas/JobDefinitionSettings'
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         triggers_on_draft_pr:
@@ -2673,6 +2680,7 @@ components:
       - run_generate_sources
       - run_lint
       - settings
+      - state
       - triggers
     HumanReadableJobDefinitionEnveloped:
       type: object
@@ -2749,7 +2757,6 @@ components:
           $ref: '#/components/schemas/JobDefinitionSettingsRequest'
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         triggers_on_draft_pr:
@@ -2775,6 +2782,7 @@ components:
       - run_generate_sources
       - run_lint
       - settings
+      - state
       - triggers
     HumanReadableJobDefinitionResponse:
       type: object
@@ -2850,6 +2858,8 @@ components:
         state:
           type: integer
           default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         triggers_on_draft_pr:
           type: boolean
           default: false
@@ -3019,7 +3029,6 @@ components:
           $ref: '#/components/schemas/JobDefinitionSettings'
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         triggers_on_draft_pr:
@@ -3042,6 +3051,7 @@ components:
       - run_generate_sources
       - run_lint
       - settings
+      - state
       - triggers
     InviteEnveloped:
       type: object
@@ -3216,7 +3226,6 @@ components:
           type: boolean
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         dbt_version:
@@ -3260,6 +3269,7 @@ components:
       - project_id
       - run_generate_sources
       - settings
+      - state
     JobNotificationSettingsEnveloped:
       type: object
       properties:
@@ -3340,7 +3350,6 @@ components:
           description: List of job IDs to send notifications for when the job warns.
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
       required:
@@ -3349,6 +3358,7 @@ components:
       - on_failure
       - on_success
       - on_warning
+      - state
       - type
       - user_id
     JobNotificationSettingsResponse:
@@ -3408,6 +3418,8 @@ components:
         state:
           type: integer
           default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         id:
           type: integer
           readOnly: true
@@ -3453,12 +3465,12 @@ components:
           type: string
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
       required:
       - account_id
       - public_key
+      - state
     LicenseTypeEnum:
       enum:
       - developer
@@ -3588,7 +3600,6 @@ components:
           $ref: '#/components/schemas/Type32eEnum'
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         created_by_id:
@@ -3609,6 +3620,7 @@ components:
       - hostname
       - name
       - port
+      - state
       - tunnel_enabled
       - type
     Project:
@@ -3637,7 +3649,6 @@ components:
           default: false
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         dbt_project_subdirectory:
@@ -3651,6 +3662,7 @@ components:
       required:
       - account_id
       - name
+      - state
     ProjectEnveloped:
       type: object
       properties:
@@ -3704,7 +3716,6 @@ components:
           default: false
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         dbt_project_subdirectory:
@@ -3719,6 +3730,7 @@ components:
       required:
       - account_id
       - name
+      - state
     ProjectResponse:
       type: object
       properties:
@@ -3746,6 +3758,8 @@ components:
         state:
           type: integer
           default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         dbt_project_subdirectory:
           type: string
         docs_job_id:
@@ -3859,7 +3873,6 @@ components:
           type: integer
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         git_provider_id:
@@ -3868,6 +3881,7 @@ components:
           type: string
       required:
       - account_id
+      - state
     RepositoryV2Enveloped:
       type: object
       properties:
@@ -3938,7 +3952,6 @@ components:
           type: integer
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         git_provider_id:
@@ -3948,6 +3961,7 @@ components:
           minLength: 1
       required:
       - account_id
+      - state
     RepositoryV2Response:
       type: object
       properties:
@@ -3993,6 +4007,8 @@ components:
         state:
           type: integer
           default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
         git_provider_id:
           type: integer
         private_link_endpoint_id:
@@ -4061,7 +4077,6 @@ components:
           type: integer
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         private_link_endpoint_id:
@@ -4070,6 +4085,7 @@ components:
           type: integer
       required:
       - account_id
+      - state
     RetryNotSupportedReasonEnum:
       enum:
       - RETRY_UNSUPPORTED_CMD
@@ -4558,11 +4574,11 @@ components:
           type: string
         state:
           type: integer
-          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
       required:
       - license_type
+      - state
     UserListEnveloped:
       type: object
       properties:
