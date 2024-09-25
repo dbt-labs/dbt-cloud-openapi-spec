@@ -357,66 +357,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/environments/{environment_id}/model-notifications/:
-    get:
-      operationId: Get Model Notification Setting
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: environment_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Environments
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ModelNotificationSettingsResponse'
-          description: ''
-    post:
-      operationId: Update Model Notification Settings
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: environment_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Environments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PostModelNotificationSettingsRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PostModelNotificationSettingsRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PostModelNotificationSettingsRequest'
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ModelNotificationSettingsResponse'
-          description: ''
   /api/v3/accounts/{account_id}/group-permissions/{group_id}/:
     post:
       operationId: Assign Group Permissions
@@ -6637,60 +6577,6 @@ components:
       enum:
       - odbc
       type: string
-    ModelNotificationSettingsResponse:
-      title: ModelNotificationSettingsResponse
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-        updated_at:
-          title: Updated At
-          type: string
-          format: date-time
-        account_id:
-          title: Account Id
-          description: The account the notification setting is associated with
-          type: integer
-        environment_id:
-          title: Environment Id
-          description: The environment the notification setting is associated with
-          type: integer
-        enabled:
-          title: Enabled
-          description: Whether model notification are enabled
-          type: boolean
-        on_success:
-          title: On Success
-          description: Whether to notify on successful model executions
-          type: boolean
-        on_failure:
-          title: On Failure
-          description: Whether to notify on model execution failures
-          type: boolean
-        on_warning:
-          title: On Warning
-          description: Whether to notify on model execution warnings
-          type: boolean
-        on_skipped:
-          title: On Skipped
-          description: Whether to notify on skipped model executions
-          type: boolean
-      required:
-      - id
-      - created_at
-      - updated_at
-      - account_id
-      - environment_id
-      - enabled
-      - on_success
-      - on_failure
-      - on_warning
-      - on_skipped
     NotFound:
       type: object
       properties:
@@ -7542,32 +7428,6 @@ components:
           type: array
           items:
             type: string
-      additionalProperties: false
-    PostModelNotificationSettingsRequest:
-      title: PostModelNotificationSettings
-      description: parent class for all request bodies, to be extended by each endpoint
-      type: object
-      properties:
-        enabled:
-          title: Enabled
-          description: Whether model level notifications are enabled
-          type: boolean
-        on_success:
-          title: On Success
-          description: Whether to notify on successful model executions
-          type: boolean
-        on_failure:
-          title: On Failure
-          description: Whether to notify on model execution failures
-          type: boolean
-        on_warning:
-          title: On Warning
-          description: Whether to notify on model execution warnings
-          type: boolean
-        on_skipped:
-          title: On Skipped
-          description: Whether to notify on skipped model executions
-          type: boolean
       additionalProperties: false
     PostOpenAIKeyRequestRequest:
       title: PostOpenAIKeyRequest
