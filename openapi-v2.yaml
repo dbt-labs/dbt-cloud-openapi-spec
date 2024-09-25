@@ -28,10 +28,16 @@ info:
     \ of those results.\n\n* Offset: Specifies how many records to skip. Can be an\
     \ integer 0 and higher.\n* Limit: Specifies the maximum records you want to retrieve\
     \ in a single request. Can be an integer up to 100. This limit makes responses\
-    \ easier to handle for servers and people.\n\n\n## Example request\n\nThe following\
-    \ example uses the list projects endpoint to list the projects that your token\
-    \ is authorized to access.\nThis request skips the first 10 projects and lists\
-    \ the next 10 projects.\nBe sure to replace `<YOUR_TOKEN>` in the Authorization\
+    \ easier to handle for servers and people.\n\nEndpoints that support pagination\
+    \ include some useful extra information about the pagination state. For example:\n\
+    \n```json\n{\n  data: [...],\n  extra: {\n    // How the results were filtered\n\
+    \    filters: {...},\n    // The order of the results\n    order_by: \"id\",\n\
+    \    // The pagination state\n    pagination: {\n      // The number of records\
+    \ returned in this response\n      count: 5,\n      // The total number of available\
+    \ records\n      total_count: 10,\n    }\n\n  }\n}\n````\n\n## Example request\n\
+    \nThe following example uses the list projects endpoint to list the projects that\
+    \ your token is authorized to access.\nThis request skips the first 10 projects\
+    \ and lists the next 10 projects.\nBe sure to replace `<YOUR_TOKEN>` in the Authorization\
     \ header with your actual API token and `<YOUR_ACCOUNT_ID>` with your actual account\
     \ ID.\n\n```bash\ncurl --request GET \\\n  --url 'https://cloud.getdbt.com/api/v3/accounts/<YOUR_ACCOUNT_ID>/projects/?limit=10&offset=5'\
     \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'Authorization:\
@@ -184,7 +190,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConnectionEncryptionListEnveloped'
+                $ref: '#/components/schemas/ConnectionEncryptionEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/encryptions/{id}/:
     get:
@@ -359,7 +365,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentV2ListEnveloped'
+                $ref: '#/components/schemas/EnvironmentV2Enveloped'
           description: ''
   /api/v2/accounts/{account_id}/environments/{id}/:
     get:
@@ -466,7 +472,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InviteEnveloped'
+                $ref: '#/components/schemas/InviteListEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/invites/{id}/:
     get:
@@ -592,7 +598,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HumanReadableJobDefinitionListEnveloped'
+                $ref: '#/components/schemas/HumanReadableJobDefinitionEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/jobs/{job_id}/artifacts/{remainder}:
     get:
@@ -880,7 +886,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JobNotificationSettingsListEnveloped'
+                $ref: '#/components/schemas/JobNotificationSettingsEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/notifications/{id}/:
     get:
@@ -1067,7 +1073,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectListEnveloped'
+                $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
   /api/v2/accounts/{account_id}/projects/{id}/:
     get:
@@ -1241,7 +1247,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RepositoryV2ListEnveloped'
+                $ref: '#/components/schemas/RepositoryV2Enveloped'
           description: ''
   /api/v2/accounts/{account_id}/repositories/{id}/:
     get:
@@ -1708,10 +1714,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AccountResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     AccountMigrationEvent:
       type: object
@@ -2085,10 +2094,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ConnectionEncryptionResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     ConnectionEncryptionRequest:
       type: object
@@ -2198,6 +2210,18 @@ components:
         * `environment` - environment
         * `job` - job
         * `user` - user
+    CustomPagination:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of items in the current page
+        total_count:
+          type: integer
+          description: Total number of items
+      required:
+      - count
+      - total_count
     DateEnum:
       enum:
       - every_day
@@ -2280,10 +2304,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentV2Response'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     EnvironmentV2Request:
       type: object
@@ -2465,6 +2492,22 @@ components:
       - supports_docs
       - type
       - use_custom_branch
+    Extra:
+      type: object
+      properties:
+        filters:
+          type: object
+          additionalProperties: {}
+          description: Filters applied to the request
+        order_by:
+          type: string
+          description: Ordering applied to the request
+        pagination:
+          $ref: '#/components/schemas/CustomPagination'
+      required:
+      - filters
+      - order_by
+      - pagination
     GitCloneStrategyEnum:
       enum:
       - azure_active_directory_app
@@ -2648,10 +2691,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/HumanReadableJobDefinitionResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     HumanReadableJobDefinitionRequest:
       type: object
@@ -3007,6 +3053,21 @@ components:
       required:
       - data
       - status
+    InviteListEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InviteResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - extra
+      - status
     InviteResponse:
       type: object
       properties:
@@ -3216,10 +3277,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/JobNotificationSettingsResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     JobNotificationSettingsRequest:
       type: object
@@ -3604,10 +3668,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProjectResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     ProjectRequest:
       type: object
@@ -3818,10 +3885,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RepositoryV2Response'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     RepositoryV2Request:
       type: object
@@ -4029,10 +4099,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RunResponseResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     RunResponseResponse:
       type: object
@@ -4497,10 +4570,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     UserRequest:
       type: object
