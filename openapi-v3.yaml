@@ -42,6 +42,27 @@ info:
     * Offset: Specifies how many records to skip. Can be an integer 0 and higher.
     * Limit: Specifies the maximum records you want to retrieve in a single request. Can be an integer up to 100. This limit makes responses easier to handle for servers and people.
 
+    Endpoints that support pagination include some useful extra information about the pagination state. For example:
+
+    ```json
+    {
+      data: [...],
+      extra: {
+        // How the results were filtered
+        filters: {...},
+        // The order of the results
+        order_by: "id",
+        // The pagination state
+        pagination: {
+          // The number of records returned in this response
+          count: 5,
+          // The total number of available records
+          total_count: 10,
+        }
+
+      }
+    }
+    ````
 
     ## Example request
 
@@ -72,7 +93,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountEnveloped'
+                $ref: '#/components/schemas/AccountListEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/assign-groups/:
     post:
@@ -89,7 +110,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupListEnveloped'
+          description: ''
   /api/v3/accounts/{account_id}/audit-logs/:
     get:
       operationId: List Recent Audit Log Events
@@ -377,7 +402,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupPermissionListEnveloped'
+          description: ''
   /api/v3/accounts/{account_id}/groups/:
     get:
       operationId: List Groups
@@ -459,7 +488,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GroupListEnveloped'
+                $ref: '#/components/schemas/GroupEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/groups/{id}/:
     get:
@@ -573,7 +602,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IPRestrictionRuleEnveloped'
+                $ref: '#/components/schemas/IPRestrictionRuleListEnveloped'
           description: ''
     post:
       operationId: Save IP Restriction
@@ -858,7 +887,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LicenseMapListEnveloped'
+                $ref: '#/components/schemas/LicenseMapEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/license-maps/{id}/:
     get:
@@ -1020,7 +1049,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OAuthConfigurationListEnveloped'
+                $ref: '#/components/schemas/OAuthConfigurationEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/oauth-configurations/{id}/:
     get:
@@ -1209,7 +1238,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectListEnveloped'
+                $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{id}/:
     get:
@@ -1332,7 +1361,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DbtAdapterListEnveloped'
+                $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/adapters/{id}/:
     get:
@@ -1524,7 +1553,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseConnectionV3ListEnveloped'
+                $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/connections/{id}/:
     get:
@@ -1811,7 +1840,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
+                $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/{id}/:
     post:
@@ -1957,9 +1986,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
     delete:
       operationId: Destroy Projects Environment Variables Bulk
@@ -1979,14 +2006,8 @@ paths:
       security:
       - BearerAuthentication: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/environment/:
     get:
       operationId: List Projects Environment Variables Environment
@@ -2335,7 +2356,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentV3ListEnveloped'
+                $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environments/{id}/:
     get:
@@ -2472,7 +2493,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExtendedAttributesListEnveloped'
+                $ref: '#/components/schemas/ExtendedAttributesEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/{id}/:
     get:
@@ -2594,7 +2615,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupPermissionListEnveloped'
+          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/:
     get:
       operationId: List Integrations
@@ -2618,7 +2643,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListLineageIntegrationResponseResponse'
+                $ref: '#/components/schemas/ListListLineageIntegrationResponseResponse'
           description: ''
     post:
       operationId: Create Integration
@@ -2779,7 +2804,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListLineageIntegrationCollection'
+                $ref: '#/components/schemas/ListListLineageIntegrationCollectionResponse'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/collections/{collection_id}/:
     get:
@@ -2814,7 +2839,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListLineageIntegrationCollection'
+                $ref: '#/components/schemas/ListListLineageIntegrationCollectionResponse'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/selections:
     post:
@@ -2976,7 +3001,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RepositoryV3ListEnveloped'
+                $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/repositories/{id}/:
     get:
@@ -3274,7 +3299,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/users/:
     get:
-      operationId: Retrieve User
+      operationId: List Users
       description: List users for a given account.
       parameters:
       - in: path
@@ -3815,7 +3840,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCredentialsListEnveloped'
+          description: ''
     post:
       operationId: Create Users Credential
       description: Associate a set of development credentials with a given user.
@@ -3843,7 +3872,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCredentialsEnveloped'
+          description: ''
   /api/v3/users/{user_id}/credentials/{id}/:
     get:
       operationId: Retrieve Users Credential
@@ -3865,7 +3898,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCredentialsListEnveloped'
+          description: ''
     post:
       operationId: Update Users Credential
       description: Update which development credentials are associated with a specific
@@ -3899,7 +3936,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCredentialsEnveloped'
+          description: ''
     delete:
       operationId: Destroy Users Credential
       description: Delete a development credentials / user association.
@@ -3923,15 +3964,20 @@ paths:
           description: No response body
 components:
   schemas:
-    AccountEnveloped:
+    AccountListEnveloped:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/AccountResponse'
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     AccountMigrationEvent:
       type: object
@@ -4497,10 +4543,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BaseConnectionV3Response'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     BaseConnectionV3Request:
       type: object
@@ -4812,10 +4861,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomEnvironmentVariableResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     CustomEnvironmentVariableRequest:
       type: object
@@ -4892,6 +4944,18 @@ components:
       - environment
       - id
       - updated_at
+    CustomPagination:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of items in the current page
+        total_count:
+          type: integer
+          description: Total number of items
+      required:
+      - count
+      - total_count
     DatabricksConnection:
       title: DatabricksConnection
       type: object
@@ -4987,18 +5051,6 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/DbtAdapterResponse'
-        status:
-          $ref: '#/components/schemas/Status'
-      required:
-      - data
-      - status
-    DbtAdapterListEnveloped:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/DbtAdapterResponse'
         status:
           $ref: '#/components/schemas/Status'
       required:
@@ -5194,10 +5246,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentV3Response'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     EnvironmentV3Request:
       type: object
@@ -5379,18 +5434,6 @@ components:
       required:
       - data
       - status
-    ExtendedAttributesListEnveloped:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExtendedAttributesResponse'
-        status:
-          $ref: '#/components/schemas/Status'
-      required:
-      - data
-      - status
     ExtendedAttributesRequest:
       type: object
       properties:
@@ -5434,6 +5477,22 @@ components:
       - created_at
       - id
       - updated_at
+    Extra:
+      type: object
+      properties:
+        filters:
+          type: object
+          additionalProperties: {}
+          description: Filters applied to the request
+        order_by:
+          type: string
+          description: Ordering applied to the request
+        pagination:
+          $ref: '#/components/schemas/CustomPagination'
+      required:
+      - filters
+      - order_by
+      - pagination
     FabricConnection:
       title: FabricConnection
       type: object
@@ -5573,9 +5632,6 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/GetAccountConnection'
-        extra:
-          title: Extra
-          type: object
         error_code:
           title: Error Code
           type: integer
@@ -5630,9 +5686,6 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/GetLineageIntegration'
-        extra:
-          title: Extra
-          type: object
         error_code:
           title: Error Code
           type: integer
@@ -5732,10 +5785,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GroupResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     GroupPermission:
       type: object
@@ -5767,6 +5823,59 @@ components:
       - group_id
       - permission_set
       - writable_environment_categories
+    GroupPermissionListEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupPermissionResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - extra
+      - status
+    GroupPermissionResponse:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        group_id:
+          type: integer
+        project_id:
+          type: integer
+        all_projects:
+          type: boolean
+        permission_set:
+          $ref: '#/components/schemas/PermissionSetEnum'
+        permission_level:
+          type: integer
+        state:
+          type: integer
+          default: 1
+        writable_environment_categories:
+          type: array
+          items:
+            type: string
+          default: []
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - updated_at
     GroupRequest:
       type: object
       properties:
@@ -5933,6 +6042,21 @@ components:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - status
+    IPRestrictionRuleListEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPRestrictionRuleResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - extra
       - status
     IPRestrictionRuleResponse:
       type: object
@@ -6187,10 +6311,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LicenseMapResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     LicenseMapRequest:
       type: object
@@ -6357,23 +6484,6 @@ components:
       - account_id
       - project_id
       - name
-    ListLineageIntegrationResponseResponse:
-      title: ListLineageIntegrationResponseResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/ListLineageIntegrationResponse'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - status
-      - data
     ListListAccountConnectionResponse:
       title: ListListAccountConnectionResponse
       type: object
@@ -6385,15 +6495,55 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ListAccountConnection'
-        extra:
-          title: Extra
-          type: object
         error_code:
           title: Error Code
           type: integer
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
       required:
       - status
       - data
+      - extra
+    ListListLineageIntegrationCollectionResponse:
+      title: ListListLineageIntegrationCollectionResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/ListLineageIntegrationCollection'
+        error_code:
+          title: Error Code
+          type: integer
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
+      required:
+      - status
+      - data
+      - extra
+    ListListLineageIntegrationResponseResponse:
+      title: ListListLineageIntegrationResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/ListLineageIntegrationResponse'
+        error_code:
+          title: Error Code
+          type: integer
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
+      required:
+      - status
+      - data
+      - extra
     ListWebhooksReceiptsResponseEnvelope:
       type: object
       properties:
@@ -6470,10 +6620,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OAuthConfigurationResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     OAuthConfigurationRequest:
       type: object
@@ -6981,7 +7134,6 @@ components:
       - pagination
     PatchAccountConnectionRequest:
       title: PatchAccountConnection
-      description: parent class for all request bodies, to be extended by each endpoint
       type: object
       properties:
         account_id:
@@ -7021,7 +7173,6 @@ components:
       additionalProperties: false
     PatchLineageIntegrationRequest:
       title: PatchLineageIntegration
-      description: parent class for all request bodies, to be extended by each endpoint
       type: object
       properties:
         name:
@@ -7120,7 +7271,6 @@ components:
         * `trial_2022` - TRIAL_2022
     PostAccountConnectionRequest:
       title: PostAccountConnection
-      description: parent class for all request bodies, to be extended by each endpoint
       type: object
       properties:
         account_id:
@@ -7168,7 +7318,6 @@ components:
       additionalProperties: false
     PostLineageIntegrationRequest:
       title: PostLineageIntegration
-      description: parent class for all request bodies, to be extended by each endpoint
       type: object
       properties:
         name:
@@ -7194,7 +7343,6 @@ components:
       additionalProperties: false
     PostLineageIntegrationWatchSelectionRequest:
       title: PostLineageIntegrationWatchSelection
-      description: parent class for all request bodies, to be extended by each endpoint
       type: object
       properties:
         to_add:
@@ -7294,10 +7442,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PrivateLinkEndpointResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     PrivateLinkEndpointResponse:
       type: object
@@ -7400,10 +7551,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProjectResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     ProjectRequest:
       type: object
@@ -7553,10 +7707,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PublicAuditLogResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     PublicAuditLogResponse:
       type: object
@@ -7737,10 +7894,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RepositoryV3Response'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     RepositoryV3Request:
       type: object
@@ -7936,10 +8096,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SemanticLayerCredentialsResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     SemanticLayerCredentialsResponse:
       type: object
@@ -8059,10 +8222,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceTokenResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     ServiceTokenLite:
       type: object
@@ -8114,10 +8280,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceTokenPermissionResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     ServiceTokenPermissionResponse:
       type: object
@@ -8656,6 +8825,31 @@ components:
       required:
       - first_name
       - last_name
+    UserCredentialsEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UserCredentialsResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    UserCredentialsListEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserCredentialsResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - extra
+      - status
     UserCredentialsRequest:
       type: object
       properties:
@@ -8681,6 +8875,49 @@ components:
       - credentials_id
       - project_id
       - user_id
+    UserCredentialsResponse:
+      type: object
+      properties:
+        account_id:
+          type: integer
+          description: The account the user credentials are associated with
+        user_id:
+          type: integer
+          description: The user the user credentials are associated with
+        project_id:
+          type: integer
+          description: The project the user credentials are associated with
+        credentials_id:
+          type: integer
+          description: The credentials the user is associated with
+        state:
+          type: integer
+          default: 1
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        credentials:
+          allOf:
+          - $ref: '#/components/schemas/PostgresCredentials'
+          readOnly: true
+        project:
+          allOf:
+          - $ref: '#/components/schemas/Project'
+          readOnly: true
+      required:
+      - created_at
+      - credentials
+      - id
+      - project
+      - updated_at
     UserLicense:
       type: object
       properties:
@@ -8700,10 +8937,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
         status:
           $ref: '#/components/schemas/Status'
       required:
       - data
+      - extra
       - status
     UserResponse:
       type: object
@@ -8820,6 +9060,35 @@ components:
       - licenses
       - permissions
       - sso_only_user
+    V3ResponseExtraData:
+      title: V3ResponseExtraData
+      type: object
+      properties:
+        filters:
+          title: Filters
+          type: object
+        order_by:
+          title: Order By
+          type: string
+        pagination:
+          $ref: '#/components/schemas/V3ResponsePagination'
+      required:
+      - filters
+      - order_by
+      - pagination
+    V3ResponsePagination:
+      title: V3ResponsePagination
+      type: object
+      properties:
+        count:
+          title: Count
+          type: integer
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - count
+      - total_count
     WatchSelectionItem:
       title: WatchSelectionItem
       type: object
