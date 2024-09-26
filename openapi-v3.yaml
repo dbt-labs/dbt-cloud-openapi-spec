@@ -1971,13 +1971,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -1986,7 +1986,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
+                $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseListEnveloped'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseFailListEnveloped'
           description: ''
     delete:
       operationId: Destroy Projects Environment Variables Bulk
