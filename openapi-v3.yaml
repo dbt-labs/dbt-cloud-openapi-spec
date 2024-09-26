@@ -2622,7 +2622,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/:
     get:
-      operationId: List Integrations
+      operationId: List Lineage Integrations
       parameters:
       - in: path
         name: account_id
@@ -2646,7 +2646,7 @@ paths:
                 $ref: '#/components/schemas/ListListLineageIntegrationResponseResponse'
           description: ''
     post:
-      operationId: Create Integration
+      operationId: Create Lineage Integration
       parameters:
       - in: path
         name: account_id
@@ -2683,7 +2683,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/:
     get:
-      operationId: Get Integration
+      operationId: Get Lineage Integration
       parameters:
       - in: path
         name: account_id
@@ -2712,7 +2712,7 @@ paths:
                 $ref: '#/components/schemas/GetLineageIntegrationResponse'
           description: ''
     patch:
-      operationId: Update Integration
+      operationId: Update Lineage Integration
       parameters:
       - in: path
         name: account_id
@@ -2752,7 +2752,7 @@ paths:
                 $ref: '#/components/schemas/GetLineageIntegrationResponse'
           description: ''
     delete:
-      operationId: Delete Integration
+      operationId: Delete Lineage Integration
       parameters:
       - in: path
         name: account_id
@@ -2806,44 +2806,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ListListLineageIntegrationCollectionResponse'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/collections/{collection_id}/:
-    get:
-      operationId: List collections from BI tool_2
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: collection_id
-        schema:
-          type: string
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Projects Integrations
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListListLineageIntegrationCollectionResponse'
-          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/selections:
     post:
-      operationId: Update Integration Selections
+      operationId: Update Lineage Integration Selections
       parameters:
       - in: path
         name: account_id
