@@ -106,6 +106,18 @@ paths:
         required: true
       tags:
       - Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignGroupsRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssignGroupsRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AssignGroupsRequestRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -158,7 +170,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          description: A CSV file
   /api/v3/accounts/{account_id}/audit-logs/export/:
     get:
       operationId: Get Bulk Audit Log Export Status
@@ -178,7 +190,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogBulkExportStatusResponseEnveloped'
+          description: ''
     post:
       operationId: Submit Bulk Audit Log Export Request
       description: |-
@@ -197,7 +213,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogStartBulkExportResponseEnveloped'
+          description: ''
   /api/v3/accounts/{account_id}/audit-logs/export/{job_id}/download/:
     get:
       operationId: Download Bulk Audit Log Export
@@ -222,7 +242,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogBulkExportDownloadResponseEnveloped'
+          description: ''
   /api/v3/accounts/{account_id}/connections/:
     get:
       operationId: List Account Connections
@@ -398,6 +422,18 @@ paths:
         required: true
       tags:
       - Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupPermissionListRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GroupPermissionListRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GroupPermissionListRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -1659,7 +1695,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/:
     get:
-      operationId: List Projects Credentials
+      operationId: List Credentials
       description: List the credentials for a given project.
       parameters:
       - in: path
@@ -1680,8 +1716,8 @@ paths:
         '200':
           description: No response body
     post:
-      operationId: Create Projects Credential
-      description: Create new credentials
+      operationId: Create Credentials
+      description: Create a new set of credentials to associate with a user or environment
       parameters:
       - in: path
         name: account_id
@@ -1702,7 +1738,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/{id}/:
     get:
-      operationId: Retrieve Projects Credential
+      operationId: Get Credentials
       description: Fetch a specific set of credentials.
       parameters:
       - in: path
@@ -1728,7 +1764,7 @@ paths:
         '200':
           description: No response body
     post:
-      operationId: Updates Project Credentials
+      operationId: Update Credentials
       description: Update a set of credentials
       parameters:
       - in: path
@@ -1754,7 +1790,7 @@ paths:
         '200':
           description: No response body
     patch:
-      operationId: Partial Update Projects Credential
+      operationId: Partial Update Credentials
       description: Partially update a set of credentials
       parameters:
       - in: path
@@ -1780,7 +1816,7 @@ paths:
         '200':
           description: No response body
     delete:
-      operationId: Destroy Projects Credential
+      operationId: Delete Credentials
       description: Delete a set of credentials
       parameters:
       - in: path
@@ -2617,6 +2653,18 @@ paths:
         required: true
       tags:
       - Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupPermissionListRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GroupPermissionListRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GroupPermissionListRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -2641,7 +2689,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Projects Integrations
+      - Lineage Integrations
       security:
       - BearerAuthentication: []
       responses:
@@ -2665,7 +2713,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Projects Integrations
+      - Lineage Integrations
       requestBody:
         content:
           application/json:
@@ -2707,7 +2755,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Projects Integrations
+      - Lineage Integrations
       security:
       - BearerAuthentication: []
       responses:
@@ -2736,7 +2784,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Projects Integrations
+      - Lineage Integrations
       requestBody:
         content:
           application/json:
@@ -2776,7 +2824,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Projects Integrations
+      - Lineage Integrations
       security:
       - BearerAuthentication: []
       responses:
@@ -2791,6 +2839,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: collection_id
+        schema:
+          type: string
+        description: A subfolder in the collection
       - in: path
         name: id
         schema:
@@ -2802,7 +2855,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Projects Integrations
+      - Lineage Integrations
       security:
       - BearerAuthentication: []
       responses:
@@ -2832,7 +2885,7 @@ paths:
           type: integer
         required: true
       tags:
-      - Projects Integrations
+      - Lineage Integrations
       requestBody:
         content:
           application/json:
@@ -2870,6 +2923,18 @@ paths:
         required: true
       tags:
       - Repositories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateManagedRepositoryRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateManagedRepositoryRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateManagedRepositoryRequestRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -3797,7 +3862,7 @@ paths:
           description: ''
   /api/v3/users/{user_id}/credentials/:
     get:
-      operationId: List Users Credential
+      operationId: List User Credentials
       description: List the development credentials associated with a given user.
       parameters:
       - in: path
@@ -3817,7 +3882,7 @@ paths:
                 $ref: '#/components/schemas/UserCredentialsListEnveloped'
           description: ''
     post:
-      operationId: Create Users Credential
+      operationId: Create User Credentials
       description: Associate a set of development credentials with a given user.
       parameters:
       - in: path
@@ -3850,7 +3915,7 @@ paths:
           description: ''
   /api/v3/users/{user_id}/credentials/{id}/:
     get:
-      operationId: Retrieve Users Credential
+      operationId: Get User Credentials
       description: Get a development credentials association for a given user.
       parameters:
       - in: path
@@ -3875,7 +3940,7 @@ paths:
                 $ref: '#/components/schemas/UserCredentialsListEnveloped'
           description: ''
     post:
-      operationId: Update Users Credential
+      operationId: Update User Credentials
       description: Update which development credentials are associated with a specific
         user.
       parameters:
@@ -3913,7 +3978,7 @@ paths:
                 $ref: '#/components/schemas/UserCredentialsEnveloped'
           description: ''
     delete:
-      operationId: Destroy Users Credential
+      operationId: Delete User Credentials
       description: Delete a development credentials / user association.
       parameters:
       - in: path
@@ -4417,6 +4482,18 @@ components:
       required:
       - host
       - cluster
+    AssignGroupsRequestRequest:
+      type: object
+      properties:
+        desired_group_ids:
+          type: array
+          items:
+            type: integer
+        user_id:
+          type: integer
+      required:
+      - desired_group_ids
+      - user_id
     AthenaConnection:
       title: AthenaConnection
       type: object
@@ -4465,6 +4542,51 @@ components:
       - region_name
       - database
       - s3_staging_dir
+    AuditLogBulkExportDownloadResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AuditLogBulkExportDownloadResponseResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    AuditLogBulkExportDownloadResponseResponse:
+      type: object
+      properties:
+        download_url:
+          type: string
+    AuditLogBulkExportStatusResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AuditLogBulkExportStatusResponseResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    AuditLogBulkExportStatusResponseResponse:
+      type: object
+      properties:
+        is_running:
+          type: boolean
+    AuditLogStartBulkExportResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AuditLogStartBulkExportResponseResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    AuditLogStartBulkExportResponseResponse:
+      type: object
+      properties:
+        workflow:
+          type: string
     BaseConnectionV3:
       type: object
       properties:
@@ -4735,6 +4857,14 @@ components:
       - http
       - thrift
       type: string
+    CreateManagedRepositoryRequestRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+      required:
+      - name
     CreateSubscriptionResponseEnvelope:
       type: object
       properties:
@@ -5825,6 +5955,46 @@ components:
       - data
       - extra
       - status
+    GroupPermissionListRequest:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupPermissionRequest'
+      required:
+      - data
+    GroupPermissionRequest:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        group_id:
+          type: integer
+        project_id:
+          type: integer
+        all_projects:
+          type: boolean
+        permission_set:
+          $ref: '#/components/schemas/PermissionSetEnum'
+        permission_level:
+          type: integer
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        writable_environment_categories:
+          type: array
+          items:
+            type: string
+            minLength: 1
+      required:
+      - account_id
+      - all_projects
+      - group_id
+      - permission_set
+      - state
+      - writable_environment_categories
     GroupPermissionResponse:
       type: object
       properties:
