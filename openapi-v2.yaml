@@ -502,7 +502,7 @@ paths:
   /api/v2/accounts/{account_id}/jobs/:
     get:
       operationId: List Jobs
-      description: Use this endpoint to list jobs for an account.
+      description: List jobs for the given account
       parameters:
       - in: path
         name: account_id
@@ -538,13 +538,19 @@ paths:
         schema:
           type: integer
       - in: query
+        name: order_by
+        schema:
+          type: string
+        description: Field to order the results by. Use `-` to reverse the order.
+      - in: query
         name: pk
         schema:
           type: integer
       - in: query
         name: project_id
         schema:
-          type: integer
+          type: string
+        description: Filters the results to a specific Project
       - in: query
         name: project_id__in
         schema:
@@ -570,7 +576,7 @@ paths:
           description: ''
     post:
       operationId: Create Job
-      description: Use this endpoint to create a new job.
+      description: Create a new job.
       parameters:
       - in: path
         name: account_id
@@ -700,7 +706,7 @@ paths:
   /api/v2/accounts/{account_id}/jobs/{id}/:
     get:
       operationId: Retrieve Job
-      description: Use this endpoint to retrieve the details of a job.
+      description: Retrieve the details of a job.
       parameters:
       - in: path
         name: account_id
@@ -725,7 +731,7 @@ paths:
           description: ''
     post:
       operationId: Update Job
-      description: Use this endpoint to update a job.
+      description: Update a job.
       parameters:
       - in: path
         name: account_id
@@ -762,7 +768,7 @@ paths:
           description: ''
     delete:
       operationId: Destroy Job
-      description: Use this endpoint to delete a job.
+      description: Delete a job
       parameters:
       - in: path
         name: account_id
@@ -783,7 +789,7 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/licenses/:
     get:
-      operationId: List Account Licenses
+      operationId: List Account License Allocations
       parameters:
       - in: path
         name: account_id
@@ -796,7 +802,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseAllocationListEnveloped'
+          description: ''
   /api/v2/accounts/{account_id}/notifications/:
     get:
       operationId: List Notifications
@@ -973,7 +983,7 @@ paths:
           description: No response body
   /api/v2/accounts/{account_id}/permissions/{id}/:
     post:
-      operationId: Create Permission
+      operationId: Update License Permissions
       parameters:
       - in: path
         name: account_id
@@ -987,11 +997,27 @@ paths:
         required: true
       tags:
       - Permissions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLicenseRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserLicenseRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserLicenseRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLicenseEnveloped'
+          description: ''
   /api/v2/accounts/{account_id}/projects/:
     get:
       operationId: List Projects
@@ -1301,7 +1327,7 @@ paths:
   /api/v2/accounts/{account_id}/runs/:
     get:
       operationId: List Runs
-      description: Use this endpoint to list runs for an account.
+      description: List runs for an account.
       parameters:
       - in: path
         name: account_id
@@ -1349,17 +1375,37 @@ paths:
         schema:
           type: integer
       - in: query
+        name: include_related
+        schema:
+          type: string
+        description: A list of related objects to include in the response. Valid values
+          are `trigger`, `job`, and `debug_logs`. If `debug_logs` is not provided,
+          then the included debug logs will be truncated to the last 1,000 lines of
+          the debug log output file.
+      - in: query
         name: job_definition_id
         schema:
-          type: integer
+          type: string
+        description: Filters the results to a specific Job
       - in: query
         name: limit
         schema:
-          type: integer
+          type: string
+          default: 100
+        description: Pagination limit
       - in: query
         name: offset
         schema:
-          type: integer
+          type: string
+          default: 0
+        description: Pagination offset
+      - in: query
+        name: order_by
+        schema:
+          type: string
+          default: id
+        description: Field to order the results by. Use `-` to reverse the order.
+          Options are `id`, `created_at`, and `finished_at`
       - in: query
         name: pk
         schema:
@@ -1371,7 +1417,8 @@ paths:
       - in: query
         name: project_id
         schema:
-          type: integer
+          type: string
+        description: Filters the results to a specific Project
       - in: query
         name: project_id__in
         schema:
@@ -1383,7 +1430,8 @@ paths:
       - in: query
         name: status
         schema:
-          type: integer
+          type: string
+        description: Filters the results to a specific run status
       - in: query
         name: status__in
         schema:
@@ -1402,7 +1450,7 @@ paths:
   /api/v2/accounts/{account_id}/runs/{id}/:
     get:
       operationId: Retrieve Run
-      description: Use this endpoint to retrieve details for a run.
+      description: Retrieve details of a run.
       parameters:
       - in: path
         name: account_id
@@ -1414,6 +1462,14 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: A list of related objects to include in the response. Valid values
+          are `trigger`, `job`, and `debug_logs`. If `debug_logs` is not provided,
+          then the included debug logs will be truncated to the last 1,000 lines of
+          the debug log output file.
       tags:
       - Runs
       security:
@@ -1492,11 +1548,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          description: A run artifact file
   /api/v2/accounts/{account_id}/runs/{run_id}/cancel/:
     post:
       operationId: Cancel Run
-      description: Use this endpoint to cancel a run.
+      description: Cancel a run.
       parameters:
       - in: path
         name: account_id
@@ -1569,8 +1625,7 @@ paths:
   /api/v2/accounts/{account_id}/steps/{id}/:
     get:
       operationId: Retrieve Run Step
-      description: Use this endpoint to retrieve the details of a specific step of
-        a run.
+      description: Retrieve the details of a specific step of a run.
       parameters:
       - in: path
         name: account_id
@@ -1582,6 +1637,14 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: A list of related objects to include in the response. Valid values
+          are `trigger`, `job`, and `debug_logs`. If `debug_logs` is not provided,
+          then the included debug logs will be truncated to the last 1,000 lines of
+          the debug log output file.
       tags:
       - Runs
       security:
@@ -1596,6 +1659,7 @@ paths:
   /api/v2/accounts/{account_id}/users/:
     get:
       operationId: List Users
+      description: List the Users associated with the specified Account.
       parameters:
       - in: path
         name: account_id
@@ -1844,10 +1908,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-        unlock_if_subscription_renewed:
-          type: boolean
-          readOnly: true
-          default: false
         pending_cancel:
           type: boolean
           readOnly: true
@@ -1856,58 +1916,48 @@ components:
         billing_email_address:
           type: string
           readOnly: true
+          description: The email address to send billing notifications to
         pod_memory_request_mebibytes:
           type: integer
           readOnly: true
           default: 600
+          description: The amount of memory (in MiB) to request for run pods
         develop_pod_memory_request_mebibytes:
           type: integer
           readOnly: true
           default: 0
+          description: The amount of memory (in MiB) to request for develop pods
         run_duration_limit_seconds:
           type: integer
           readOnly: true
           default: 86400
+          description: The maximum duration that a run may is permitted to execute
+            for before it is terminated
         queue_limit:
           type: integer
           readOnly: true
           default: 50
-        metronome_customer_id:
-          type: string
-          readOnly: true
-        salesforce_customer_id:
-          type: string
-          readOnly: true
-        third_party_billing:
-          allOf:
-          - $ref: '#/components/schemas/ThirdPartyBillingEnum'
-          readOnly: true
-        develop_file_system:
-          type: boolean
-          readOnly: true
-          default: true
-        enterprise_authentication_method:
-          type: string
-          readOnly: true
+          description: The maximum number of runs that may be queued at once
         enterprise_login_slug:
           type: string
           readOnly: true
-        enterprise_unique_identifier:
-          type: string
-          readOnly: true
+          description: The enterprise login URL, if available
         business_critical:
           type: boolean
           readOnly: true
           default: false
+          description: Whether this account is on a Business Critical plan
         starter_repo_url:
           type: string
           readOnly: true
+          description: If defined, the URL used to initialize new dbt projects
         git_auth_level:
           type: string
           readOnly: true
         identifier:
           type: string
           readOnly: true
+          description: A globally unique (cross-cell) identifier
         trial_end_date:
           type: string
           format: date-time
@@ -1962,12 +2012,9 @@ components:
       - billing_email_address
       - business_critical
       - created_at
-      - develop_file_system
       - develop_pod_memory_request_mebibytes
       - developer_seats
-      - enterprise_authentication_method
       - enterprise_login_slug
-      - enterprise_unique_identifier
       - explorer_seats
       - git_auth_level
       - groups
@@ -1977,7 +2024,6 @@ components:
       - lock_cause
       - lock_reason
       - locked
-      - metronome_customer_id
       - migration_scheduled_at
       - pending_cancel
       - plan
@@ -1987,12 +2033,9 @@ components:
       - run_duration_limit_seconds
       - run_locked_until
       - run_slots
-      - salesforce_customer_id
       - starter_repo_url
       - static_subdomain
-      - third_party_billing
       - trial_end_date
-      - unlock_if_subscription_renewed
       - unlocked_at
       - updated_at
     AdapterVersionEnum:
@@ -2593,6 +2636,7 @@ components:
             type: integer
         cron:
           type: string
+          description: Cron syntax schedule for the job string
       required:
       - type
     HumanReadableDateStrategyRequest:
@@ -2607,6 +2651,7 @@ components:
         cron:
           type: string
           minLength: 1
+          description: Cron syntax schedule for the job string
       required:
       - type
     HumanReadableJobDefinition:
@@ -2620,8 +2665,11 @@ components:
           type: integer
         name:
           type: string
+          description: The name of the job
         dbt_version:
           type: string
+          description: When set, overrides the dbt_version specified in the Job's
+            Environment
         deferring_environment_id:
           type: integer
         deferring_job_definition_id:
@@ -2633,10 +2681,13 @@ components:
           type: array
           items:
             type: string
+          description: A list of dbt commands to run
         execution:
           $ref: '#/components/schemas/JobDefinitionExecution'
         generate_docs:
           type: boolean
+          description: When true, `dbt docs generate` will be run at the end of all
+            runs for this Job
         integration_id:
           type: integer
         job_type:
@@ -2719,9 +2770,12 @@ components:
         name:
           type: string
           minLength: 1
+          description: The name of the job
         dbt_version:
           type: string
           minLength: 1
+          description: When set, overrides the dbt_version specified in the Job's
+            Environment
         deferring_environment_id:
           type: integer
         deferring_job_definition_id:
@@ -2735,10 +2789,13 @@ components:
           items:
             type: string
             minLength: 1
+          description: A list of dbt commands to run
         execution:
           $ref: '#/components/schemas/JobDefinitionExecutionRequest'
         generate_docs:
           type: boolean
+          description: When true, `dbt docs generate` will be run at the end of all
+            runs for this Job
         integration_id:
           type: integer
         job_type:
@@ -2795,8 +2852,11 @@ components:
           type: integer
         name:
           type: string
+          description: The name of the job
         dbt_version:
           type: string
+          description: When set, overrides the dbt_version specified in the Job's
+            Environment
         deferring_environment_id:
           type: integer
         deferring_job_definition_id:
@@ -2808,6 +2868,7 @@ components:
           type: array
           items:
             type: string
+          description: A list of dbt commands to run
         execution:
           allOf:
           - $ref: '#/components/schemas/JobDefinitionExecution'
@@ -2816,6 +2877,8 @@ components:
         generate_docs:
           type: boolean
           default: false
+          description: When true, `dbt docs generate` will be run at the end of all
+            runs for this Job
         integration_id:
           type: integer
         is_deferrable:
@@ -2939,6 +3002,7 @@ components:
           $ref: '#/components/schemas/HumanReadableTimeStrategy'
         cron:
           type: string
+          description: Cron syntax schedule for the job string
       required:
       - date
       - time
@@ -2952,6 +3016,7 @@ components:
         cron:
           type: string
           minLength: 1
+          description: Cron syntax schedule for the job string
       required:
       - date
       - time
@@ -2994,8 +3059,11 @@ components:
           type: integer
         name:
           type: string
+          description: The name of the job
         dbt_version:
           type: string
+          description: When set, overrides the dbt_version specified in the Job's
+            Environment
         deferring_environment_id:
           type: integer
         deferring_job_definition_id:
@@ -3007,10 +3075,13 @@ components:
           type: array
           items:
             type: string
+          description: A list of dbt commands to run
         execution:
           $ref: '#/components/schemas/JobDefinitionExecution'
         generate_docs:
           type: boolean
+          description: When true, `dbt docs generate` will be run at the end of all
+            runs for this Job
         integration_id:
           type: integer
         job_type:
@@ -3144,6 +3215,7 @@ components:
       properties:
         cron:
           type: string
+          description: Cron syntax schedule for the job string
         date:
           $ref: '#/components/schemas/DateEnum'
         time:
@@ -3157,8 +3229,12 @@ components:
       properties:
         threads:
           type: integer
+          description: The maximum number of models to run in parallel in a single
+            dbt run
         target_name:
           type: string
+          description: Informational field that can be consumed in dbt project code
+            with `{{ target.name }}`
       required:
       - target_name
       - threads
@@ -3167,9 +3243,13 @@ components:
       properties:
         threads:
           type: integer
+          description: The maximum number of models to run in parallel in a single
+            dbt run
         target_name:
           type: string
           minLength: 1
+          description: Informational field that can be consumed in dbt project code
+            with `{{ target.name }}`
       required:
       - target_name
       - threads
@@ -3218,10 +3298,13 @@ components:
           type: integer
         name:
           type: string
+          description: The name of the job
         description:
           type: string
         generate_docs:
           type: boolean
+          description: When true, `dbt docs generate` will be run at the end of all
+            runs for this Job
         run_generate_sources:
           type: boolean
         state:
@@ -3230,6 +3313,8 @@ components:
             this entity is deleted
         dbt_version:
           type: string
+          description: When set, overrides the dbt_version specified in the Job's
+            Environment
         triggers:
           $ref: '#/components/schemas/JobDefinitionTriggers'
         settings:
@@ -3242,6 +3327,7 @@ components:
           type: array
           items:
             type: string
+          description: A list of dbt commands to run
         job_type:
           $ref: '#/components/schemas/JobTypeEnum'
         triggers_on_draft_pr:
@@ -3471,6 +3557,57 @@ components:
       - account_id
       - public_key
       - state
+    LicenseAllocationListEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseAllocationResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - extra
+      - status
+    LicenseAllocationResponse:
+      type: object
+      properties:
+        developer:
+          $ref: '#/components/schemas/LicenseDetail'
+        explorer:
+          $ref: '#/components/schemas/LicenseDetail'
+        read_only:
+          $ref: '#/components/schemas/LicenseDetail'
+        it:
+          $ref: '#/components/schemas/LicenseDetail'
+    LicenseDetail:
+      type: object
+      properties:
+        limited:
+          type: boolean
+        over_limit:
+          type: boolean
+        total:
+          type: integer
+        in_use:
+          type: integer
+        available:
+          type: integer
+        assigned:
+          type: integer
+        enterprise_plan:
+          type: boolean
+      required:
+      - assigned
+      - available
+      - enterprise_plan
+      - in_use
+      - limited
+      - over_limit
+      - total
     LicenseTypeEnum:
       enum:
       - developer
@@ -3490,6 +3627,8 @@ components:
           type: array
           items:
             type: string
+          description: List of artifact paths. Can be used to fetch individual artifacts
+            via the Retrieve Run Artifact endpoint.
         status:
           $ref: '#/components/schemas/Status'
       required:
@@ -3644,15 +3783,14 @@ components:
         semantic_layer_config_id:
           type: integer
           description: The active semantic layer configuration
-        skipped_setup:
-          type: boolean
-          default: false
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         dbt_project_subdirectory:
           type: string
+          description: The path in the associated repository where a dbt project can
+            be found
         docs_job_id:
           type: integer
           description: The job used for docs generation
@@ -3711,9 +3849,6 @@ components:
         semantic_layer_config_id:
           type: integer
           description: The active semantic layer configuration
-        skipped_setup:
-          type: boolean
-          default: false
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -3721,6 +3856,8 @@ components:
         dbt_project_subdirectory:
           type: string
           minLength: 1
+          description: The path in the associated repository where a dbt project can
+            be found
         docs_job_id:
           type: integer
           description: The job used for docs generation
@@ -3752,9 +3889,6 @@ components:
         semantic_layer_config_id:
           type: integer
           description: The active semantic layer configuration
-        skipped_setup:
-          type: boolean
-          default: false
         state:
           type: integer
           default: 1
@@ -3762,6 +3896,8 @@ components:
             this entity is deleted
         dbt_project_subdirectory:
           type: string
+          description: The path in the associated repository where a dbt project can
+            be found
         docs_job_id:
           type: integer
           description: The job used for docs generation
@@ -4140,12 +4276,18 @@ components:
           type: integer
         status:
           type: integer
+          description: "\n                A number representing the status of the\
+            \ run.\n                1: Queued\n                2: Starting\n     \
+            \           3: Running\n                10: Success\n                20:\
+            \ Error\n                30: Cancelled\n                "
         dbt_version:
           type: string
         git_branch:
           type: string
+          description: The git branch that was checked out for this run.
         git_sha:
           type: string
+          description: The git sha that was checked out for this run.
         status_message:
           type: string
         owner_thread_id:
@@ -4179,12 +4321,15 @@ components:
         dequeued_at:
           type: string
           format: date-time
+          description: When the run was picked up by a processor node
         started_at:
           type: string
           format: date-time
+          description: When the run began execution
         finished_at:
           type: string
           format: date-time
+          description: When the run completed execution
         last_checked_at:
           type: string
           format: date-time
@@ -4264,12 +4409,16 @@ components:
           type: string
         logs:
           type: string
+          description: High level logs
         debug_logs:
           type: string
+          description: The full debug logs
         log_path:
           type: string
+          description: The path to the logs, if available
         debug_log_path:
           type: string
+          description: The path to the debug logs, if available
       required:
       - account_id
       - index
@@ -4311,35 +4460,45 @@ components:
           type: string
         logs:
           type: string
+          description: High level logs
         debug_logs:
           type: string
+          description: The full debug logs
         log_path:
           type: string
+          description: The path to the logs, if available
         debug_log_path:
           type: string
+          description: The path to the debug logs, if available
         truncated_debug_logs:
           type: string
           readOnly: true
+          description: A truncated subset of the debug logs
         started_at:
           type: string
           format: date-time
           readOnly: true
+          description: When execution of the step began
         finished_at:
           type: string
           format: date-time
           readOnly: true
+          description: When execution of the step completed
         status_color:
           type: string
           readOnly: true
+          description: A status color code, in hex format
         status_humanized:
           type: string
           readOnly: true
         duration:
           type: string
           readOnly: true
+          description: How long execution of the step took
         duration_humanized:
           type: string
           readOnly: true
+          description: A human-readable verison of the execution duration
         id:
           type: integer
           readOnly: true
@@ -4413,12 +4572,16 @@ components:
         code:
           type: integer
           default: 200
+          description: HTTP status code
         is_success:
           type: boolean
+          description: Whether the request was successful or not
         user_message:
           type: string
+          description: End-user friendly success or error message
         developer_message:
           type: string
+          description: Developer friendly success or error message
       required:
       - developer_message
       - is_success
@@ -4437,11 +4600,6 @@ components:
         * `3` - EXPIRED
         * `4` - PENDING_EMAIL_VERIFICATION
         * `5` - EMAIL_VERIFIED_SSO
-    ThirdPartyBillingEnum:
-      enum:
-      - 5x
-      type: string
-      description: '* `5x` - FIVE_X'
     TimeEnum:
       enum:
       - every_hour
@@ -4456,12 +4614,15 @@ components:
         cause:
           type: string
           minLength: 1
+          description: A text description of the reason for running
         git_sha:
           type: string
           minLength: 1
+          description: The git sha to checkout before running
         git_branch:
           type: string
           minLength: 1
+          description: The git branch to checkout before running
         azure_pull_request_id:
           type: integer
         github_pull_request_id:
@@ -4473,24 +4634,30 @@ components:
         schema_override:
           type: string
           minLength: 1
+          description: Overrides the destination schema in the configured target
         dbt_version_override:
           type: string
           minLength: 1
-          description: 'Allowed values are: '
+          description: 'Overrides the version of dbt. Allowed values are: '
         threads_override:
           type: integer
+          description: Overrides the number of threads used
         target_name_override:
           type: string
           minLength: 1
+          description: Overrides the `target.name` context variable
         generate_docs_override:
           type: boolean
+          description: Overrides whether or not to generate docs
         timeout_seconds_override:
           type: integer
+          description: Overrides the timeout in seconds
         steps_override:
           type: array
           items:
             type: string
             minLength: 1
+          description: Overrides the list of dbt commands
       required:
       - cause
     Type13aEnum:
@@ -4572,6 +4739,7 @@ components:
       properties:
         license_type:
           type: string
+          description: The type of license, e.g. `developer` or `read_only`
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -4579,6 +4747,74 @@ components:
       required:
       - license_type
       - state
+    UserLicenseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UserLicenseResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    UserLicenseRequest:
+      type: object
+      properties:
+        license_type:
+          type: string
+          minLength: 1
+          description: The type of license, e.g. `developer` or `read_only`
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+      required:
+      - license_type
+      - state
+    UserLicenseResponse:
+      type: object
+      properties:
+        account_id:
+          type: integer
+          readOnly: true
+          description: The account the user license is associated with
+        user_id:
+          type: integer
+          readOnly: true
+          description: The user the user license is associated with
+        license_type:
+          type: string
+          default: developer
+          description: The type of license, e.g. `developer` or `read_only`
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+          readOnly: true
+          default: []
+      required:
+      - account_id
+      - created_at
+      - groups
+      - id
+      - updated_at
+      - user_id
     UserListEnveloped:
       type: object
       properties:
