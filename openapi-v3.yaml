@@ -83,7 +83,7 @@ paths:
   /api/v3/accounts/:
     get:
       operationId: List Accounts
-      description: List accounts
+      description: List the Accounts that your API Token is authorized to access.
       tags:
       - Accounts
       security:
@@ -4157,10 +4157,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-        unlock_if_subscription_renewed:
-          type: boolean
-          readOnly: true
-          default: false
         pending_cancel:
           type: boolean
           readOnly: true
@@ -4169,58 +4165,48 @@ components:
         billing_email_address:
           type: string
           readOnly: true
+          description: The email address to send billing notifications to
         pod_memory_request_mebibytes:
           type: integer
           readOnly: true
           default: 600
+          description: The amount of memory (in MiB) to request for run pods
         develop_pod_memory_request_mebibytes:
           type: integer
           readOnly: true
           default: 0
+          description: The amount of memory (in MiB) to request for develop pods
         run_duration_limit_seconds:
           type: integer
           readOnly: true
           default: 86400
+          description: The maximum duration that a run may is permitted to execute
+            for before it is terminated
         queue_limit:
           type: integer
           readOnly: true
           default: 50
-        metronome_customer_id:
-          type: string
-          readOnly: true
-        salesforce_customer_id:
-          type: string
-          readOnly: true
-        third_party_billing:
-          allOf:
-          - $ref: '#/components/schemas/ThirdPartyBillingEnum'
-          readOnly: true
-        develop_file_system:
-          type: boolean
-          readOnly: true
-          default: true
-        enterprise_authentication_method:
-          type: string
-          readOnly: true
+          description: The maximum number of runs that may be queued at once
         enterprise_login_slug:
           type: string
           readOnly: true
-        enterprise_unique_identifier:
-          type: string
-          readOnly: true
+          description: The enterprise login URL, if available
         business_critical:
           type: boolean
           readOnly: true
           default: false
+          description: Whether this account is on a Business Critical plan
         starter_repo_url:
           type: string
           readOnly: true
+          description: If defined, the URL used to initialize new dbt projects
         git_auth_level:
           type: string
           readOnly: true
         identifier:
           type: string
           readOnly: true
+          description: A globally unique (cross-cell) identifier
         trial_end_date:
           type: string
           format: date-time
@@ -4275,12 +4261,9 @@ components:
       - billing_email_address
       - business_critical
       - created_at
-      - develop_file_system
       - develop_pod_memory_request_mebibytes
       - developer_seats
-      - enterprise_authentication_method
       - enterprise_login_slug
-      - enterprise_unique_identifier
       - explorer_seats
       - git_auth_level
       - groups
@@ -4290,7 +4273,6 @@ components:
       - lock_cause
       - lock_reason
       - locked
-      - metronome_customer_id
       - migration_scheduled_at
       - pending_cancel
       - plan
@@ -4300,12 +4282,9 @@ components:
       - run_duration_limit_seconds
       - run_locked_until
       - run_slots
-      - salesforce_customer_id
       - starter_repo_url
       - static_subdomain
-      - third_party_billing
       - trial_end_date
-      - unlock_if_subscription_renewed
       - unlocked_at
       - updated_at
     AccountScopedPATRequestRequest:
@@ -6368,6 +6347,7 @@ components:
       properties:
         cron:
           type: string
+          description: Cron syntax schedule for the job string
         date:
           $ref: '#/components/schemas/DateEnum'
         time:
@@ -6381,8 +6361,12 @@ components:
       properties:
         threads:
           type: integer
+          description: The maximum number of models to run in parallel in a single
+            dbt run
         target_name:
           type: string
+          description: Informational field that can be consumed in dbt project code
+            with `{{ target.name }}`
       required:
       - target_name
       - threads
@@ -6414,10 +6398,13 @@ components:
           type: integer
         name:
           type: string
+          description: The name of the job
         description:
           type: string
         generate_docs:
           type: boolean
+          description: When true, `dbt docs generate` will be run at the end of all
+            runs for this Job
         run_generate_sources:
           type: boolean
         state:
@@ -6426,6 +6413,8 @@ components:
             this entity is deleted
         dbt_version:
           type: string
+          description: When set, overrides the dbt_version specified in the Job's
+            Environment
         triggers:
           $ref: '#/components/schemas/JobDefinitionTriggers'
         settings:
@@ -6438,6 +6427,7 @@ components:
           type: array
           items:
             type: string
+          description: A list of dbt commands to run
         job_type:
           $ref: '#/components/schemas/JobTypeEnum'
         triggers_on_draft_pr:
@@ -6798,10 +6788,13 @@ components:
           default: 404
         is_success:
           type: boolean
+          description: Whether the request was successful or not
         user_message:
           type: string
+          description: End-user friendly success or error message
         developer_message:
           type: string
+          description: Developer friendly success or error message
       required:
       - developer_message
       - is_success
@@ -7718,15 +7711,14 @@ components:
         semantic_layer_config_id:
           type: integer
           description: The active semantic layer configuration
-        skipped_setup:
-          type: boolean
-          default: false
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         dbt_project_subdirectory:
           type: string
+          description: The path in the associated repository where a dbt project can
+            be found
         docs_job_id:
           type: integer
           description: The job used for docs generation
@@ -7785,9 +7777,6 @@ components:
         semantic_layer_config_id:
           type: integer
           description: The active semantic layer configuration
-        skipped_setup:
-          type: boolean
-          default: false
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -7795,6 +7784,8 @@ components:
         dbt_project_subdirectory:
           type: string
           minLength: 1
+          description: The path in the associated repository where a dbt project can
+            be found
         docs_job_id:
           type: integer
           description: The job used for docs generation
@@ -7826,9 +7817,6 @@ components:
         semantic_layer_config_id:
           type: integer
           description: The active semantic layer configuration
-        skipped_setup:
-          type: boolean
-          default: false
         state:
           type: integer
           default: 1
@@ -7836,6 +7824,8 @@ components:
             this entity is deleted
         dbt_project_subdirectory:
           type: string
+          description: The path in the associated repository where a dbt project can
+            be found
         docs_job_id:
           type: integer
           description: The job used for docs generation
@@ -8670,12 +8660,16 @@ components:
         code:
           type: integer
           default: 200
+          description: HTTP status code
         is_success:
           type: boolean
+          description: Whether the request was successful or not
         user_message:
           type: string
+          description: End-user friendly success or error message
         developer_message:
           type: string
+          description: Developer friendly success or error message
       required:
       - developer_message
       - is_success
@@ -8902,11 +8896,6 @@ components:
       required:
       - data
       - status
-    ThirdPartyBillingEnum:
-      enum:
-      - 5x
-      type: string
-      description: '* `5x` - FIVE_X'
     TimeEnum:
       enum:
       - every_hour
@@ -9138,6 +9127,7 @@ components:
       properties:
         license_type:
           type: string
+          description: The type of license, e.g. `developer` or `read_only`
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
