@@ -1714,7 +1714,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialsResponseListEnveloped'
+          description: ''
     post:
       operationId: Create Credentials
       description: Create a new set of credentials to associate with a user or environment
@@ -1731,11 +1735,26 @@ paths:
         required: true
       tags:
       - Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CredentialsRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CredentialsRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CredentialsRequestRequest'
       security:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialsResponseEnveloped'
+          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/{id}/:
     get:
       operationId: Get Credentials
@@ -1762,7 +1781,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialsResponseEnveloped'
+          description: ''
     post:
       operationId: Update Credentials
       description: Update a set of credentials
@@ -1784,11 +1807,26 @@ paths:
         required: true
       tags:
       - Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CredentialsRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CredentialsRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CredentialsRequestRequest'
       security:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialsResponseEnveloped'
+          description: ''
     patch:
       operationId: Partial Update Credentials
       description: Partially update a set of credentials
@@ -1810,11 +1848,26 @@ paths:
         required: true
       tags:
       - Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CredentialsRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CredentialsRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CredentialsRequestRequest'
       security:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialsResponseEnveloped'
+          description: ''
     delete:
       operationId: Delete Credentials
       description: Delete a set of credentials
@@ -4606,6 +4659,18 @@ components:
       properties:
         workflow:
           type: string
+    AuthTypeEnum:
+      enum:
+      - password
+      - keypair
+      - sso
+      - external_oauth
+      type: string
+      description: |-
+        * `password` - PASSWORD
+        * `keypair` - KEYPAIR
+        * `sso` - SSO
+        * `external_oauth` - EXTERNAL_OAUTH
     BaseConnectionV3:
       type: object
       properties:
@@ -4757,6 +4822,103 @@ components:
       - id
       - oauth_redirect_uri
       - updated_at
+    BaseSparkAdapterCredentialFields:
+      type: object
+      properties:
+        token:
+          $ref: '#/components/schemas/TextField'
+        schema:
+          $ref: '#/components/schemas/TextField'
+        target_name:
+          $ref: '#/components/schemas/TextField'
+        threads:
+          allOf:
+          - $ref: '#/components/schemas/LegacyIntegerField'
+          default:
+            metadata:
+              label: Threads
+              description: The number of threads to use for your jobs.
+              field_type: number
+              encrypt: false
+              depends_on: null
+              overrideable: false
+              is_searchable: null
+              validation:
+                min_length: null
+                max_length: null
+                required: true
+                pattern: null
+            value: 6
+      required:
+      - schema
+      - target_name
+      - token
+    BaseSparkAdapterCredentialFieldsRequest:
+      type: object
+      properties:
+        token:
+          $ref: '#/components/schemas/TextFieldRequest'
+        schema:
+          $ref: '#/components/schemas/TextFieldRequest'
+        target_name:
+          $ref: '#/components/schemas/TextFieldRequest'
+        threads:
+          allOf:
+          - $ref: '#/components/schemas/LegacyIntegerFieldRequest'
+          default:
+            metadata:
+              label: Threads
+              description: The number of threads to use for your jobs.
+              field_type: number
+              encrypt: false
+              depends_on: null
+              overrideable: false
+              is_searchable: null
+              validation:
+                min_length: null
+                max_length: null
+                required: true
+                pattern: null
+            value: 6
+      required:
+      - schema
+      - target_name
+      - token
+    BaseSparkAdapterCredentialsSchema:
+      type: object
+      properties:
+        fields:
+          $ref: '#/components/schemas/BaseSparkAdapterCredentialFields'
+        field_order:
+          type: array
+          items:
+            type: string
+          description: The field order for display in the UI
+        field_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldGroup'
+          description: Specification of how certain fields should be grouped
+      required:
+      - fields
+    BaseSparkAdapterCredentialsSchemaRequest:
+      type: object
+      properties:
+        fields:
+          $ref: '#/components/schemas/BaseSparkAdapterCredentialFieldsRequest'
+        field_order:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          description: The field order for display in the UI
+        field_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldGroupRequest'
+          description: Specification of how certain fields should be grouped
+      required:
+      - fields
     BigqueryConnection:
       title: BigqueryConnection
       type: object
@@ -4869,6 +5031,103 @@ components:
       - token_uri
       - auth_provider_x509_cert_url
       - client_x509_cert_url
+    BigqueryCredentials:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        type:
+          $ref: '#/components/schemas/Type32eEnum'
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        threads:
+          type: integer
+        schema:
+          type: string
+        target_name:
+          type: string
+        _refresh_token:
+          type: string
+          title: ' refresh token'
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The version of the adapter used to create this connection. Can use instead of adapter_id.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
+      required:
+      - account_id
+      - schema
+      - state
+      - target_name
+      - threads
+      - type
+    BigqueryCredentialsRequest:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        type:
+          $ref: '#/components/schemas/Type32eEnum'
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        threads:
+          type: integer
+        schema:
+          type: string
+          minLength: 1
+        target_name:
+          type: string
+          minLength: 1
+        _refresh_token:
+          type: string
+          minLength: 1
+          title: ' refresh token'
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The version of the adapter used to create this connection. Can use instead of adapter_id.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
+      required:
+      - account_id
+      - schema
+      - state
+      - target_name
+      - threads
+      - type
     ConnectionMethod:
       title: ConnectionMethod
       description: An enumeration.
@@ -4893,6 +5152,45 @@ components:
           $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
+      - status
+    CredentialsRequestRequest:
+      oneOf:
+      - $ref: '#/components/schemas/PostgresCredentialsRequest'
+      - $ref: '#/components/schemas/RedshiftCredentialsRequest'
+      - $ref: '#/components/schemas/SnowflakeCredentialsRequest'
+      - $ref: '#/components/schemas/BigqueryCredentialsRequest'
+      - $ref: '#/components/schemas/DbtAdapterCredentialsRequest'
+    CredentialsResponse:
+      oneOf:
+      - $ref: '#/components/schemas/PostgresCredentials'
+      - $ref: '#/components/schemas/RedshiftCredentials'
+      - $ref: '#/components/schemas/SnowflakeCredentials'
+      - $ref: '#/components/schemas/BigqueryCredentials'
+      - $ref: '#/components/schemas/DbtAdapterCredentials'
+    CredentialsResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CredentialsResponse'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - status
+    CredentialsResponseListEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialsResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - data
+      - extra
       - status
     CustomEnvironmentVariableBulkRequest:
       type: object
@@ -5176,6 +5474,97 @@ components:
         * `days_of_week` - days_of_week
         * `custom_cron` - custom_cron
         * `interval_cron` - interval_cron
+    DbtAdapterCredentials:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        type:
+          $ref: '#/components/schemas/Type32eEnum'
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        threads:
+          type: integer
+        adapter_id:
+          type: integer
+        target_name:
+          type: string
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The version of the adapter used to create this connection. Can use instead of adapter_id.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
+      required:
+      - account_id
+      - state
+      - target_name
+      - threads
+      - type
+    DbtAdapterCredentialsRequest:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        type:
+          $ref: '#/components/schemas/Type32eEnum'
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        threads:
+          type: integer
+        adapter_id:
+          type: integer
+        credential_details:
+          allOf:
+          - $ref: '#/components/schemas/BaseSparkAdapterCredentialsSchemaRequest'
+          writeOnly: true
+        target_name:
+          type: string
+          minLength: 1
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The version of the adapter used to create this connection. Can use instead of adapter_id.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
+      required:
+      - account_id
+      - state
+      - target_name
+      - threads
+      - type
     DbtAdapterEnveloped:
       type: object
       properties:
@@ -5680,6 +6069,20 @@ components:
       required:
       - members
       - name
+    FieldGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        members:
+          type: array
+          items:
+            type: string
+            minLength: 1
+      required:
+      - members
+      - name
     Filters:
       type: object
       properties:
@@ -5690,6 +6093,31 @@ components:
       required:
       - limit
       - offset
+    GenericTextValidation:
+      type: object
+      properties:
+        min_length:
+          type: integer
+        max_length:
+          type: integer
+        required:
+          type: boolean
+          default: false
+        pattern:
+          type: string
+    GenericTextValidationRequest:
+      type: object
+      properties:
+        min_length:
+          type: integer
+        max_length:
+          type: integer
+        required:
+          type: boolean
+          default: false
+        pattern:
+          type: string
+          minLength: 1
     GetAccountConnection:
       title: GetAccountConnection
       type: object
@@ -6485,6 +6913,24 @@ components:
       - account_id
       - public_key
       - state
+    LegacyIntegerField:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/TextFieldMetadata'
+        value:
+          type: integer
+      required:
+      - metadata
+    LegacyIntegerFieldRequest:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/TextFieldMetadataRequest'
+        value:
+          type: integer
+      required:
+      - metadata
     LicenseMapEnveloped:
       type: object
       properties:
@@ -7624,6 +8070,60 @@ components:
       - threads
       - type
       - username
+    PostgresCredentialsRequest:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        type:
+          $ref: '#/components/schemas/Type32eEnum'
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        threads:
+          type: integer
+        username:
+          type: string
+          minLength: 1
+        default_schema:
+          type: string
+          minLength: 1
+        target_name:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The version of the adapter used to create this connection. Can use instead of adapter_id.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
+      required:
+      - account_id
+      - default_schema
+      - state
+      - target_name
+      - threads
+      - type
+      - username
     Priority:
       title: Priority
       description: An enumeration.
@@ -7983,6 +8483,107 @@ components:
       required:
       - hostname
       - dbname
+    RedshiftCredentials:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        type:
+          $ref: '#/components/schemas/Type32eEnum'
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        threads:
+          type: integer
+        username:
+          type: string
+        default_schema:
+          type: string
+        target_name:
+          type: string
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The version of the adapter used to create this connection. Can use instead of adapter_id.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
+      required:
+      - account_id
+      - default_schema
+      - state
+      - target_name
+      - threads
+      - type
+      - username
+    RedshiftCredentialsRequest:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        type:
+          $ref: '#/components/schemas/Type32eEnum'
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        threads:
+          type: integer
+        username:
+          type: string
+          minLength: 1
+        default_schema:
+          type: string
+          minLength: 1
+        target_name:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The version of the adapter used to create this connection. Can use instead of adapter_id.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
+      required:
+      - account_id
+      - default_schema
+      - state
+      - target_name
+      - threads
+      - type
+      - username
     RemoteBackendEnum:
       enum:
       - azure_active_directory
@@ -8654,6 +9255,141 @@ components:
       - account
       - database
       - warehouse
+    SnowflakeCredentials:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        type:
+          $ref: '#/components/schemas/Type32eEnum'
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        threads:
+          type: integer
+        auth_type:
+          $ref: '#/components/schemas/AuthTypeEnum'
+        schema:
+          type: string
+        user:
+          type: string
+        target_name:
+          type: string
+        role:
+          type: string
+        database:
+          type: string
+        warehouse:
+          type: string
+        _refresh_token:
+          type: string
+          title: ' refresh token'
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The version of the adapter used to create this connection. Can use instead of adapter_id.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
+      required:
+      - account_id
+      - auth_type
+      - schema
+      - state
+      - target_name
+      - threads
+      - type
+    SnowflakeCredentialsRequest:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        type:
+          $ref: '#/components/schemas/Type32eEnum'
+        state:
+          type: integer
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        threads:
+          type: integer
+        auth_type:
+          $ref: '#/components/schemas/AuthTypeEnum'
+        schema:
+          type: string
+          minLength: 1
+        user:
+          type: string
+          minLength: 1
+        target_name:
+          type: string
+          minLength: 1
+        role:
+          type: string
+          minLength: 1
+        database:
+          type: string
+          minLength: 1
+        warehouse:
+          type: string
+          minLength: 1
+        _refresh_token:
+          type: string
+          minLength: 1
+          title: ' refresh token'
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+        private_key:
+          type: string
+          writeOnly: true
+          minLength: 1
+        private_key_passphrase:
+          type: string
+          writeOnly: true
+          minLength: 1
+        adapter_version:
+          allOf:
+          - $ref: '#/components/schemas/AdapterVersionEnum'
+          description: |-
+            The version of the adapter used to create this connection. Can use instead of adapter_id.
+
+            * `apache_spark_v0` - apache_spark_v0
+            * `databricks_spark_v0` - databricks_spark_v0
+            * `databricks_v0` - databricks_v0
+            * `trino_v0` - trino_v0
+            * `snowflake_v0` - snowflake_v0
+            * `bigquery_v0` - bigquery_v0
+            * `postgres_v0` - postgres_v0
+            * `redshift_v0` - redshift_v0
+            * `synapse_v0` - synapse_v0
+            * `fabric_v0` - fabric_v0
+            * `athena_v0` - athena_v0
+            * `teradata_v0` - teradata_v0
+      required:
+      - account_id
+      - auth_type
+      - schema
+      - state
+      - target_name
+      - threads
+      - type
     Status:
       type: object
       properties:
@@ -8896,6 +9632,78 @@ components:
       required:
       - data
       - status
+    TextField:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/TextFieldMetadata'
+        value:
+          type: string
+      required:
+      - metadata
+    TextFieldMetadata:
+      type: object
+      properties:
+        label:
+          type: string
+        description:
+          type: string
+        field_type:
+          type: string
+        encrypt:
+          type: boolean
+        depends_on: {}
+        overrideable:
+          type: boolean
+          default: false
+        is_searchable:
+          type: boolean
+        validation:
+          $ref: '#/components/schemas/GenericTextValidation'
+      required:
+      - description
+      - encrypt
+      - field_type
+      - label
+      - validation
+    TextFieldMetadataRequest:
+      type: object
+      properties:
+        label:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        field_type:
+          type: string
+          minLength: 1
+        encrypt:
+          type: boolean
+        depends_on: {}
+        overrideable:
+          type: boolean
+          default: false
+        is_searchable:
+          type: boolean
+        validation:
+          $ref: '#/components/schemas/GenericTextValidationRequest'
+      required:
+      - description
+      - encrypt
+      - field_type
+      - label
+      - validation
+    TextFieldRequest:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/TextFieldMetadataRequest'
+        value:
+          type: string
+          minLength: 1
+      required:
+      - metadata
     TimeEnum:
       enum:
       - every_hour
