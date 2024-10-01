@@ -704,7 +704,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPRestrictionRuleSetEnveloped'
+          description: ''
   /api/v3/accounts/{account_id}/ip-restrictions-set/{id}/validate/:
     get:
       operationId: Validate Client IP Against IP Restrictions
@@ -4103,7 +4107,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -4354,7 +4358,7 @@ components:
         data:
           $ref: '#/components/schemas/AccountScopedPATResponseResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4466,7 +4470,7 @@ components:
         data:
           $ref: '#/components/schemas/AdapterSchemaResponseResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4620,7 +4624,7 @@ components:
         data:
           $ref: '#/components/schemas/AuditLogBulkExportDownloadResponseResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4635,7 +4639,7 @@ components:
         data:
           $ref: '#/components/schemas/AuditLogBulkExportStatusResponseResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4650,7 +4654,7 @@ components:
         data:
           $ref: '#/components/schemas/AuditLogStartBulkExportResponseResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4684,7 +4688,7 @@ components:
           type: string
           description: The name of the connection
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         adapter_version:
           $ref: '#/components/schemas/AdapterVersionEnum'
         created_by_id:
@@ -4713,7 +4717,7 @@ components:
         data:
           $ref: '#/components/schemas/BaseConnectionV3Response'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4727,7 +4731,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -4746,7 +4750,7 @@ components:
           minLength: 1
           description: The name of the connection
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         adapter_version:
           $ref: '#/components/schemas/AdapterVersionEnum'
         created_by_id:
@@ -4783,7 +4787,7 @@ components:
           type: string
           description: The name of the connection
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         adapter_version:
           $ref: '#/components/schemas/AdapterVersionEnum'
         created_by_id:
@@ -5039,7 +5043,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -5086,7 +5090,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -5135,6 +5139,20 @@ components:
       - http
       - thrift
       type: string
+    ConnectionTypeEnum:
+      enum:
+      - postgres
+      - redshift
+      - snowflake
+      - bigquery
+      - adapter
+      type: string
+      description: |-
+        * `postgres` - postgres
+        * `redshift` - redshift
+        * `snowflake` - snowflake
+        * `bigquery` - bigquery
+        * `adapter` - adapter
     CreateManagedRepositoryRequestRequest:
       type: object
       properties:
@@ -5149,7 +5167,7 @@ components:
         data:
           $ref: '#/components/schemas/Subscription'
         status:
-          $ref: '#/components/schemas/ResponseStatus'
+          $ref: '#/components/schemas/WebhookResponseStatus'
       required:
       - data
       - status
@@ -5173,21 +5191,28 @@ components:
         data:
           $ref: '#/components/schemas/CredentialsResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
+    CredentialsResponseList:
+      oneOf:
+      - $ref: '#/components/schemas/PostgresCredentials'
+      - $ref: '#/components/schemas/RedshiftCredentials'
+      - $ref: '#/components/schemas/SnowflakeCredentials'
+      - $ref: '#/components/schemas/BigqueryCredentials'
+      - $ref: '#/components/schemas/DbtAdapterCredentials'
     CredentialsResponseListEnveloped:
       type: object
       properties:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/CredentialsResponse'
+            $ref: '#/components/schemas/CredentialsResponseList'
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -5230,7 +5255,7 @@ components:
           items:
             $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseFailResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -5253,7 +5278,7 @@ components:
           items:
             $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -5274,7 +5299,7 @@ components:
         data:
           $ref: '#/components/schemas/CustomEnvironmentVariableResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -5288,7 +5313,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -5304,7 +5329,7 @@ components:
           type: string
           minLength: 1
         type:
-          $ref: '#/components/schemas/TypeE7eEnum'
+          $ref: '#/components/schemas/CustomEnvironmentVariableTypeEnum'
         user_id:
           type: integer
         environment_id:
@@ -5338,7 +5363,7 @@ components:
         name:
           type: string
         type:
-          $ref: '#/components/schemas/TypeE7eEnum'
+          $ref: '#/components/schemas/CustomEnvironmentVariableTypeEnum'
         user_id:
           type: integer
         environment_id:
@@ -5372,6 +5397,18 @@ components:
       - environment
       - id
       - updated_at
+    CustomEnvironmentVariableTypeEnum:
+      enum:
+      - project
+      - environment
+      - job
+      - user
+      type: string
+      description: |-
+        * `project` - project
+        * `environment` - environment
+        * `job` - job
+        * `user` - user
     CustomPagination:
       type: object
       properties:
@@ -5462,18 +5499,6 @@ components:
           type: integer
       required:
       - host
-    DateEnum:
-      enum:
-      - every_day
-      - days_of_week
-      - custom_cron
-      - interval_cron
-      type: string
-      description: |-
-        * `every_day` - every_day
-        * `days_of_week` - days_of_week
-        * `custom_cron` - custom_cron
-        * `interval_cron` - interval_cron
     DbtAdapterCredentials:
       type: object
       properties:
@@ -5482,7 +5507,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -5525,7 +5550,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -5571,7 +5596,7 @@ components:
         data:
           $ref: '#/components/schemas/DbtAdapterResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -5756,7 +5781,7 @@ components:
         data:
           $ref: '#/components/schemas/EnvironmentV3Response'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -5770,7 +5795,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -5943,7 +5968,7 @@ components:
         data:
           $ref: '#/components/schemas/Event'
         status:
-          $ref: '#/components/schemas/ResponseStatus'
+          $ref: '#/components/schemas/WebhookResponseStatus'
       required:
       - data
       - status
@@ -5953,7 +5978,7 @@ components:
         data:
           $ref: '#/components/schemas/ExtendedAttributesResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -6277,7 +6302,7 @@ components:
         data:
           $ref: '#/components/schemas/Receipt'
         status:
-          $ref: '#/components/schemas/ResponseStatus'
+          $ref: '#/components/schemas/WebhookResponseStatus'
       required:
       - data
       - status
@@ -6338,7 +6363,7 @@ components:
         data:
           $ref: '#/components/schemas/GroupResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -6352,7 +6377,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -6397,7 +6422,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -6405,12 +6430,12 @@ components:
     GroupPermissionListRequest:
       type: object
       properties:
-        data:
-          type: array
+        ? ''
+        : type: array
           items:
             $ref: '#/components/schemas/GroupPermissionRequest'
       required:
-      - data
+      - ''
     GroupPermissionRequest:
       type: object
       properties:
@@ -6547,6 +6572,26 @@ components:
       - group_permissions
       - id
       - updated_at
+    HumanReadableDateStrategyTypeEnum:
+      enum:
+      - every_day
+      - days_of_week
+      - custom_cron
+      - interval_cron
+      type: string
+      description: |-
+        * `every_day` - every_day
+        * `days_of_week` - days_of_week
+        * `custom_cron` - custom_cron
+        * `interval_cron` - interval_cron
+    HumanReadableTimeStrategTypeEnum:
+      enum:
+      - every_hour
+      - at_exact_hours
+      type: string
+      description: |-
+        * `every_hour` - every_hour
+        * `at_exact_hours` - at_exact_hours
     IPRestrictionCidr:
       type: object
       properties:
@@ -6647,7 +6692,7 @@ components:
         data:
           $ref: '#/components/schemas/IPRestrictionRuleResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -6661,7 +6706,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -6697,6 +6742,47 @@ components:
           readOnly: true
         description:
           type: string
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - enabled_for_service_tokens
+      - id
+      - updated_at
+    IPRestrictionRuleSetEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/IPRestrictionRuleSetResponse'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
+    IPRestrictionRuleSetResponse:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        state:
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        enabled:
+          type: boolean
+        enabled_for_service_tokens:
+          type: boolean
+          readOnly: true
         id:
           type: integer
           readOnly: true
@@ -6752,7 +6838,7 @@ components:
         data:
           $ref: '#/components/schemas/InviteUsersResponseResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -6777,9 +6863,9 @@ components:
           type: string
           description: Cron syntax schedule for the job string
         date:
-          $ref: '#/components/schemas/DateEnum'
+          $ref: '#/components/schemas/HumanReadableDateStrategyTypeEnum'
         time:
-          $ref: '#/components/schemas/TimeEnum'
+          $ref: '#/components/schemas/HumanReadableTimeStrategTypeEnum'
       required:
       - cron
       - date
@@ -6937,7 +7023,7 @@ components:
         data:
           $ref: '#/components/schemas/LicenseMapResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -6951,7 +7037,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -7191,7 +7277,7 @@ components:
           items:
             $ref: '#/components/schemas/Receipt'
         status:
-          $ref: '#/components/schemas/ResponseStatus'
+          $ref: '#/components/schemas/WebhookResponseStatus'
       required:
       - data
       - status
@@ -7251,7 +7337,7 @@ components:
         data:
           $ref: '#/components/schemas/OAuthConfigurationResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -7265,7 +7351,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -7732,7 +7818,7 @@ components:
           items:
             $ref: '#/components/schemas/Event'
         status:
-          $ref: '#/components/schemas/ResponseStatus'
+          $ref: '#/components/schemas/WebhookResponseStatus'
         extra:
           $ref: '#/components/schemas/PaginationExtra'
       required:
@@ -7747,7 +7833,7 @@ components:
           items:
             $ref: '#/components/schemas/Subscription'
         status:
-          $ref: '#/components/schemas/ResponseStatus'
+          $ref: '#/components/schemas/WebhookResponseStatus'
         extra:
           $ref: '#/components/schemas/PaginationExtra'
       required:
@@ -8031,7 +8117,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -8078,7 +8164,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -8141,7 +8227,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -8235,7 +8321,7 @@ components:
         data:
           $ref: '#/components/schemas/ProjectResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -8249,7 +8335,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -8405,7 +8491,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -8491,7 +8577,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -8538,7 +8624,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -8679,7 +8765,7 @@ components:
         data:
           $ref: '#/components/schemas/RepositoryV3Response'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -8693,7 +8779,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -8862,8 +8948,21 @@ components:
       properties:
         code:
           type: integer
+          default: 200
+          description: HTTP status code
+        is_success:
+          type: boolean
+          description: Whether the request was successful or not
+        user_message:
+          type: string
+          description: End-user friendly success or error message
+        developer_message:
+          type: string
+          description: Developer friendly success or error message
       required:
-      - code
+      - developer_message
+      - is_success
+      - user_message
     Schema:
       type: object
       properties:
@@ -8897,7 +8996,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -9011,7 +9110,7 @@ components:
         data:
           $ref: '#/components/schemas/ServiceTokenResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -9025,7 +9124,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -9083,7 +9182,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -9263,7 +9362,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -9321,7 +9420,7 @@ components:
         project_id:
           type: integer
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -9391,25 +9490,26 @@ components:
       - threads
       - type
     Status:
+      title: Status
       type: object
       properties:
         code:
+          title: Code
           type: integer
-          default: 200
-          description: HTTP status code
         is_success:
+          title: Is Success
           type: boolean
-          description: Whether the request was successful or not
         user_message:
+          title: User Message
           type: string
-          description: End-user friendly success or error message
         developer_message:
+          title: Developer Message
           type: string
-          description: Developer friendly success or error message
       required:
-      - developer_message
+      - code
       - is_success
       - user_message
+      - developer_message
     Subscription:
       type: object
       properties:
@@ -9516,7 +9616,7 @@ components:
         data:
           $ref: '#/components/schemas/Subscription'
         status:
-          $ref: '#/components/schemas/ResponseStatus'
+          $ref: '#/components/schemas/WebhookResponseStatus'
       required:
       - data
       - status
@@ -9628,7 +9728,7 @@ components:
         data:
           $ref: '#/components/schemas/TestSubscriptionResponseData'
         status:
-          $ref: '#/components/schemas/ResponseStatus'
+          $ref: '#/components/schemas/WebhookResponseStatus'
       required:
       - data
       - status
@@ -9704,14 +9804,6 @@ components:
           minLength: 1
       required:
       - metadata
-    TimeEnum:
-      enum:
-      - every_hour
-      - at_exact_hours
-      type: string
-      description: |-
-        * `every_hour` - every_hour
-        * `at_exact_hours` - at_exact_hours
     TrinoConnection:
       title: TrinoConnection
       type: object
@@ -9735,20 +9827,6 @@ components:
           type: integer
       required:
       - host
-    Type32eEnum:
-      enum:
-      - postgres
-      - redshift
-      - snowflake
-      - bigquery
-      - adapter
-      type: string
-      description: |-
-        * `postgres` - postgres
-        * `redshift` - redshift
-        * `snowflake` - snowflake
-        * `bigquery` - bigquery
-        * `adapter` - adapter
     Type76eEnum:
       enum:
       - development
@@ -9767,18 +9845,6 @@ components:
         * `1` - CLOUD_CLI
         * `2` - GENERAL
         * `3` - NATIVE_APP_USER_LINK
-    TypeE7eEnum:
-      enum:
-      - project
-      - environment
-      - job
-      - user
-      type: string
-      description: |-
-        * `project` - project
-        * `environment` - environment
-        * `job` - job
-        * `user` - user
     TypeEdaEnum:
       enum:
       - 1
@@ -9821,7 +9887,7 @@ components:
         data:
           $ref: '#/components/schemas/Subscription'
         status:
-          $ref: '#/components/schemas/ResponseStatus'
+          $ref: '#/components/schemas/WebhookResponseStatus'
       required:
       - data
       - status
@@ -9841,7 +9907,7 @@ components:
         data:
           $ref: '#/components/schemas/UserCredentialsResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -9855,7 +9921,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -9953,7 +10019,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -10128,6 +10194,13 @@ components:
       - folder
       - dashboard
       type: string
+    WebhookResponseStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+      required:
+      - code
   securitySchemes:
     BearerAuthentication:
       type: http
