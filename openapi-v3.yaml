@@ -7790,7 +7790,7 @@ components:
           type: integer
         request_timeout:
           title: Request Timeout
-          type: string
+          type: integer
         adapter_id:
           title: Adapter Id
           type: integer
@@ -9691,7 +9691,6 @@ components:
       properties:
         port:
           title: Port
-          default: '1025'
           type: string
         tmode:
           title: Tmode
@@ -9703,12 +9702,10 @@ components:
           type: string
         retries:
           title: Retries
-          default: 0
           type: integer
         request_timeout:
           title: Request Timeout
-          default: '0'
-          type: string
+          type: integer
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
