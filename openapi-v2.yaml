@@ -633,7 +633,7 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          description: A run artifact file
   /api/v2/accounts/{account_id}/jobs/{job_id}/rerun/:
     post:
       operationId: Retry Failed Job
@@ -660,7 +660,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunResponseEnveloped'
+          description: ''
   /api/v2/accounts/{account_id}/jobs/{job_id}/run/:
     post:
       operationId: Trigger Job Run
@@ -1597,7 +1601,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunFailureDetailsEnveloped'
+          description: ''
     post:
       operationId: Retry Run
       description: Use this endpoint to retry a failed run. When this endpoint returns
@@ -1621,7 +1629,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunResponseEnveloped'
+          description: ''
   /api/v2/accounts/{account_id}/steps/{id}/:
     get:
       operationId: Retrieve Run Step
@@ -1767,7 +1779,7 @@ components:
         data:
           $ref: '#/components/schemas/AccountResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -1781,7 +1793,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -2079,7 +2091,7 @@ components:
           type: string
           description: The name of the connection
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         adapter_version:
           $ref: '#/components/schemas/AdapterVersionEnum'
         created_by_id:
@@ -2128,7 +2140,7 @@ components:
         data:
           $ref: '#/components/schemas/ConnectionEncryptionResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -2142,7 +2154,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -2218,6 +2230,20 @@ components:
           readOnly: true
       required:
       - id
+    ConnectionTypeEnum:
+      enum:
+      - postgres
+      - redshift
+      - snowflake
+      - bigquery
+      - adapter
+      type: string
+      description: |-
+        * `postgres` - postgres
+        * `redshift` - redshift
+        * `snowflake` - snowflake
+        * `bigquery` - bigquery
+        * `adapter` - adapter
     CustomEnvironmentVariable:
       type: object
       properties:
@@ -2271,18 +2297,6 @@ components:
       required:
       - count
       - total_count
-    DateEnum:
-      enum:
-      - every_day
-      - days_of_week
-      - custom_cron
-      - interval_cron
-      type: string
-      description: |-
-        * `every_day` - every_day
-        * `days_of_week` - days_of_week
-        * `custom_cron` - custom_cron
-        * `interval_cron` - interval_cron
     DeploymentTypeEnum:
       enum:
       - production
@@ -2342,7 +2356,7 @@ components:
         data:
           $ref: '#/components/schemas/EnvironmentV2Response'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -2356,7 +2370,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -2629,7 +2643,7 @@ components:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/TypeE72Enum'
+          $ref: '#/components/schemas/HumanReadableDateStrategyTypeEnum'
         days:
           type: array
           items:
@@ -2643,7 +2657,7 @@ components:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/TypeE72Enum'
+          $ref: '#/components/schemas/HumanReadableDateStrategyTypeEnum'
         days:
           type: array
           items:
@@ -2654,6 +2668,18 @@ components:
           description: Cron syntax schedule for the job string
       required:
       - type
+    HumanReadableDateStrategyTypeEnum:
+      enum:
+      - every_day
+      - days_of_week
+      - custom_cron
+      - interval_cron
+      type: string
+      description: |-
+        * `every_day` - every_day
+        * `days_of_week` - days_of_week
+        * `custom_cron` - custom_cron
+        * `interval_cron` - interval_cron
     HumanReadableJobDefinition:
       type: object
       properties:
@@ -2739,7 +2765,7 @@ components:
         data:
           $ref: '#/components/schemas/HumanReadableJobDefinitionResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -2753,7 +2779,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -3020,11 +3046,19 @@ components:
       required:
       - date
       - time
+    HumanReadableTimeStrategTypeEnum:
+      enum:
+      - every_hour
+      - at_exact_hours
+      type: string
+      description: |-
+        * `every_hour` - every_hour
+        * `at_exact_hours` - at_exact_hours
     HumanReadableTimeStrategy:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/Type13aEnum'
+          $ref: '#/components/schemas/HumanReadableTimeStrategTypeEnum'
         hours:
           type: array
           items:
@@ -3038,7 +3072,7 @@ components:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/Type13aEnum'
+          $ref: '#/components/schemas/HumanReadableTimeStrategTypeEnum'
         hours:
           type: array
           items:
@@ -3130,7 +3164,7 @@ components:
         data:
           $ref: '#/components/schemas/InviteResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -3144,7 +3178,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -3217,9 +3251,9 @@ components:
           type: string
           description: Cron syntax schedule for the job string
         date:
-          $ref: '#/components/schemas/DateEnum'
+          $ref: '#/components/schemas/HumanReadableDateStrategyTypeEnum'
         time:
-          $ref: '#/components/schemas/TimeEnum'
+          $ref: '#/components/schemas/HumanReadableTimeStrategTypeEnum'
       required:
       - cron
       - date
@@ -3362,7 +3396,7 @@ components:
         data:
           $ref: '#/components/schemas/JobNotificationSettingsResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -3376,7 +3410,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -3567,7 +3601,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -3630,7 +3664,7 @@ components:
           description: List of artifact paths. Can be used to fetch individual artifacts
             via the Retrieve Run Artifact endpoint.
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -3736,7 +3770,7 @@ components:
         name:
           type: string
         type:
-          $ref: '#/components/schemas/Type32eEnum'
+          $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
@@ -3807,7 +3841,7 @@ components:
         data:
           $ref: '#/components/schemas/ProjectResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -3821,7 +3855,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -4024,7 +4058,7 @@ components:
         data:
           $ref: '#/components/schemas/RepositoryV2Response'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4038,7 +4072,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -4222,6 +4256,26 @@ components:
       required:
       - account_id
       - state
+    ResponseStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 200
+          description: HTTP status code
+        is_success:
+          type: boolean
+          description: Whether the request was successful or not
+        user_message:
+          type: string
+          description: End-user friendly success or error message
+        developer_message:
+          type: string
+          description: Developer friendly success or error message
+      required:
+      - developer_message
+      - is_success
+      - user_message
     RetryNotSupportedReasonEnum:
       enum:
       - RETRY_UNSUPPORTED_CMD
@@ -4234,13 +4288,32 @@ components:
         * `RETRY_UNSUPPORTED_VERSION` - RETRY_UNSUPPORTED_VERSION
         * `RETRY_NOT_LATEST_RUN` - RETRY_NOT_LATEST_RUN
         * `RETRY_NOT_FAILED_RUN` - RETRY_NOT_FAILED_RUN
+    RunFailureDetailsEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunFailureDetailsResponse'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
+    RunFailureDetailsResponse:
+      type: object
+      properties:
+        failed_step:
+          type: string
+        skipped_steps:
+          type: array
+          items:
+            type: string
     RunResponseEnveloped:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/RunResponseResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4254,7 +4327,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
@@ -4441,7 +4514,7 @@ components:
         data:
           $ref: '#/components/schemas/RunStepResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4566,26 +4639,6 @@ components:
       required:
       - cause
       - job_definition_id
-    Status:
-      type: object
-      properties:
-        code:
-          type: integer
-          default: 200
-          description: HTTP status code
-        is_success:
-          type: boolean
-          description: Whether the request was successful or not
-        user_message:
-          type: string
-          description: End-user friendly success or error message
-        developer_message:
-          type: string
-          description: Developer friendly success or error message
-      required:
-      - developer_message
-      - is_success
-      - user_message
     StatusEnum:
       enum:
       - 1
@@ -4600,14 +4653,6 @@ components:
         * `3` - EXPIRED
         * `4` - PENDING_EMAIL_VERIFICATION
         * `5` - EMAIL_VERIFIED_SSO
-    TimeEnum:
-      enum:
-      - every_hour
-      - at_exact_hours
-      type: string
-      description: |-
-        * `every_hour` - every_hour
-        * `at_exact_hours` - at_exact_hours
     TriggerRunRequestRequest:
       type: object
       properties:
@@ -4660,14 +4705,6 @@ components:
           description: Overrides the list of dbt commands
       required:
       - cause
-    Type13aEnum:
-      enum:
-      - every_hour
-      - at_exact_hours
-      type: string
-      description: |-
-        * `every_hour` - every_hour
-        * `at_exact_hours` - at_exact_hours
     Type2e2Enum:
       enum:
       - 1
@@ -4680,20 +4717,6 @@ components:
         * `2` - SLACK
         * `3` - WEBHOOK
         * `4` - EXTERNAL_EMAIL
-    Type32eEnum:
-      enum:
-      - postgres
-      - redshift
-      - snowflake
-      - bigquery
-      - adapter
-      type: string
-      description: |-
-        * `postgres` - postgres
-        * `redshift` - redshift
-        * `snowflake` - snowflake
-        * `bigquery` - bigquery
-        * `adapter` - adapter
     Type76eEnum:
       enum:
       - development
@@ -4702,18 +4725,6 @@ components:
       description: |-
         * `development` - DEVELOPMENT
         * `deployment` - DEPLOYMENT
-    TypeE72Enum:
-      enum:
-      - every_day
-      - days_of_week
-      - custom_cron
-      - interval_cron
-      type: string
-      description: |-
-        * `every_day` - every_day
-        * `days_of_week` - days_of_week
-        * `custom_cron` - custom_cron
-        * `interval_cron` - interval_cron
     User:
       type: object
       properties:
@@ -4730,7 +4741,7 @@ components:
         data:
           $ref: '#/components/schemas/UserResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4753,7 +4764,7 @@ components:
         data:
           $ref: '#/components/schemas/UserLicenseResponse'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
@@ -4825,7 +4836,7 @@ components:
         extra:
           $ref: '#/components/schemas/Extra'
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - extra
