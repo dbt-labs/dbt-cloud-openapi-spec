@@ -115,6 +115,38 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccountEnveloped'
           description: ''
+    patch:
+      operationId: Partial Update Account
+      description: Partial Account update
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEnveloped'
+          description: ''
   /api/v2/accounts/{account_id}/encryptions/:
     get:
       operationId: List SSH Tunnels
@@ -1981,10 +2013,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-        migration_scheduled_at:
-          type: string
-          format: date-time
-          readOnly: true
         state:
           type: integer
           default: 1
@@ -2036,7 +2064,6 @@ components:
       - lock_cause
       - lock_reason
       - locked
-      - migration_scheduled_at
       - pending_cancel
       - plan
       - pod_memory_request_mebibytes
