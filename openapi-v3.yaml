@@ -4275,10 +4275,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-        migration_scheduled_at:
-          type: string
-          format: date-time
-          readOnly: true
         state:
           type: integer
           default: 1
@@ -4330,7 +4326,6 @@ components:
       - lock_cause
       - lock_reason
       - locked
-      - migration_scheduled_at
       - pending_cancel
       - plan
       - pod_memory_request_mebibytes
