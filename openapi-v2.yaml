@@ -2742,8 +2742,6 @@ components:
           type: boolean
           description: When true, `dbt docs generate` will be run at the end of all
             runs for this Job
-        integration_id:
-          type: integer
         job_type:
           $ref: '#/components/schemas/JobTypeEnum'
         lifecycle_webhooks:
@@ -2850,8 +2848,6 @@ components:
           type: boolean
           description: When true, `dbt docs generate` will be run at the end of all
             runs for this Job
-        integration_id:
-          type: integer
         job_type:
           $ref: '#/components/schemas/JobTypeEnum'
         lifecycle_webhooks:
@@ -2933,8 +2929,6 @@ components:
           default: false
           description: When true, `dbt docs generate` will be run at the end of all
             runs for this Job
-        integration_id:
-          type: integer
         is_deferrable:
           type: boolean
           readOnly: true
@@ -3144,8 +3138,6 @@ components:
           type: boolean
           description: When true, `dbt docs generate` will be run at the end of all
             runs for this Job
-        integration_id:
-          type: integer
         job_type:
           $ref: '#/components/schemas/JobTypeEnum'
         lifecycle_webhooks:
