@@ -1471,7 +1471,9 @@ paths:
       - in: query
         name: status__in
         schema:
-          type: array
+          type: string
+        description: 'Filters the results to a specific set of run statuses. `1: Queued`,
+          `2: Starting`, `3: Running`, `10: Success`, `20: Error`, `30: Cancelled`'
       tags:
       - Runs
       security:
