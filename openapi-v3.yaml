@@ -6315,21 +6315,6 @@ components:
         * `deploy_token` - deploy_token
         * `github_app` - github_app
         * `git_token` - git_token
-    GitProvider:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        provider_type:
-          $ref: '#/components/schemas/ProviderTypeEnum'
-        state:
-          type: integer
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-      required:
-      - account_id
-      - provider_type
-      - state
     Group:
       type: object
       properties:
@@ -8460,22 +8445,6 @@ components:
       - id
       - repository
       - updated_at
-    ProviderTypeEnum:
-      enum:
-      - azure_active_directory
-      - github
-      - gitlab
-      - git_url
-      - managed_github
-      - manual_config
-      type: string
-      description: |-
-        * `azure_active_directory` - azure_active_directory
-        * `github` - github
-        * `gitlab` - gitlab
-        * `git_url` - git_url
-        * `managed_github` - managed_github
-        * `manual_config` - manual_config
     PublicAuditLogListEnveloped:
       type: object
       properties:
@@ -8907,8 +8876,6 @@ components:
           - $ref: '#/components/schemas/Keypair'
           readOnly: true
         git_provider:
-          allOf:
-          - $ref: '#/components/schemas/GitProvider'
           readOnly: true
         gitlab:
           allOf:
