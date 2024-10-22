@@ -176,7 +176,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: integer
+          type: string
       - in: query
         name: state
         schema:
@@ -341,7 +341,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: integer
+          type: string
       - in: query
         name: project_id
         schema:
@@ -577,7 +577,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: integer
+          type: string
       - in: query
         name: project_id
         schema:
@@ -872,7 +872,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: integer
+          type: string
       - in: query
         name: slack_channel_id
         schema:
@@ -1083,7 +1083,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: integer
+          type: string
       - in: query
         name: pk__in
         schema:
@@ -1249,7 +1249,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: integer
+          type: string
       - in: query
         name: project_id
         schema:
@@ -1445,7 +1445,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: integer
+          type: string
       - in: query
         name: pk__in
         schema:
