@@ -2656,6 +2656,7 @@ components:
           type: integer
         state:
           type: integer
+          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         writable_environment_categories:
@@ -2667,7 +2668,6 @@ components:
       - all_projects
       - group_id
       - permission_set
-      - state
       - writable_environment_categories
     HumanReadableDateStrategy:
       type: object
