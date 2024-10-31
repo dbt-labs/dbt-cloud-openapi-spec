@@ -6930,6 +6930,10 @@ components:
         run_compare_changes:
           type: boolean
           default: false
+        compare_changes_flags:
+          type: string
+          default: --select state:modified
+          description: dbt syntax flags to be used for compare changes
         run_lint:
           type: boolean
           default: false
