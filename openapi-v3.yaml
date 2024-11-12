@@ -4656,7 +4656,7 @@ components:
     AuditLogStartBulkExportResponseResponse:
       type: object
       properties:
-        workflow:
+        job_id:
           type: string
     AuthTypeEnum:
       enum:
