@@ -4961,7 +4961,6 @@ components:
           type: string
         private_key:
           title: Private Key
-          write_only: true
           type: string
           writeOnly: true
           format: password
@@ -5022,13 +5021,11 @@ components:
           type: integer
         application_id:
           title: Application Id
-          write_only: true
           type: string
           writeOnly: true
           format: password
         application_secret:
           title: Application Secret
-          write_only: true
           type: string
           writeOnly: true
           format: password
@@ -5456,13 +5453,11 @@ components:
           type: string
         client_id:
           title: Client Id
-          write_only: true
           type: string
           writeOnly: true
           format: password
         client_secret:
           title: Client Secret
-          write_only: true
           type: string
           writeOnly: true
           format: password
@@ -9328,13 +9323,11 @@ components:
           type: boolean
         oauth_client_id:
           title: Oauth Client Id
-          write_only: true
           type: string
           writeOnly: true
           format: password
         oauth_client_secret:
           title: Oauth Client Secret
-          write_only: true
           type: string
           writeOnly: true
           format: password
@@ -9665,7 +9658,6 @@ components:
           type: string
         token:
           title: Token
-          write_only: true
           type: string
           writeOnly: true
           format: password
