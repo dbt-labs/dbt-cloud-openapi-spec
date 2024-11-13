@@ -480,6 +480,8 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: state
         schema:
@@ -1233,6 +1235,8 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: state
         schema:
@@ -1541,6 +1545,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
@@ -2157,6 +2163,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
@@ -2230,6 +2238,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
@@ -2303,6 +2313,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
@@ -2352,6 +2364,8 @@ paths:
         name: dbt_version__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: deployment_type
         schema:
@@ -2360,6 +2374,8 @@ paths:
         name: deployment_type__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: id__gt
         schema:
@@ -2388,6 +2404,8 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: string
       - in: path
         name: project_id
         schema:
@@ -2401,6 +2419,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
@@ -3080,6 +3100,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: remote_url
         schema:
@@ -4929,7 +4951,8 @@ components:
           type: string
         timeout_seconds:
           title: Timeout Seconds
-          exclusiveMinimum: 0
+          exclusiveMinimum: true
+          minimum: 0
           maximum: 86400
           type: integer
         private_key_id:
@@ -4939,7 +4962,6 @@ components:
           type: string
         private_key:
           title: Private Key
-          write_only: true
           type: string
           writeOnly: true
           format: password
@@ -5000,13 +5022,11 @@ components:
           type: integer
         application_id:
           title: Application Id
-          write_only: true
           type: string
           writeOnly: true
           format: password
         application_secret:
           title: Application Secret
-          write_only: true
           type: string
           writeOnly: true
           format: password
@@ -5434,13 +5454,11 @@ components:
           type: string
         client_id:
           title: Client Id
-          write_only: true
           type: string
           writeOnly: true
           format: password
         client_secret:
           title: Client Secret
-          write_only: true
           type: string
           writeOnly: true
           format: password
@@ -8087,7 +8105,8 @@ components:
         port:
           title: Port
           default: 5432
-          exclusiveMinimum: 0
+          exclusiveMinimum: true
+          minimum: 0
           maximum: 65535
           type: integer
       required:
@@ -8531,7 +8550,8 @@ components:
         port:
           title: Port
           default: 5432
-          exclusiveMinimum: 0
+          exclusiveMinimum: true
+          minimum: 0
           maximum: 65535
           type: integer
       required:
@@ -9306,13 +9326,11 @@ components:
           type: boolean
         oauth_client_id:
           title: Oauth Client Id
-          write_only: true
           type: string
           writeOnly: true
           format: password
         oauth_client_secret:
           title: Oauth Client Secret
-          write_only: true
           type: string
           writeOnly: true
           format: password
@@ -9603,7 +9621,8 @@ components:
         port:
           title: Port
           default: 1433
-          exclusiveMinimum: 0
+          exclusiveMinimum: true
+          minimum: 0
           maximum: 65535
           type: integer
         retries:
@@ -9643,7 +9662,6 @@ components:
           type: string
         token:
           title: Token
-          write_only: true
           type: string
           writeOnly: true
           format: password
@@ -9661,7 +9679,7 @@ components:
         tmode:
           title: Tmode
           default: ANSI
-          const: ANSI
+          enum: [ANSI]
           type: string
         host:
           title: Host
@@ -9781,7 +9799,8 @@ components:
         port:
           title: Port
           default: 443
-          exclusiveMinimum: 0
+          exclusiveMinimum: true
+          minimum: 0
           maximum: 65535
           type: integer
         adapter_id:
