@@ -4951,7 +4951,8 @@ components:
           type: string
         timeout_seconds:
           title: Timeout Seconds
-          exclusiveMinimum: 0
+          exclusiveMinimum: true
+          minimum: 0
           maximum: 86400
           type: integer
         private_key_id:
@@ -8104,7 +8105,8 @@ components:
         port:
           title: Port
           default: 5432
-          exclusiveMinimum: 0
+          exclusiveMinimum: true
+          minimum: 0
           maximum: 65535
           type: integer
       required:
@@ -8548,7 +8550,8 @@ components:
         port:
           title: Port
           default: 5432
-          exclusiveMinimum: 0
+          exclusiveMinimum: true
+          minimum: 0
           maximum: 65535
           type: integer
       required:
@@ -9618,7 +9621,8 @@ components:
         port:
           title: Port
           default: 1433
-          exclusiveMinimum: 0
+          exclusiveMinimum: true
+          minimum: 0
           maximum: 65535
           type: integer
         retries:
@@ -9795,7 +9799,8 @@ components:
         port:
           title: Port
           default: 443
-          exclusiveMinimum: 0
+          exclusiveMinimum: true
+          minimum: 0
           maximum: 65535
           type: integer
         adapter_id:
