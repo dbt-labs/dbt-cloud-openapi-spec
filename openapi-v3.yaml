@@ -480,6 +480,8 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: state
         schema:
@@ -1233,6 +1235,8 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: state
         schema:
@@ -1541,6 +1545,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
@@ -2157,6 +2163,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
@@ -2230,6 +2238,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
@@ -2303,6 +2313,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
@@ -2352,6 +2364,8 @@ paths:
         name: dbt_version__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: deployment_type
         schema:
@@ -2360,6 +2374,8 @@ paths:
         name: deployment_type__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: id__gt
         schema:
@@ -2388,6 +2404,8 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: string
       - in: path
         name: project_id
         schema:
@@ -2401,6 +2419,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
@@ -3080,6 +3100,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: remote_url
         schema:
