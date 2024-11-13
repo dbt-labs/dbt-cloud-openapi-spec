@@ -9679,7 +9679,7 @@ components:
         tmode:
           title: Tmode
           default: ANSI
-          const: ANSI
+          enum: [ANSI]
           type: string
         host:
           title: Host
