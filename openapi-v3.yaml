@@ -475,7 +475,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: query
         name: pk__in
         schema:
@@ -882,7 +882,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: query
         name: state
         schema:
@@ -1039,7 +1039,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: query
         name: state
         schema:
@@ -1228,7 +1228,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: query
         name: pk__in
         schema:
@@ -1527,7 +1527,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: path
         name: project_id
         schema:
@@ -2143,7 +2143,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: path
         name: project_id
         schema:
@@ -2216,7 +2216,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: path
         name: project_id
         schema:
@@ -2289,7 +2289,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: path
         name: project_id
         schema:
@@ -2383,7 +2383,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: query
         name: pk__in
         schema:
@@ -3066,7 +3066,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: path
         name: project_id
         schema:
@@ -3251,7 +3251,7 @@ paths:
       - in: query
         name: pk
         schema:
-          type: string
+          type: integer
       - in: query
         name: project_id
         schema:
