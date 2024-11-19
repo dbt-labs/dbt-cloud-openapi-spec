@@ -4726,7 +4726,8 @@ components:
         dbt_version_override:
           type: string
           minLength: 1
-          description: 'Overrides the version of dbt. Allowed values are: '
+          description: 'Overrides the version of dbt. Allowed values are: fallback,
+            extended, compatible'
         threads_override:
           type: integer
           description: Overrides the number of threads used
