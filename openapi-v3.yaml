@@ -8646,7 +8646,7 @@ components:
           type: string
         port:
           title: Port
-          default: 5432
+          default: 5439
           exclusiveMinimum: 0
           maximum: 65535
           type: integer
