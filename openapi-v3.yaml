@@ -4165,7 +4165,9 @@ components:
           writeOnly: true
           minLength: 1
         azure_service_authentication_method:
-          $ref: '#/components/schemas/AzureServiceAuthenticationMethodEnum'
+          allOf:
+          - $ref: '#/components/schemas/AzureServiceAuthenticationMethodEnum'
+          default: service_user
         state:
           type: integer
           default: 1
@@ -4173,7 +4175,6 @@ components:
             this entity is deleted
       required:
       - account_id
-      - azure_service_authentication_method
     AccountAzureActiveDirectoryApplicationResponse:
       type: object
       properties:
