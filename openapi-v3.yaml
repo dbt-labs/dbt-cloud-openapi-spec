@@ -247,43 +247,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuditLogBulkExportDownloadResponseEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/azure-ad-applications/{id}/:
-    patch:
-      operationId: Partial Update Azure Ad Application
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Azure Ad Applications
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccountAzureActiveDirectoryApplicationRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AccountAzureActiveDirectoryApplicationRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AccountAzureActiveDirectoryApplicationRequest'
-        required: true
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccountAzureActiveDirectoryApplicationEnveloped'
-          description: ''
   /api/v3/accounts/{account_id}/connections/:
     get:
       operationId: List Account Connections
@@ -4134,78 +4097,6 @@ paths:
           description: No response body
 components:
   schemas:
-    AccountAzureActiveDirectoryApplicationEnveloped:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/AccountAzureActiveDirectoryApplicationResponse'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - status
-    AccountAzureActiveDirectoryApplicationRequest:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        organization_name:
-          type: string
-          minLength: 1
-        tenant_id:
-          type: string
-          writeOnly: true
-          minLength: 1
-        client_id:
-          type: string
-          writeOnly: true
-          minLength: 1
-        client_secret:
-          type: string
-          writeOnly: true
-          minLength: 1
-        azure_service_authentication_method:
-          allOf:
-          - $ref: '#/components/schemas/AzureServiceAuthenticationMethodEnum'
-          default: service_user
-        state:
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-      required:
-      - account_id
-    AccountAzureActiveDirectoryApplicationResponse:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        organization_name:
-          type: string
-        azure_service_authentication_method:
-          allOf:
-          - $ref: '#/components/schemas/AzureServiceAuthenticationMethodEnum'
-          default: service_user
-        state:
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-        id:
-          type: integer
-          readOnly: true
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-      required:
-      - created_at
-      - id
-      - updated_at
     AccountListEnveloped:
       type: object
       properties:
@@ -4779,14 +4670,6 @@ components:
         * `keypair` - KEYPAIR
         * `sso` - SSO
         * `external_oauth` - EXTERNAL_OAUTH
-    AzureServiceAuthenticationMethodEnum:
-      enum:
-      - service_user
-      - service_principal
-      type: string
-      description: |-
-        * `service_user` - SERVICE_USER
-        * `service_principal` - SERVICE_PRINCIPAL
     BaseConnectionV3:
       type: object
       properties:
