@@ -1884,6 +1884,9 @@ components:
     AccountResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           description: The name of the account
@@ -2039,9 +2042,6 @@ components:
           readOnly: true
           default: []
           description: The user groups in the account
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -2232,6 +2232,9 @@ components:
     ConnectionEncryptionResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
           description: The account the connection is associated with
@@ -2255,9 +2258,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: integer
-          readOnly: true
       required:
       - id
     ConnectionTypeEnum:
@@ -2457,6 +2457,9 @@ components:
     EnvironmentV2Response:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         project_id:
@@ -2499,9 +2502,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -2905,6 +2905,9 @@ components:
     HumanReadableJobDefinitionResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         project_id:
@@ -3016,9 +3019,6 @@ components:
             : 1,\n                    \"project_id\": 1,\n                    \"statuses\"\
             : [10, 20],\n                }\n            }\n            </pre>\n  \
             \          "
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -3225,6 +3225,9 @@ components:
     InviteResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
           readOnly: true
@@ -3243,9 +3246,6 @@ components:
         redeemed_at:
           type: string
           format: date-time
-          readOnly: true
-        id:
-          type: integer
           readOnly: true
         created_at:
           type: string
@@ -3527,6 +3527,9 @@ components:
     JobNotificationSettingsResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
           description: The account the job notification setting is associated with
@@ -3583,9 +3586,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -3948,6 +3948,9 @@ components:
     ProjectResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           description: The name of the project
@@ -3981,9 +3984,6 @@ components:
         freshness_job_id:
           type: integer
           description: The job used for source freshness generation
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -4178,6 +4178,9 @@ components:
     RepositoryV2Response:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
           description: The account the repo is associated with
@@ -4226,9 +4229,6 @@ components:
           type: integer
         private_link_endpoint_id:
           type: string
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -4564,6 +4564,9 @@ components:
     RunStepResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         run_id:
           type: integer
         account_id:
@@ -4615,9 +4618,6 @@ components:
           type: string
           readOnly: true
           description: A human-readable verison of the execution duration
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -4828,6 +4828,9 @@ components:
     UserLicenseResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
           readOnly: true
@@ -4845,9 +4848,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -4899,6 +4899,9 @@ components:
     UserResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         first_name:
           type: string
         last_name:
@@ -4969,9 +4972,6 @@ components:
           readOnly: true
         gitlab_token_retrieval_failure:
           type: boolean
-          readOnly: true
-        id:
-          type: integer
           readOnly: true
         created_at:
           type: string
