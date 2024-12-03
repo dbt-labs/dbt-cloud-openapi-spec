@@ -4143,6 +4143,9 @@ components:
     AccountResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           description: The name of the account
@@ -4298,9 +4301,6 @@ components:
           readOnly: true
           default: []
           description: The user groups in the account
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -4360,6 +4360,9 @@ components:
     AccountScopedPATResponseResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         uid:
@@ -4399,9 +4402,6 @@ components:
         webhooks_only:
           type: boolean
           default: false
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -4772,6 +4772,9 @@ components:
     BaseConnectionV3Response:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
           description: The account the connection is associated with
@@ -4805,9 +4808,6 @@ components:
           type: integer
           description: The OAuth Configuration associated with this connection. When
             set,developer credentials leveraging OAuth may be created.
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -5351,6 +5351,9 @@ components:
     CustomEnvironmentVariableResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         project_id:
@@ -5372,9 +5375,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -5622,6 +5622,9 @@ components:
     DbtAdapterResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         project_id:
@@ -5638,9 +5641,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -5851,6 +5851,9 @@ components:
     EnvironmentV3Response:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
           description: The account the environment is associated with
@@ -5902,9 +5905,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -5997,6 +5997,9 @@ components:
     ExtendedAttributesResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         project_id:
@@ -6007,9 +6010,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -6450,6 +6450,9 @@ components:
     GroupPermissionResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         group_id:
@@ -6472,9 +6475,6 @@ components:
           items:
             type: string
           default: []
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -6514,6 +6514,9 @@ components:
     GroupResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         name:
@@ -6530,9 +6533,6 @@ components:
           type: array
           items:
             type: string
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -6694,6 +6694,9 @@ components:
     IPRestrictionRuleResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
         type:
@@ -6722,9 +6725,6 @@ components:
           readOnly: true
         description:
           type: string
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -6751,6 +6751,9 @@ components:
     IPRestrictionRuleSetResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         state:
@@ -6762,9 +6765,6 @@ components:
           type: boolean
         enabled_for_service_tokens:
           type: boolean
-          readOnly: true
-        id:
-          type: integer
           readOnly: true
         created_at:
           type: string
@@ -7049,6 +7049,9 @@ components:
     LicenseMapResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         license_type:
@@ -7062,9 +7065,6 @@ components:
           type: array
           items:
             type: string
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -7375,6 +7375,9 @@ components:
     OAuthConfigurationResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         type:
@@ -7391,9 +7394,6 @@ components:
           type: string
         redirect_uri:
           type: string
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -8219,6 +8219,9 @@ components:
     PrivateLinkEndpointResponse:
       type: object
       properties:
+        id:
+          type: string
+          readOnly: true
         account_id:
           type: integer
         name:
@@ -8245,9 +8248,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: string
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -8369,6 +8369,9 @@ components:
     ProjectResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           description: The name of the project
@@ -8402,9 +8405,6 @@ components:
         freshness_job_id:
           type: integer
           description: The job used for source freshness generation
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -8810,6 +8810,9 @@ components:
     RepositoryV3Response:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
           description: The account the repo is associated with
@@ -8863,9 +8866,6 @@ components:
           readOnly: true
         name:
           type: string
-          readOnly: true
-        id:
-          type: integer
           readOnly: true
         created_at:
           type: string
@@ -8970,6 +8970,9 @@ components:
     SemanticLayerCredentialsResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
           description: The account the credentials are associated with
@@ -9014,9 +9017,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -9156,6 +9156,9 @@ components:
     ServiceTokenPermissionResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         service_token_id:
@@ -9176,9 +9179,6 @@ components:
           items:
             type: string
           default: []
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -9208,6 +9208,9 @@ components:
     ServiceTokenResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
         uid:
@@ -9247,9 +9250,6 @@ components:
         webhooks_only:
           type: boolean
           default: false
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -9917,6 +9917,9 @@ components:
     UserCredentialsResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         account_id:
           type: integer
           description: The account the user credentials are associated with
@@ -9934,9 +9937,6 @@ components:
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        id:
-          type: integer
-          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -9990,6 +9990,9 @@ components:
     UserResponse:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         first_name:
           type: string
         last_name:
@@ -10060,9 +10063,6 @@ components:
           readOnly: true
         gitlab_token_retrieval_failure:
           type: boolean
-          readOnly: true
-        id:
-          type: integer
           readOnly: true
         created_at:
           type: string
