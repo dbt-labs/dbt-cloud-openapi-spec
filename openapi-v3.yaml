@@ -4392,7 +4392,7 @@ components:
         user:
           $ref: '#/components/schemas/User'
         type:
-          $ref: '#/components/schemas/TypeB17Enum'
+          $ref: '#/components/schemas/Type34eEnum'
         expires_at:
           type: string
           format: date-time
@@ -9055,7 +9055,7 @@ components:
         user:
           $ref: '#/components/schemas/User'
         type:
-          $ref: '#/components/schemas/TypeB17Enum'
+          $ref: '#/components/schemas/Type34eEnum'
         expires_at:
           type: string
           format: date-time
@@ -9240,7 +9240,7 @@ components:
         user:
           $ref: '#/components/schemas/User'
         type:
-          $ref: '#/components/schemas/TypeB17Enum'
+          $ref: '#/components/schemas/Type34eEnum'
         expires_at:
           type: string
           format: date-time
@@ -9790,6 +9790,18 @@ components:
           type: integer
       required:
       - host
+    Type34eEnum:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      type: integer
+      description: |-
+        * `1` - CLOUD_CLI
+        * `2` - GENERAL
+        * `3` - NATIVE_APP_USER_LINK
+        * `4` - SCIM
     Type76eEnum:
       enum:
       - development
@@ -9798,16 +9810,6 @@ components:
       description: |-
         * `development` - DEVELOPMENT
         * `deployment` - DEPLOYMENT
-    TypeB17Enum:
-      enum:
-      - 1
-      - 2
-      - 3
-      type: integer
-      description: |-
-        * `1` - CLOUD_CLI
-        * `2` - GENERAL
-        * `3` - NATIVE_APP_USER_LINK
     TypeEdaEnum:
       enum:
       - 1
