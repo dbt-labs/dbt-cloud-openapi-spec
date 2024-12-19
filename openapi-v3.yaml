@@ -4158,15 +4158,20 @@ components:
 
             * `cancelled` - CANCELLED
             * `cancelled_2022` - CANCELLED_2022
+            * `cancelled_2025` - CANCELLED_2025
             * `developer` - DEVELOPER
             * `developer_2022` - DEVELOPER_2022
             * `enterprise` - ENTERPRISE
+            * `enterprise_2025` - ENTERPRISE_2025
+            * `enterprise_plus_2025` - ENTERPRISE_PLUS_2025
             * `free` - FREE
+            * `starter_2025` - STARTER_2025
             * `team` - TEAM
             * `team_2022` - TEAM_2022
             * `team_annual` - TEAM_ANNUAL
             * `trial` - TRIAL
             * `trial_2022` - TRIAL_2022
+            * `trial_2025` - TRIAL_2025
         run_slots:
           type: integer
           readOnly: true
@@ -7959,28 +7964,38 @@ components:
       enum:
       - cancelled
       - cancelled_2022
+      - cancelled_2025
       - developer
       - developer_2022
       - enterprise
+      - enterprise_2025
+      - enterprise_plus_2025
       - free
+      - starter_2025
       - team
       - team_2022
       - team_annual
       - trial
       - trial_2022
+      - trial_2025
       type: string
       description: |-
         * `cancelled` - CANCELLED
         * `cancelled_2022` - CANCELLED_2022
+        * `cancelled_2025` - CANCELLED_2025
         * `developer` - DEVELOPER
         * `developer_2022` - DEVELOPER_2022
         * `enterprise` - ENTERPRISE
+        * `enterprise_2025` - ENTERPRISE_2025
+        * `enterprise_plus_2025` - ENTERPRISE_PLUS_2025
         * `free` - FREE
+        * `starter_2025` - STARTER_2025
         * `team` - TEAM
         * `team_2022` - TEAM_2022
         * `team_annual` - TEAM_ANNUAL
         * `trial` - TRIAL
         * `trial_2022` - TRIAL_2022
+        * `trial_2025` - TRIAL_2025
     PostAccountConnectionRequest:
       title: PostAccountConnection
       type: object
