@@ -3754,7 +3754,6 @@ components:
       - semantic_layer_only
       - webhooks_only
       - manage_marketplace_apps
-      - explorer
       type: string
       description: |-
         * `owner` - OWNER
@@ -3779,7 +3778,6 @@ components:
         * `semantic_layer_only` - SEMANTIC_LAYER_ONLY
         * `webhooks_only` - WEBHOOKS_ONLY
         * `manage_marketplace_apps` - MANAGE_MARKETPLACE_APPS
-        * `explorer` - EXPLORER
     PlanEnum:
       enum:
       - cancelled
