@@ -5880,7 +5880,7 @@ components:
           description: The name of the environment
         dbt_version:
           type: string
-          default: versionless
+          default: latest
           description: The default dbt Version to use for this environment
         raw_dbt_version:
           type: string
