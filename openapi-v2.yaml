@@ -554,6 +554,13 @@ paths:
         schema:
           type: integer
       - in: query
+        name: include_related
+        schema:
+          type: string
+        description: A list of related objects to include in the response. Valid values
+          are `environment`, `custom_environment_variables`, `most_recent_run`, and
+          `most_recent_completed_run.
+      - in: query
         name: is_system
         schema:
           type: boolean
@@ -754,6 +761,13 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: A list of related objects to include in the response. Valid values
+          are `environment`, `custom_environment_variables`, `most_recent_run`, and
+          `most_recent_completed_run.
       tags:
       - Jobs
       security:
