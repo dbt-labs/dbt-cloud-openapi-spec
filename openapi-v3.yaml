@@ -6966,6 +6966,7 @@ components:
       - other
       - merge
       - exposure_sync
+      - adaptive
       type: string
       description: |-
         * `ci` - ci
@@ -6973,6 +6974,7 @@ components:
         * `other` - other
         * `merge` - merge
         * `exposure_sync` - exposure_sync
+        * `adaptive` - adaptive
     Keypair:
       type: object
       properties:
