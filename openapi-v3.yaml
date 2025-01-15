@@ -7292,6 +7292,14 @@ components:
       enum:
       - odbc
       type: string
+    MethodEnum:
+      enum:
+      - password
+      - oauth
+      type: string
+      description: |-
+        * `password` - PASSWORD
+        * `oauth` - OAUTH
     NotFound:
       type: object
       properties:
@@ -8567,6 +8575,8 @@ components:
             this entity is deleted
         threads:
           type: integer
+        method:
+          $ref: '#/components/schemas/MethodEnum'
         username:
           type: string
         default_schema:
@@ -8594,6 +8604,7 @@ components:
       required:
       - account_id
       - default_schema
+      - method
       - state
       - target_name
       - threads
@@ -8614,6 +8625,8 @@ components:
             this entity is deleted
         threads:
           type: integer
+        method:
+          $ref: '#/components/schemas/MethodEnum'
         username:
           type: string
           minLength: 1
@@ -8648,6 +8661,7 @@ components:
       required:
       - account_id
       - default_schema
+      - method
       - state
       - target_name
       - threads
