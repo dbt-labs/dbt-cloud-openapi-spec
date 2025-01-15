@@ -484,6 +484,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       tags:
       - Groups
       security:
@@ -887,6 +894,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       tags:
       - License Maps
       security:
@@ -1044,6 +1058,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       - in: query
         name: type
         schema:
@@ -1237,6 +1258,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       tags:
       - Projects
       security:
@@ -1545,6 +1573,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       tags:
       - Connections
       security:
@@ -2161,6 +2196,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       - in: query
         name: type
         schema:
@@ -2234,6 +2276,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       - in: query
         name: type
         schema:
@@ -2307,6 +2356,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       - in: query
         name: type
         schema:
@@ -2405,6 +2461,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       - in: query
         name: type
         schema:
@@ -3088,6 +3151,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       tags:
       - Repositories
       security:
@@ -3260,6 +3330,13 @@ paths:
         name: state
         schema:
           type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
       tags:
       - Semantic Layer Credentials
       security:
@@ -4284,6 +4361,7 @@ components:
           format: date-time
           readOnly: true
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -4377,6 +4455,7 @@ components:
         token:
           type: string
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -4696,6 +4775,7 @@ components:
         created_by_service_token_id:
           type: integer
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -4758,6 +4838,7 @@ components:
         created_by_service_token_id:
           type: integer
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -4798,6 +4879,7 @@ components:
         created_by_service_token_id:
           type: integer
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -5045,6 +5127,7 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -5092,6 +5175,7 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -5344,6 +5428,7 @@ components:
           type: string
           minLength: 1
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -5376,6 +5461,7 @@ components:
         display_value:
           type: string
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -5509,6 +5595,7 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -5552,6 +5639,7 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -5615,6 +5703,7 @@ components:
           $ref: '#/components/schemas/AdapterVersionEnum'
         metadata_json: {}
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -5642,6 +5731,7 @@ components:
           $ref: '#/components/schemas/AdapterVersionEnum'
         metadata_json: {}
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -5763,6 +5853,7 @@ components:
           type: boolean
           default: false
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -5841,6 +5932,7 @@ components:
           type: boolean
           default: false
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -5906,6 +5998,7 @@ components:
           type: boolean
           default: false
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -5991,6 +6084,7 @@ components:
           type: integer
         extended_attributes: {}
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -6011,6 +6105,7 @@ components:
           type: integer
         extended_attributes: {}
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -6328,6 +6423,7 @@ components:
         name:
           type: string
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -6383,6 +6479,7 @@ components:
         permission_level:
           type: integer
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -6437,6 +6534,7 @@ components:
         permission_level:
           type: integer
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -6471,6 +6569,7 @@ components:
         permission_level:
           type: integer
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -6501,6 +6600,7 @@ components:
           type: string
           minLength: 1
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -6527,6 +6627,7 @@ components:
         name:
           type: string
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -6581,6 +6682,7 @@ components:
       type: object
       properties:
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -6601,6 +6703,7 @@ components:
       type: object
       properties:
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -6645,6 +6748,7 @@ components:
         type:
           type: integer
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -6707,6 +6811,7 @@ components:
         type:
           type: integer
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -6762,6 +6867,7 @@ components:
         account_id:
           type: integer
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -6907,6 +7013,7 @@ components:
         run_generate_sources:
           type: boolean
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -6983,6 +7090,7 @@ components:
         public_key:
           type: string
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -7041,6 +7149,7 @@ components:
         license_type:
           $ref: '#/components/schemas/LicenseTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -7064,6 +7173,7 @@ components:
         license_type:
           $ref: '#/components/schemas/LicenseTypeEnum'
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -8126,6 +8236,7 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -8173,6 +8284,7 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -8267,6 +8379,7 @@ components:
           description: The result of the most recent connection test against the PrivateLink
             endpoint
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -8305,6 +8418,7 @@ components:
           type: integer
           description: The active semantic layer configuration
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -8371,6 +8485,7 @@ components:
           type: integer
           description: The active semantic layer configuration
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -8414,6 +8529,7 @@ components:
           type: integer
           description: The active semantic layer configuration
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -8570,6 +8686,7 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -8620,6 +8737,7 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -8691,6 +8809,7 @@ components:
         gitlab_project_id:
           type: integer
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -8746,6 +8865,7 @@ components:
         github_webhook_id:
           type: integer
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -8825,6 +8945,7 @@ components:
         github_webhook_id:
           type: integer
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -8882,6 +9003,7 @@ components:
         github_webhook_id:
           type: integer
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -9042,6 +9164,7 @@ components:
           description: Key/val pairs of creds values. When returned via API, encrypted
             values will be excluded.
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -9076,6 +9199,7 @@ components:
         token:
           type: string
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -9153,6 +9277,7 @@ components:
         permission_set:
           $ref: '#/components/schemas/PermissionSetEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -9199,6 +9324,7 @@ components:
         permission_set:
           $ref: '#/components/schemas/PermissionSetEnum'
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -9249,6 +9375,7 @@ components:
         token:
           type: string
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -9359,6 +9486,7 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -9417,6 +9545,7 @@ components:
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -9936,6 +10065,7 @@ components:
           type: integer
           description: The credentials the user is associated with
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
@@ -9964,6 +10094,7 @@ components:
           type: integer
           description: The credentials the user is associated with
         state:
+          example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
@@ -9997,6 +10128,7 @@ components:
           type: string
           description: The type of license, e.g. `developer` or `read_only`
         state:
+          example: 1
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
