@@ -2760,6 +2760,7 @@ paths:
   /api/v3/accounts/{account_id}/projects/{project_id}/group-permissions/:
     post:
       operationId: Assign Project Group Permissions
+      description: Deprecated. Consider using the account-level v3 API instead.
       parameters:
       - in: path
         name: account_id
@@ -2787,6 +2788,7 @@ paths:
         required: true
       security:
       - BearerAuthentication: []
+      deprecated: true
       responses:
         '200':
           content:
