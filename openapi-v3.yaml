@@ -8698,6 +8698,7 @@ components:
           $ref: '#/components/schemas/MethodEnum'
         username:
           type: string
+          default: ''
         default_schema:
           type: string
         target_name:
@@ -8728,7 +8729,6 @@ components:
       - target_name
       - threads
       - type
-      - username
     RedshiftCredentialsRequest:
       type: object
       properties:
@@ -8750,6 +8750,7 @@ components:
         username:
           type: string
           minLength: 1
+          default: ''
         default_schema:
           type: string
           minLength: 1
@@ -8786,7 +8787,6 @@ components:
       - target_name
       - threads
       - type
-      - username
     RemoteBackendEnum:
       enum:
       - azure_active_directory
