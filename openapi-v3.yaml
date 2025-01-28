@@ -4744,18 +4744,6 @@ components:
       properties:
         job_id:
           type: string
-    AuthTypeEnum:
-      enum:
-      - password
-      - keypair
-      - sso
-      - external_oauth
-      type: string
-      description: |-
-        * `password` - PASSWORD
-        * `keypair` - KEYPAIR
-        * `sso` - SSO
-        * `external_oauth` - EXTERNAL_OAUTH
     BaseConnectionV3:
       type: object
       properties:
@@ -7405,14 +7393,6 @@ components:
       enum:
       - odbc
       type: string
-    MethodEnum:
-      enum:
-      - password
-      - oauth
-      type: string
-      description: |-
-        * `password` - PASSWORD
-        * `oauth` - OAUTH
     NotFound:
       type: object
       properties:
@@ -8695,8 +8675,8 @@ components:
             this entity is deleted
         threads:
           type: integer
-        method:
-          $ref: '#/components/schemas/MethodEnum'
+        auth_type:
+          $ref: '#/components/schemas/RedshiftCredentialsAuthTypeEnum'
         username:
           type: string
           default: ''
@@ -8724,12 +8704,20 @@ components:
             * `teradata_v0` - teradata_v0
       required:
       - account_id
+      - auth_type
       - default_schema
-      - method
       - state
       - target_name
       - threads
       - type
+    RedshiftCredentialsAuthTypeEnum:
+      enum:
+      - password
+      - external_oauth
+      type: string
+      description: |-
+        * `password` - PASSWORD
+        * `external_oauth` - OAUTH
     RedshiftCredentialsRequest:
       type: object
       properties:
@@ -8746,8 +8734,8 @@ components:
             this entity is deleted
         threads:
           type: integer
-        method:
-          $ref: '#/components/schemas/MethodEnum'
+        auth_type:
+          $ref: '#/components/schemas/RedshiftCredentialsAuthTypeEnum'
         username:
           type: string
           minLength: 1
@@ -8782,8 +8770,8 @@ components:
             * `teradata_v0` - teradata_v0
       required:
       - account_id
+      - auth_type
       - default_schema
-      - method
       - state
       - target_name
       - threads
@@ -9496,7 +9484,7 @@ components:
         threads:
           type: integer
         auth_type:
-          $ref: '#/components/schemas/AuthTypeEnum'
+          $ref: '#/components/schemas/SnowflakeCredentialsAuthTypeEnum'
         schema:
           type: string
         user:
@@ -9538,6 +9526,18 @@ components:
       - target_name
       - threads
       - type
+    SnowflakeCredentialsAuthTypeEnum:
+      enum:
+      - password
+      - keypair
+      - sso
+      - external_oauth
+      type: string
+      description: |-
+        * `password` - PASSWORD
+        * `keypair` - KEYPAIR
+        * `sso` - SSO
+        * `external_oauth` - EXTERNAL_OAUTH
     SnowflakeCredentialsRequest:
       type: object
       properties:
@@ -9555,7 +9555,7 @@ components:
         threads:
           type: integer
         auth_type:
-          $ref: '#/components/schemas/AuthTypeEnum'
+          $ref: '#/components/schemas/SnowflakeCredentialsAuthTypeEnum'
         schema:
           type: string
           minLength: 1
