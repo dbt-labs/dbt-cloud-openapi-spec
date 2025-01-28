@@ -7213,6 +7213,7 @@ components:
       description: An enumeration.
       enum:
       - tableau
+      - powerbi
       type: string
     ListAccountConnection:
       title: ListAccountConnection
