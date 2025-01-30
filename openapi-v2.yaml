@@ -3776,13 +3776,11 @@ components:
       - developer
       - read_only
       - it
-      - explorer
       type: string
       description: |-
         * `developer` - DEVELOPER
         * `read_only` - READ_ONLY
         * `it` - IT
-        * `explorer` - EXPLORER
     ListOfStringsEnveloped:
       type: object
       properties:
