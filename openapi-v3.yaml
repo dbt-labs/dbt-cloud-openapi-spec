@@ -3368,7 +3368,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceTokenListEnveloped'
+                $ref: '#/components/schemas/ListServiceTokenResponseResponse'
           description: ''
     post:
       operationId: Create Service Token
@@ -3385,13 +3385,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+              $ref: '#/components/schemas/CreateServiceTokenRequestRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+              $ref: '#/components/schemas/CreateServiceTokenRequestRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+              $ref: '#/components/schemas/CreateServiceTokenRequestRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -3400,7 +3400,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceTokenEnveloped'
+                $ref: '#/components/schemas/CreateServiceTokenResponseResponse'
           description: ''
   /api/v3/accounts/{account_id}/service-tokens/{id}/:
     get:
@@ -3446,13 +3446,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+              $ref: '#/components/schemas/UpdateServiceTokenRequestRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+              $ref: '#/components/schemas/UpdateServiceTokenRequestRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ServiceTokenRequestRequest'
+              $ref: '#/components/schemas/UpdateServiceTokenRequestRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -3461,7 +3461,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceTokenEnveloped'
+                $ref: '#/components/schemas/ServiceTokenResponseResponse'
           description: ''
     delete:
       operationId: Destroy Service Token
@@ -5235,6 +5235,140 @@ components:
           minLength: 1
       required:
       - name
+    CreateServiceTokenRequestRequest:
+      title: CreateServiceTokenRequest
+      type: object
+      properties:
+        name:
+          title: Name
+          description: The name of the service token
+          type: string
+        permission_grants:
+          title: Permission Grants
+          description: Permissions to assign to the service token
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTokenPermissionGrant'
+        metadata_only:
+          title: Metadata Only
+          description: Deprecated. Use the metadata_only permission set instead.
+          default: false
+          type: boolean
+        webhooks_only:
+          title: Webhooks Only
+          default: false
+          type: boolean
+      required:
+      - name
+    CreateServiceTokenResponse:
+      title: CreateServiceTokenResponse
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        account_id:
+          title: Account Id
+          description: The account the service token is associated with
+          type: integer
+        uid:
+          title: Uid
+          description: The unique identifier for the service token
+          type: string
+        name:
+          title: Name
+          description: The name of the service token
+          type: string
+        state:
+          title: State
+          description: The liveness state of the service token. A value of 1 means
+            this entity is active and a value of 2 means this entity is deleted
+          type: integer
+        permission_grants:
+          title: Permission Grants
+          description: The permissions to be assigned to the service token
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTokenPermissionGrant'
+        last_used:
+          title: Last Used
+          description: The time the service token was last used
+          type: string
+          format: date-time
+        semantic_layer_credentials:
+          title: Semantic Layer Credentials
+          type: array
+          items:
+            type: object
+        metadata_only:
+          title: Metadata Only
+          description: Deprecated. Use the metadata_only permission set instead.
+          default: false
+          type: boolean
+        webhooks_only:
+          title: Webhooks Only
+          default: false
+          type: boolean
+        token:
+          title: Token
+          description: The hashed token secret
+          type: string
+        token_string:
+          title: Token String
+          description: The full token string used to authenticate clients
+          type: string
+        last_identify:
+          title: Last Identify
+          type: string
+          format: date-time
+        user_id:
+          title: User Id
+          type: integer
+        user:
+          title: User
+          type: object
+        type:
+          $ref: '#/components/schemas/ServiceTokenType'
+        expires_at:
+          title: Expires At
+          type: string
+          format: date-time
+        service_token_permissions:
+          title: Service Token Permissions
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_id
+      - uid
+      - name
+      - state
+      - token_string
+    CreateServiceTokenResponseResponse:
+      title: CreateServiceTokenResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/CreateServiceTokenResponse'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
     CreateSubscriptionResponseEnvelope:
       type: object
       properties:
@@ -7361,6 +7495,26 @@ components:
       - status
       - data
       - extra
+    ListServiceTokenResponseResponse:
+      title: ListServiceTokenResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTokenResponse'
+        error_code:
+          title: Error Code
+          type: integer
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
+      required:
+      - status
+      - data
+      - extra
     ListWebhooksReceiptsResponseEnvelope:
       type: object
       properties:
@@ -8312,6 +8466,33 @@ components:
       - threads
       - type
       - username
+    PredefinedPermissionSet:
+      title: PredefinedPermissionSet
+      description: An enumeration.
+      enum:
+      - owner
+      - member
+      - account_admin
+      - security_admin
+      - billing_admin
+      - admin
+      - database_admin
+      - git_admin
+      - team_admin
+      - job_admin
+      - job_runner
+      - job_viewer
+      - analyst
+      - developer
+      - stakeholder
+      - readonly
+      - project_creator
+      - account_viewer
+      - metadata_only
+      - semantic_layer_only
+      - webhooks_only
+      - manage_marketplace_apps
+      type: string
     Priority:
       title: Priority
       description: An enumeration.
@@ -9283,6 +9464,24 @@ components:
       - service_token_id
       - state
       - writable_environment_categories
+    ServiceTokenPermissionGrant:
+      title: ServiceTokenPermissionGrant
+      type: object
+      properties:
+        permission_set:
+          $ref: '#/components/schemas/PredefinedPermissionSet'
+        project_id:
+          title: Project Id
+          description: The project to which the permissions are scoped. If none, then
+            the permissions apply to all projects.
+          type: integer
+        writable_environment_categories:
+          title: Writable Environment Categories
+          type: array
+          items:
+            type: string
+      required:
+      - permission_set
     ServiceTokenPermissionListEnveloped:
       type: object
       properties:
@@ -9337,88 +9536,96 @@ components:
       - created_at
       - id
       - updated_at
-    ServiceTokenRequestRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          minLength: 1
-        metadata_only:
-          type: boolean
-        webhooks_only:
-          type: boolean
-      required:
-      - metadata_only
-      - name
-      - webhooks_only
     ServiceTokenResponse:
+      title: ServiceTokenResponse
       type: object
       properties:
         id:
+          title: Id
           type: integer
-          readOnly: true
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
         account_id:
+          title: Account Id
+          description: The account the service token is associated with
           type: integer
         uid:
+          title: Uid
+          description: The unique identifier for the service token
           type: string
         name:
-          type: string
-        token:
+          title: Name
+          description: The name of the service token
           type: string
         state:
-          example: 1
+          title: State
+          description: The liveness state of the service token. A value of 1 means
+            this entity is active and a value of 2 means this entity is deleted
           type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-        token_string:
-          type: string
-          readOnly: true
-        last_used:
-          type: string
-          format: date-time
-          readOnly: true
-        last_identify:
-          type: string
-          format: date-time
-          readOnly: true
-        user_id:
-          type: integer
-        user:
-          $ref: '#/components/schemas/User'
-        type:
-          $ref: '#/components/schemas/Type34eEnum'
-        expires_at:
-          type: string
-          format: date-time
-        metadata_only:
-          type: boolean
-          default: false
-        webhooks_only:
-          type: boolean
-          default: false
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-        service_token_permissions:
+        permission_grants:
+          title: Permission Grants
+          description: The permissions to be assigned to the service token
           type: array
           items:
-            $ref: '#/components/schemas/ServiceTokenPermission'
-          readOnly: true
-          default: []
+            $ref: '#/components/schemas/ServiceTokenPermissionGrant'
+        last_used:
+          title: Last Used
+          description: The time the service token was last used
+          type: string
+          format: date-time
+        semantic_layer_credentials:
+          title: Semantic Layer Credentials
+          description: The semantic layer credentials associated with the service
+            token
+          type: array
+          items:
+            type: object
+        metadata_only:
+          title: Metadata Only
+          description: Deprecated. Use the metadata_only permission set instead.
+          default: false
+          type: boolean
+        webhooks_only:
+          title: Webhooks Only
+          default: false
+          type: boolean
       required:
-      - created_at
       - id
-      - last_identify
-      - last_used
-      - service_token_permissions
-      - token_string
+      - created_at
       - updated_at
+      - account_id
+      - uid
+      - name
+      - state
+    ServiceTokenResponseResponse:
+      title: ServiceTokenResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/ServiceTokenResponse'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
+    ServiceTokenType:
+      title: ServiceTokenType
+      description: An enumeration.
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      type: integer
     SnowflakeConnection:
       title: SnowflakeConnection
       type: object
@@ -10007,6 +10214,17 @@ components:
       - name
       - rule_set_enabled
       - type
+    UpdateServiceTokenRequestRequest:
+      title: UpdateServiceTokenRequest
+      description: Request body for updating a service token name.
+      type: object
+      properties:
+        name:
+          title: Name
+          description: The name of the service token
+          type: string
+      required:
+      - name
     UpdateSubscriptionResponseEnvelope:
       type: object
       properties:
