@@ -6477,7 +6477,7 @@ components:
           title: Config
           description: The integration config
           allOf:
-          - $ref: '#/components/schemas/TableauIntegration'
+          - $ref: '#/components/schemas/LineageIntegrationConfigSchema'
       required:
       - id
       - created_at
@@ -7328,6 +7328,10 @@ components:
         * `developer` - DEVELOPER
         * `read_only` - READ_ONLY
         * `it` - IT
+    LineageIntegrationConfigSchema:
+      title: LineageIntegrationConfigSchema
+      type: object
+      properties: {}
     LineageIntegrationType:
       title: LineageIntegrationType
       description: An enumeration.
@@ -7912,6 +7916,10 @@ components:
         adapter_id:
           title: Adapter Id
           type: integer
+    OptionalLineageIntegrationConfigSchema:
+      title: OptionalLineageIntegrationConfigSchema
+      type: object
+      properties: {}
     OptionalPostgresConnection:
       title: OptionalPostgresConnection
       type: object
@@ -7998,24 +8006,6 @@ components:
         adapter_id:
           title: Adapter Id
           type: integer
-    OptionalTableauIntegration:
-      title: OptionalTableauIntegration
-      type: object
-      properties:
-        host:
-          title: Host
-          type: string
-        site_id:
-          title: Site Id
-          type: string
-        token_name:
-          title: Token Name
-          type: string
-        token:
-          title: Token
-          type: string
-          writeOnly: true
-          format: password
     OptionalTeradataConnection:
       title: OptionalTeradataConnection
       type: object
@@ -8163,7 +8153,7 @@ components:
           title: Config
           description: The integration configuration for this type of integration
           allOf:
-          - $ref: '#/components/schemas/OptionalTableauIntegration'
+          - $ref: '#/components/schemas/OptionalLineageIntegrationConfigSchema'
       additionalProperties: false
     PermissionSetEnum:
       enum:
@@ -8316,7 +8306,7 @@ components:
           title: Config
           description: The integration configuration for this type of integration
           allOf:
-          - $ref: '#/components/schemas/TableauIntegration'
+          - $ref: '#/components/schemas/LineageIntegrationConfigSchema'
       required:
       - name
       - account_id
@@ -9991,32 +9981,6 @@ components:
       required:
       - host
       - database
-    TableauIntegration:
-      title: TableauIntegration
-      type: object
-      properties:
-        host:
-          title: Host
-          maxLength: 255
-          type: string
-        site_id:
-          title: Site Id
-          maxLength: 255
-          type: string
-        token_name:
-          title: Token Name
-          maxLength: 255
-          type: string
-        token:
-          title: Token
-          write_only: true
-          type: string
-          writeOnly: true
-          format: password
-      required:
-      - host
-      - site_id
-      - token_name
     TeradataConnection:
       title: TeradataConnection
       type: object
