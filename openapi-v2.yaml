@@ -3833,6 +3833,7 @@ components:
       - semantic_layer_only
       - webhooks_only
       - manage_marketplace_apps
+      - scim_only
       type: string
       description: |-
         * `owner` - OWNER
@@ -3857,6 +3858,7 @@ components:
         * `semantic_layer_only` - SEMANTIC_LAYER_ONLY
         * `webhooks_only` - WEBHOOKS_ONLY
         * `manage_marketplace_apps` - MANAGE_MARKETPLACE_APPS
+        * `scim_only` - SCIM_ONLY
     PlanEnum:
       enum:
       - cancelled
