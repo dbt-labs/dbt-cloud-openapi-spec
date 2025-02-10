@@ -9181,6 +9181,9 @@ components:
         name:
           type: string
           readOnly: true
+        web_url:
+          type: string
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -9208,6 +9211,7 @@ components:
       - id
       - name
       - updated_at
+      - web_url
     ResponseData:
       type: object
       properties:
