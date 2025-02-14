@@ -4297,6 +4297,7 @@ components:
             * `unpaid` - UNPAID
             * `provisioned_team_annual` - PROVISIONED_TEAM_ANNUAL
             * `other` - OTHER
+            * `migrated` - MIGRATED
         unlocked_at:
           type: string
           format: date-time
@@ -7536,6 +7537,7 @@ components:
       - unpaid
       - provisioned_team_annual
       - other
+      - migrated
       type: string
       description: |-
         * `trial_expired` - TRIAL_EXPIRED
@@ -7543,6 +7545,7 @@ components:
         * `unpaid` - UNPAID
         * `provisioned_team_annual` - PROVISIONED_TEAM_ANNUAL
         * `other` - OTHER
+        * `migrated` - MIGRATED
     Method:
       title: Method
       description: An enumeration.
