@@ -4526,6 +4526,11 @@ components:
           allOf:
           - $ref: '#/components/schemas/Schema'
           description: The set of credential-level fields for this adapter
+        cost_optimization_credentials:
+          allOf:
+          - $ref: '#/components/schemas/Schema'
+          description: The set of cost optimization credential-level fields for this
+            adapter
         semantic_layer_credentials:
           allOf:
           - $ref: '#/components/schemas/Schema'
