@@ -1545,6 +1545,10 @@ paths:
         schema:
           type: integer
       - in: query
+        name: adapter_version
+        schema:
+          type: string
+      - in: query
         name: limit
         schema:
           type: integer
