@@ -1549,6 +1549,10 @@ paths:
         schema:
           type: string
       - in: query
+        name: has_cost_optimization_credentials
+        schema:
+          type: boolean
+      - in: query
         name: limit
         schema:
           type: integer
