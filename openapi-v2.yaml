@@ -2221,6 +2221,7 @@ components:
       - merge
       - exposures generated
       - adaptive
+      - ingest
       type: string
       description: |-
         * `api` - api
@@ -2232,6 +2233,7 @@ components:
         * `merge` - merge
         * `exposures generated` - exposures_generated
         * `adaptive` - adaptive
+        * `ingest` - ingest
     ConnectionEncryptionEnveloped:
       type: object
       properties:
