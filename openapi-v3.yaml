@@ -3538,6 +3538,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserListEnveloped'
           description: ''
+  /api/v3/accounts/{account_id}/users/{id}/:
+    get:
+      operationId: Retrieve User
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Users
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUserResponseResponse'
+          description: ''
   /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys/:
     get:
       operationId: List Account Scoped PATs
@@ -4519,6 +4544,91 @@ components:
       - service_token_permissions
       - token_string
       - updated_at
+    AccountUserLicense:
+      title: AccountUserLicense
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        license_type:
+          $ref: '#/components/schemas/LicenseType'
+      required:
+      - id
+      - license_type
+    AccountUserResponse:
+      title: AccountUserResponse
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        email:
+          title: Email
+          description: The email address of the user
+          type: string
+        first_name:
+          title: First Name
+          description: The first name of the user
+          type: string
+        last_name:
+          title: Last Name
+          description: The last name of the user
+          type: string
+        fullname:
+          title: Fullname
+          description: The full name of the user
+          type: string
+        email_verified:
+          title: Email Verified
+          description: Whether the user has verified their email
+          type: boolean
+        license:
+          title: License
+          description: The license assigned to the user for the account
+          allOf:
+          - $ref: '#/components/schemas/AccountUserLicense'
+        is_active:
+          title: Is Active
+          description: A boolean indicating if this user is active
+          default: false
+          type: boolean
+        is_staff:
+          title: Is Staff
+          default: false
+          type: boolean
+      required:
+      - id
+      - created_at
+      - updated_at
+      - email
+      - first_name
+      - last_name
+      - fullname
+      - email_verified
+      - license
+    AccountUserResponseResponse:
+      title: AccountUserResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/AccountUserResponse'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
     Adapter:
       type: object
       properties:
@@ -7332,6 +7442,14 @@ components:
       - created_at
       - id
       - updated_at
+    LicenseType:
+      title: LicenseType
+      description: An enumeration.
+      enum:
+      - developer
+      - read_only
+      - it
+      type: string
     LicenseTypeEnum:
       enum:
       - developer
