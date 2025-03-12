@@ -1549,7 +1549,7 @@ paths:
         schema:
           type: string
       - in: query
-        name: has_cost_optimization_credentials
+        name: has_platform_metadata_credentials
         schema:
           type: boolean
       - in: query
@@ -4644,10 +4644,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/Schema'
           description: The set of credential-level fields for this adapter
-        cost_optimization_credentials:
+        platform_metadata_credentials:
           allOf:
           - $ref: '#/components/schemas/Schema'
-          description: The set of cost optimization credential-level fields for this
+          description: The set of platform metadata credential-level fields for this
             adapter
         semantic_layer_credentials:
           allOf:
