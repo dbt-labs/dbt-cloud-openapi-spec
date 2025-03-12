@@ -9399,11 +9399,13 @@ components:
       - connection
       - credential
       - semantic_layer_credentials
+      - platform_metadata_credentials
       type: string
       description: |-
         * `connection` - connection
         * `credential` - credential
         * `semantic_layer_credentials` - semantic_layer_credentials
+        * `platform_metadata_credentials` - platform_metadata_credentials
     SemanticLayerCredentialsListEnveloped:
       type: object
       properties:
@@ -9458,6 +9460,7 @@ components:
             * `connection` - connection
             * `credential` - credential
             * `semantic_layer_credentials` - semantic_layer_credentials
+            * `platform_metadata_credentials` - platform_metadata_credentials
         name:
           type: string
           description: The user-facing name to identify these credentials.
