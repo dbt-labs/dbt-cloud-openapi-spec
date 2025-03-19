@@ -266,6 +266,7 @@ paths:
           - apache_spark_v0
           - athena_v0
           - bigquery_v0
+          - bigquery_v1
           - databricks_spark_v0
           - databricks_v0
           - fabric_v0
@@ -4047,6 +4048,7 @@ paths:
           - apache_spark_v0
           - athena_v0
           - bigquery_v0
+          - bigquery_v1
           - databricks_spark_v0
           - databricks_v0
           - fabric_v0
@@ -4692,6 +4694,7 @@ components:
       - trino_v0
       - snowflake_v0
       - bigquery_v0
+      - bigquery_v1
       - postgres_v0
       - redshift_v0
       - synapse_v0
@@ -4706,6 +4709,7 @@ components:
         * `trino_v0` - trino_v0
         * `snowflake_v0` - snowflake_v0
         * `bigquery_v0` - bigquery_v0
+        * `bigquery_v1` - bigquery_v1
         * `postgres_v0` - postgres_v0
         * `redshift_v0` - redshift_v0
         * `synapse_v0` - synapse_v0
@@ -5167,7 +5171,7 @@ components:
           title: Client X509 Cert Url
           type: string
         priority:
-          $ref: '#/components/schemas/Priority'
+          $ref: '#/components/schemas/schemas__adapters__bigquery__v0__connection_schema__Priority'
         scopes:
           title: Scopes
           type: array
@@ -5231,6 +5235,116 @@ components:
       - token_uri
       - auth_provider_x509_cert_url
       - client_x509_cert_url
+    BigqueryConnectionV1:
+      title: BigqueryConnectionV1
+      type: object
+      properties:
+        deployment_env_auth_type:
+          default: service-account-json
+          allOf:
+          - $ref: '#/components/schemas/DeploymentEnvironmentAuthType'
+        project_id:
+          title: Project Id
+          maxLength: 255
+          minLength: 1
+          type: string
+        private_key_id:
+          title: Private Key Id
+          maxLength: 255
+          type: string
+        private_key:
+          title: Private Key
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+        client_email:
+          title: Client Email
+          maxLength: 1024
+          type: string
+        client_id:
+          title: Client Id
+          maxLength: 255
+          type: string
+        auth_uri:
+          title: Auth Uri
+          type: string
+        token_uri:
+          title: Token Uri
+          type: string
+        auth_provider_x509_cert_url:
+          title: Auth Provider X509 Cert Url
+          type: string
+        client_x509_cert_url:
+          title: Client X509 Cert Url
+          type: string
+        job_execution_timeout_seconds:
+          title: Job Execution Timeout Seconds
+          exclusiveMinimum: 0
+          maximum: 86400
+          type: integer
+        priority:
+          $ref: '#/components/schemas/schemas__adapters__bigquery__v1__connection_schema__Priority'
+        scopes:
+          title: Scopes
+          type: array
+          items:
+            type: string
+        location:
+          title: Location
+          maxLength: 255
+          minLength: 1
+          type: string
+        maximum_bytes_billed:
+          title: Maximum Bytes Billed
+          type: integer
+        execution_project:
+          title: Execution Project
+          type: string
+        impersonate_service_account:
+          title: Impersonate Service Account
+          type: string
+        retries:
+          title: Retries
+          minimum: 0
+          maximum: 60
+          type: integer
+        job_retry_deadline_seconds:
+          title: Job Retry Deadline Seconds
+          type: integer
+        job_creation_timeout_seconds:
+          title: Job Creation Timeout Seconds
+          type: integer
+        application_id:
+          title: Application Id
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+        application_secret:
+          title: Application Secret
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+        oauth_token_uri:
+          title: Oauth Token Uri
+          type: string
+        gcs_bucket:
+          title: Gcs Bucket
+          type: string
+        dataproc_region:
+          title: Dataproc Region
+          type: string
+        dataproc_cluster_name:
+          title: Dataproc Cluster Name
+          type: string
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use credentials.adapter_version
+          type: integer
+      required:
+      - project_id
     BigqueryCredentials:
       type: object
       properties:
@@ -5266,6 +5380,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -5317,6 +5432,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -5865,6 +5981,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -5914,6 +6031,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -6006,6 +6124,7 @@ components:
       - trino_v0
       - snowflake_v0
       - bigquery_v0
+      - bigquery_v1
       - postgres_v0
       - redshift_v0
       - synapse_v0
@@ -6040,6 +6159,13 @@ components:
       required:
       - code
       - is_success
+    DeploymentEnvironmentAuthType:
+      title: DeploymentEnvironmentAuthType
+      description: An enumeration.
+      enum:
+      - service-account-json
+      - external-oauth-wif
+      type: string
     DeploymentTypeEnum:
       enum:
       - production
@@ -6539,6 +6665,7 @@ components:
           - $ref: '#/components/schemas/PostgresConnection'
           - $ref: '#/components/schemas/RedshiftConnection'
           - $ref: '#/components/schemas/BigqueryConnection'
+          - $ref: '#/components/schemas/BigqueryConnectionV1'
           - $ref: '#/components/schemas/DatabricksConnection'
           - $ref: '#/components/schemas/DatabricksSparkConnection'
           - $ref: '#/components/schemas/TrinoConnection'
@@ -7920,7 +8047,7 @@ components:
           title: Client X509 Cert Url
           type: string
         priority:
-          $ref: '#/components/schemas/Priority'
+          $ref: '#/components/schemas/schemas__adapters__bigquery__v0__connection_schema__Priority'
         scopes:
           title: Scopes
           type: array
@@ -7966,6 +8093,97 @@ components:
         dataproc_cluster_name:
           title: Dataproc Cluster Name
           type: string
+    OptionalBigqueryConnectionV1:
+      title: OptionalBigqueryConnectionV1
+      type: object
+      properties:
+        deployment_env_auth_type:
+          $ref: '#/components/schemas/DeploymentEnvironmentAuthType'
+        project_id:
+          title: Project Id
+          type: string
+        private_key_id:
+          title: Private Key Id
+          type: string
+        private_key:
+          title: Private Key
+          type: string
+          writeOnly: true
+          format: password
+        client_email:
+          title: Client Email
+          type: string
+        client_id:
+          title: Client Id
+          type: string
+        auth_uri:
+          title: Auth Uri
+          type: string
+        token_uri:
+          title: Token Uri
+          type: string
+        auth_provider_x509_cert_url:
+          title: Auth Provider X509 Cert Url
+          type: string
+        client_x509_cert_url:
+          title: Client X509 Cert Url
+          type: string
+        job_execution_timeout_seconds:
+          title: Job Execution Timeout Seconds
+          type: integer
+        priority:
+          $ref: '#/components/schemas/schemas__adapters__bigquery__v1__connection_schema__Priority'
+        scopes:
+          title: Scopes
+          type: array
+          items:
+            type: string
+        location:
+          title: Location
+          type: string
+        maximum_bytes_billed:
+          title: Maximum Bytes Billed
+          type: integer
+        execution_project:
+          title: Execution Project
+          type: string
+        impersonate_service_account:
+          title: Impersonate Service Account
+          type: string
+        retries:
+          title: Retries
+          type: integer
+        job_retry_deadline_seconds:
+          title: Job Retry Deadline Seconds
+          type: integer
+        job_creation_timeout_seconds:
+          title: Job Creation Timeout Seconds
+          type: integer
+        application_id:
+          title: Application Id
+          type: string
+          writeOnly: true
+          format: password
+        application_secret:
+          title: Application Secret
+          type: string
+          writeOnly: true
+          format: password
+        oauth_token_uri:
+          title: Oauth Token Uri
+          type: string
+        gcs_bucket:
+          title: Gcs Bucket
+          type: string
+        dataproc_region:
+          title: Dataproc Region
+          type: string
+        dataproc_cluster_name:
+          title: Dataproc Cluster Name
+          type: string
+        adapter_id:
+          title: Adapter Id
+          type: integer
     OptionalDatabricksConnection:
       title: OptionalDatabricksConnection
       type: object
@@ -8258,6 +8476,7 @@ components:
           - $ref: '#/components/schemas/OptionalPostgresConnection'
           - $ref: '#/components/schemas/OptionalRedshiftConnection'
           - $ref: '#/components/schemas/OptionalBigqueryConnection'
+          - $ref: '#/components/schemas/OptionalBigqueryConnectionV1'
           - $ref: '#/components/schemas/OptionalDatabricksConnection'
           - $ref: '#/components/schemas/OptionalDatabricksSparkConnection'
           - $ref: '#/components/schemas/OptionalTrinoConnection'
@@ -8409,6 +8628,7 @@ components:
           - $ref: '#/components/schemas/PostgresConnection'
           - $ref: '#/components/schemas/RedshiftConnection'
           - $ref: '#/components/schemas/BigqueryConnection'
+          - $ref: '#/components/schemas/BigqueryConnectionV1'
           - $ref: '#/components/schemas/DatabricksConnection'
           - $ref: '#/components/schemas/DatabricksSparkConnection'
           - $ref: '#/components/schemas/TrinoConnection'
@@ -8521,6 +8741,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -8576,6 +8797,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -8617,13 +8839,6 @@ components:
       - webhooks_only
       - manage_marketplace_apps
       - scim_only
-      type: string
-    Priority:
-      title: Priority
-      description: An enumeration.
-      enum:
-      - interactive
-      - batch
       type: string
     PrivateLinkEndpointListEnveloped:
       type: object
@@ -9002,6 +9217,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -9068,6 +9284,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -9445,6 +9662,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -9851,6 +10069,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -9941,6 +10160,7 @@ components:
             * `trino_v0` - trino_v0
             * `snowflake_v0` - snowflake_v0
             * `bigquery_v0` - bigquery_v0
+            * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
             * `synapse_v0` - synapse_v0
@@ -10654,6 +10874,20 @@ components:
           type: integer
       required:
       - code
+    schemas__adapters__bigquery__v0__connection_schema__Priority:
+      title: Priority
+      description: An enumeration.
+      enum:
+      - interactive
+      - batch
+      type: string
+    schemas__adapters__bigquery__v1__connection_schema__Priority:
+      title: Priority
+      description: An enumeration.
+      enum:
+      - interactive
+      - batch
+      type: string
   securitySchemes:
     BearerAuthentication:
       type: http
