@@ -6657,6 +6657,9 @@ components:
         is_configured_for_native_oauth:
           title: Is Configured For Native Oauth
           type: boolean
+        platform_metadata_credentials_id:
+          title: Platform Metadata Credentials Id
+          type: integer
         config:
           title: Config
           description: The adapter-specific configuration for the connection
@@ -7640,6 +7643,9 @@ components:
         environment__count:
           title: Environment  Count
           description: The number of environments using this connection
+          type: integer
+        platform_metadata_credentials_id:
+          title: Platform Metadata Credentials Id
           type: integer
       required:
       - id
