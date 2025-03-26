@@ -4292,34 +4292,6 @@ components:
       - data
       - extra
       - status
-    AccountMigrationEvent:
-      type: object
-      properties:
-        type:
-          type: string
-        account_identifier:
-          type: string
-        key:
-          type: string
-        is_minidump:
-          type: boolean
-        account_has_static_subdomain:
-          type: boolean
-          default: false
-        background_job_id:
-          type: integer
-        started_at:
-          type: string
-          format: date-time
-        completed_at:
-          type: string
-          format: date-time
-        failed_at:
-          type: string
-          format: date-time
-      required:
-      - account_identifier
-      - type
     AccountResponse:
       type: object
       properties:
@@ -4478,9 +4450,9 @@ components:
           description: (Deprecated)
         account_migration_events:
           type: array
-          items:
-            $ref: '#/components/schemas/AccountMigrationEvent'
+          items: {}
           readOnly: true
+          description: (Deprecated)
         groups:
           type: array
           items:
