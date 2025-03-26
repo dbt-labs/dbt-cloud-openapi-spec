@@ -4374,12 +4374,15 @@ components:
           description: The project the repo is associated with
         full_name:
           type: string
-          description: The name of the repo
+          description: The name of the repo⚠️ If not set to the correct values, CI
+            jobs may not trigger and the branch link from the dbt Cloud IDE may not
+            work.For example, if the remote URL is 'git://github.com/your_org/your_repo_name.git',the
+            correct full_name is 'your_org/your_repo_name'.
         remote_backend:
           allOf:
           - $ref: '#/components/schemas/RemoteBackendEnum'
           description: |-
-            The associated git provider
+            The associated git provider⚠️ If not set to the correct values, CI jobs may not trigger and the branch link from the dbt Cloud IDE may not work.
 
             * `azure_active_directory` - azure_active_directory
             * `github` - github
