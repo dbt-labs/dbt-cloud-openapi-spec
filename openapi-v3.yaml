@@ -8914,10 +8914,19 @@ components:
         freshness_job_id:
           type: integer
           description: The job used for source freshness generation
+        type:
+          allOf:
+          - $ref: '#/components/schemas/Type24eEnum'
+          description: |-
+            The type of the project
+
+            * `0` - DEFAULT
+            * `1` - HYBRID
       required:
       - account_id
       - name
       - state
+      - type
     ProjectEnveloped:
       type: object
       properties:
@@ -8982,10 +8991,19 @@ components:
         freshness_job_id:
           type: integer
           description: The job used for source freshness generation
+        type:
+          allOf:
+          - $ref: '#/components/schemas/Type24eEnum'
+          description: |-
+            The type of the project
+
+            * `0` - DEFAULT
+            * `1` - HYBRID
       required:
       - account_id
       - name
       - state
+      - type
     ProjectResponse:
       type: object
       properties:
@@ -9026,6 +9044,15 @@ components:
         freshness_job_id:
           type: integer
           description: The job used for source freshness generation
+        type:
+          allOf:
+          - $ref: '#/components/schemas/Type24eEnum'
+          default: 0
+          description: |-
+            The type of the project
+
+            * `0` - DEFAULT
+            * `1` - HYBRID
         created_at:
           type: string
           format: date-time
@@ -10471,6 +10498,14 @@ components:
           type: integer
       required:
       - host
+    Type24eEnum:
+      enum:
+      - 0
+      - 1
+      type: integer
+      description: |-
+        * `0` - DEFAULT
+        * `1` - HYBRID
     Type34eEnum:
       enum:
       - 1
