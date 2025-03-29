@@ -6088,7 +6088,7 @@ components:
       - updated_at
     DbtAdapterVersion:
       title: DbtAdapterVersion
-      description: The specific schema version for a given connection or credential
+      description: An enumeration.
       enum:
       - apache_spark_v0
       - databricks_spark_v0
