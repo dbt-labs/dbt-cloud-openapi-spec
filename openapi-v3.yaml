@@ -3320,6 +3320,566 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/scim-config/:
+    get:
+      operationId: Retrieve SCIM configuration
+      description: Retrieve the SCIM configuration for the account
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SCIMConfigResponseResponse'
+          description: ''
+    post:
+      operationId: Create SCIM configuration
+      description: Create SCIM configuration for the account
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSCIMConfigurationRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateSCIMConfigurationRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateSCIMConfigurationRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SCIMConfigResponseResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/scim-config/tokens/:
+    get:
+      operationId: Retrieve SCIM tokens
+      description: Retrieve all SCIM tokens
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSCIMTokenResponseResponse'
+          description: ''
+    post:
+      operationId: Create SCIM token
+      description: Create a SCIM token
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSCIMTokenRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateSCIMTokenRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateSCIMTokenRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSCIMTokenResponseResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/scim-config/tokens/{id}/:
+    get:
+      operationId: Retrieve SCIM token
+      description: Retrieve the specified SCIM token
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SCIMTokenResponseResponse'
+          description: ''
+    delete:
+      operationId: Delete SCIM token
+      description: Delete the specified SCIM token
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
+  /api/v3/accounts/{account_id}/scim/v2/Groups/:
+    get:
+      operationId: List SCIM Groups
+      description: List all groups via SCIM
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/SCIMListResponseResponse'
+          description: ''
+    post:
+      operationId: Create SCIM Group
+      description: Create a group via SCIM
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      requestBody:
+        content:
+          application/scim+json:
+            schema:
+              $ref: '#/components/schemas/CreateGroupSCIMRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/GroupSCIMResponseResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/scim/v2/Groups/{group_id}:
+    get:
+      operationId: Get SCIM Group
+      description: Get a group via SCIM
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: group_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/GroupSCIMResponseResponse'
+          description: ''
+    put:
+      operationId: Update SCIM Group
+      description: Update a group via SCIM using PUT
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: group_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      requestBody:
+        content:
+          application/scim+json:
+            schema:
+              $ref: '#/components/schemas/UpdateGroupSCIMRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/GroupSCIMResponseResponse'
+          description: ''
+    patch:
+      operationId: Patch SCIM Group
+      description: Update a group via SCIM using PATCH
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: group_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      requestBody:
+        content:
+          application/scim+json:
+            schema:
+              $ref: '#/components/schemas/PatchGroupSCIMRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/GroupSCIMResponseResponse'
+          description: ''
+    delete:
+      operationId: Delete SCIM Group
+      description: Delete a group via SCIM
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: group_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
+  /api/v3/accounts/{account_id}/scim/v2/ResourceTypes/:
+    get:
+      operationId: Get SCIM Resource Types
+      description: Get Supported SCIM Resource Types
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/SCIMListResponseResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/scim/v2/ResourceTypes/{resource_type}/:
+    get:
+      operationId: Get SCIM Resource Type Details
+      description: Get Supported SCIM Resource Type Details
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: resource_type
+        schema:
+          type: string
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/SCIMResourceTypeResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/scim/v2/Schemas/:
+    get:
+      operationId: Get SCIM Schemas
+      description: Get Supported SCIM Schemas
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/SCIMListResponseResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/scim/v2/Schemas/{schema_uri}/:
+    get:
+      operationId: Get SCIM Schema Details
+      description: Get Supported SCIM Schema Details
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: schema_uri
+        schema:
+          type: string
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/SCIMResourceTypeResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/scim/v2/Users/:
+    get:
+      operationId: List SCIM Users
+      description: List all users via SCIM
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/SCIMListResponseResponse'
+          description: ''
+    post:
+      operationId: Create SCIM User
+      description: Create a user via SCIM
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      requestBody:
+        content:
+          application/scim+json:
+            schema:
+              $ref: '#/components/schemas/CreateOrReplaceUserSCIMRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/CreateOrReplaceUserSCIMResponseResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/scim/v2/Users/{user_id}:
+    get:
+      operationId: Get SCIM User
+      description: Get a user via SCIM
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/UserSCIMResponseResponse'
+          description: ''
+    put:
+      operationId: Replace SCIM User
+      description: Replace a user via SCIM using PUT
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      requestBody:
+        content:
+          application/scim+json:
+            schema:
+              $ref: '#/components/schemas/CreateOrReplaceUserSCIMRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/CreateOrReplaceUserSCIMResponseResponse'
+          description: ''
+    patch:
+      operationId: Update SCIM User
+      description: Update a user attribute(s) via SCIM
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      requestBody:
+        content:
+          application/scim+json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserSCIMRequestRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/UserSCIMResponseResponse'
+          description: ''
+    delete:
+      operationId: Delete SCIM User
+      description: Delete a user via SCIM. This endpoint will remove the users license
+        from the account.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/semantic-layer-credentials/:
     get:
       operationId: List Semantic Layer Credentials
@@ -5443,6 +6003,29 @@ components:
         * `snowflake` - snowflake
         * `bigquery` - bigquery
         * `adapter` - adapter
+    CreateGroupSCIMRequestRequest:
+      title: CreateGroupSCIMRequest
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          description: The SCIM schema of the request
+          type: array
+          items:
+            type: string
+        displayName:
+          title: Displayname
+          description: The display name of the group
+          type: string
+        members:
+          title: Members
+          description: The members of the group
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMemberComponent'
+      required:
+      - schemas
+      - displayName
     CreateManagedRepositoryRequestRequest:
       type: object
       properties:
@@ -5451,6 +6034,195 @@ components:
           minLength: 1
       required:
       - name
+    CreateOrReplaceUserSCIMRequestRequest:
+      title: CreateOrReplaceUserSCIMRequest
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          description: The user schemas supported by the SCIM provider
+          type: array
+          items:
+            type: string
+        userName:
+          title: Username
+          description: The userName is mapped to the email address of the user
+          type: string
+        active:
+          title: Active
+          description: Whether the user is active
+          type: boolean
+        name:
+          title: Name
+          description: The user's name components
+          example:
+            givenName: John
+            familyName: Smith
+          allOf:
+          - $ref: '#/components/schemas/UserNameComponent'
+        emails:
+          title: Emails
+          description: The user's email addresses
+          example:
+          - value: john.smith@example.com
+            primary: true
+          type: array
+          items:
+            $ref: '#/components/schemas/UserEmailComponent'
+        externalId:
+          title: Externalid
+          description: The external ID of the user (user's scim id)
+          example: 12uhdfs0
+          type: string
+      required:
+      - schemas
+      - userName
+      - active
+      - name
+      - emails
+      - externalId
+    CreateOrReplaceUserSCIMResponse:
+      title: CreateOrReplaceUserSCIMResponse
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The unique identifier for the user
+          type: string
+        userName:
+          title: Username
+          description: The userName is mapped to the email address of the user
+          type: string
+        active:
+          title: Active
+          description: Whether the user is active
+          type: boolean
+        schemas:
+          title: Schemas
+          description: The schemas supported by the SCIM provider
+          default:
+          - urn:ietf:params:scim:schemas:core:2.0:User
+          type: array
+          items:
+            type: string
+        name:
+          title: Name
+          description: The user's name components
+          example:
+            givenName: John
+            familyName: Smith
+          allOf:
+          - $ref: '#/components/schemas/UserNameComponent'
+        emails:
+          title: Emails
+          description: The user's email addresses
+          example:
+          - value: john.smith@example.com
+            primary: 'True'
+          type: array
+          items:
+            $ref: '#/components/schemas/UserEmailComponent'
+        meta:
+          title: Meta
+          description: The metadata for the user
+          example:
+            resourceType: User
+            created: '2024-01-01T00:00:00+00:00'
+            lastModified: '2024-01-01T00:00:00+00:00'
+            location: /scim/v2/Users/1111
+          allOf:
+          - $ref: '#/components/schemas/MetaComponent'
+        externalId:
+          title: Externalid
+          description: The external ID of the user (user's scim id)
+          example: 12uhdfs0
+          type: string
+      required:
+      - id
+      - userName
+      - active
+      - name
+      - emails
+      - meta
+      - externalId
+    CreateOrReplaceUserSCIMResponseResponse:
+      title: CreateOrReplaceUserSCIMResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/CreateOrReplaceUserSCIMResponse'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
+    CreateSCIMConfigurationRequestRequest:
+      title: CreateSCIMConfigurationRequest
+      type: object
+      properties:
+        enabled:
+          title: Enabled
+          type: boolean
+        manual_updates_allowed:
+          title: Manual Updates Allowed
+          type: boolean
+      required:
+      - enabled
+      - manual_updates_allowed
+      additionalProperties: false
+    CreateSCIMTokenRequestRequest:
+      title: CreateSCIMTokenRequest
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+      required:
+      - name
+      additionalProperties: false
+    CreateSCIMTokenResponse:
+      title: CreateSCIMTokenResponse
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        last_used:
+          title: Last Used
+          type: string
+          format: date-time
+        token_string:
+          title: Token String
+          type: string
+      required:
+      - id
+      - name
+      - created_at
+      - token_string
+    CreateSCIMTokenResponseResponse:
+      title: CreateSCIMTokenResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/CreateSCIMTokenResponse'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
     CreateServiceTokenRequestRequest:
       title: CreateServiceTokenRequest
       type: object
@@ -6817,6 +7589,21 @@ components:
       - data
       - extra
       - status
+    GroupMemberComponent:
+      title: GroupMemberComponent
+      type: object
+      properties:
+        value:
+          title: Value
+          description: The ID of the member
+          type: string
+        display:
+          title: Display
+          description: The display name of the member
+          type: string
+      required:
+      - value
+      - display
     GroupPermission:
       type: object
       properties:
@@ -7012,6 +7799,56 @@ components:
       - group_permissions
       - id
       - updated_at
+    GroupSCIMResponse:
+      title: GroupSCIMResponse
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          description: The SCIM schema of the response
+          default:
+          - urn:ietf:params:scim:schemas:core:2.0:Group
+          type: array
+          items:
+            type: string
+        id:
+          title: Id
+          description: The ID of the group
+          type: string
+        displayName:
+          title: Displayname
+          description: The display name of the group
+          type: string
+        members:
+          title: Members
+          description: The members of the group
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMemberComponent'
+        meta:
+          title: Meta
+          description: The metadata of the group
+          allOf:
+          - $ref: '#/components/schemas/MetaComponent'
+      required:
+      - id
+      - displayName
+      - members
+      - meta
+    GroupSCIMResponseResponse:
+      title: GroupSCIMResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/GroupSCIMResponse'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
     HumanReadableDateStrategyTypeEnum:
       enum:
       - every_day
@@ -7738,6 +8575,26 @@ components:
       - status
       - data
       - extra
+    ListSCIMTokenResponseResponse:
+      title: ListSCIMTokenResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/SCIMTokenResponse'
+        error_code:
+          title: Error Code
+          type: integer
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
+      required:
+      - status
+      - data
+      - extra
     ListServiceTokenResponseResponse:
       title: ListServiceTokenResponseResponse
       type: object
@@ -7786,6 +8643,29 @@ components:
         * `provisioned_team_annual` - PROVISIONED_TEAM_ANNUAL
         * `other` - OTHER
         * `migrated` - MIGRATED
+    MetaComponent:
+      title: MetaComponent
+      type: object
+      properties:
+        resourceType:
+          title: Resourcetype
+          description: The resource type of the metadata
+          type: string
+        location:
+          title: Location
+          description: The location of the resource
+          type: string
+        created:
+          title: Created
+          description: The date and time the resource was created
+          type: string
+        lastModified:
+          title: Lastmodified
+          description: The date and time the resource was last modified
+          type: string
+      required:
+      - resourceType
+      - location
     Method:
       title: Method
       description: An enumeration.
@@ -8468,6 +9348,94 @@ components:
           - $ref: '#/components/schemas/OptionalAthenaConnection'
           - $ref: '#/components/schemas/OptionalTeradataConnection'
       additionalProperties: false
+    PatchGroupNameSCIMOperation:
+      title: PatchGroupNameSCIMOperation
+      type: object
+      properties:
+        op:
+          title: Op
+          description: The operation to perform
+          type: string
+        value:
+          title: Value
+          description: The value to perform the operation with
+          allOf:
+          - $ref: '#/components/schemas/PatchGroupNameSCIMValue'
+      required:
+      - op
+      - value
+    PatchGroupNameSCIMValue:
+      title: PatchGroupNameSCIMValue
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The Group ID
+          type: string
+        displayName:
+          title: Displayname
+          description: The new name of the Group
+          type: string
+      required:
+      - id
+      - displayName
+    PatchGroupSCIMOperation:
+      title: PatchGroupSCIMOperation
+      type: object
+      properties:
+        op:
+          title: Op
+          description: The operation to perform
+          type: string
+        path:
+          title: Path
+          description: members path
+          type: string
+        value:
+          title: Value
+          description: The value or list of values to perform the operation with
+          type: array
+          items:
+            $ref: '#/components/schemas/PatchGroupUserSCIMValue'
+      required:
+      - op
+      - path
+    PatchGroupSCIMRequestRequest:
+      title: PatchGroupSCIMRequest
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          description: The SCIM schema of the response
+          type: array
+          items:
+            type: string
+        Operations:
+          title: Operations
+          description: The operations to perform
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/PatchGroupSCIMOperation'
+            - $ref: '#/components/schemas/PatchGroupNameSCIMOperation'
+      required:
+      - schemas
+      - Operations
+    PatchGroupUserSCIMValue:
+      title: PatchGroupUserSCIMValue
+      type: object
+      properties:
+        value:
+          title: Value
+          description: The value to perform the operation with
+          type: string
+        display:
+          title: Display
+          description: The user's display name
+          type: string
+      required:
+      - value
+      - display
     PatchLineageIntegrationRequest:
       title: PatchLineageIntegration
       type: object
@@ -9616,6 +10584,175 @@ components:
       - developer_message
       - is_success
       - user_message
+    SCIMConfigResponse:
+      title: SCIMConfigResponse
+      type: object
+      properties:
+        enabled:
+          title: Enabled
+          type: boolean
+        manual_updates_allowed:
+          title: Manual Updates Allowed
+          type: boolean
+      required:
+      - enabled
+      - manual_updates_allowed
+    SCIMConfigResponseResponse:
+      title: SCIMConfigResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/SCIMConfigResponse'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
+    SCIMListResponse:
+      title: SCIMListResponse
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          description: The SCIM schema of the response
+          default:
+          - urn:ietf:params:scim:api:messages:2.0:ListResponse
+          type: array
+          items:
+            type: string
+        totalResults:
+          title: Totalresults
+          description: The total number of results
+          type: integer
+        startIndex:
+          title: Startindex
+          description: The start index of the results
+          type: integer
+        itemsPerPage:
+          title: Itemsperpage
+          description: The number of results per page
+          type: integer
+        Resources:
+          title: Resources
+          description: The list of resources
+          type: array
+          items: {}
+      required:
+      - totalResults
+      - startIndex
+      - itemsPerPage
+      - Resources
+    SCIMListResponseResponse:
+      title: SCIMListResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/SCIMListResponse'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
+    SCIMResourceType:
+      title: SCIMResourceType
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          description: The SCIM schema of the resource type
+          default:
+          - urn:ietf:params:scim:schemas:core:2.0:ResourceType
+          type: array
+          items:
+            type: string
+        id:
+          title: Id
+          description: The ID of the resource type
+          type: string
+        name:
+          title: Name
+          description: The name of the resource type
+          type: string
+        endpoint:
+          title: Endpoint
+          description: The endpoint to access the resource type
+          type: string
+        description:
+          title: Description
+          description: The description of the resource type
+          type: string
+        schema:
+          title: Schema
+          description: The schema of the resource type
+          type: string
+        meta:
+          title: Meta
+          description: The metadata of the resource type
+          allOf:
+          - $ref: '#/components/schemas/MetaComponent'
+      required:
+      - id
+      - name
+      - endpoint
+      - description
+      - schema
+      - meta
+    SCIMResourceTypeResponse:
+      title: SCIMResourceTypeResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/SCIMResourceType'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
+    SCIMTokenResponse:
+      title: SCIMTokenResponse
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        last_used:
+          title: Last Used
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - created_at
+    SCIMTokenResponseResponse:
+      title: SCIMTokenResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/SCIMTokenResponse'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
     Schema:
       type: object
       properties:
@@ -10538,6 +11675,30 @@ components:
       description: |-
         * `1` - ALLOW
         * `2` - DENY
+    UpdateGroupSCIMRequestRequest:
+      title: UpdateGroupSCIMRequest
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          description: The SCIM schema of the request
+          type: array
+          items:
+            type: string
+        displayName:
+          title: Displayname
+          description: The display name of the group
+          type: string
+        members:
+          title: Members
+          description: The members of the group
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMemberComponent'
+      required:
+      - schemas
+      - displayName
+      - members
     UpdateIPRestrictionRequestRequest:
       type: object
       properties:
@@ -10587,6 +11748,25 @@ components:
       required:
       - data
       - status
+    UpdateUserSCIMRequestRequest:
+      title: UpdateUserSCIMRequest
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          description: The user schemas supported by the SCIM provider
+          type: array
+          items:
+            type: string
+        Operations:
+          title: Operations
+          description: The operations to perform on the user
+          type: array
+          items:
+            $ref: '#/components/schemas/UserOperationComponent'
+      required:
+      - schemas
+      - Operations
     User:
       type: object
       properties:
@@ -10694,6 +11874,21 @@ components:
       - id
       - project
       - updated_at
+    UserEmailComponent:
+      title: UserEmailComponent
+      type: object
+      properties:
+        value:
+          title: Value
+          description: The email address of the user
+          default: ''
+          type: string
+        primary:
+          title: Primary
+          description: Whether the email address is the primary email address of the
+            user
+          default: false
+          type: boolean
     UserLicense:
       type: object
       properties:
@@ -10723,6 +11918,36 @@ components:
       - data
       - extra
       - status
+    UserNameComponent:
+      title: UserNameComponent
+      type: object
+      properties:
+        givenName:
+          title: Givenname
+          description: The given name of the user
+          default: ''
+          type: string
+        familyName:
+          title: Familyname
+          description: The family name of the user
+          default: ''
+          type: string
+    UserOperationComponent:
+      title: UserOperationComponent
+      type: object
+      properties:
+        op:
+          title: Op
+          description: The operation to perform on the user
+          type: string
+        value:
+          title: Value
+          description: The value to perform the operation on
+          allOf:
+          - $ref: '#/components/schemas/UserValueComponent'
+      required:
+      - op
+      - value
     UserResponse:
       type: object
       properties:
@@ -10838,6 +12063,88 @@ components:
       - licenses
       - permissions
       - sso_only_user
+    UserSCIMResponse:
+      title: UserSCIMResponse
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The unique identifier for the user
+          type: string
+        userName:
+          title: Username
+          description: The userName is mapped to the email address of the user
+          type: string
+        active:
+          title: Active
+          description: Whether the user is active
+          type: boolean
+        schemas:
+          title: Schemas
+          description: The schemas supported by the SCIM provider
+          default:
+          - urn:ietf:params:scim:schemas:core:2.0:User
+          type: array
+          items:
+            type: string
+        name:
+          title: Name
+          description: The user's name components
+          example:
+            givenName: John
+            familyName: Smith
+          allOf:
+          - $ref: '#/components/schemas/UserNameComponent'
+        emails:
+          title: Emails
+          description: The user's email addresses
+          example:
+          - value: john.smith@example.com
+            primary: 'True'
+          type: array
+          items:
+            $ref: '#/components/schemas/UserEmailComponent'
+        meta:
+          title: Meta
+          description: The metadata for the user
+          example:
+            resourceType: User
+            created: '2024-01-01T00:00:00+00:00'
+            lastModified: '2024-01-01T00:00:00+00:00'
+            location: /scim/v2/Users/1111
+          allOf:
+          - $ref: '#/components/schemas/MetaComponent'
+      required:
+      - id
+      - userName
+      - active
+      - name
+      - emails
+      - meta
+    UserSCIMResponseResponse:
+      title: UserSCIMResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/UserSCIMResponse'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - status
+      - data
+    UserValueComponent:
+      title: UserValueComponent
+      type: object
+      properties:
+        active:
+          title: Active
+          description: The active status of the user
+          type: boolean
+      required:
+      - active
     V3ResponseExtraData:
       title: V3ResponseExtraData
       type: object
