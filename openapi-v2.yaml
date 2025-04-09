@@ -3794,54 +3794,56 @@ components:
         * `migrated` - MIGRATED
     PermissionSetEnum:
       enum:
-      - owner
-      - member
       - account_admin
-      - security_admin
-      - billing_admin
+      - account_viewer
       - admin
+      - analyst
+      - billing_admin
+      - cost_management_admin
       - database_admin
+      - developer
       - git_admin
-      - team_admin
       - job_admin
       - job_runner
       - job_viewer
-      - analyst
-      - developer
-      - stakeholder
-      - readonly
-      - project_creator
-      - account_viewer
-      - metadata_only
-      - semantic_layer_only
-      - webhooks_only
       - manage_marketplace_apps
+      - member
+      - metadata_only
+      - owner
+      - project_creator
+      - readonly
       - scim_only
+      - security_admin
+      - semantic_layer_only
+      - stakeholder
+      - team_admin
+      - webhooks_only
       type: string
       description: |-
-        * `owner` - OWNER
-        * `member` - MEMBER
         * `account_admin` - ACCOUNT_ADMIN
-        * `security_admin` - SECURITY_ADMIN
-        * `billing_admin` - BILLING_ADMIN
+        * `account_viewer` - ACCOUNT_VIEWER
         * `admin` - ADMIN
+        * `analyst` - ANALYST
+        * `billing_admin` - BILLING_ADMIN
+        * `cost_management_admin` - COST_MANAGEMENT_ADMIN
         * `database_admin` - DATABASE_ADMIN
+        * `developer` - DEVELOPER
         * `git_admin` - GIT_ADMIN
-        * `team_admin` - TEAM_ADMIN
         * `job_admin` - JOB_ADMIN
         * `job_runner` - JOB_RUNNER
         * `job_viewer` - JOB_VIEWER
-        * `analyst` - ANALYST
-        * `developer` - DEVELOPER
-        * `stakeholder` - STAKEHOLDER
-        * `readonly` - READONLY
-        * `project_creator` - PROJECT_CREATOR
-        * `account_viewer` - ACCOUNT_VIEWER
-        * `metadata_only` - METADATA_ONLY
-        * `semantic_layer_only` - SEMANTIC_LAYER_ONLY
-        * `webhooks_only` - WEBHOOKS_ONLY
         * `manage_marketplace_apps` - MANAGE_MARKETPLACE_APPS
+        * `member` - MEMBER
+        * `metadata_only` - METADATA_ONLY
+        * `owner` - OWNER
+        * `project_creator` - PROJECT_CREATOR
+        * `readonly` - READONLY
         * `scim_only` - SCIM_ONLY
+        * `security_admin` - SECURITY_ADMIN
+        * `semantic_layer_only` - SEMANTIC_LAYER_ONLY
+        * `stakeholder` - STAKEHOLDER
+        * `team_admin` - TEAM_ADMIN
+        * `webhooks_only` - WEBHOOKS_ONLY
     PlanEnum:
       enum:
       - cancelled
