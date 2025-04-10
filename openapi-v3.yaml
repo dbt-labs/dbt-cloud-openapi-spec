@@ -3509,7 +3509,7 @@ paths:
         content:
           application/scim+json:
             schema:
-              $ref: '#/components/schemas/CreateGroupSCIMRequestRequest'
+              $ref: '#/components/schemas/CreateOrReplaceGroupSCIMRequestRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -3566,7 +3566,7 @@ paths:
         content:
           application/scim+json:
             schema:
-              $ref: '#/components/schemas/UpdateGroupSCIMRequestRequest'
+              $ref: '#/components/schemas/CreateOrReplaceGroupSCIMRequestRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -3768,7 +3768,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/CreateOrReplaceUserSCIMResponseResponse'
+                $ref: '#/components/schemas/UserSCIMResponseResponse'
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/Users/{user_id}:
     get:
@@ -3825,7 +3825,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/CreateOrReplaceUserSCIMResponseResponse'
+                $ref: '#/components/schemas/UserSCIMResponseResponse'
           description: ''
     patch:
       operationId: Update SCIM User
@@ -6003,8 +6003,16 @@ components:
         * `snowflake` - snowflake
         * `bigquery` - bigquery
         * `adapter` - adapter
-    CreateGroupSCIMRequestRequest:
-      title: CreateGroupSCIMRequest
+    CreateManagedRepositoryRequestRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+      required:
+      - name
+    CreateOrReplaceGroupSCIMRequestRequest:
+      title: CreateOrReplaceGroupSCIMRequest
       type: object
       properties:
         schemas:
@@ -6013,6 +6021,11 @@ components:
           type: array
           items:
             type: string
+        externalId:
+          title: Externalid
+          description: The external ID of the group
+          example: 12uhdfs0
+          type: string
         displayName:
           title: Displayname
           description: The display name of the group
@@ -6026,14 +6039,6 @@ components:
       required:
       - schemas
       - displayName
-    CreateManagedRepositoryRequestRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          minLength: 1
-      required:
-      - name
     CreateOrReplaceUserSCIMRequestRequest:
       title: CreateOrReplaceUserSCIMRequest
       type: object
@@ -6044,6 +6049,11 @@ components:
           type: array
           items:
             type: string
+        externalId:
+          title: Externalid
+          description: The external ID of the user (user's scim id)
+          example: 12uhdfs0
+          type: string
         userName:
           title: Username
           description: The userName is mapped to the email address of the user
@@ -6069,96 +6079,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserEmailComponent'
-        externalId:
-          title: Externalid
-          description: The external ID of the user (user's scim id)
-          example: 12uhdfs0
-          type: string
       required:
       - schemas
       - userName
       - active
       - name
       - emails
-      - externalId
-    CreateOrReplaceUserSCIMResponse:
-      title: CreateOrReplaceUserSCIMResponse
-      type: object
-      properties:
-        id:
-          title: Id
-          description: The unique identifier for the user
-          type: string
-        userName:
-          title: Username
-          description: The userName is mapped to the email address of the user
-          type: string
-        active:
-          title: Active
-          description: Whether the user is active
-          type: boolean
-        schemas:
-          title: Schemas
-          description: The schemas supported by the SCIM provider
-          default:
-          - urn:ietf:params:scim:schemas:core:2.0:User
-          type: array
-          items:
-            type: string
-        name:
-          title: Name
-          description: The user's name components
-          example:
-            givenName: John
-            familyName: Smith
-          allOf:
-          - $ref: '#/components/schemas/UserNameComponent'
-        emails:
-          title: Emails
-          description: The user's email addresses
-          example:
-          - value: john.smith@example.com
-            primary: 'True'
-          type: array
-          items:
-            $ref: '#/components/schemas/UserEmailComponent'
-        meta:
-          title: Meta
-          description: The metadata for the user
-          example:
-            resourceType: User
-            created: '2024-01-01T00:00:00+00:00'
-            lastModified: '2024-01-01T00:00:00+00:00'
-            location: /scim/v2/Users/1111
-          allOf:
-          - $ref: '#/components/schemas/MetaComponent'
-        externalId:
-          title: Externalid
-          description: The external ID of the user (user's scim id)
-          example: 12uhdfs0
-          type: string
-      required:
-      - id
-      - userName
-      - active
-      - name
-      - emails
-      - meta
-      - externalId
-    CreateOrReplaceUserSCIMResponseResponse:
-      title: CreateOrReplaceUserSCIMResponseResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/CreateOrReplaceUserSCIMResponse'
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - status
-      - data
     CreateSCIMConfigurationRequestRequest:
       title: CreateSCIMConfigurationRequest
       type: object
@@ -7803,17 +7729,13 @@ components:
       title: GroupSCIMResponse
       type: object
       properties:
-        schemas:
-          title: Schemas
-          description: The SCIM schema of the response
-          default:
-          - urn:ietf:params:scim:schemas:core:2.0:Group
-          type: array
-          items:
-            type: string
         id:
           title: Id
           description: The ID of the group
+          type: string
+        externalId:
+          title: Externalid
+          description: The external ID of the group
           type: string
         displayName:
           title: Displayname
@@ -7830,6 +7752,12 @@ components:
           description: The metadata of the group
           allOf:
           - $ref: '#/components/schemas/MetaComponent'
+        schemas:
+          title: Schemas
+          default:
+          - urn:ietf:params:scim:schemas:core:2.0:Group
+          type: array
+          items: {}
       required:
       - id
       - displayName
@@ -9348,94 +9276,24 @@ components:
           - $ref: '#/components/schemas/OptionalAthenaConnection'
           - $ref: '#/components/schemas/OptionalTeradataConnection'
       additionalProperties: false
-    PatchGroupNameSCIMOperation:
-      title: PatchGroupNameSCIMOperation
-      type: object
-      properties:
-        op:
-          title: Op
-          description: The operation to perform
-          type: string
-        value:
-          title: Value
-          description: The value to perform the operation with
-          allOf:
-          - $ref: '#/components/schemas/PatchGroupNameSCIMValue'
-      required:
-      - op
-      - value
-    PatchGroupNameSCIMValue:
-      title: PatchGroupNameSCIMValue
-      type: object
-      properties:
-        id:
-          title: Id
-          description: The Group ID
-          type: string
-        displayName:
-          title: Displayname
-          description: The new name of the Group
-          type: string
-      required:
-      - id
-      - displayName
-    PatchGroupSCIMOperation:
-      title: PatchGroupSCIMOperation
-      type: object
-      properties:
-        op:
-          title: Op
-          description: The operation to perform
-          type: string
-        path:
-          title: Path
-          description: members path
-          type: string
-        value:
-          title: Value
-          description: The value or list of values to perform the operation with
-          type: array
-          items:
-            $ref: '#/components/schemas/PatchGroupUserSCIMValue'
-      required:
-      - op
-      - path
     PatchGroupSCIMRequestRequest:
       title: PatchGroupSCIMRequest
       type: object
       properties:
-        schemas:
-          title: Schemas
-          description: The SCIM schema of the response
-          type: array
-          items:
-            type: string
         Operations:
           title: Operations
           description: The operations to perform
           type: array
           items:
-            anyOf:
-            - $ref: '#/components/schemas/PatchGroupSCIMOperation'
-            - $ref: '#/components/schemas/PatchGroupNameSCIMOperation'
+            $ref: '#/components/schemas/PatchOperation'
+        schemas:
+          title: Schemas
+          default:
+          - urn:ietf:params:scim:api:messages:2.0:PatchOp
+          type: array
+          items: {}
       required:
-      - schemas
       - Operations
-    PatchGroupUserSCIMValue:
-      title: PatchGroupUserSCIMValue
-      type: object
-      properties:
-        value:
-          title: Value
-          description: The value to perform the operation with
-          type: string
-        display:
-          title: Display
-          description: The user's display name
-          type: string
-      required:
-      - value
-      - display
     PatchLineageIntegrationRequest:
       title: PatchLineageIntegration
       type: object
@@ -9458,6 +9316,31 @@ components:
           allOf:
           - $ref: '#/components/schemas/OptionalLineageIntegrationConfigSchema'
       additionalProperties: false
+    PatchOp:
+      title: PatchOp
+      description: An enumeration.
+      enum:
+      - add
+      - remove
+      - replace
+      type: string
+    PatchOperation:
+      title: PatchOperation
+      type: object
+      properties:
+        op:
+          description: The operation type
+          allOf:
+          - $ref: '#/components/schemas/PatchOp'
+        path:
+          title: Path
+          description: The target [sub]attribute of the operation
+          type: string
+        value:
+          title: Value
+          description: The value used by the operation
+      required:
+      - op
     PermissionSetEnum:
       enum:
       - account_admin
@@ -11678,30 +11561,6 @@ components:
       description: |-
         * `1` - ALLOW
         * `2` - DENY
-    UpdateGroupSCIMRequestRequest:
-      title: UpdateGroupSCIMRequest
-      type: object
-      properties:
-        schemas:
-          title: Schemas
-          description: The SCIM schema of the request
-          type: array
-          items:
-            type: string
-        displayName:
-          title: Displayname
-          description: The display name of the group
-          type: string
-        members:
-          title: Members
-          description: The members of the group
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupMemberComponent'
-      required:
-      - schemas
-      - displayName
-      - members
     UpdateIPRestrictionRequestRequest:
       type: object
       properties:
@@ -12073,6 +11932,11 @@ components:
         id:
           title: Id
           description: The unique identifier for the user
+          type: string
+        externalId:
+          title: Externalid
+          description: The external ID of the user (user's scim id)
+          example: 12uhdfs0
           type: string
         userName:
           title: Username
