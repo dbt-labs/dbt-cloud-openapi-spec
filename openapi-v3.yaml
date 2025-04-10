@@ -6056,7 +6056,7 @@ components:
           type: string
         userName:
           title: Username
-          description: The userName is mapped to the email address of the user
+          description: The username for the user
           type: string
         active:
           title: Active
@@ -11940,7 +11940,7 @@ components:
           type: string
         userName:
           title: Username
-          description: The userName is mapped to the email address of the user
+          description: The username for the user
           type: string
         active:
           title: Active
