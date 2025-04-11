@@ -3473,7 +3473,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/scim/v2/Groups/:
+  /api/v3/accounts/{account_id}/scim/v2/Groups:
     get:
       operationId: List SCIM Groups
       description: List all groups via SCIM
@@ -3629,7 +3629,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/scim/v2/ResourceTypes/:
+  /api/v3/accounts/{account_id}/scim/v2/ResourceTypes:
     get:
       operationId: Get SCIM Resource Types
       description: Get Supported SCIM Resource Types
@@ -3650,7 +3650,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SCIMListResponseResponse'
           description: ''
-  /api/v3/accounts/{account_id}/scim/v2/ResourceTypes/{resource_type}/:
+  /api/v3/accounts/{account_id}/scim/v2/ResourceTypes/{resource_type}:
     get:
       operationId: Get SCIM Resource Type Details
       description: Get Supported SCIM Resource Type Details
@@ -3676,7 +3676,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SCIMResourceTypeResponse'
           description: ''
-  /api/v3/accounts/{account_id}/scim/v2/Schemas/:
+  /api/v3/accounts/{account_id}/scim/v2/Schemas:
     get:
       operationId: Get SCIM Schemas
       description: Get Supported SCIM Schemas
@@ -3697,7 +3697,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SCIMListResponseResponse'
           description: ''
-  /api/v3/accounts/{account_id}/scim/v2/Schemas/{schema_uri}/:
+  /api/v3/accounts/{account_id}/scim/v2/Schemas/{schema_uri}:
     get:
       operationId: Get SCIM Schema Details
       description: Get Supported SCIM Schema Details
@@ -3723,7 +3723,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SCIMResourceTypeResponse'
           description: ''
-  /api/v3/accounts/{account_id}/scim/v2/Users/:
+  /api/v3/accounts/{account_id}/scim/v2/Users:
     get:
       operationId: List SCIM Users
       description: List all users via SCIM
