@@ -2055,6 +2055,9 @@ components:
         static_subdomain:
           type: string
           readOnly: true
+        vanity_subdomain:
+          type: string
+          readOnly: true
         run_locked_until:
           type: string
           format: date-time
@@ -2121,6 +2124,7 @@ components:
       - trial_end_date
       - unlocked_at
       - updated_at
+      - vanity_subdomain
     AdapterVersionEnum:
       enum:
       - apache_spark_v0
