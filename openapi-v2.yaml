@@ -3804,6 +3804,7 @@ components:
       - analyst
       - billing_admin
       - cost_management_admin
+      - cost_management_viewer
       - database_admin
       - developer
       - git_admin
@@ -3830,6 +3831,7 @@ components:
         * `analyst` - ANALYST
         * `billing_admin` - BILLING_ADMIN
         * `cost_management_admin` - COST_MANAGEMENT_ADMIN
+        * `cost_management_viewer` - COST_MANAGEMENT_VIEWER
         * `database_admin` - DATABASE_ADMIN
         * `developer` - DEVELOPER
         * `git_admin` - GIT_ADMIN
