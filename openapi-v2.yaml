@@ -2390,6 +2390,13 @@ components:
       description: |-
         * `production` - production
         * `staging` - staging
+    DeprecationWarnings:
+      type: object
+      properties:
+        count:
+          type: integer
+      required:
+      - count
     EnvironmentV2:
       type: object
       properties:
@@ -4597,6 +4604,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RunStep'
+        deprecation:
+          $ref: '#/components/schemas/DeprecationWarnings'
         status_humanized:
           type: string
         in_progress:
