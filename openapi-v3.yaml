@@ -7724,10 +7724,14 @@ components:
             $ref: '#/components/schemas/GroupPermission'
           readOnly: true
           default: []
+        member_count:
+          type: integer
+          readOnly: true
       required:
       - created_at
       - group_permissions
       - id
+      - member_count
       - updated_at
     GroupSCIMResponse:
       title: GroupSCIMResponse
