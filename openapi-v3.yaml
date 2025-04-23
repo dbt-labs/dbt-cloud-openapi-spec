@@ -8322,17 +8322,20 @@ components:
       enum:
       - developer
       - read_only
+      - analyst
       - it
       type: string
     LicenseTypeEnum:
       enum:
       - developer
       - read_only
+      - analyst
       - it
       type: string
       description: |-
         * `developer` - DEVELOPER
         * `read_only` - READ_ONLY
+        * `analyst` - ANALYST
         * `it` - IT
     LineageIntegrationConfigSchema:
       title: LineageIntegrationConfigSchema
