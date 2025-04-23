@@ -7765,7 +7765,6 @@ components:
       required:
       - id
       - displayName
-      - members
       - meta
     GroupSCIMResponseResponse:
       title: GroupSCIMResponseResponse
@@ -11978,6 +11977,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserEmailComponent'
+        groups:
+          title: Groups
+          description: The groups the user belongs to
+          example:
+          - id: '1234'
+            externalId: group-1234
+            displayName: Example Group
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupSCIMResponse'
         meta:
           title: Meta
           description: The metadata for the user
