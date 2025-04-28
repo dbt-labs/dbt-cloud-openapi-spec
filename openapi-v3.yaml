@@ -4842,6 +4842,11 @@ components:
           readOnly: true
           default: 0
           description: The total number of explorer seats the account may use
+        analyst_seats:
+          type: integer
+          readOnly: true
+          default: 0
+          description: The total number of pre-purchased analyst seats for the account
         read_only_seats:
           type: integer
           readOnly: true
@@ -4976,6 +4981,7 @@ components:
           readOnly: true
       required:
       - account_migration_events
+      - analyst_seats
       - billing_email_address
       - business_critical
       - copilot_locked_until
