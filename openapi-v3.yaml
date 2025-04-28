@@ -4949,6 +4949,11 @@ components:
         freshness_job_id:
           type: integer
           description: (Deprecated)
+        copilot_locked_until:
+          type: string
+          format: date-time
+          readOnly: true
+          description: When copilot will be enabled again for the account
         account_migration_events:
           type: array
           items: {}
@@ -4973,6 +4978,7 @@ components:
       - account_migration_events
       - billing_email_address
       - business_critical
+      - copilot_locked_until
       - created_at
       - develop_pod_memory_request_mebibytes
       - developer_seats
