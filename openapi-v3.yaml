@@ -7739,11 +7739,15 @@ components:
         member_count:
           type: integer
           readOnly: true
+        scim_managed:
+          type: boolean
+          readOnly: true
       required:
       - created_at
       - group_permissions
       - id
       - member_count
+      - scim_managed
       - updated_at
     GroupSCIMResponse:
       title: GroupSCIMResponse
