@@ -3492,7 +3492,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/SCIMListResponseResponse'
+                $ref: '#/components/schemas/ListGroupSCIMResponseResponse'
           description: ''
     post:
       operationId: Create SCIM Group
@@ -3742,7 +3742,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/SCIMListResponseResponse'
+                $ref: '#/components/schemas/ListUserSCIMResponseResponse'
           description: ''
     post:
       operationId: Create SCIM User
@@ -8422,6 +8422,26 @@ components:
       - name
       - adapter_version
       - environment__count
+    ListGroupSCIMResponseResponse:
+      title: ListGroupSCIMResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupSCIMResponse'
+        error_code:
+          title: Error Code
+          type: integer
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
+      required:
+      - status
+      - data
+      - extra
     ListLineageIntegrationCollection:
       title: ListLineageIntegrationCollection
       type: object
@@ -8560,6 +8580,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceTokenResponse'
+        error_code:
+          title: Error Code
+          type: integer
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
+      required:
+      - status
+      - data
+      - extra
+    ListUserSCIMResponseResponse:
+      title: ListUserSCIMResponseResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSCIMResponse'
         error_code:
           title: Error Code
           type: integer
