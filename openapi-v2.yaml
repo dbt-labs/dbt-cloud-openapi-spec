@@ -5036,11 +5036,15 @@ components:
             $ref: '#/components/schemas/Group'
           readOnly: true
           default: []
+        scim_managed:
+          type: boolean
+          readOnly: true
       required:
       - account_id
       - created_at
       - groups
       - id
+      - scim_managed
       - updated_at
       - user_id
     UserListEnveloped:
