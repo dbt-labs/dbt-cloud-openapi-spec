@@ -5159,6 +5159,10 @@ components:
           title: Is Staff
           default: false
           type: boolean
+        scim_managed:
+          title: Scim Managed
+          description: Whether the user is managed via SCIM
+          type: boolean
       required:
       - id
       - created_at
