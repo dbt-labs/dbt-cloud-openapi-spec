@@ -11818,6 +11818,11 @@ components:
             user
           default: false
           type: boolean
+        type:
+          title: Type
+          description: The type of the email address
+          default: work
+          type: string
     UserLicense:
       type: object
       properties:
@@ -11866,14 +11871,19 @@ components:
       type: object
       properties:
         op:
-          title: Op
           description: The operation to perform on the user
-          type: string
+          allOf:
+          - $ref: '#/components/schemas/PatchOp'
         value:
           title: Value
           description: The value to perform the operation on
-          allOf:
+          anyOf:
           - $ref: '#/components/schemas/UserValueComponent'
+          - type: string
+        path:
+          title: Path
+          description: The path to the value to perform the operation on
+          type: string
       required:
       - op
       - value
