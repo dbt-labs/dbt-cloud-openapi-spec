@@ -6073,7 +6073,7 @@ components:
           type: string
         userName:
           title: Username
-          description: The username for the user
+          description: The username for the user which is their email address
           type: string
         active:
           title: Active
@@ -12017,7 +12017,7 @@ components:
           type: string
         userName:
           title: Username
-          description: The username for the user
+          description: The username for the user which is their email address
           type: string
         active:
           title: Active
