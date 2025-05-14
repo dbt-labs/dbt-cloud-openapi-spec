@@ -4490,12 +4490,14 @@ components:
       - RETRY_UNSUPPORTED_VERSION
       - RETRY_NOT_LATEST_RUN
       - RETRY_NOT_FAILED_RUN
+      - RETRY_NO_RUN_RESULTS
       type: string
       description: |-
         * `RETRY_UNSUPPORTED_CMD` - RETRY_UNSUPPORTED_CMD
         * `RETRY_UNSUPPORTED_VERSION` - RETRY_UNSUPPORTED_VERSION
         * `RETRY_NOT_LATEST_RUN` - RETRY_NOT_LATEST_RUN
         * `RETRY_NOT_FAILED_RUN` - RETRY_NOT_FAILED_RUN
+        * `RETRY_NO_RUN_RESULTS` - RETRY_NO_RUN_RESULTS
     RunFailureDetailsEnveloped:
       type: object
       properties:
