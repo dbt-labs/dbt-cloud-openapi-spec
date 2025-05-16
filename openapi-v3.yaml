@@ -1554,6 +1554,14 @@ paths:
         schema:
           type: string
       - in: query
+        name: has_catalog_ingestion_enabled
+        schema:
+          type: boolean
+      - in: query
+        name: has_cost_management_enabled
+        schema:
+          type: boolean
+      - in: query
         name: has_platform_metadata_credentials
         schema:
           type: boolean
