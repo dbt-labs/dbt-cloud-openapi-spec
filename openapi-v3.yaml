@@ -5189,6 +5189,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/AccountUserResponse'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -6168,6 +6171,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/CreateSCIMTokenResponse'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -6302,6 +6308,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/CreateServiceTokenResponse'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -7393,6 +7402,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/GetAccountConnection'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -7447,6 +7459,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/GetLineageIntegration'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -7803,6 +7818,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/GroupSCIMResponse'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -8442,11 +8460,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GroupSCIMResponse'
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
           title: Error Code
           type: integer
-        extra:
-          $ref: '#/components/schemas/V3ResponseExtraData'
       required:
       - status
       - data
@@ -8509,11 +8527,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ListAccountConnection'
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
           title: Error Code
           type: integer
-        extra:
-          $ref: '#/components/schemas/V3ResponseExtraData'
       required:
       - status
       - data
@@ -8529,11 +8547,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ListLineageIntegrationCollection'
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
           title: Error Code
           type: integer
-        extra:
-          $ref: '#/components/schemas/V3ResponseExtraData'
       required:
       - status
       - data
@@ -8549,11 +8567,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ListLineageIntegrationResponse'
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
           title: Error Code
           type: integer
-        extra:
-          $ref: '#/components/schemas/V3ResponseExtraData'
       required:
       - status
       - data
@@ -8569,11 +8587,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SCIMTokenResponse'
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
           title: Error Code
           type: integer
-        extra:
-          $ref: '#/components/schemas/V3ResponseExtraData'
       required:
       - status
       - data
@@ -8589,11 +8607,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceTokenResponse'
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
           title: Error Code
           type: integer
-        extra:
-          $ref: '#/components/schemas/V3ResponseExtraData'
       required:
       - status
       - data
@@ -8609,11 +8627,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserSCIMResponse'
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
           title: Error Code
           type: integer
-        extra:
-          $ref: '#/components/schemas/V3ResponseExtraData'
       required:
       - status
       - data
@@ -10566,6 +10584,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/SCIMConfigResponse'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -10614,6 +10635,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/SCIMListResponse'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -10672,6 +10696,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/SCIMResourceType'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -10708,6 +10735,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/SCIMTokenResponse'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -11077,6 +11107,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/ServiceTokenResponse'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -12091,6 +12124,9 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/UserSCIMResponse'
+        extra:
+          title: Extra
+          type: object
         error_code:
           title: Error Code
           type: integer
@@ -12107,21 +12143,26 @@ components:
           type: boolean
       required:
       - active
+    V3RequestParams:
+      title: V3RequestParams
+      type: object
+      properties: {}
     V3ResponseExtraData:
       title: V3ResponseExtraData
       type: object
       properties:
         filters:
-          title: Filters
-          type: object
+          $ref: '#/components/schemas/V3RequestParams'
         order_by:
           title: Order By
-          type: string
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
         pagination:
           $ref: '#/components/schemas/V3ResponsePagination'
       required:
-      - filters
-      - order_by
       - pagination
     V3ResponsePagination:
       title: V3ResponsePagination
