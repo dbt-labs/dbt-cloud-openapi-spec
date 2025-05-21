@@ -277,6 +277,21 @@ paths:
           - teradata_v0
           - trino_v0
         description: The adapter to fetch the connections for
+      - in: query
+        name: has_catalog_ingestion_enabled
+        schema:
+          type: boolean
+        description: Connections with catalog ingestion enabled
+      - in: query
+        name: has_cost_management_enabled
+        schema:
+          type: boolean
+        description: Connections with cost management enabled
+      - in: query
+        name: has_platform_metadata_credentials
+        schema:
+          type: boolean
+        description: Connections with platform metadata credentials
       tags:
       - Connections
       security:
