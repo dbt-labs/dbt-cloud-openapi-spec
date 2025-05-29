@@ -5228,7 +5228,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     Adapter:
       type: object
@@ -6222,7 +6221,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     CreateServiceTokenRequestRequest:
       title: CreateServiceTokenRequest
@@ -6362,7 +6360,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     CreateSubscriptionResponseEnvelope:
       type: object
@@ -7456,7 +7453,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     GetLineageIntegration:
       title: GetLineageIntegration
@@ -7513,7 +7509,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     GetLineageIntegrationWatchSelectionResponse:
       title: GetLineageIntegrationWatchSelectionResponse
@@ -7872,7 +7867,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     HumanReadableDateStrategyTypeEnum:
       enum:
@@ -8513,7 +8507,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListLineageIntegrationCollection:
@@ -8580,7 +8573,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListListLineageIntegrationCollectionResponse:
@@ -8600,7 +8592,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListListLineageIntegrationResponseResponse:
@@ -8620,7 +8611,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListSCIMTokenResponseResponse:
@@ -8640,7 +8630,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListServiceTokenResponseResponse:
@@ -8660,7 +8649,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListUserSCIMResponseResponse:
@@ -8680,7 +8668,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListWebhooksReceiptsResponseEnvelope:
@@ -10659,7 +10646,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     SCIMListResponse:
       title: SCIMListResponse
@@ -10710,7 +10696,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     SCIMResourceType:
       title: SCIMResourceType
@@ -10771,7 +10756,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     SCIMTokenResponse:
       title: SCIMTokenResponse
@@ -10810,7 +10794,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     Schema:
       type: object
@@ -11182,7 +11165,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     ServiceTokenType:
       title: ServiceTokenType
@@ -11407,12 +11389,8 @@ components:
           type: string
         developer_message:
           title: Developer Message
+          default: ''
           type: string
-      required:
-      - code
-      - is_success
-      - user_message
-      - developer_message
     Subscription:
       type: object
       properties:
@@ -12211,7 +12189,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     UserValueComponent:
       title: UserValueComponent
