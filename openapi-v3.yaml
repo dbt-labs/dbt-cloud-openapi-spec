@@ -9964,6 +9964,7 @@ components:
         name:
           type: string
           minLength: 1
+          maxLength: 255
           description: The name of the project
         account_id:
           type: integer
@@ -9971,6 +9972,7 @@ components:
         description:
           type: string
           minLength: 1
+          maxLength: 255
           description: The description of the project
         connection_id:
           type: integer
@@ -9989,6 +9991,7 @@ components:
         dbt_project_subdirectory:
           type: string
           minLength: 1
+          maxLength: 255
           description: The path in the associated repository where a dbt project can
             be found
         docs_job_id:
