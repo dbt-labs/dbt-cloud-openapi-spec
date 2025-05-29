@@ -6073,6 +6073,9 @@ components:
       - name
     CreateOrReplaceGroupSCIMRequestRequest:
       title: CreateOrReplaceGroupSCIMRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         schemas:
@@ -6101,6 +6104,9 @@ components:
       - displayName
     CreateOrReplaceUserSCIMRequestRequest:
       title: CreateOrReplaceUserSCIMRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         schemas:
@@ -6147,6 +6153,9 @@ components:
       - emails
     CreateSCIMConfigurationRequestRequest:
       title: CreateSCIMConfigurationRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         enabled:
@@ -6161,6 +6170,9 @@ components:
       additionalProperties: false
     CreateSCIMTokenRequestRequest:
       title: CreateSCIMTokenRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         name:
@@ -6214,6 +6226,9 @@ components:
       - data
     CreateServiceTokenRequestRequest:
       title: CreateServiceTokenRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         name:
@@ -8698,6 +8713,9 @@ components:
         * `migrated` - MIGRATED
     MetaComponent:
       title: MetaComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         resourceType:
@@ -9360,6 +9378,9 @@ components:
       - pagination
     PatchAccountConnectionRequest:
       title: PatchAccountConnection
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         account_id:
@@ -9400,6 +9421,9 @@ components:
       additionalProperties: false
     PatchGroupSCIMRequestRequest:
       title: PatchGroupSCIMRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         Operations:
@@ -9418,6 +9442,9 @@ components:
       - Operations
     PatchLineageIntegrationRequest:
       title: PatchLineageIntegration
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         name:
@@ -9555,6 +9582,9 @@ components:
         * `trial_2025` - TRIAL_2025
     PostAccountConnectionRequest:
       title: PostAccountConnection
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         account_id:
@@ -9603,6 +9633,9 @@ components:
       additionalProperties: false
     PostLineageIntegrationRequest:
       title: PostLineageIntegration
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         name:
@@ -9628,6 +9661,9 @@ components:
       additionalProperties: false
     PostLineageIntegrationWatchSelectionRequest:
       title: PostLineageIntegrationWatchSelection
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         to_add:
@@ -11752,6 +11788,9 @@ components:
       - status
     UpdateUserSCIMRequestRequest:
       title: UpdateUserSCIMRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         schemas:
@@ -11878,6 +11917,9 @@ components:
       - updated_at
     UserEmailComponent:
       title: UserEmailComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         value:
@@ -11927,6 +11969,9 @@ components:
       - status
     UserNameComponent:
       title: UserNameComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         givenName:
@@ -11941,6 +11986,9 @@ components:
           type: string
     UserOperationComponent:
       title: UserOperationComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         op:
@@ -12167,6 +12215,9 @@ components:
       - data
     UserValueComponent:
       title: UserValueComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         active:
@@ -12177,6 +12228,9 @@ components:
       - active
     V3RequestParams:
       title: V3RequestParams
+      description: |-
+        Base class for all URL request parameters.
+        It is expected that each endpoint extends this class to define its own parameters format
       type: object
       properties: {}
     V3ResponseExtraData:
