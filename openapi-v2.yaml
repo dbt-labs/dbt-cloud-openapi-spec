@@ -4730,6 +4730,16 @@ components:
       required:
       - data
       - status
+    RunStepInvocation:
+      type: object
+      properties:
+        run_step_id:
+          type: integer
+        run_id:
+          type: integer
+      required:
+      - run_id
+      - run_step_id
     RunStepResponse:
       type: object
       properties:
@@ -4799,6 +4809,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/RunStepCommand'
           readOnly: true
+        run_step_invocation:
+          allOf:
+          - $ref: '#/components/schemas/RunStepInvocation'
+          readOnly: true
       required:
       - created_at
       - duration
@@ -4806,6 +4820,7 @@ components:
       - finished_at
       - id
       - run_step_command
+      - run_step_invocation
       - started_at
       - status_color
       - status_humanized
