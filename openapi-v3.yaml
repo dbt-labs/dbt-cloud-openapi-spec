@@ -10573,6 +10573,11 @@ components:
           allOf:
           - $ref: '#/components/schemas/RepositoryGitlab'
           readOnly: true
+        is_private_link_enabled:
+          type: boolean
+          readOnly: true
+          default: false
+          description: Whether the repository is using a private link endpoint
       required:
       - created_at
       - deploy_key
@@ -10580,6 +10585,7 @@ components:
       - github_repo
       - gitlab
       - id
+      - is_private_link_enabled
       - name
       - updated_at
       - web_url
