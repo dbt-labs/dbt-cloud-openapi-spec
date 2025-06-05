@@ -2793,45 +2793,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/group-permissions/:
-    post:
-      operationId: Assign Project Group Permissions
-      description: Deprecated. Consider using the account-level v3 API instead.
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Groups
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GroupPermissionListRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GroupPermissionListRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GroupPermissionListRequest'
-        required: true
-      security:
-      - BearerAuthentication: []
-      deprecated: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupPermissionListEnveloped'
-          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/:
     get:
       operationId: List Lineage Integrations
