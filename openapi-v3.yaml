@@ -277,6 +277,21 @@ paths:
           - teradata_v0
           - trino_v0
         description: The adapter to fetch the connections for
+      - in: query
+        name: has_catalog_ingestion_enabled
+        schema:
+          type: boolean
+        description: Connections with catalog ingestion enabled
+      - in: query
+        name: has_cost_management_enabled
+        schema:
+          type: boolean
+        description: Connections with cost management enabled
+      - in: query
+        name: has_platform_metadata_credentials
+        schema:
+          type: boolean
+        description: Connections with platform metadata credentials
       tags:
       - Connections
       security:
@@ -2778,45 +2793,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/group-permissions/:
-    post:
-      operationId: Assign Project Group Permissions
-      description: Deprecated. Consider using the account-level v3 API instead.
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Groups
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GroupPermissionListRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GroupPermissionListRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GroupPermissionListRequest'
-        required: true
-      security:
-      - BearerAuthentication: []
-      deprecated: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupPermissionListEnveloped'
-          description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/:
     get:
       operationId: List Lineage Integrations
@@ -3731,6 +3707,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/SCIMResourceTypeResponse'
           description: ''
+  /api/v3/accounts/{account_id}/scim/v2/ServiceProviderConfig:
+    get:
+      operationId: Retrieve Scim V2 Serviceproviderconfig
+      description: Get the SCIM Service Provider Config
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - SCIM Endpoints - In Beta
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          description: No response body
   /api/v3/accounts/{account_id}/scim/v2/Users:
     get:
       operationId: List SCIM Users
@@ -5196,7 +5189,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     Adapter:
       type: object
@@ -6041,6 +6033,9 @@ components:
       - name
     CreateOrReplaceGroupSCIMRequestRequest:
       title: CreateOrReplaceGroupSCIMRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         schemas:
@@ -6069,6 +6064,9 @@ components:
       - displayName
     CreateOrReplaceUserSCIMRequestRequest:
       title: CreateOrReplaceUserSCIMRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         schemas:
@@ -6115,6 +6113,9 @@ components:
       - emails
     CreateSCIMConfigurationRequestRequest:
       title: CreateSCIMConfigurationRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         enabled:
@@ -6129,6 +6130,9 @@ components:
       additionalProperties: false
     CreateSCIMTokenRequestRequest:
       title: CreateSCIMTokenRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         name:
@@ -6178,10 +6182,12 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     CreateServiceTokenRequestRequest:
       title: CreateServiceTokenRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         name:
@@ -6315,7 +6321,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     CreateSubscriptionResponseEnvelope:
       type: object
@@ -7409,7 +7414,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     GetLineageIntegration:
       title: GetLineageIntegration
@@ -7466,7 +7470,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     GetLineageIntegrationWatchSelectionResponse:
       title: GetLineageIntegrationWatchSelectionResponse
@@ -7825,7 +7828,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     HumanReadableDateStrategyTypeEnum:
       enum:
@@ -8466,7 +8468,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListLineageIntegrationCollection:
@@ -8533,7 +8534,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListListLineageIntegrationCollectionResponse:
@@ -8553,7 +8553,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListListLineageIntegrationResponseResponse:
@@ -8573,7 +8572,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListSCIMTokenResponseResponse:
@@ -8593,7 +8591,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListServiceTokenResponseResponse:
@@ -8613,7 +8610,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListUserSCIMResponseResponse:
@@ -8633,7 +8629,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
       - extra
     ListWebhooksReceiptsResponseEnvelope:
@@ -8666,6 +8661,9 @@ components:
         * `migrated` - MIGRATED
     MetaComponent:
       title: MetaComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         resourceType:
@@ -9328,6 +9326,9 @@ components:
       - pagination
     PatchAccountConnectionRequest:
       title: PatchAccountConnection
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         account_id:
@@ -9368,6 +9369,9 @@ components:
       additionalProperties: false
     PatchGroupSCIMRequestRequest:
       title: PatchGroupSCIMRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         Operations:
@@ -9386,6 +9390,9 @@ components:
       - Operations
     PatchLineageIntegrationRequest:
       title: PatchLineageIntegration
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         name:
@@ -9523,6 +9530,9 @@ components:
         * `trial_2025` - TRIAL_2025
     PostAccountConnectionRequest:
       title: PostAccountConnection
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         account_id:
@@ -9571,6 +9581,9 @@ components:
       additionalProperties: false
     PostLineageIntegrationRequest:
       title: PostLineageIntegration
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         name:
@@ -9596,6 +9609,9 @@ components:
       additionalProperties: false
     PostLineageIntegrationWatchSelectionRequest:
       title: PostLineageIntegrationWatchSelection
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         to_add:
@@ -10521,6 +10537,11 @@ components:
           allOf:
           - $ref: '#/components/schemas/RepositoryGitlab'
           readOnly: true
+        is_private_link_enabled:
+          type: boolean
+          readOnly: true
+          default: false
+          description: Whether the repository is using a private link endpoint
       required:
       - created_at
       - deploy_key
@@ -10528,6 +10549,7 @@ components:
       - github_repo
       - gitlab
       - id
+      - is_private_link_enabled
       - name
       - updated_at
       - web_url
@@ -10594,7 +10616,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     SCIMListResponse:
       title: SCIMListResponse
@@ -10645,7 +10666,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     SCIMResourceType:
       title: SCIMResourceType
@@ -10706,7 +10726,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     SCIMTokenResponse:
       title: SCIMTokenResponse
@@ -10745,7 +10764,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     Schema:
       type: object
@@ -11117,7 +11135,6 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     ServiceTokenType:
       title: ServiceTokenType
@@ -11342,12 +11359,8 @@ components:
           type: string
         developer_message:
           title: Developer Message
+          default: ''
           type: string
-      required:
-      - code
-      - is_success
-      - user_message
-      - developer_message
     Subscription:
       type: object
       properties:
@@ -11723,6 +11736,9 @@ components:
       - status
     UpdateUserSCIMRequestRequest:
       title: UpdateUserSCIMRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         schemas:
@@ -11849,6 +11865,9 @@ components:
       - updated_at
     UserEmailComponent:
       title: UserEmailComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         value:
@@ -11898,6 +11917,9 @@ components:
       - status
     UserNameComponent:
       title: UserNameComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         givenName:
@@ -11912,6 +11934,9 @@ components:
           type: string
     UserOperationComponent:
       title: UserOperationComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         op:
@@ -12134,10 +12159,12 @@ components:
           title: Error Code
           type: integer
       required:
-      - status
       - data
     UserValueComponent:
       title: UserValueComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
         active:
@@ -12148,6 +12175,9 @@ components:
       - active
     V3RequestParams:
       title: V3RequestParams
+      description: |-
+        Base class for all URL request parameters.
+        It is expected that each endpoint extends this class to define its own parameters format
       type: object
       properties: {}
     V3ResponseExtraData:
