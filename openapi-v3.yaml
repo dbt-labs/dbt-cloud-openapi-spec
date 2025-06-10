@@ -12231,7 +12231,7 @@ components:
           description: The user's email addresses
           example:
           - value: john.smith@example.com
-            primary: 'True'
+            primary: true
           type: array
           items:
             $ref: '#/components/schemas/UserEmailComponent'
