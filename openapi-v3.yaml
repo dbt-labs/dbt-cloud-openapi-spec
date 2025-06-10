@@ -12242,6 +12242,9 @@ components:
           - id: '1234'
             externalId: group-1234
             displayName: Example Group
+            meta:
+              resourceType: Group
+              location: /scim/v2/Groups/1234
           type: array
           items:
             $ref: '#/components/schemas/GroupSCIMResponse'
