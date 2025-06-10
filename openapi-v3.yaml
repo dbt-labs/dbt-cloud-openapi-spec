@@ -80,7 +80,7 @@ info:
   contact:
     email: support@getdbt.com
 paths:
-  /api/v3/accounts/:
+  /api/v3/accounts:
     get:
       operationId: List Accounts
       description: List the Accounts that your API Token is authorized to access.
@@ -95,7 +95,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccountListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/assign-groups/:
+  /api/v3/accounts/{account_id}/assign-groups:
     post:
       operationId: Assign User to Groups
       parameters:
@@ -127,7 +127,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GroupListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/audit-logs/:
+  /api/v3/accounts/{account_id}/audit-logs:
     get:
       operationId: List Recent Audit Log Events
       description: |-
@@ -151,7 +151,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PublicAuditLogListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/audit-logs/download/:
+  /api/v3/accounts/{account_id}/audit-logs/download:
     get:
       operationId: Get Recent Audit Log Events CSV
       description: |-
@@ -171,7 +171,7 @@ paths:
       responses:
         '200':
           description: A CSV file
-  /api/v3/accounts/{account_id}/audit-logs/export/:
+  /api/v3/accounts/{account_id}/audit-logs/export:
     get:
       operationId: Get Bulk Audit Log Export Status
       description: |-
@@ -218,7 +218,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuditLogStartBulkExportResponseEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/audit-logs/export/{job_id}/download/:
+  /api/v3/accounts/{account_id}/audit-logs/export/{job_id}/download:
     get:
       operationId: Download Bulk Audit Log Export
       description: |-
@@ -247,7 +247,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuditLogBulkExportDownloadResponseEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/connections/:
+  /api/v3/accounts/{account_id}/connections:
     get:
       operationId: List Account Connections
       description: This is our new list endpoint for connections. Connections are
@@ -336,7 +336,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetAccountConnectionResponse'
           description: ''
-  /api/v3/accounts/{account_id}/connections/{id}/:
+  /api/v3/accounts/{account_id}/connections/{id}:
     get:
       operationId: Get Account Connection
       description: This our new get endpoint for connections. Connections are now
@@ -422,7 +422,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/group-permissions/{group_id}/:
+  /api/v3/accounts/{account_id}/group-permissions/{group_id}:
     post:
       operationId: Assign Group Permissionss
       parameters:
@@ -459,7 +459,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GroupPermissionListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/groups/:
+  /api/v3/accounts/{account_id}/groups:
     get:
       operationId: List Groups
       parameters:
@@ -551,7 +551,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GroupEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/groups/{id}/:
+  /api/v3/accounts/{account_id}/groups/{id}:
     get:
       operationId: Retrieve Group
       parameters:
@@ -612,7 +612,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GroupEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/invites/:
+  /api/v3/accounts/{account_id}/invites:
     post:
       operationId: Send user invites
       description: Send email invites to users who you wish to add to this account
@@ -645,7 +645,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InviteUsersResponseEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/ip-restrictions/:
+  /api/v3/accounts/{account_id}/ip-restrictions:
     get:
       operationId: List IP Restrictions
       parameters:
@@ -701,7 +701,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/IPRestrictionRuleEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/ip-restrictions-set/:
+  /api/v3/accounts/{account_id}/ip-restrictions-set:
     post:
       operationId: Enable IP Restrictions
       description: Toggle the enablement of the IP restriction feature.
@@ -734,7 +734,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/IPRestrictionRuleSetEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/ip-restrictions-set/{id}/validate/:
+  /api/v3/accounts/{account_id}/ip-restrictions-set/{id}/validate:
     get:
       operationId: Validate Client IP Against IP Restrictions
       description: |-
@@ -883,7 +883,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/license-maps/:
+  /api/v3/accounts/{account_id}/license-maps:
     get:
       operationId: List License Maps
       parameters:
@@ -961,7 +961,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/LicenseMapEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/license-maps/{id}/:
+  /api/v3/accounts/{account_id}/license-maps/{id}:
     get:
       operationId: Retrieve License Map
       parameters:
@@ -1042,7 +1042,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/oauth-configurations/:
+  /api/v3/accounts/{account_id}/oauth-configurations:
     get:
       operationId: List OAuthConfigurations
       description: List OAuthConfigurations
@@ -1130,7 +1130,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/OAuthConfigurationEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/oauth-configurations/{id}/:
+  /api/v3/accounts/{account_id}/oauth-configurations/{id}:
     get:
       operationId: Retrieve OAuth Configuration
       description: Retrieve an OAuth Configuration
@@ -1214,7 +1214,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/private-link-endpoints/:
+  /api/v3/accounts/{account_id}/private-link-endpoints:
     get:
       operationId: List PrivateLink Endpoints
       description: |-
@@ -1238,7 +1238,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PrivateLinkEndpointListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/:
+  /api/v3/accounts/{account_id}/projects:
     get:
       operationId: List Projects
       description: List Projects
@@ -1332,7 +1332,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{id}/:
+  /api/v3/accounts/{account_id}/projects/{id}:
     get:
       operationId: Retrieve Project
       description: Retrieve a Project
@@ -1416,7 +1416,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/adapters/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/adapters:
     post:
       operationId: Create Adapter
       description: Create a new adapter for a project. The ID from this adapter can
@@ -1455,7 +1455,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/adapters/{id}/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/adapters/{id}:
     get:
       operationId: Retrieve Adapter
       description: Get an adapter by ID.
@@ -1554,7 +1554,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/connections/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/connections:
     get:
       operationId: List Connections
       description: List Connections
@@ -1672,7 +1672,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/connections/{id}/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/connections/{id}:
     get:
       operationId: Retrieve Connection
       description: Retrieve a Connection
@@ -1774,7 +1774,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/credentials/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/credentials:
     get:
       operationId: List Credentials
       description: List the credentials for a given project.
@@ -1836,7 +1836,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CredentialsResponseEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/credentials/{id}/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/credentials/{id}:
     get:
       operationId: Get Credentials
       description: Fetch a specific set of credentials.
@@ -1975,7 +1975,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables:
     post:
       operationId: Create Projects Environment Variable
       parameters:
@@ -2012,7 +2012,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/{id}/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/{id}:
     post:
       operationId: Update Projects Environment Variable
       parameters:
@@ -2079,7 +2079,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/bulk/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/bulk:
     post:
       operationId: Create Projects Environment Variables Bulk
       parameters:
@@ -2184,7 +2184,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/environment/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/environment:
     get:
       operationId: List Projects Environment Variables Environment
       parameters:
@@ -2266,7 +2266,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/job/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/job:
     get:
       operationId: List Projects Environment Variables Job
       parameters:
@@ -2348,7 +2348,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/user/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/user:
     get:
       operationId: List Projects Environment Variables User
       parameters:
@@ -2430,7 +2430,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/environments/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/environments:
     get:
       operationId: List Environments
       description: List Environments
@@ -2576,7 +2576,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/environments/{id}/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/environments/{id}:
     get:
       operationId: Retrieve Environment
       description: Retrieve an Environment
@@ -2675,7 +2675,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes:
     post:
       operationId: Create Extended Attributes
       description: Create a new Extended Attributes record.
@@ -2713,7 +2713,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ExtendedAttributesEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/{id}/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/{id}:
     get:
       operationId: Retrieve Extended Attributes
       description: 'Given an account_id, project_id, and primary key: retrieve an
@@ -2813,7 +2813,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage:
     get:
       operationId: List Lineage Integrations
       parameters:
@@ -2874,7 +2874,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetLineageIntegrationResponse'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}:
     get:
       operationId: Get Lineage Integration
       parameters:
@@ -2969,7 +2969,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/collections/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/collections:
     get:
       operationId: List collections from BI tool
       parameters:
@@ -3004,7 +3004,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ListListLineageIntegrationCollectionResponse'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/collections/{collection_id}/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/collections/{collection_id}:
     get:
       operationId: List collections from BI tool_2
       parameters:
@@ -3085,7 +3085,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetLineageIntegrationWatchSelectionResponse'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/managed-repositories/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/managed-repositories:
     post:
       operationId: Create Managed Repository
       description: Create a new dbt Cloud managed repository.
@@ -3123,7 +3123,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/repositories/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/repositories:
     get:
       operationId: List Repositories
       description: List repositories for the given project
@@ -3227,7 +3227,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/repositories/{id}/:
+  /api/v3/accounts/{account_id}/projects/{project_id}/repositories/{id}:
     get:
       operationId: Retrieve Repository
       description: Get a repository by ID
@@ -3326,7 +3326,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/scim-config/:
+  /api/v3/accounts/{account_id}/scim-config:
     get:
       operationId: Retrieve SCIM configuration
       description: Retrieve the SCIM configuration for the account
@@ -3379,7 +3379,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SCIMConfigResponseResponse'
           description: ''
-  /api/v3/accounts/{account_id}/scim-config/tokens/:
+  /api/v3/accounts/{account_id}/scim-config/tokens:
     get:
       operationId: Retrieve SCIM tokens
       description: Retrieve all SCIM tokens
@@ -3432,7 +3432,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreateSCIMTokenResponseResponse'
           description: ''
-  /api/v3/accounts/{account_id}/scim-config/tokens/{id}/:
+  /api/v3/accounts/{account_id}/scim-config/tokens/{id}:
     get:
       operationId: Retrieve SCIM token
       description: Retrieve the specified SCIM token
@@ -3903,7 +3903,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/semantic-layer-credentials/:
+  /api/v3/accounts/{account_id}/semantic-layer-credentials:
     get:
       operationId: List Semantic Layer Credentials
       parameters:
@@ -3946,7 +3946,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SemanticLayerCredentialsListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/service-tokens/:
+  /api/v3/accounts/{account_id}/service-tokens:
     get:
       operationId: List Service Tokens
       parameters:
@@ -3998,7 +3998,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreateServiceTokenResponseResponse'
           description: ''
-  /api/v3/accounts/{account_id}/service-tokens/{id}/:
+  /api/v3/accounts/{account_id}/service-tokens/{id}:
     get:
       operationId: Retrieve Service Token
       parameters:
@@ -4079,7 +4079,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v3/accounts/{account_id}/service-tokens/{service_token_id}/permissions/:
+  /api/v3/accounts/{account_id}/service-tokens/{service_token_id}/permissions:
     get:
       operationId: Retrieve Service Tokens Permission
       description: List permissions of a given ServiceToken for an account.
@@ -4105,7 +4105,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceTokenPermissionListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/users/:
+  /api/v3/accounts/{account_id}/users:
     get:
       operationId: List Users
       description: List users for a given account.
@@ -4126,7 +4126,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserListEnveloped'
           description: ''
-  /api/v3/accounts/{account_id}/users/{id}/:
+  /api/v3/accounts/{account_id}/users/{id}:
     get:
       operationId: Retrieve User
       parameters:
@@ -4151,7 +4151,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccountUserResponseResponse'
           description: ''
-  /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys/:
+  /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys:
     get:
       operationId: List Account Scoped PATs
       parameters:
@@ -4212,7 +4212,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceToken'
           description: ''
-  /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys/{id}/:
+  /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys/{id}:
     get:
       operationId: Get Account Scoped PAT
       parameters:
@@ -4621,7 +4621,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFound'
           description: ''
-  /api/v3/adapter-schema/:
+  /api/v3/adapter-schema:
     get:
       operationId: Retrieve Adapter Schema
       description: Fetch the schema for a given adapter. The schema will include details
@@ -4658,7 +4658,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AdapterSchemaResponseEnveloped'
           description: ''
-  /api/v3/users/{user_id}/credentials/:
+  /api/v3/users/{user_id}/credentials:
     get:
       operationId: List User Credentials
       description: List the development credentials associated with a given user.
@@ -4711,7 +4711,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserCredentialsEnveloped'
           description: ''
-  /api/v3/users/{user_id}/credentials/{id}/:
+  /api/v3/users/{user_id}/credentials/{id}:
     get:
       operationId: Get User Credentials
       description: Get a development credentials association for a given user.
