@@ -424,7 +424,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/group-permissions/{group_id}/:
     post:
-      operationId: Assign Group Permissions
+      operationId: Assign Group Permissionss
       parameters:
       - in: path
         name: account_id
