@@ -5832,7 +5832,6 @@ components:
           title: Private Key
           write_only: true
           type: string
-          writeOnly: true
           format: password
         client_email:
           title: Client Email
@@ -10363,7 +10362,6 @@ components:
         username:
           type: string
           minLength: 1
-          default: ''
         default_schema:
           type: string
           minLength: 1
