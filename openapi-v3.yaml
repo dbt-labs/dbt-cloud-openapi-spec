@@ -4157,6 +4157,7 @@ paths:
                 $ref: '#/components/schemas/ServiceTokenResponseResponse'
           description: ''
     delete:
+      description: Delete a specific service token by ID
       operationId: DestroyServiceToken
       parameters:
       - in: path
@@ -4222,9 +4223,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserListEnveloped'
-          description: ''
+          description: 'Returns a list of users for the specified account.'
   /api/v3/accounts/{account_id}/users/{id}:
     get:
+      description: Retrieve a specific user by ID
       operationId: RetrieveUser
       parameters:
       - in: path
@@ -4250,6 +4252,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys:
     get:
+      description: List account scoped PATs for a user
       operationId: ListAccountScopedPATs
       parameters:
       - in: path
@@ -4274,6 +4277,7 @@ paths:
                 $ref: '#/components/schemas/ServiceTokenListEnveloped'
           description: ''
     post:
+      description: Create a new account scoped PAT for a user
       operationId: CreateAccountScopedPAT
       parameters:
       - in: path
@@ -4311,6 +4315,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys/{id}:
     get:
+      description: Retrieve a specific account scoped PAT by ID
       operationId: GetAccountScopedPAT
       parameters:
       - in: path
@@ -4340,6 +4345,7 @@ paths:
                 $ref: '#/components/schemas/AccountScopedPATResponseEnveloped'
           description: ''
     post:
+      description: Rotate an account scoped PAT for a user
       operationId: RotateAccountScopedPAT
       parameters:
       - in: path
@@ -4367,8 +4373,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceTokenEnveloped'
-          description: ''
+          description: 'Returns the rotated account scoped PAT.'
     delete:
+      description: Delete a specific account scoped PAT for a user
       operationId: DeleteAccountScopedPAT
       parameters:
       - in: path
