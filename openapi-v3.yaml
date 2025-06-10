@@ -3760,7 +3760,7 @@ paths:
         content:
           application/scim+json:
             schema:
-              $ref: '#/components/schemas/CreateOrReplaceUserSCIMRequestRequest'
+              $ref: '#/components/schemas/CreateUserSCIMRequestRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -3817,7 +3817,7 @@ paths:
         content:
           application/scim+json:
             schema:
-              $ref: '#/components/schemas/CreateOrReplaceUserSCIMRequestRequest'
+              $ref: '#/components/schemas/ReplaceUserSCIMRequestRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -6062,55 +6062,6 @@ components:
       required:
       - schemas
       - displayName
-    CreateOrReplaceUserSCIMRequestRequest:
-      title: CreateOrReplaceUserSCIMRequest
-      description: |-
-        Base class for all request payloads.
-        It is expected that each endpoint extends this class to define its own payload format
-      type: object
-      properties:
-        schemas:
-          title: Schemas
-          description: The user schemas supported by the SCIM provider
-          type: array
-          items:
-            type: string
-        externalId:
-          title: Externalid
-          description: The external ID of the user (user's scim id)
-          example: 12uhdfs0
-          type: string
-        userName:
-          title: Username
-          description: The username for the user which is their email address
-          type: string
-        active:
-          title: Active
-          description: Whether the user is active
-          type: boolean
-        name:
-          title: Name
-          description: The user's name components
-          example:
-            givenName: John
-            familyName: Smith
-          allOf:
-          - $ref: '#/components/schemas/UserNameComponent'
-        emails:
-          title: Emails
-          description: The user's email addresses
-          example:
-          - value: john.smith@example.com
-            primary: true
-          type: array
-          items:
-            $ref: '#/components/schemas/UserEmailComponent'
-      required:
-      - schemas
-      - userName
-      - active
-      - name
-      - emails
     CreateSCIMConfigurationRequestRequest:
       title: CreateSCIMConfigurationRequest
       description: |-
@@ -6123,6 +6074,9 @@ components:
           type: boolean
         manual_updates_allowed:
           title: Manual Updates Allowed
+          type: boolean
+        scim_controlled_license_type:
+          title: Scim Controlled License Type
           type: boolean
       required:
       - enabled
@@ -6332,6 +6286,65 @@ components:
       required:
       - data
       - status
+    CreateUserSCIMRequestRequest:
+      title: CreateUserSCIMRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          description: The user schemas supported by the SCIM provider
+          type: array
+          items:
+            type: string
+        externalId:
+          title: Externalid
+          description: The external ID of the user (user's scim id)
+          example: 12uhdfs0
+          type: string
+        userName:
+          title: Username
+          description: The username for the user which is their email address
+          type: string
+        active:
+          title: Active
+          description: Whether the user is active
+          type: boolean
+        name:
+          title: Name
+          description: The user's name components
+          example:
+            givenName: John
+            familyName: Smith
+          allOf:
+          - $ref: '#/components/schemas/UserNameComponent'
+        emails:
+          title: Emails
+          description: The user's email addresses
+          example:
+          - value: john.smith@example.com
+            primary: true
+          type: array
+          items:
+            $ref: '#/components/schemas/UserEmailComponent'
+        urn:ietf:params:scim:schemas:extension:dbtLabs:2.0:User:
+          title: Urn:Ietf:Params:Scim:Schemas:Extension:Dbtlabs:2.0:User
+          description: Custom attributes for the user. This is where licenseType will
+            be stored
+          default:
+            licenseType: developer
+          example:
+            licenseType: developer
+          allOf:
+          - $ref: '#/components/schemas/CustomAttributesComponent'
+      required:
+      - schemas
+      - userName
+      - active
+      - name
+      - emails
     CredentialsRequestRequest:
       oneOf:
       - $ref: '#/components/schemas/PostgresCredentialsRequest'
@@ -6378,6 +6391,20 @@ components:
       - data
       - extra
       - status
+    CustomAttributesComponent:
+      title: CustomAttributesComponent
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        licenseType:
+          description: The license type of the user
+          example: developer
+          allOf:
+          - $ref: '#/components/schemas/LicenseType'
+      required:
+      - licenseType
     CustomEnvironmentVariableBulkRequest:
       type: object
       properties:
@@ -10285,6 +10312,63 @@ components:
         * `managed` - managed
         * `gitlab` - gitlab
         * `manual_config` - manual_config
+    ReplaceUserSCIMRequestRequest:
+      title: ReplaceUserSCIMRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          description: The user schemas supported by the SCIM provider
+          type: array
+          items:
+            type: string
+        externalId:
+          title: Externalid
+          description: The external ID of the user (user's scim id)
+          example: 12uhdfs0
+          type: string
+        userName:
+          title: Username
+          description: The username for the user which is their email address
+          type: string
+        active:
+          title: Active
+          description: Whether the user is active
+          type: boolean
+        name:
+          title: Name
+          description: The user's name components
+          example:
+            givenName: John
+            familyName: Smith
+          allOf:
+          - $ref: '#/components/schemas/UserNameComponent'
+        emails:
+          title: Emails
+          description: The user's email addresses
+          example:
+          - value: john.smith@example.com
+            primary: true
+          type: array
+          items:
+            $ref: '#/components/schemas/UserEmailComponent'
+        urn:ietf:params:scim:schemas:extension:dbtLabs:2.0:User:
+          title: Urn:Ietf:Params:Scim:Schemas:Extension:Dbtlabs:2.0:User
+          description: Custom attributes for the user. This is where licenseType will
+            be stored
+          example:
+            licenseType: developer
+          allOf:
+          - $ref: '#/components/schemas/CustomAttributesComponent'
+      required:
+      - schemas
+      - userName
+      - active
+      - name
+      - emails
     RepositoryGitlab:
       type: object
       properties:
@@ -10595,9 +10679,13 @@ components:
         manual_updates_allowed:
           title: Manual Updates Allowed
           type: boolean
+        scim_controlled_license_type:
+          title: Scim Controlled License Type
+          type: boolean
       required:
       - enabled
       - manual_updates_allowed
+      - scim_controlled_license_type
     SCIMConfigResponseResponse:
       title: SCIMConfigResponseResponse
       type: object
@@ -12134,6 +12222,14 @@ components:
             location: /scim/v2/Users/1111
           allOf:
           - $ref: '#/components/schemas/MetaComponent'
+        urn:ietf:params:scim:schemas:extension:dbtLabs:2.0:User:
+          title: Urn:Ietf:Params:Scim:Schemas:Extension:Dbtlabs:2.0:User
+          description: Custom attributes for the user. This is where licenseType will
+            be stored
+          example:
+            licenseType: developer
+          allOf:
+          - $ref: '#/components/schemas/CustomAttributesComponent'
       required:
       - id
       - userName
