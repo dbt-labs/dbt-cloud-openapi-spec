@@ -79,10 +79,57 @@ info:
   termsOfService: https://www.getdbt.com/terms-of-service
   contact:
     email: support@getdbt.com
+tags:
+  - name: Accounts
+    description: Operations related to accounts.
+  - name: Groups
+    description: Operations related to groups.
+  - name: Audit Logs
+    description: Operations related to audit logs.
+  - name: Connections
+    description: Operations related to connections.
+  - name: Invites
+    description: Operations related to user invites.
+  - name: IP Restriction Endpoints
+    description: Operations related to IP restrictions.
+  - name: License Maps
+    description: Operations related to license maps.
+  - name: OAuth Configurations
+    description: Operations related to OAuth configurations.
+  - name: Private Link Endpoints
+    description: Operations related to private link endpoints.
+  - name: Projects
+    description: Operations related to projects.
+  - name: Adapters
+    description: Operations related to adapters.
+  - name: Credentials
+    description: Operations related to credentials.
+  - name: Environment Variables
+    description: Operations related to environment variables.
+  - name: Environments
+    description: Operations related to environments.
+  - name: Extended Attributes
+    description: Operations related to extended attributes.
+  - name: Lineage Integrations
+    description: Operations related to lineage integrations.
+  - name: Repositories
+    description: Operations related to repositories.
+  - name: SCIM Endpoints - In Beta
+    description: Operations related to SCIM endpoints.
+  - name: Semantic Layer Credentials
+    description: Operations related to semantic layer credentials.
+  - name: Service Tokens
+    description: Operations related to service tokens.
+  - name: Users
+    description: Operations related to users.
+  - name: Webhooks
+    description: Operations related to webhooks.
+  - name: Adapter Schema
+    description: Operations related to adapter schemas.
 paths:
   /api/v3/accounts:
     get:
-      operationId: List Accounts
+      operationId: ListAccounts
       description: List the Accounts that your API Token is authorized to access.
       tags:
       - Accounts
@@ -97,7 +144,9 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/assign-groups:
     post:
-      operationId: Assign User to Groups
+      description: |-
+        Assign a user to groups in the account.
+      operationId: AssignUserToGroups
       parameters:
       - in: path
         name: account_id
@@ -129,7 +178,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/audit-logs:
     get:
-      operationId: List Recent Audit Log Events
+      operationId: ListRecentAuditLogEvents
       description: |-
         Fetch paginated audit log events.
 
@@ -153,7 +202,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/audit-logs/download:
     get:
-      operationId: Get Recent Audit Log Events CSV
+      operationId: GetRecentAuditLogEventsCSV
       description: |-
         Generate audit log CSV
 
@@ -173,7 +222,7 @@ paths:
           description: A CSV file
   /api/v3/accounts/{account_id}/audit-logs/export:
     get:
-      operationId: Get Bulk Audit Log Export Status
+      operationId: GetBulkAuditLogExportStatus
       description: |-
         Check the status of a bulk export request.
 
@@ -196,7 +245,7 @@ paths:
                 $ref: '#/components/schemas/AuditLogBulkExportStatusResponseEnveloped'
           description: ''
     post:
-      operationId: Submit Bulk Audit Log Export Request
+      operationId: SubmitBulkAuditLogExportRequest
       description: |-
         Submit a bulk export request.
 
@@ -220,7 +269,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/audit-logs/export/{job_id}/download:
     get:
-      operationId: Download Bulk Audit Log Export
+      operationId: DownloadBulkAuditLogExport
       description: |-
         Download a bulk export of audit log events.
 
@@ -249,7 +298,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/connections:
     get:
-      operationId: List Account Connections
+      operationId: ListAccountConnections
       description: This is our new list endpoint for connections. Connections are
         now account-scoped
       parameters:
@@ -304,7 +353,7 @@ paths:
                 $ref: '#/components/schemas/ListListAccountConnectionResponse'
           description: ''
     post:
-      operationId: Create Account Connection
+      operationId: CreateAccountConnection
       description: This our new post endpoint for connections. Connections are now
         account-scoped
       parameters:
@@ -338,7 +387,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/connections/{id}:
     get:
-      operationId: Get Account Connection
+      operationId: GetAccountConnection
       description: This our new get endpoint for connections. Connections are now
         account-scoped
       parameters:
@@ -364,7 +413,7 @@ paths:
                 $ref: '#/components/schemas/GetAccountConnectionResponse'
           description: ''
     patch:
-      operationId: Update Account Connection
+      operationId: UpdateAccountConnection
       description: This our new patch endpoint for connections. Connections are now
         account-scoped
       parameters:
@@ -401,7 +450,7 @@ paths:
                 $ref: '#/components/schemas/GetAccountConnectionResponse'
           description: ''
     delete:
-      operationId: Delete Account Connection
+      operationId: DeleteAccountConnection
       description: This our new delete endpoint for connections. Connections are now
         account-scoped
       parameters:
@@ -424,7 +473,9 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/group-permissions/{group_id}:
     post:
-      operationId: Assign Group Permissionss
+      description: |-
+        Assign permissions to a group in the account.
+      operationId: AssignGroupPermissionss
       parameters:
       - in: path
         name: account_id
@@ -458,10 +509,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroupPermissionListEnveloped'
-          description: ''
+          description: |-
+            Returns the list of permissions that were assigned to the group.
   /api/v3/accounts/{account_id}/groups:
     get:
-      operationId: List Groups
+      description: List the Groups.
+      operationId: ListGroups
       parameters:
       - in: path
         name: account_id
@@ -519,9 +572,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroupListEnveloped'
-          description: ''
+          description: |-
+            Returns a list of groups in the account.
     post:
-      operationId: Create Group
+      description: |-
+        Create a new group in the account.
+      operationId: CreateGroup
       parameters:
       - in: path
         name: account_id
@@ -550,10 +606,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroupEnveloped'
-          description: ''
+          description: |-
+            Returns the group that was created.
   /api/v3/accounts/{account_id}/groups/{id}:
     get:
-      operationId: Retrieve Group
+      description: |-
+        Retrieve a group by its ID.
+      operationId: RetrieveGroup
       parameters:
       - in: path
         name: account_id
@@ -575,9 +634,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroupEnveloped'
-          description: ''
+          description: |-
+            Returns the group with the specified ID.
     post:
-      operationId: Update Group
+      description: |-
+        Update an existing group in the account.
+      operationId: UpdateGroup
       parameters:
       - in: path
         name: account_id
@@ -614,7 +676,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/invites:
     post:
-      operationId: Send user invites
+      operationId: SendUserInvites
       description: Send email invites to users who you wish to add to this account
       parameters:
       - in: path
@@ -644,10 +706,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InviteUsersResponseEnveloped'
-          description: ''
+          description: |-
+            Returns the list of users that were invited to the account.
   /api/v3/accounts/{account_id}/ip-restrictions:
     get:
-      operationId: List IP Restrictions
+      description: |-
+        List all IP restriction rules for the account.
+      operationId: ListIPRestrictions
       parameters:
       - in: path
         name: account_id
@@ -666,7 +731,7 @@ paths:
                 $ref: '#/components/schemas/IPRestrictionRuleListEnveloped'
           description: ''
     post:
-      operationId: Save IP Restriction
+      operationId: SaveIPRestriction
       description: |-
         Save net-new ip restriction rule
 
@@ -703,7 +768,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/ip-restrictions-set:
     post:
-      operationId: Enable IP Restrictions
+      operationId: EnableIPRestrictions
       description: Toggle the enablement of the IP restriction feature.
       parameters:
       - in: path
@@ -736,7 +801,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/ip-restrictions-set/{id}/validate:
     get:
-      operationId: Validate Client IP Against IP Restrictions
+      operationId: ValidateClientIPAgainstIPRestrictions
       description: |-
         This endpoint returns whether the client ip is acceptable based on the
         configured ip restriction rules associated to the rule set.
@@ -761,11 +826,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IPRestrictionSetValidate'
-          description: ''
+          description: |-
+            Returns whether the client IP is acceptable based on the configured
+            IP restriction rules associated to the rule set.
   /api/v3/accounts/{account_id}/ip-restrictions-set/{id}/validate/{rule_id}:
     get:
-      operationId: Validate Client IP Against IP Restrictions Excluding Specified
-        IP Rule
+      operationId: ValidateClientIPAgainstIPRestrictionsExcludingSpecifiedIPRule
       description: |-
         This endpoint returns whether the client ip is acceptable based on the
         configured ip restriction rules associated to the rule set - excluding the ip rule id
@@ -799,7 +865,9 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/ip-restrictions/{id}:
     get:
-      operationId: Retrieve IP Restriction
+      description: |-
+        Retrieve an existing ip restriction rule by its ID
+      operationId: RetrieveIPRestriction
       parameters:
       - in: path
         name: account_id
@@ -823,7 +891,7 @@ paths:
                 $ref: '#/components/schemas/IPRestrictionRuleEnveloped'
           description: ''
     put:
-      operationId: Update IP Restriction
+      operationId: UpdateIPRestriction
       description: |-
         Update an existing ip restriction rule
 
@@ -858,13 +926,16 @@ paths:
       - BearerAuthentication: []
       responses:
         '200':
+          description: |-
+            Update an existing ip restriction rule
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/IPRestrictionRule'
-          description: ''
     delete:
-      operationId: Delete IP Restriction
+      description: |-
+        Delete an existing ip restriction rule by its ID
+      operationId: DeleteIPRestriction
       parameters:
       - in: path
         name: account_id
@@ -882,10 +953,11 @@ paths:
       - BearerAuthentication: []
       responses:
         '204':
-          description: No response body
+          description: 'No response body'
   /api/v3/accounts/{account_id}/license-maps:
     get:
-      operationId: List License Maps
+      description: List License Maps
+      operationId: ListLicenseMaps
       parameters:
       - in: path
         name: account_id
@@ -929,9 +1001,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LicenseMapListEnveloped'
-          description: ''
+          description: 'Returns a list of license maps in the account.'
     post:
-      operationId: Create License Map
+      description: Create a new License Map
+      operationId: CreateLicenseMap
       parameters:
       - in: path
         name: account_id
@@ -963,7 +1036,8 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/license-maps/{id}:
     get:
-      operationId: Retrieve License Map
+      description: Retrieve a License Map
+      operationId: RetrieveLicenseMap
       parameters:
       - in: path
         name: account_id
@@ -985,9 +1059,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LicenseMapEnveloped'
-          description: ''
+          description: 'Returns the license map with the specified ID.'
     post:
-      operationId: Update License Map
+      description: Update a License Map
+      operationId: UpdateLicenseMap
       parameters:
       - in: path
         name: account_id
@@ -1021,9 +1096,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LicenseMapEnveloped'
-          description: ''
+          description: 'Returns the updated license map.'
     delete:
-      operationId: Destroy License Map
+      description: Delete a License Map
+      operationId: DestroyLicenseMap
       parameters:
       - in: path
         name: account_id
@@ -1044,7 +1120,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/oauth-configurations:
     get:
-      operationId: List OAuthConfigurations
+      operationId: ListOAuthConfigurations
       description: List OAuthConfigurations
       parameters:
       - in: path
@@ -1099,7 +1175,7 @@ paths:
                 $ref: '#/components/schemas/OAuthConfigurationListEnveloped'
           description: ''
     post:
-      operationId: Create OAuthConfiguration
+      operationId: CreateOAuthConfiguration
       description: Create a new OAuthConfiguration
       parameters:
       - in: path
@@ -1132,7 +1208,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/oauth-configurations/{id}:
     get:
-      operationId: Retrieve OAuth Configuration
+      operationId: RetrieveOAuthConfiguration
       description: Retrieve an OAuth Configuration
       parameters:
       - in: path
@@ -1157,7 +1233,7 @@ paths:
                 $ref: '#/components/schemas/OAuthConfigurationEnveloped'
           description: ''
     post:
-      operationId: Update OAuth Configuration
+      operationId: UpdateOAuthConfiguration
       description: Update an OAuthConfiguration
       parameters:
       - in: path
@@ -1194,7 +1270,7 @@ paths:
                 $ref: '#/components/schemas/OAuthConfigurationEnveloped'
           description: ''
     delete:
-      operationId: Destroy OAuth Configuration
+      operationId: DestroyOAuthConfiguration
       description: Delete an OAuth Configuration
       parameters:
       - in: path
@@ -1216,7 +1292,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/private-link-endpoints:
     get:
-      operationId: List PrivateLink Endpoints
+      operationId: ListPrivateLinkEndpoints
       description: |-
         List PrivateLink Endpoints for an account.
 
@@ -1240,7 +1316,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects:
     get:
-      operationId: List Projects
+      operationId: ListProjects
       description: List Projects
       parameters:
       - in: path
@@ -1301,7 +1377,7 @@ paths:
                 $ref: '#/components/schemas/ProjectListEnveloped'
           description: ''
     post:
-      operationId: Create Project
+      operationId: CreateProject
       description: Create a new Project
       parameters:
       - in: path
@@ -1334,7 +1410,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{id}:
     get:
-      operationId: Retrieve Project
+      operationId: RetrieveProject
       description: Retrieve a Project
       parameters:
       - in: path
@@ -1359,7 +1435,7 @@ paths:
                 $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
     post:
-      operationId: Update Project
+      operationId: UpdateProject
       description: Update a Project
       parameters:
       - in: path
@@ -1396,7 +1472,7 @@ paths:
                 $ref: '#/components/schemas/ProjectEnveloped'
           description: ''
     delete:
-      operationId: Destroy Project
+      operationId: DestroyProject
       description: Delete Project
       parameters:
       - in: path
@@ -1418,7 +1494,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/adapters:
     post:
-      operationId: Create Adapter
+      operationId: CreateAdapter
       description: Create a new adapter for a project. The ID from this adapter can
         be used to create Connections or Credentials when necessary.
       parameters:
@@ -1457,7 +1533,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/adapters/{id}:
     get:
-      operationId: Retrieve Adapter
+      operationId: RetrieveAdapter
       description: Get an adapter by ID.
       parameters:
       - in: path
@@ -1487,7 +1563,7 @@ paths:
                 $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
     post:
-      operationId: Update Adapter
+      operationId: UpdateAdapter
       description: Update an adapter.
       parameters:
       - in: path
@@ -1529,7 +1605,7 @@ paths:
                 $ref: '#/components/schemas/DbtAdapterEnveloped'
           description: ''
     delete:
-      operationId: Destroy Adapter
+      operationId: DestroyAdapter
       description: Delete an adapter.
       parameters:
       - in: path
@@ -1556,7 +1632,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/connections:
     get:
-      operationId: List Connections
+      operationId: ListConnections
       description: List Connections
       parameters:
       - in: path
@@ -1635,7 +1711,7 @@ paths:
                 $ref: '#/components/schemas/BaseConnectionV3ListEnveloped'
           description: ''
     post:
-      operationId: Create Connection
+      operationId: CreateConnection
       description: Create a new Connection
       parameters:
       - in: path
@@ -1674,7 +1750,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/connections/{id}:
     get:
-      operationId: Retrieve Connection
+      operationId: RetrieveConnection
       description: Retrieve a Connection
       parameters:
       - in: path
@@ -1705,7 +1781,7 @@ paths:
                 $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
     post:
-      operationId: Update Connection
+      operationId: UpdateConnection
       description: Update a Connection
       parameters:
       - in: path
@@ -1748,7 +1824,7 @@ paths:
                 $ref: '#/components/schemas/BaseConnectionV3Enveloped'
           description: ''
     delete:
-      operationId: Destroy Connection
+      operationId: DestroyConnection
       description: Delete a Connection
       parameters:
       - in: path
@@ -1776,7 +1852,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials:
     get:
-      operationId: List Credentials
+      operationId: ListCredentials
       description: List the credentials for a given project.
       parameters:
       - in: path
@@ -1801,7 +1877,7 @@ paths:
                 $ref: '#/components/schemas/CredentialsResponseListEnveloped'
           description: ''
     post:
-      operationId: Create Credentials
+      operationId: CreateCredentials
       description: Create a new set of credentials to associate with a user or environment
       parameters:
       - in: path
@@ -1838,7 +1914,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/{id}:
     get:
-      operationId: Get Credentials
+      operationId: GetCredentials
       description: Fetch a specific set of credentials.
       parameters:
       - in: path
@@ -1868,7 +1944,7 @@ paths:
                 $ref: '#/components/schemas/CredentialsResponseEnveloped'
           description: ''
     post:
-      operationId: Update Credentials
+      operationId: UpdateCredentials
       description: Update a set of credentials
       parameters:
       - in: path
@@ -1909,7 +1985,7 @@ paths:
                 $ref: '#/components/schemas/CredentialsResponseEnveloped'
           description: ''
     patch:
-      operationId: Partial Update Credentials
+      operationId: PartialUpdateCredentials
       description: Partially update a set of credentials
       parameters:
       - in: path
@@ -1950,7 +2026,7 @@ paths:
                 $ref: '#/components/schemas/CredentialsResponseEnveloped'
           description: ''
     delete:
-      operationId: Delete Credentials
+      operationId: DeleteCredentials
       description: Delete a set of credentials
       parameters:
       - in: path
@@ -1977,7 +2053,8 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables:
     post:
-      operationId: Create Projects Environment Variable
+      description: Create a new environment variable for a project.
+      operationId: CreateProjectsEnvironmentVariable
       parameters:
       - in: path
         name: account_id
@@ -2011,10 +2088,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
-          description: ''
+          description: 'Returns the created environment variable.'
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/{id}:
     post:
-      operationId: Update Projects Environment Variable
+      description: Update an existing environment variables for a project.
+      operationId: UpdateProjectsEnvironmentVariable
       parameters:
       - in: path
         name: account_id
@@ -2053,9 +2131,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
-          description: ''
+          description: 'Returns the updated environment variable.'
     delete:
-      operationId: Destroy Projects Environment Variable
+      description: Delete an environment variable for a project.
+      operationId: DestroyProjectsEnvironmentVariable
       parameters:
       - in: path
         name: account_id
@@ -2081,7 +2160,8 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/bulk:
     post:
-      operationId: Create Projects Environment Variables Bulk
+      description: Create or update multiple environment variables for a project in bulk.
+      operationId: CreateProjectsEnvironmentVariablesBulk
       parameters:
       - in: path
         name: account_id
@@ -2115,15 +2195,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseListEnveloped'
-          description: ''
+          description: 'Returns a list of environment variable updates.'
         '400':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseFailListEnveloped'
-          description: ''
+          description: 'Returns a list of failed environment variable updates.'
     put:
-      operationId: Update Projects Environment Variables Bulk
+      description: Update multiple environment variables for a project in bulk.
+      operationId: UpdateProjectsEnvironmentVariablesBulk
       parameters:
       - in: path
         name: account_id
@@ -2157,15 +2238,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseListEnveloped'
-          description: ''
+          description: 'Returns a list of environment variable updates.'
         '400':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseFailListEnveloped'
-          description: ''
+          description: 'Returns a list of failed environment variable updates.'
     delete:
-      operationId: Destroy Projects Environment Variables Bulk
+      description: Delete multiple environment variables for a project in bulk.
+      operationId: DestroyProjectsEnvironmentVariablesBulk
       parameters:
       - in: path
         name: account_id
@@ -2186,7 +2268,8 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/environment:
     get:
-      operationId: List Projects Environment Variables Environment
+      description: List environment variables for a project, filtered by environment.
+      operationId: ListProjectsEnvironmentVariablesEnvironment
       parameters:
       - in: path
         name: account_id
@@ -2265,10 +2348,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
-          description: ''
+          description: 'Returns a list of environment variables for the specified project and environment.'
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/job:
     get:
-      operationId: List Projects Environment Variables Job
+      description: List environment variables for a project, filtered by job.
+      operationId: ListProjectsEnvironmentVariablesJob
       parameters:
       - in: path
         name: account_id
@@ -2347,10 +2431,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
-          description: ''
+          description: 'Returns a list of environment variables for the specified project and job.'
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/user:
     get:
-      operationId: List Projects Environment Variables User
+      description: List environment variables for a project, filtered by user.
+      operationId: ListProjectsEnvironmentVariablesUser
       parameters:
       - in: path
         name: account_id
@@ -2432,7 +2517,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environments:
     get:
-      operationId: List Environments
+      operationId: ListEnvironments
       description: List Environments
       parameters:
       - in: path
@@ -2540,7 +2625,7 @@ paths:
                 $ref: '#/components/schemas/EnvironmentV3ListEnveloped'
           description: ''
     post:
-      operationId: Create Environment
+      operationId: CreateEnvironment
       description: Create a new Environment
       parameters:
       - in: path
@@ -2578,7 +2663,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environments/{id}:
     get:
-      operationId: Retrieve Environment
+      operationId: RetrieveEnvironment
       description: Retrieve an Environment
       parameters:
       - in: path
@@ -2608,7 +2693,7 @@ paths:
                 $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
     post:
-      operationId: Update Environment
+      operationId: UpdateEnvironment
       description: Update an Environment
       parameters:
       - in: path
@@ -2650,7 +2735,7 @@ paths:
                 $ref: '#/components/schemas/EnvironmentV3Enveloped'
           description: ''
     delete:
-      operationId: Destroy Environment
+      operationId: DestroyEnvironment
       description: Delete an Environment
       parameters:
       - in: path
@@ -2677,7 +2762,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes:
     post:
-      operationId: Create Extended Attributes
+      operationId: CreateExtendedAttributes
       description: Create a new Extended Attributes record.
       parameters:
       - in: path
@@ -2715,7 +2800,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/{id}:
     get:
-      operationId: Retrieve Extended Attributes
+      operationId: RetrieveExtendedAttributes
       description: 'Given an account_id, project_id, and primary key: retrieve an
         existing Extended Attributes record.'
       parameters:
@@ -2746,7 +2831,7 @@ paths:
                 $ref: '#/components/schemas/ExtendedAttributesEnveloped'
           description: ''
     patch:
-      operationId: Update Extended Attributes
+      operationId: UpdateExtendedAttributes
       description: Update an existing Extended Attributes record by ID.
       parameters:
       - in: path
@@ -2788,7 +2873,7 @@ paths:
                 $ref: '#/components/schemas/ExtendedAttributesEnveloped'
           description: ''
     delete:
-      operationId: Destroy Extended Attributes
+      operationId: DestroyExtendedAttributes
       description: Delete an existing Extended Attributes record by ID.
       parameters:
       - in: path
@@ -2815,7 +2900,8 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage:
     get:
-      operationId: List Lineage Integrations
+      description: List Lineage Integrations
+      operationId: ListLineageIntegrations
       parameters:
       - in: path
         name: account_id
@@ -2837,9 +2923,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListListLineageIntegrationResponseResponse'
-          description: ''
+          description: 'Returns a list of lineage integrations for the specified project.'
     post:
-      operationId: Create Lineage Integration
+      description: Create a new Lineage Integration
+      operationId: CreateLineageIntegration
       parameters:
       - in: path
         name: account_id
@@ -2876,7 +2963,8 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}:
     get:
-      operationId: Get Lineage Integration
+      description: Retrieve a specific Lineage Integration
+      operationId: GetLineageIntegration
       parameters:
       - in: path
         name: account_id
@@ -2903,9 +2991,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLineageIntegrationResponse'
-          description: ''
+          description: 'Returns the details of a specific lineage integration.'
     patch:
-      operationId: Update Lineage Integration
+      description: Update a specific Lineage Integration
+      operationId: UpdateLineageIntegration
       parameters:
       - in: path
         name: account_id
@@ -2943,9 +3032,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLineageIntegrationResponse'
-          description: ''
+          description: 'Returns the updated lineage integration.'
     delete:
-      operationId: Delete Lineage Integration
+      description: Delete a specific Lineage Integration
+      operationId: DeleteLineageIntegration
       parameters:
       - in: path
         name: account_id
@@ -2971,7 +3061,8 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/collections:
     get:
-      operationId: List collections from BI tool
+      description: List Collections from a Lineage Integration
+      operationId: ListCollectionsFromBITool
       parameters:
       - in: path
         name: account_id
@@ -3003,10 +3094,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListListLineageIntegrationCollectionResponse'
-          description: ''
+          description: 'Returns a list of collections from the specified lineage integration.'
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/collections/{collection_id}:
     get:
-      operationId: List collections from BI tool_2
+      description: List Collections from a Lineage Integration with a specific collection ID
+      operationId: ListCollectionsFromBITool2
       parameters:
       - in: path
         name: account_id
@@ -3043,10 +3135,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListListLineageIntegrationCollectionResponse'
-          description: ''
+          description: 'Returns a list of collections from the specified lineage integration with a specific collection ID.'
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/selections:
     post:
-      operationId: Update Lineage Integration Selections
+      description: Update the selections for a Lineage Integration
+      operationId: UpdateLineageIntegrationSelections
       parameters:
       - in: path
         name: account_id
@@ -3084,10 +3177,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLineageIntegrationWatchSelectionResponse'
-          description: ''
+          description: 'Returns the updated selections for the specified lineage integration.'
   /api/v3/accounts/{account_id}/projects/{project_id}/managed-repositories:
     post:
-      operationId: Create Managed Repository
+      operationId: CreateManagedRepository
       description: Create a new dbt Cloud managed repository.
       parameters:
       - in: path
@@ -3122,10 +3215,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RepositoryV3Enveloped'
-          description: ''
+          description: 'Returns the created managed repository.'
   /api/v3/accounts/{account_id}/projects/{project_id}/repositories:
     get:
-      operationId: List Repositories
+      operationId: ListRepositories
       description: List repositories for the given project
       parameters:
       - in: path
@@ -3191,7 +3284,7 @@ paths:
                 $ref: '#/components/schemas/RepositoryV3ListEnveloped'
           description: ''
     post:
-      operationId: Create Repository
+      operationId: CreateRepository
       description: Create a new repository for the given project
       parameters:
       - in: path
@@ -3229,7 +3322,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/repositories/{id}:
     get:
-      operationId: Retrieve Repository
+      operationId: RetrieveRepository
       description: Get a repository by ID
       parameters:
       - in: path
@@ -3259,7 +3352,7 @@ paths:
                 $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
     post:
-      operationId: Update Repository
+      operationId: UpdateRepository
       description: Update a repository
       parameters:
       - in: path
@@ -3301,7 +3394,7 @@ paths:
                 $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
     delete:
-      operationId: Destroy Repository
+      operationId: DestroyRepository
       description: Delete a repository
       parameters:
       - in: path
@@ -3328,7 +3421,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/scim-config:
     get:
-      operationId: Retrieve SCIM configuration
+      operationId: RetrieveSCIMConfiguration
       description: Retrieve the SCIM configuration for the account
       parameters:
       - in: path
@@ -3348,7 +3441,7 @@ paths:
                 $ref: '#/components/schemas/SCIMConfigResponseResponse'
           description: ''
     post:
-      operationId: Create SCIM configuration
+      operationId: CreateSCIMConfiguration
       description: Create SCIM configuration for the account
       parameters:
       - in: path
@@ -3381,7 +3474,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/scim-config/tokens:
     get:
-      operationId: Retrieve SCIM tokens
+      operationId: RetrieveSCIMTokens
       description: Retrieve all SCIM tokens
       parameters:
       - in: path
@@ -3401,7 +3494,7 @@ paths:
                 $ref: '#/components/schemas/ListSCIMTokenResponseResponse'
           description: ''
     post:
-      operationId: Create SCIM token
+      operationId: CreateSCIMToken
       description: Create a SCIM token
       parameters:
       - in: path
@@ -3434,7 +3527,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/scim-config/tokens/{id}:
     get:
-      operationId: Retrieve SCIM token
+      operationId: RetrieveSCIMToken
       description: Retrieve the specified SCIM token
       parameters:
       - in: path
@@ -3459,7 +3552,7 @@ paths:
                 $ref: '#/components/schemas/SCIMTokenResponseResponse'
           description: ''
     delete:
-      operationId: Delete SCIM token
+      operationId: DeleteSCIMToken
       description: Delete the specified SCIM token
       parameters:
       - in: path
@@ -3481,7 +3574,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/scim/v2/Groups:
     get:
-      operationId: List SCIM Groups
+      operationId: ListSCIMGroups
       description: List all groups via SCIM
       parameters:
       - in: path
@@ -3501,7 +3594,7 @@ paths:
                 $ref: '#/components/schemas/ListGroupSCIMResponseResponse'
           description: ''
     post:
-      operationId: Create SCIM Group
+      operationId: CreateSCIMGroup
       description: Create a group via SCIM
       parameters:
       - in: path
@@ -3528,7 +3621,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/Groups/{group_id}:
     get:
-      operationId: Get SCIM Group
+      operationId: GetSCIMGroup
       description: Get a group via SCIM
       parameters:
       - in: path
@@ -3553,7 +3646,7 @@ paths:
                 $ref: '#/components/schemas/GroupSCIMResponseResponse'
           description: ''
     put:
-      operationId: Update SCIM Group
+      operationId: UpdateSCIMGroup
       description: Update a group via SCIM using PUT
       parameters:
       - in: path
@@ -3584,7 +3677,7 @@ paths:
                 $ref: '#/components/schemas/GroupSCIMResponseResponse'
           description: ''
     patch:
-      operationId: Patch SCIM Group
+      operationId: PatchSCIMGroup
       description: Update a group via SCIM using PATCH
       parameters:
       - in: path
@@ -3615,7 +3708,7 @@ paths:
                 $ref: '#/components/schemas/GroupSCIMResponseResponse'
           description: ''
     delete:
-      operationId: Delete SCIM Group
+      operationId: DeleteSCIMGroup
       description: Delete a group via SCIM
       parameters:
       - in: path
@@ -3637,7 +3730,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/scim/v2/ResourceTypes:
     get:
-      operationId: Get SCIM Resource Types
+      operationId: GetSCIMResourceTypes
       description: Get Supported SCIM Resource Types
       parameters:
       - in: path
@@ -3658,7 +3751,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/ResourceTypes/{resource_type}:
     get:
-      operationId: Get SCIM Resource Type Details
+      operationId: GetSCIMResourceTypeDetails
       description: Get Supported SCIM Resource Type Details
       parameters:
       - in: path
@@ -3684,7 +3777,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/Schemas:
     get:
-      operationId: Get SCIM Schemas
+      operationId: GetSCIMSchemas
       description: Get Supported SCIM Schemas
       parameters:
       - in: path
@@ -3705,7 +3798,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/Schemas/{schema_uri}:
     get:
-      operationId: Get SCIM Schema Details
+      operationId: GetSCIMSchemaDetails
       description: Get Supported SCIM Schema Details
       parameters:
       - in: path
@@ -3731,7 +3824,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/ServiceProviderConfig:
     get:
-      operationId: Retrieve Scim V2 Serviceproviderconfig
+      operationId: RetrieveScimV2Serviceproviderconfig
       description: Get the SCIM Service Provider Config
       parameters:
       - in: path
@@ -3748,7 +3841,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/scim/v2/Users:
     get:
-      operationId: List SCIM Users
+      operationId: ListSCIMUsers
       description: List all users via SCIM
       parameters:
       - in: path
@@ -3768,7 +3861,7 @@ paths:
                 $ref: '#/components/schemas/ListUserSCIMResponseResponse'
           description: ''
     post:
-      operationId: Create SCIM User
+      operationId: CreateSCIMUser
       description: Create a user via SCIM
       parameters:
       - in: path
@@ -3795,7 +3888,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/Users/{user_id}:
     get:
-      operationId: Get SCIM User
+      operationId: GetSCIMUser
       description: Get a user via SCIM
       parameters:
       - in: path
@@ -3820,7 +3913,7 @@ paths:
                 $ref: '#/components/schemas/UserSCIMResponseResponse'
           description: ''
     put:
-      operationId: Replace SCIM User
+      operationId: ReplaceSCIMUser
       description: Replace a user via SCIM using PUT
       parameters:
       - in: path
@@ -3851,7 +3944,7 @@ paths:
                 $ref: '#/components/schemas/UserSCIMResponseResponse'
           description: ''
     patch:
-      operationId: Update SCIM User
+      operationId: UpdateSCIMUser
       description: Update a user attribute(s) via SCIM
       parameters:
       - in: path
@@ -3882,7 +3975,7 @@ paths:
                 $ref: '#/components/schemas/UserSCIMResponseResponse'
           description: ''
     delete:
-      operationId: Delete SCIM User
+      operationId: DeleteSCIMUser
       description: Delete a user via SCIM. This endpoint will remove the users license
         from the account.
       parameters:
@@ -3905,7 +3998,8 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/semantic-layer-credentials:
     get:
-      operationId: List Semantic Layer Credentials
+      description: List Semantic Layer Credentials for the account
+      operationId: ListSemanticLayerCredentials
       parameters:
       - in: path
         name: account_id
@@ -3945,10 +4039,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SemanticLayerCredentialsListEnveloped'
-          description: ''
+          description: 'Returns a list of semantic layer credentials for the account.'
   /api/v3/accounts/{account_id}/service-tokens:
     get:
-      operationId: List Service Tokens
+      description: List service tokens for the account
+      operationId: ListServiceTokens
       parameters:
       - in: path
         name: account_id
@@ -3967,7 +4062,7 @@ paths:
                 $ref: '#/components/schemas/ListServiceTokenResponseResponse'
           description: ''
     post:
-      operationId: Create Service Token
+      operationId: CreateServiceToken
       description: This endpoint is used to generate a new service token for the account.
       parameters:
       - in: path
@@ -3997,10 +4092,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateServiceTokenResponseResponse'
-          description: ''
+          description: 'Returns the created service token.'
   /api/v3/accounts/{account_id}/service-tokens/{id}:
     get:
-      operationId: Retrieve Service Token
+      description: Retrieve a specific service token by ID
+      operationId: RetrieveServiceToken
       parameters:
       - in: path
         name: account_id
@@ -4022,9 +4118,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceTokenEnveloped'
-          description: ''
+          description: 'Returns the specified service token.'
     put:
-      operationId: Update Service Token
+      description: Update a specific service token by ID
+      operationId: UpdateServiceToken
       parameters:
       - in: path
         name: account_id
@@ -4060,7 +4157,7 @@ paths:
                 $ref: '#/components/schemas/ServiceTokenResponseResponse'
           description: ''
     delete:
-      operationId: Destroy Service Token
+      operationId: DestroyServiceToken
       parameters:
       - in: path
         name: account_id
@@ -4081,7 +4178,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/service-tokens/{service_token_id}/permissions:
     get:
-      operationId: Retrieve Service Tokens Permission
+      operationId: RetrieveServiceTokensPermission
       description: List permissions of a given ServiceToken for an account.
       parameters:
       - in: path
@@ -4107,7 +4204,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/users:
     get:
-      operationId: List Users
+      operationId: ListUsers
       description: List users for a given account.
       parameters:
       - in: path
@@ -4128,7 +4225,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/users/{id}:
     get:
-      operationId: Retrieve User
+      operationId: RetrieveUser
       parameters:
       - in: path
         name: account_id
@@ -4153,7 +4250,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys:
     get:
-      operationId: List Account Scoped PATs
+      operationId: ListAccountScopedPATs
       parameters:
       - in: path
         name: account_id
@@ -4177,7 +4274,7 @@ paths:
                 $ref: '#/components/schemas/ServiceTokenListEnveloped'
           description: ''
     post:
-      operationId: Create Account Scoped PAT
+      operationId: CreateAccountScopedPAT
       parameters:
       - in: path
         name: account_id
@@ -4214,7 +4311,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys/{id}:
     get:
-      operationId: Get Account Scoped PAT
+      operationId: GetAccountScopedPAT
       parameters:
       - in: path
         name: account_id
@@ -4243,7 +4340,7 @@ paths:
                 $ref: '#/components/schemas/AccountScopedPATResponseEnveloped'
           description: ''
     post:
-      operationId: Rotate Account Scoped PAT
+      operationId: RotateAccountScopedPAT
       parameters:
       - in: path
         name: account_id
@@ -4272,7 +4369,7 @@ paths:
                 $ref: '#/components/schemas/ServiceTokenEnveloped'
           description: ''
     delete:
-      operationId: Delete Account Scoped PAT
+      operationId: DeleteAccountScopedPAT
       parameters:
       - in: path
         name: account_id
@@ -4298,7 +4395,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/webhooks/event/{event_id}:
     get:
-      operationId: Retrieve Webhooks Event
+      operationId: RetrieveWebhooksEvent
       description: Get a specific event given an event_id
       parameters:
       - in: path
@@ -4330,7 +4427,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/webhooks/event/{event_id}/receipts:
     get:
-      operationId: List Webhooks Event Receipts
+      operationId: ListWebhooksEventReceipts
       description: Get all receipts for a given event id
       parameters:
       - in: path
@@ -4362,7 +4459,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/webhooks/receipt/{receipt_id}:
     get:
-      operationId: Retrieve Webhooks Receipt
+      operationId: RetrieveWebhooksReceipt
       description: Get a specific receipt given its id
       parameters:
       - in: path
@@ -4394,7 +4491,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/webhooks/subscription/{subscription_id}:
     get:
-      operationId: Retrieve Webhooks Subscription
+      operationId: RetrieveWebhooksSubscription
       description: Get a specific subscription with a subscription id
       parameters:
       - in: path
@@ -4425,7 +4522,7 @@ paths:
                 $ref: '#/components/schemas/NotFound'
           description: ''
     put:
-      operationId: Update Webhooks Subscription
+      operationId: UpdateWebhooksSubscription
       description: Edit a subscription given a subscription id
       parameters:
       - in: path
@@ -4468,7 +4565,7 @@ paths:
                 $ref: '#/components/schemas/NotFound'
           description: ''
     delete:
-      operationId: Destroy Webhooks Subscription
+      operationId: DestroyWebhooksSubscription
       description: Delete a specific subscription
       parameters:
       - in: path
@@ -4500,7 +4597,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/webhooks/subscription/{subscription_id}/events:
     get:
-      operationId: List Webhooks Events
+      operationId: ListWebhooksEvents
       description: Get all events for a specific subscription
       parameters:
       - in: path
@@ -4532,7 +4629,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/webhooks/subscription/{subscription_id}/test:
     get:
-      operationId: Test Webhooks Subscription
+      operationId: TestWebhooksSubscription
       description: Test the client endpoint for a given subscription
       parameters:
       - in: path
@@ -4564,7 +4661,7 @@ paths:
           description: ''
   /api/v3/accounts/{account_id}/webhooks/subscriptions:
     get:
-      operationId: List Webhooks Subscriptions
+      operationId: ListWebhooksSubscriptions
       description: Given an account id list all webhook subscriptions
       parameters:
       - in: path
@@ -4584,7 +4681,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedWebhooksSubscriptions'
           description: ''
     post:
-      operationId: Create Webhooks Subscription
+      operationId: CreateWebhooksSubscription
       description: Create a new webhook subscription
       parameters:
       - in: path
@@ -4623,7 +4720,7 @@ paths:
           description: ''
   /api/v3/adapter-schema:
     get:
-      operationId: Retrieve Adapter Schema
+      operationId: RetrieveAdapterSchema
       description: Fetch the schema for a given adapter. The schema will include details
         on available fields for connections and credentials.
       parameters:
@@ -4660,7 +4757,7 @@ paths:
           description: ''
   /api/v3/users/{user_id}/credentials:
     get:
-      operationId: List User Credentials
+      operationId: ListUserCredentials
       description: List the development credentials associated with a given user.
       parameters:
       - in: path
@@ -4680,7 +4777,7 @@ paths:
                 $ref: '#/components/schemas/UserCredentialsListEnveloped'
           description: ''
     post:
-      operationId: Create User Credentials
+      operationId: CreateUserCredentials
       description: Associate a set of development credentials with a given user.
       parameters:
       - in: path
@@ -4713,7 +4810,7 @@ paths:
           description: ''
   /api/v3/users/{user_id}/credentials/{id}:
     get:
-      operationId: Get User Credentials
+      operationId: GetUserCredentials
       description: Get a development credentials association for a given user.
       parameters:
       - in: path
@@ -4738,7 +4835,7 @@ paths:
                 $ref: '#/components/schemas/UserCredentialsListEnveloped'
           description: ''
     post:
-      operationId: Update User Credentials
+      operationId: UpdateUserCredentials
       description: Update which development credentials are associated with a specific
         user.
       parameters:
@@ -4776,7 +4873,7 @@ paths:
                 $ref: '#/components/schemas/UserCredentialsEnveloped'
           description: ''
     delete:
-      operationId: Delete User Credentials
+      operationId: DeleteUserCredentials
       description: Delete a development credentials / user association.
       parameters:
       - in: path
@@ -12288,16 +12385,16 @@ components:
       scheme: bearer
       bearerFormat: Bearer
 servers:
-- url: https://cloud.getdbt.com/
+- url: https://cloud.getdbt.com
   description: Production (US)
-- url: https://{account_prefix}.us1.dbt.com/
+- url: https://{account_prefix}.us1.dbt.com
   description: Production (US)
   variables:
     account_prefix:
       default: ab123
       description: Your unique account prefix. Can be found on your account settings
         page.
-- url: https://emea.dbt.com/
+- url: https://emea.dbt.com
   description: Production (Europe)
-- url: https://au.dbt.com/
+- url: https://au.dbt.com
   description: Production (AU)
