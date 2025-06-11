@@ -4517,32 +4517,7 @@ components:
           type: array
           items:
             type: string
-    RunResponseEnveloped:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RunResponseResponse'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - status
-    RunResponseListEnveloped:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/RunResponseResponse'
-        extra:
-          $ref: '#/components/schemas/Extra'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - extra
-      - status
-    RunResponseResponse:
+    RunResponse:
       type: object
       properties:
         id:
@@ -4679,6 +4654,31 @@ components:
       required:
       - created_at
       - updated_at
+    RunResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunResponse'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
+    RunResponseListEnveloped:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunResponse'
+        extra:
+          $ref: '#/components/schemas/Extra'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - extra
+      - status
     RunStep:
       type: object
       properties:
