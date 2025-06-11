@@ -301,7 +301,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListListAccountConnectionResponse'
+                $ref: '#/components/schemas/ListAccountConnectionResponse'
           description: ''
     post:
       operationId: Create Account Connection
@@ -334,7 +334,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetAccountConnectionResponse'
+                $ref: '#/components/schemas/DetailAccountConnectionResponse'
           description: ''
   /api/v3/accounts/{account_id}/connections/{id}/:
     get:
@@ -361,7 +361,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetAccountConnectionResponse'
+                $ref: '#/components/schemas/DetailAccountConnectionResponse'
           description: ''
     patch:
       operationId: Update Account Connection
@@ -398,7 +398,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetAccountConnectionResponse'
+                $ref: '#/components/schemas/DetailAccountConnectionResponse'
           description: ''
     delete:
       operationId: Delete Account Connection
@@ -2816,7 +2816,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListListLineageIntegrationResponseResponse'
+                $ref: '#/components/schemas/ListLineageIntegrationResponse'
           description: ''
     post:
       operationId: Create Lineage Integration
@@ -2852,7 +2852,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetLineageIntegrationResponse'
+                $ref: '#/components/schemas/DetailLineageIntegrationResponse'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/:
     get:
@@ -2882,7 +2882,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetLineageIntegrationResponse'
+                $ref: '#/components/schemas/DetailLineageIntegrationResponse'
           description: ''
     patch:
       operationId: Update Lineage Integration
@@ -2922,7 +2922,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetLineageIntegrationResponse'
+                $ref: '#/components/schemas/DetailLineageIntegrationResponse'
           description: ''
     delete:
       operationId: Delete Lineage Integration
@@ -2982,7 +2982,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListListLineageIntegrationCollectionResponse'
+                $ref: '#/components/schemas/ListLineageIntegrationCollectionResponse'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/collections/{collection_id}/:
     get:
@@ -3022,7 +3022,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListListLineageIntegrationCollectionResponse'
+                $ref: '#/components/schemas/ListLineageIntegrationCollectionResponse'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/integrations/lineage/{id}/selections:
     post:
@@ -3323,7 +3323,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SCIMConfigResponseResponse'
+                $ref: '#/components/schemas/DetailSCIMConfigResponse'
           description: ''
     post:
       operationId: Create SCIM configuration
@@ -3355,7 +3355,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SCIMConfigResponseResponse'
+                $ref: '#/components/schemas/DetailSCIMConfigResponse'
           description: ''
   /api/v3/accounts/{account_id}/scim-config/tokens/:
     get:
@@ -3376,7 +3376,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListSCIMTokenResponseResponse'
+                $ref: '#/components/schemas/ListSCIMTokenResponse'
           description: ''
     post:
       operationId: Create SCIM token
@@ -3408,7 +3408,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateSCIMTokenResponseResponse'
+                $ref: '#/components/schemas/DetailCreateSCIMTokenResponse'
           description: ''
   /api/v3/accounts/{account_id}/scim-config/tokens/{id}/:
     get:
@@ -3434,7 +3434,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SCIMTokenResponseResponse'
+                $ref: '#/components/schemas/DetailSCIMTokenResponse'
           description: ''
     delete:
       operationId: Delete SCIM token
@@ -3476,7 +3476,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/ListGroupSCIMResponseResponse'
+                $ref: '#/components/schemas/ListGroupSCIMResponse'
           description: ''
     post:
       operationId: Create SCIM Group
@@ -3502,7 +3502,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/GroupSCIMResponseResponse'
+                $ref: '#/components/schemas/DetailGroupSCIMResponse'
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/Groups/{group_id}:
     get:
@@ -3528,7 +3528,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/GroupSCIMResponseResponse'
+                $ref: '#/components/schemas/DetailGroupSCIMResponse'
           description: ''
     put:
       operationId: Update SCIM Group
@@ -3559,7 +3559,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/GroupSCIMResponseResponse'
+                $ref: '#/components/schemas/DetailGroupSCIMResponse'
           description: ''
     patch:
       operationId: Patch SCIM Group
@@ -3590,7 +3590,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/GroupSCIMResponseResponse'
+                $ref: '#/components/schemas/DetailGroupSCIMResponse'
           description: ''
     delete:
       operationId: Delete SCIM Group
@@ -3632,7 +3632,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/SCIMListResponseResponse'
+                $ref: '#/components/schemas/DetailSCIMListResponse'
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/ResourceTypes/{resource_type}:
     get:
@@ -3658,7 +3658,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/SCIMResourceTypeResponse'
+                $ref: '#/components/schemas/DetailSCIMResourceTypeResponse'
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/Schemas:
     get:
@@ -3679,7 +3679,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/SCIMListResponseResponse'
+                $ref: '#/components/schemas/DetailSCIMListResponse'
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/Schemas/{schema_uri}:
     get:
@@ -3705,7 +3705,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/SCIMResourceTypeResponse'
+                $ref: '#/components/schemas/DetailSCIMResourceTypeResponse'
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/ServiceProviderConfig:
     get:
@@ -3743,7 +3743,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/ListUserSCIMResponseResponse'
+                $ref: '#/components/schemas/ListUserSCIMResponse'
           description: ''
     post:
       operationId: Create SCIM User
@@ -3769,7 +3769,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/UserSCIMResponseResponse'
+                $ref: '#/components/schemas/DetailUserSCIMResponse'
           description: ''
   /api/v3/accounts/{account_id}/scim/v2/Users/{user_id}:
     get:
@@ -3795,7 +3795,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/UserSCIMResponseResponse'
+                $ref: '#/components/schemas/DetailUserSCIMResponse'
           description: ''
     put:
       operationId: Replace SCIM User
@@ -3826,7 +3826,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/UserSCIMResponseResponse'
+                $ref: '#/components/schemas/DetailUserSCIMResponse'
           description: ''
     patch:
       operationId: Update SCIM User
@@ -3857,7 +3857,7 @@ paths:
           content:
             application/scim+json:
               schema:
-                $ref: '#/components/schemas/UserSCIMResponseResponse'
+                $ref: '#/components/schemas/DetailUserSCIMResponse'
           description: ''
     delete:
       operationId: Delete SCIM User
@@ -3942,7 +3942,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListServiceTokenResponseResponse'
+                $ref: '#/components/schemas/ListServiceTokenResponse'
           description: ''
     post:
       operationId: Create Service Token
@@ -3974,7 +3974,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateServiceTokenResponseResponse'
+                $ref: '#/components/schemas/DetailCreateServiceTokenResponse'
           description: ''
   /api/v3/accounts/{account_id}/service-tokens/{id}/:
     get:
@@ -4035,7 +4035,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceTokenResponseResponse'
+                $ref: '#/components/schemas/DetailServiceTokenResponse'
           description: ''
     delete:
       operationId: Destroy Service Token
@@ -4127,7 +4127,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountUserResponseResponse'
+                $ref: '#/components/schemas/DetailAccountUserResponse'
           description: ''
   /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys/:
     get:
@@ -4776,6 +4776,60 @@ paths:
           description: No response body
 components:
   schemas:
+    AccountConnection:
+      title: AccountConnection
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        account_id:
+          title: Account Id
+          description: The account the connection is associated with
+          type: integer
+        name:
+          title: Name
+          description: The name of the connection
+          type: string
+        adapter_version:
+          description: Identifies the warehouse and version of its adapter
+          allOf:
+          - $ref: '#/components/schemas/DbtAdapterVersion'
+        private_link_endpoint_id:
+          title: Private Link Endpoint Id
+          type: string
+        is_ssh_tunnel_enabled:
+          title: Is Ssh Tunnel Enabled
+          default: false
+          type: boolean
+        oauth_configuration_id:
+          title: Oauth Configuration Id
+          description: The OAuth Configuration associated with this connection. When
+            set,developer credentials leveraging OAuth may be created.
+          type: integer
+        environment__count:
+          title: Environment  Count
+          description: The number of environments using this connection
+          type: integer
+        platform_metadata_credentials_id:
+          title: Platform Metadata Credentials Id
+          type: integer
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_id
+      - name
+      - adapter_version
+      - environment__count
     AccountListEnveloped:
       type: object
       properties:
@@ -5021,17 +5075,7 @@ components:
           minLength: 1
       required:
       - name
-    AccountScopedPATResponseEnveloped:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/AccountScopedPATResponseResponse'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - status
-    AccountScopedPATResponseResponse:
+    AccountScopedPATResponse:
       type: object
       properties:
         id:
@@ -5099,20 +5143,18 @@ components:
       - service_token_permissions
       - token_string
       - updated_at
-    AccountUserLicense:
-      title: AccountUserLicense
+    AccountScopedPATResponseEnveloped:
       type: object
       properties:
-        id:
-          title: Id
-          type: integer
-        license_type:
-          $ref: '#/components/schemas/LicenseType'
+        data:
+          $ref: '#/components/schemas/AccountScopedPATResponse'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
       required:
-      - id
-      - license_type
-    AccountUserResponse:
-      title: AccountUserResponse
+      - data
+      - status
+    AccountUser:
+      title: AccountUser
       type: object
       properties:
         id:
@@ -5174,22 +5216,18 @@ components:
       - fullname
       - email_verified
       - license
-    AccountUserResponseResponse:
-      title: AccountUserResponseResponse
+    AccountUserLicense:
+      title: AccountUserLicense
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/AccountUserResponse'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
+        id:
+          title: Id
           type: integer
+        license_type:
+          $ref: '#/components/schemas/LicenseType'
       required:
-      - data
+      - id
+      - license_type
     Adapter:
       type: object
       properties:
@@ -5230,21 +5268,21 @@ components:
       - docs_link
       - image_link
       - title
+    AdapterSchemaResponse:
+      type: object
+      properties:
+        adapter:
+          $ref: '#/components/schemas/Adapter'
     AdapterSchemaResponseEnveloped:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/AdapterSchemaResponseResponse'
+          $ref: '#/components/schemas/AdapterSchemaResponse'
         status:
           $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
-    AdapterSchemaResponseResponse:
-      type: object
-      properties:
-        adapter:
-          $ref: '#/components/schemas/Adapter'
     AdapterVersionEnum:
       enum:
       - apache_spark_v0
@@ -5386,51 +5424,51 @@ components:
       - region_name
       - database
       - s3_staging_dir
-    AuditLogBulkExportDownloadResponseEnveloped:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/AuditLogBulkExportDownloadResponseResponse'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - status
-    AuditLogBulkExportDownloadResponseResponse:
+    AuditLogBulkExportDownloadResponse:
       type: object
       properties:
         download_url:
           type: string
-    AuditLogBulkExportStatusResponseEnveloped:
+    AuditLogBulkExportDownloadResponseEnveloped:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/AuditLogBulkExportStatusResponseResponse'
+          $ref: '#/components/schemas/AuditLogBulkExportDownloadResponse'
         status:
           $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
-    AuditLogBulkExportStatusResponseResponse:
+    AuditLogBulkExportStatusResponse:
       type: object
       properties:
         is_running:
           type: boolean
-    AuditLogStartBulkExportResponseEnveloped:
+    AuditLogBulkExportStatusResponseEnveloped:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/AuditLogStartBulkExportResponseResponse'
+          $ref: '#/components/schemas/AuditLogBulkExportStatusResponse'
         status:
           $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
-    AuditLogStartBulkExportResponseResponse:
+    AuditLogStartBulkExportResponse:
       type: object
       properties:
         job_id:
           type: string
+    AuditLogStartBulkExportResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AuditLogStartBulkExportResponse'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
     BaseConnectionV3:
       type: object
       properties:
@@ -6082,21 +6120,8 @@ components:
       - enabled
       - manual_updates_allowed
       additionalProperties: false
-    CreateSCIMTokenRequestRequest:
-      title: CreateSCIMTokenRequest
-      description: |-
-        Base class for all request payloads.
-        It is expected that each endpoint extends this class to define its own payload format
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-      required:
-      - name
-      additionalProperties: false
-    CreateSCIMTokenResponse:
-      title: CreateSCIMTokenResponse
+    CreateSCIMToken:
+      title: CreateSCIMToken
       type: object
       properties:
         id:
@@ -6121,24 +6146,8 @@ components:
       - name
       - created_at
       - token_string
-    CreateSCIMTokenResponseResponse:
-      title: CreateSCIMTokenResponseResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/CreateSCIMTokenResponse'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
-    CreateServiceTokenRequestRequest:
-      title: CreateServiceTokenRequest
+    CreateSCIMTokenRequestRequest:
+      title: CreateSCIMTokenRequest
       description: |-
         Base class for all request payloads.
         It is expected that each endpoint extends this class to define its own payload format
@@ -6146,27 +6155,12 @@ components:
       properties:
         name:
           title: Name
-          description: The name of the service token
           type: string
-        permission_grants:
-          title: Permission Grants
-          description: Permissions to assign to the service token
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTokenPermissionGrant'
-        metadata_only:
-          title: Metadata Only
-          description: Deprecated. Use the metadata_only permission set instead.
-          default: false
-          type: boolean
-        webhooks_only:
-          title: Webhooks Only
-          default: false
-          type: boolean
       required:
       - name
-    CreateServiceTokenResponse:
-      title: CreateServiceTokenResponse
+      additionalProperties: false
+    CreateServiceToken:
+      title: CreateServiceToken
       type: object
       properties:
         id:
@@ -6260,22 +6254,34 @@ components:
       - name
       - state
       - token_string
-    CreateServiceTokenResponseResponse:
-      title: CreateServiceTokenResponseResponse
+    CreateServiceTokenRequestRequest:
+      title: CreateServiceTokenRequest
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/CreateServiceTokenResponse'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
+        name:
+          title: Name
+          description: The name of the service token
+          type: string
+        permission_grants:
+          title: Permission Grants
+          description: Permissions to assign to the service token
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTokenPermissionGrant'
+        metadata_only:
+          title: Metadata Only
+          description: Deprecated. Use the metadata_only permission set instead.
+          default: false
+          type: boolean
+        webhooks_only:
+          title: Webhooks Only
+          default: false
+          type: boolean
       required:
-      - data
+      - name
     CreateSubscriptionResponseEnvelope:
       type: object
       properties:
@@ -6435,6 +6441,17 @@ components:
             $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequest'
       required:
       - env_var
+    CustomEnvironmentVariableBulkResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        status_code:
+          type: integer
+        key_name:
+          type: string
+        data:
+          $ref: '#/components/schemas/ResponseData'
     CustomEnvironmentVariableBulkResponseFailListEnveloped:
       type: object
       properties:
@@ -6464,23 +6481,12 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseResponse'
+            $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponse'
         status:
           $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
       - status
-    CustomEnvironmentVariableBulkResponseResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        status_code:
-          type: integer
-        key_name:
-          type: string
-        data:
-          $ref: '#/components/schemas/ResponseData'
     CustomEnvironmentVariableEnveloped:
       type: object
       properties:
@@ -6914,6 +6920,198 @@ components:
       description: |-
         * `production` - production
         * `staging` - staging
+    DetailAccountConnectionResponse:
+      title: DetailAccountConnectionResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/AccountConnection'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailAccountUserResponse:
+      title: DetailAccountUserResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/AccountUser'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailCreateSCIMTokenResponse:
+      title: DetailCreateSCIMTokenResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/CreateSCIMToken'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailCreateServiceTokenResponse:
+      title: DetailCreateServiceTokenResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/CreateServiceToken'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailGroupSCIMResponse:
+      title: DetailGroupSCIMResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/GroupSCIM'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailLineageIntegrationResponse:
+      title: DetailLineageIntegrationResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/LineageIntegration'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailSCIMConfigResponse:
+      title: DetailSCIMConfigResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/SCIMConfig'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailSCIMListResponse:
+      title: DetailSCIMListResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/SCIMList'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailSCIMResourceTypeResponse:
+      title: DetailSCIMResourceTypeResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/SCIMResourceType'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailSCIMTokenResponse:
+      title: DetailSCIMTokenResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/SCIMToken'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailServiceTokenResponse:
+      title: DetailServiceTokenResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/ServiceToken'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailUserSCIMResponse:
+      title: DetailUserSCIMResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/UserSCIM'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
     EntraExtraData:
       type: object
       properties:
@@ -7352,152 +7550,6 @@ components:
         pattern:
           type: string
           minLength: 1
-    GetAccountConnection:
-      title: GetAccountConnection
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-        updated_at:
-          title: Updated At
-          type: string
-          format: date-time
-        account_id:
-          title: Account Id
-          description: The account the connection is associated with
-          type: integer
-        name:
-          title: Name
-          description: The name of the connection
-          type: string
-        adapter_version:
-          description: Identifies the warehouse and version of its adapter
-          allOf:
-          - $ref: '#/components/schemas/DbtAdapterVersion'
-        private_link_endpoint_id:
-          title: Private Link Endpoint Id
-          type: string
-        is_ssh_tunnel_enabled:
-          title: Is Ssh Tunnel Enabled
-          default: false
-          type: boolean
-        oauth_redirect_uri:
-          title: Oauth Redirect Uri
-          description: If OAuth is enabled for this connection, this field is used
-            internally by dbt Cloud
-          type: string
-        oauth_configuration_id:
-          title: Oauth Configuration Id
-          type: integer
-        is_configured_for_native_oauth:
-          title: Is Configured For Native Oauth
-          type: boolean
-        platform_metadata_credentials_id:
-          title: Platform Metadata Credentials Id
-          type: integer
-        config:
-          title: Config
-          description: The adapter-specific configuration for the connection
-          anyOf:
-          - $ref: '#/components/schemas/SnowflakeConnection'
-          - $ref: '#/components/schemas/PostgresConnection'
-          - $ref: '#/components/schemas/RedshiftConnection'
-          - $ref: '#/components/schemas/BigqueryConnection'
-          - $ref: '#/components/schemas/BigqueryConnectionV1'
-          - $ref: '#/components/schemas/DatabricksConnection'
-          - $ref: '#/components/schemas/DatabricksSparkConnection'
-          - $ref: '#/components/schemas/TrinoConnection'
-          - $ref: '#/components/schemas/FabricConnection'
-          - $ref: '#/components/schemas/SynapseConnection'
-          - $ref: '#/components/schemas/ApacheSparkConnection'
-          - $ref: '#/components/schemas/AthenaConnection'
-          - $ref: '#/components/schemas/TeradataConnection'
-      required:
-      - id
-      - created_at
-      - updated_at
-      - account_id
-      - name
-      - adapter_version
-      - oauth_redirect_uri
-      - config
-    GetAccountConnectionResponse:
-      title: GetAccountConnectionResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/GetAccountConnection'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
-    GetLineageIntegration:
-      title: GetLineageIntegration
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-        updated_at:
-          title: Updated At
-          type: string
-          format: date-time
-        account_id:
-          title: Account Id
-          description: The account the integration is associated with
-          type: integer
-        project_id:
-          title: Project Id
-          description: The project the integration is associated with
-          type: integer
-        name:
-          title: Name
-          description: The name of the integration
-          type: string
-        config:
-          title: Config
-          description: The integration config
-          allOf:
-          - $ref: '#/components/schemas/LineageIntegrationConfigSchema'
-      required:
-      - id
-      - created_at
-      - updated_at
-      - account_id
-      - project_id
-      - name
-      - config
-    GetLineageIntegrationResponse:
-      title: GetLineageIntegrationResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/GetLineageIntegration'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
     GetLineageIntegrationWatchSelectionResponse:
       title: GetLineageIntegrationWatchSelectionResponse
       type: object
@@ -7803,6 +7855,43 @@ components:
       - member_count
       - scim_managed
       - updated_at
+    GroupSCIM:
+      title: GroupSCIM
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The ID of the group
+          type: string
+        externalId:
+          title: Externalid
+          description: The external ID of the group
+          type: string
+        displayName:
+          title: Displayname
+          description: The display name of the group
+          type: string
+        members:
+          title: Members
+          description: The members of the group
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMemberComponent'
+        meta:
+          title: Meta
+          description: The metadata of the group
+          allOf:
+          - $ref: '#/components/schemas/MetaComponent'
+        schemas:
+          title: Schemas
+          default:
+          - urn:ietf:params:scim:schemas:core:2.0:Group
+          type: array
+          items: {}
+      required:
+      - id
+      - displayName
+      - meta
     GroupSCIMResponse:
       title: GroupSCIMResponse
       type: object
@@ -7840,22 +7929,6 @@ components:
       - id
       - displayName
       - meta
-    GroupSCIMResponseResponse:
-      title: GroupSCIMResponseResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/GroupSCIMResponse'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
     HumanReadableDateStrategyTypeEnum:
       enum:
       - every_day
@@ -8121,23 +8194,23 @@ components:
       required:
       - email_addresses
       - license_type
-    InviteUsersResponseEnveloped:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/InviteUsersResponseResponse'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - status
-    InviteUsersResponseResponse:
+    InviteUsersResponse:
       type: object
       properties:
         sent:
           type: array
           items:
             type: string
+    InviteUsersResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/InviteUsersResponse'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
     JobDefinitionExecution:
       type: object
       properties:
@@ -8413,104 +8486,8 @@ components:
         * `read_only` - READ_ONLY
         * `analyst` - ANALYST
         * `it` - IT
-    LineageIntegrationConfigSchema:
-      title: LineageIntegrationConfigSchema
-      type: object
-      properties: {}
-    LineageIntegrationType:
-      title: LineageIntegrationType
-      description: An enumeration.
-      enum:
-      - tableau
-      - powerbi
-      type: string
-    ListAccountConnection:
-      title: ListAccountConnection
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-        updated_at:
-          title: Updated At
-          type: string
-          format: date-time
-        account_id:
-          title: Account Id
-          description: The account the connection is associated with
-          type: integer
-        name:
-          title: Name
-          description: The name of the connection
-          type: string
-        adapter_version:
-          description: Identifies the warehouse and version of its adapter
-          allOf:
-          - $ref: '#/components/schemas/DbtAdapterVersion'
-        private_link_endpoint_id:
-          title: Private Link Endpoint Id
-          type: string
-        is_ssh_tunnel_enabled:
-          title: Is Ssh Tunnel Enabled
-          default: false
-          type: boolean
-        oauth_configuration_id:
-          title: Oauth Configuration Id
-          description: The OAuth Configuration associated with this connection. When
-            set,developer credentials leveraging OAuth may be created.
-          type: integer
-        environment__count:
-          title: Environment  Count
-          description: The number of environments using this connection
-          type: integer
-        platform_metadata_credentials_id:
-          title: Platform Metadata Credentials Id
-          type: integer
-      required:
-      - id
-      - created_at
-      - updated_at
-      - account_id
-      - name
-      - adapter_version
-      - environment__count
-    ListGroupSCIMResponseResponse:
-      title: ListGroupSCIMResponseResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          title: Data
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupSCIMResponse'
-        extra:
-          $ref: '#/components/schemas/V3ResponseExtraData'
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
-      - extra
-    ListLineageIntegrationCollection:
-      title: ListLineageIntegrationCollection
-      type: object
-      properties:
-        collections:
-          title: Collections
-          description: List of collections
-          type: array
-          items:
-            $ref: '#/components/schemas/WatchSelectionItem'
-      required:
-      - collections
-    ListLineageIntegrationResponse:
-      title: ListLineageIntegrationResponse
+    LineageIntegration:
+      title: LineageIntegration
       type: object
       properties:
         id:
@@ -8544,8 +8521,31 @@ components:
       - account_id
       - project_id
       - name
-    ListListAccountConnectionResponse:
-      title: ListListAccountConnectionResponse
+    LineageIntegrationCollection:
+      title: LineageIntegrationCollection
+      type: object
+      properties:
+        collections:
+          title: Collections
+          description: List of collections
+          type: array
+          items:
+            $ref: '#/components/schemas/WatchSelectionItem'
+      required:
+      - collections
+    LineageIntegrationConfigSchema:
+      title: LineageIntegrationConfigSchema
+      type: object
+      properties: {}
+    LineageIntegrationType:
+      title: LineageIntegrationType
+      description: An enumeration.
+      enum:
+      - tableau
+      - powerbi
+      type: string
+    ListAccountConnectionResponse:
+      title: ListAccountConnectionResponse
       type: object
       properties:
         status:
@@ -8554,7 +8554,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/ListAccountConnection'
+            $ref: '#/components/schemas/AccountConnection'
         extra:
           $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
@@ -8563,8 +8563,8 @@ components:
       required:
       - data
       - extra
-    ListListLineageIntegrationCollectionResponse:
-      title: ListListLineageIntegrationCollectionResponse
+    ListGroupSCIMResponse:
+      title: ListGroupSCIMResponse
       type: object
       properties:
         status:
@@ -8573,7 +8573,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/ListLineageIntegrationCollection'
+            $ref: '#/components/schemas/GroupSCIM'
         extra:
           $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
@@ -8582,8 +8582,8 @@ components:
       required:
       - data
       - extra
-    ListListLineageIntegrationResponseResponse:
-      title: ListListLineageIntegrationResponseResponse
+    ListLineageIntegrationCollectionResponse:
+      title: ListLineageIntegrationCollectionResponse
       type: object
       properties:
         status:
@@ -8592,7 +8592,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/ListLineageIntegrationResponse'
+            $ref: '#/components/schemas/LineageIntegrationCollection'
         extra:
           $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
@@ -8601,8 +8601,8 @@ components:
       required:
       - data
       - extra
-    ListSCIMTokenResponseResponse:
-      title: ListSCIMTokenResponseResponse
+    ListLineageIntegrationResponse:
+      title: ListLineageIntegrationResponse
       type: object
       properties:
         status:
@@ -8611,7 +8611,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/SCIMTokenResponse'
+            $ref: '#/components/schemas/LineageIntegration'
         extra:
           $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
@@ -8620,8 +8620,8 @@ components:
       required:
       - data
       - extra
-    ListServiceTokenResponseResponse:
-      title: ListServiceTokenResponseResponse
+    ListSCIMTokenResponse:
+      title: ListSCIMTokenResponse
       type: object
       properties:
         status:
@@ -8630,7 +8630,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/ServiceTokenResponse'
+            $ref: '#/components/schemas/SCIMToken'
         extra:
           $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
@@ -8639,8 +8639,8 @@ components:
       required:
       - data
       - extra
-    ListUserSCIMResponseResponse:
-      title: ListUserSCIMResponseResponse
+    ListServiceTokenResponse:
+      title: ListServiceTokenResponse
       type: object
       properties:
         status:
@@ -8649,7 +8649,26 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/UserSCIMResponse'
+            $ref: '#/components/schemas/ServiceToken'
+        extra:
+          $ref: '#/components/schemas/V3ResponseExtraData'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+      - extra
+    ListUserSCIMResponse:
+      title: ListUserSCIMResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSCIM'
         extra:
           $ref: '#/components/schemas/V3ResponseExtraData'
         error_code:
@@ -10669,8 +10688,8 @@ components:
       - developer_message
       - is_success
       - user_message
-    SCIMConfigResponse:
-      title: SCIMConfigResponse
+    SCIMConfig:
+      title: SCIMConfig
       type: object
       properties:
         enabled:
@@ -10686,24 +10705,8 @@ components:
       - enabled
       - manual_updates_allowed
       - scim_controlled_license_type
-    SCIMConfigResponseResponse:
-      title: SCIMConfigResponseResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/SCIMConfigResponse'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
-    SCIMListResponse:
-      title: SCIMListResponse
+    SCIMList:
+      title: SCIMList
       type: object
       properties:
         schemas:
@@ -10736,22 +10739,6 @@ components:
       - startIndex
       - itemsPerPage
       - Resources
-    SCIMListResponseResponse:
-      title: SCIMListResponseResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/SCIMListResponse'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
     SCIMResourceType:
       title: SCIMResourceType
       type: object
@@ -10796,24 +10783,8 @@ components:
       - description
       - schema
       - meta
-    SCIMResourceTypeResponse:
-      title: SCIMResourceTypeResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/SCIMResourceType'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
-    SCIMTokenResponse:
-      title: SCIMTokenResponse
+    SCIMToken:
+      title: SCIMToken
       type: object
       properties:
         id:
@@ -10834,22 +10805,6 @@ components:
       - id
       - name
       - created_at
-    SCIMTokenResponseResponse:
-      title: SCIMTokenResponseResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/SCIMTokenResponse'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
     Schema:
       type: object
       properties:
@@ -10962,41 +10917,72 @@ components:
       - service_tokens
       - updated_at
     ServiceToken:
+      title: ServiceToken
       type: object
       properties:
-        account_id:
+        id:
+          title: Id
           type: integer
-        uid:
-          type: string
-        name:
-          type: string
-        token:
-          type: string
-        state:
-          example: 1
-          type: integer
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-        user_id:
-          type: integer
-        user:
-          $ref: '#/components/schemas/User'
-        type:
-          $ref: '#/components/schemas/Type34eEnum'
-        expires_at:
+        created_at:
+          title: Created At
           type: string
           format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        account_id:
+          title: Account Id
+          description: The account the service token is associated with
+          type: integer
+        uid:
+          title: Uid
+          description: The unique identifier for the service token
+          type: string
+        name:
+          title: Name
+          description: The name of the service token
+          type: string
+        state:
+          title: State
+          description: The liveness state of the service token. A value of 1 means
+            this entity is active and a value of 2 means this entity is deleted
+          type: integer
+        permission_grants:
+          title: Permission Grants
+          description: The permissions to be assigned to the service token
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTokenPermissionGrant'
+        last_used:
+          title: Last Used
+          description: The time the service token was last used
+          type: string
+          format: date-time
+        semantic_layer_credentials:
+          title: Semantic Layer Credentials
+          description: The semantic layer credentials associated with the service
+            token
+          type: array
+          items:
+            type: object
         metadata_only:
+          title: Metadata Only
+          description: Deprecated. Use the metadata_only permission set instead.
+          default: false
           type: boolean
         webhooks_only:
+          title: Webhooks Only
+          default: false
           type: boolean
       required:
+      - id
+      - created_at
+      - updated_at
       - account_id
-      - metadata_only
+      - uid
       - name
       - state
-      - uid
-      - webhooks_only
     ServiceTokenEnveloped:
       type: object
       properties:
@@ -11139,88 +11125,73 @@ components:
       - id
       - updated_at
     ServiceTokenResponse:
-      title: ServiceTokenResponse
       type: object
       properties:
         id:
-          title: Id
           type: integer
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-        updated_at:
-          title: Updated At
-          type: string
-          format: date-time
+          readOnly: true
         account_id:
-          title: Account Id
-          description: The account the service token is associated with
           type: integer
         uid:
-          title: Uid
-          description: The unique identifier for the service token
           type: string
         name:
-          title: Name
-          description: The name of the service token
+          type: string
+        token:
           type: string
         state:
-          title: State
-          description: The liveness state of the service token. A value of 1 means
-            this entity is active and a value of 2 means this entity is deleted
+          example: 1
           type: integer
-        permission_grants:
-          title: Permission Grants
-          description: The permissions to be assigned to the service token
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTokenPermissionGrant'
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        token_string:
+          type: string
+          readOnly: true
         last_used:
-          title: Last Used
-          description: The time the service token was last used
           type: string
           format: date-time
-        semantic_layer_credentials:
-          title: Semantic Layer Credentials
-          description: The semantic layer credentials associated with the service
-            token
+          readOnly: true
+        last_identify:
+          type: string
+          format: date-time
+          readOnly: true
+        user_id:
+          type: integer
+        user:
+          $ref: '#/components/schemas/User'
+        type:
+          $ref: '#/components/schemas/Type34eEnum'
+        expires_at:
+          type: string
+          format: date-time
+        metadata_only:
+          type: boolean
+          default: false
+        webhooks_only:
+          type: boolean
+          default: false
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        service_token_permissions:
           type: array
           items:
-            type: object
-        metadata_only:
-          title: Metadata Only
-          description: Deprecated. Use the metadata_only permission set instead.
-          default: false
-          type: boolean
-        webhooks_only:
-          title: Webhooks Only
-          default: false
-          type: boolean
+            $ref: '#/components/schemas/ServiceTokenPermission'
+          readOnly: true
+          default: []
       required:
-      - id
       - created_at
+      - id
+      - last_identify
+      - last_used
+      - service_token_permissions
+      - token_string
       - updated_at
-      - account_id
-      - uid
-      - name
-      - state
-    ServiceTokenResponseResponse:
-      title: ServiceTokenResponseResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/ServiceTokenResponse'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
     ServiceTokenType:
       title: ServiceTokenType
       description: An enumeration.
@@ -12156,8 +12127,8 @@ components:
       - licenses
       - permissions
       - sso_only_user
-    UserSCIMResponse:
-      title: UserSCIMResponse
+    UserSCIM:
+      title: UserSCIM
       type: object
       properties:
         id:
@@ -12237,22 +12208,6 @@ components:
       - name
       - emails
       - meta
-    UserSCIMResponseResponse:
-      title: UserSCIMResponseResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/UserSCIMResponse'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
     UserValueComponent:
       title: UserValueComponent
       description: |-
