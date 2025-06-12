@@ -4498,6 +4498,27 @@ components:
         * `RETRY_NOT_LATEST_RUN` - RETRY_NOT_LATEST_RUN
         * `RETRY_NOT_FAILED_RUN` - RETRY_NOT_FAILED_RUN
         * `RETRY_NO_RUN_RESULTS` - RETRY_NO_RUN_RESULTS
+    RunAuditActor:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        name:
+          type: string
+    RunAuditEvent:
+      type: object
+      properties:
+        actor:
+          $ref: '#/components/schemas/RunAuditActor'
+    RunAuditResult:
+      type: object
+      properties:
+        trigger:
+          $ref: '#/components/schemas/RunAuditEvent'
+        cancellation:
+          $ref: '#/components/schemas/RunAuditEvent'
     RunFailureDetailsEnveloped:
       type: object
       properties:
@@ -4651,6 +4672,8 @@ components:
           type: string
         used_repo_cache:
           type: boolean
+        audit:
+          $ref: '#/components/schemas/RunAuditResult'
       required:
       - created_at
       - updated_at
