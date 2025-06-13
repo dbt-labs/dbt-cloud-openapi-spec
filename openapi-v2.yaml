@@ -1475,9 +1475,9 @@ paths:
         schema:
           type: string
         description: A list of related objects to include in the response. Valid values
-          are `trigger`, `job`, and `debug_logs`. If `debug_logs` is not provided,
-          then the included debug logs will be truncated to the last 1,000 lines of
-          the debug log output file.
+          are `trigger`, `job`, `audit`, and `debug_logs`. If `debug_logs` is not
+          provided, then the included debug logs will be truncated to the last 1,000
+          lines of the debug log output file.
       - in: query
         name: job_definition_id
         schema:
@@ -1566,7 +1566,7 @@ paths:
           type: string
         description: A list of related objects to include in the response. Valid values
           are `trigger`, `job`, `environment`, `repository`, `run_steps`, `run_retries`,
-          `used_repo_cache`, `repo_cache_restore`, and `debug_logs`. If `debug_logs`
+          `used_repo_cache`, `repo_cache_restore`, `audit`, and `debug_logs`. If `debug_logs`
           is not provided, then the included debug logs will be truncated to the last
           1,000 lines of the debug log output file.
       tags:
@@ -4498,6 +4498,27 @@ components:
         * `RETRY_NOT_LATEST_RUN` - RETRY_NOT_LATEST_RUN
         * `RETRY_NOT_FAILED_RUN` - RETRY_NOT_FAILED_RUN
         * `RETRY_NO_RUN_RESULTS` - RETRY_NO_RUN_RESULTS
+    RunAuditActor:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        name:
+          type: string
+    RunAuditEvent:
+      type: object
+      properties:
+        actor:
+          $ref: '#/components/schemas/RunAuditActor'
+    RunAuditResult:
+      type: object
+      properties:
+        trigger:
+          $ref: '#/components/schemas/RunAuditEvent'
+        cancellation:
+          $ref: '#/components/schemas/RunAuditEvent'
     RunFailureDetailsEnveloped:
       type: object
       properties:
@@ -4651,6 +4672,8 @@ components:
           type: string
         used_repo_cache:
           type: boolean
+        audit:
+          $ref: '#/components/schemas/RunAuditResult'
       required:
       - created_at
       - updated_at
