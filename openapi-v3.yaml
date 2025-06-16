@@ -12153,6 +12153,7 @@ components:
           description: The schemas supported by the SCIM provider
           default:
           - urn:ietf:params:scim:schemas:core:2.0:User
+          - urn:ietf:params:scim:schemas:extension:dbtLabs:2.0:User
           type: array
           items:
             type: string
