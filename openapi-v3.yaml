@@ -3103,6 +3103,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/RepositoryV3Enveloped'
           description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/managed-repositories/{repository_id}/download/:
+    get:
+      operationId: Retrieve Projects Managed Repositories Download
+      description: Download a managed repository as a ZIP archive
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: repository_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects Managed Repositories
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/repositories/:
     get:
       operationId: List Repositories
