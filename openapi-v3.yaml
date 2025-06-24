@@ -250,8 +250,7 @@ paths:
   /api/v3/accounts/{account_id}/connections/:
     get:
       operationId: List Account Connections
-      description: This is our new list endpoint for connections. Connections are
-        now account-scoped
+      description: List all Account Connections.
       parameters:
       - in: path
         name: account_id
@@ -292,6 +291,22 @@ paths:
         schema:
           type: boolean
         description: Connections with platform metadata credentials
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: name__icontains
+        schema:
+          type: string
+        description: Connection's name, case-insensitive
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
       tags:
       - Connections
       security:
@@ -301,31 +316,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListAccountConnectionResponse'
+                $ref: '#/components/schemas/AccountConnectionListResponse'
           description: ''
     post:
       operationId: Create Account Connection
-      description: This our new post endpoint for connections. Connections are now
-        account-scoped
+      description: Create a new Account Connection.
       parameters:
       - in: path
         name: account_id
         schema:
           type: integer
         required: true
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
       tags:
       - Connections
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostAccountConnectionRequest'
+              $ref: '#/components/schemas/AccountConnectionCreateBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PostAccountConnectionRequest'
+              $ref: '#/components/schemas/AccountConnectionCreateBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PostAccountConnectionRequest'
+              $ref: '#/components/schemas/AccountConnectionCreateBodyRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -334,13 +359,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DetailAccountConnectionResponse'
+                $ref: '#/components/schemas/AccountConnectionDetailResponse'
           description: ''
   /api/v3/accounts/{account_id}/connections/{id}/:
     get:
-      operationId: Get Account Connection
-      description: This our new get endpoint for connections. Connections are now
-        account-scoped
+      operationId: Retrieve Account Connection
+      description: Retrieve details of a specific Account Connection.
       parameters:
       - in: path
         name: account_id
@@ -361,12 +385,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DetailAccountConnectionResponse'
+                $ref: '#/components/schemas/AccountConnectionDetailResponse'
           description: ''
     patch:
       operationId: Update Account Connection
-      description: This our new patch endpoint for connections. Connections are now
-        account-scoped
+      description: Update an existing Account Connection.
       parameters:
       - in: path
         name: account_id
@@ -384,13 +407,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchAccountConnectionRequest'
+              $ref: '#/components/schemas/AccountConnectionUpdateBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchAccountConnectionRequest'
+              $ref: '#/components/schemas/AccountConnectionUpdateBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchAccountConnectionRequest'
+              $ref: '#/components/schemas/AccountConnectionUpdateBodyRequest'
       security:
       - BearerAuthentication: []
       responses:
@@ -398,12 +421,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DetailAccountConnectionResponse'
+                $ref: '#/components/schemas/AccountConnectionDetailResponse'
           description: ''
     delete:
-      operationId: Delete Account Connection
-      description: This our new delete endpoint for connections. Connections are now
-        account-scoped
+      operationId: Delete Account Connection Delete
+      description: Delete an existing Account Connection Delete.
       parameters:
       - in: path
         name: account_id
@@ -468,10 +490,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: query
         name: limit
         schema:
@@ -891,10 +909,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
         name: limit
         schema:
           type: integer
@@ -1050,10 +1064,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: query
         name: client_id
         schema:
@@ -1246,10 +1256,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: query
         name: limit
         schema:
@@ -1561,10 +1567,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
         name: adapter_version
         schema:
           type: string
@@ -1597,10 +1599,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
       - in: query
         name: project_id__in
         schema:
@@ -2188,10 +2186,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
         name: environment_id
         schema:
           type: integer
@@ -2220,10 +2214,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
       - in: query
         name: project_id__in
         schema:
@@ -2268,10 +2258,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
         name: environment_id
         schema:
           type: integer
@@ -2300,10 +2286,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
       - in: query
         name: project_id__in
         schema:
@@ -2348,10 +2330,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
         name: environment_id
         schema:
           type: integer
@@ -2380,10 +2358,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
       - in: query
         name: project_id__in
         schema:
@@ -2428,10 +2402,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: query
         name: credentials_id
         schema:
@@ -2485,10 +2455,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
       - in: query
         name: project_id__in
         schema:
@@ -2998,11 +2964,6 @@ paths:
         schema:
           type: string
         required: true
-      - in: query
-        name: collection_id
-        schema:
-          type: string
-        description: A subfolder in the collection
       - in: path
         name: id
         schema:
@@ -3141,10 +3102,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
         name: limit
         schema:
           type: integer
@@ -3161,10 +3118,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id
-        schema:
-          type: integer
       - in: query
         name: project_id__in
         schema:
@@ -3917,10 +3870,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: query
         name: pk
         schema:
@@ -4803,8 +4752,149 @@ paths:
           description: No response body
 components:
   schemas:
-    AccountConnection:
-      title: AccountConnection
+    AccountConnectionCreateBodyRequest:
+      title: AccountConnectionCreateBody
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        account_id:
+          title: Account Id
+          description: The account the connection is associated with
+          type: integer
+        name:
+          title: Name
+          description: The name of the connection
+          type: string
+        adapter_version:
+          description: Identifies the warehouse and version of its adapter
+          allOf:
+          - $ref: '#/components/schemas/DbtAdapterVersion'
+        private_link_endpoint_id:
+          title: Private Link Endpoint Id
+          type: string
+        is_ssh_tunnel_enabled:
+          title: Is Ssh Tunnel Enabled
+          default: false
+          type: boolean
+        oauth_configuration_id:
+          title: Oauth Configuration Id
+          type: integer
+        config:
+          title: Config
+          description: The adapter-specific configuration for the connection
+          anyOf:
+          - $ref: '#/components/schemas/SnowflakeConnection'
+          - $ref: '#/components/schemas/PostgresConnection'
+          - $ref: '#/components/schemas/RedshiftConnection'
+          - $ref: '#/components/schemas/BigqueryConnection'
+          - $ref: '#/components/schemas/BigqueryConnectionV1'
+          - $ref: '#/components/schemas/DatabricksConnection'
+          - $ref: '#/components/schemas/DatabricksSparkConnection'
+          - $ref: '#/components/schemas/TrinoConnection'
+          - $ref: '#/components/schemas/FabricConnection'
+          - $ref: '#/components/schemas/SynapseConnection'
+          - $ref: '#/components/schemas/ApacheSparkConnection'
+          - $ref: '#/components/schemas/AthenaConnection'
+          - $ref: '#/components/schemas/TeradataConnection'
+      required:
+      - account_id
+      - name
+      - adapter_version
+      additionalProperties: false
+    AccountConnectionDetail:
+      title: AccountConnectionDetail
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        account_id:
+          title: Account Id
+          description: The account the connection is associated with
+          type: integer
+        name:
+          title: Name
+          description: The name of the connection
+          type: string
+        adapter_version:
+          description: Identifies the warehouse and version of its adapter
+          allOf:
+          - $ref: '#/components/schemas/DbtAdapterVersion'
+        private_link_endpoint_id:
+          title: Private Link Endpoint Id
+          type: string
+        is_ssh_tunnel_enabled:
+          title: Is Ssh Tunnel Enabled
+          default: false
+          type: boolean
+        oauth_redirect_uri:
+          title: Oauth Redirect Uri
+          description: If OAuth is enabled for this connection, this field is used
+            internally by dbt Cloud
+          type: string
+        oauth_configuration_id:
+          title: Oauth Configuration Id
+          type: integer
+        is_configured_for_native_oauth:
+          title: Is Configured For Native Oauth
+          type: boolean
+        platform_metadata_credentials_id:
+          title: Platform Metadata Credentials Id
+          type: integer
+        config:
+          title: Config
+          description: The adapter-specific configuration for the connection
+          anyOf:
+          - $ref: '#/components/schemas/SnowflakeConnection'
+          - $ref: '#/components/schemas/PostgresConnection'
+          - $ref: '#/components/schemas/RedshiftConnection'
+          - $ref: '#/components/schemas/BigqueryConnection'
+          - $ref: '#/components/schemas/BigqueryConnectionV1'
+          - $ref: '#/components/schemas/DatabricksConnection'
+          - $ref: '#/components/schemas/DatabricksSparkConnection'
+          - $ref: '#/components/schemas/TrinoConnection'
+          - $ref: '#/components/schemas/FabricConnection'
+          - $ref: '#/components/schemas/SynapseConnection'
+          - $ref: '#/components/schemas/ApacheSparkConnection'
+          - $ref: '#/components/schemas/AthenaConnection'
+          - $ref: '#/components/schemas/TeradataConnection'
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_id
+      - name
+      - adapter_version
+      - oauth_redirect_uri
+      - config
+    AccountConnectionDetailResponse:
+      title: AccountConnectionDetailResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/AccountConnectionDetail'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    AccountConnectionList:
+      title: AccountConnectionList
       type: object
       properties:
         id:
@@ -4857,6 +4947,65 @@ components:
       - name
       - adapter_version
       - environment__count
+    AccountConnectionListResponse:
+      title: AccountConnectionListResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/AccountConnectionList'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    AccountConnectionUpdateBodyRequest:
+      title: AccountConnectionUpdateBody
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        account_id:
+          title: Account Id
+          description: The account the connection is associated with
+          type: integer
+        name:
+          title: Name
+          description: The name of the connection
+          type: string
+        private_link_endpoint_id:
+          title: Private Link Endpoint Id
+          type: string
+        is_ssh_tunnel_enabled:
+          title: Is Ssh Tunnel Enabled
+          default: false
+          type: boolean
+        oauth_configuration_id:
+          title: Oauth Configuration Id
+          type: integer
+        config:
+          title: Config
+          description: The adapter-specific configuration for the connection
+          anyOf:
+          - $ref: '#/components/schemas/OptionalSnowflakeConnection'
+          - $ref: '#/components/schemas/OptionalPostgresConnection'
+          - $ref: '#/components/schemas/OptionalRedshiftConnection'
+          - $ref: '#/components/schemas/OptionalBigqueryConnection'
+          - $ref: '#/components/schemas/OptionalBigqueryConnectionV1'
+          - $ref: '#/components/schemas/OptionalDatabricksConnection'
+          - $ref: '#/components/schemas/OptionalDatabricksSparkConnection'
+          - $ref: '#/components/schemas/OptionalTrinoConnection'
+          - $ref: '#/components/schemas/OptionalFabricConnection'
+          - $ref: '#/components/schemas/OptionalSynapseConnection'
+          - $ref: '#/components/schemas/OptionalApacheSparkConnection'
+          - $ref: '#/components/schemas/OptionalAthenaConnection'
+          - $ref: '#/components/schemas/OptionalTeradataConnection'
+      additionalProperties: false
     AccountListEnveloped:
       type: object
       properties:
@@ -6947,22 +7096,6 @@ components:
       description: |-
         * `production` - production
         * `staging` - staging
-    DetailAccountConnectionResponse:
-      title: DetailAccountConnectionResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/AccountConnection'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
     DetailAccountUserResponse:
       title: DetailAccountUserResponse
       type: object
@@ -8571,25 +8704,6 @@ components:
       - tableau
       - powerbi
       type: string
-    ListAccountConnectionResponse:
-      title: ListAccountConnectionResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          title: Data
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountConnection'
-        extra:
-          $ref: '#/components/schemas/V3ResponseExtraData'
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
-      - extra
     ListGroupSCIMResponse:
       title: ListGroupSCIMResponse
       type: object
@@ -9397,49 +9511,6 @@ components:
       required:
       - filters
       - pagination
-    PatchAccountConnectionRequest:
-      title: PatchAccountConnection
-      description: |-
-        Base class for all request payloads.
-        It is expected that each endpoint extends this class to define its own payload format
-      type: object
-      properties:
-        account_id:
-          title: Account Id
-          description: The account the connection is associated with
-          type: integer
-        name:
-          title: Name
-          description: The name of the connection
-          type: string
-        private_link_endpoint_id:
-          title: Private Link Endpoint Id
-          type: string
-        is_ssh_tunnel_enabled:
-          title: Is Ssh Tunnel Enabled
-          default: false
-          type: boolean
-        oauth_configuration_id:
-          title: Oauth Configuration Id
-          type: integer
-        config:
-          title: Config
-          description: The adapter-specific configuration for the connection
-          anyOf:
-          - $ref: '#/components/schemas/OptionalSnowflakeConnection'
-          - $ref: '#/components/schemas/OptionalPostgresConnection'
-          - $ref: '#/components/schemas/OptionalRedshiftConnection'
-          - $ref: '#/components/schemas/OptionalBigqueryConnection'
-          - $ref: '#/components/schemas/OptionalBigqueryConnectionV1'
-          - $ref: '#/components/schemas/OptionalDatabricksConnection'
-          - $ref: '#/components/schemas/OptionalDatabricksSparkConnection'
-          - $ref: '#/components/schemas/OptionalTrinoConnection'
-          - $ref: '#/components/schemas/OptionalFabricConnection'
-          - $ref: '#/components/schemas/OptionalSynapseConnection'
-          - $ref: '#/components/schemas/OptionalApacheSparkConnection'
-          - $ref: '#/components/schemas/OptionalAthenaConnection'
-          - $ref: '#/components/schemas/OptionalTeradataConnection'
-      additionalProperties: false
     PatchGroupSCIMRequestRequest:
       title: PatchGroupSCIMRequest
       description: |-
@@ -9601,57 +9672,6 @@ components:
         * `trial` - TRIAL
         * `trial_2022` - TRIAL_2022
         * `trial_2025` - TRIAL_2025
-    PostAccountConnectionRequest:
-      title: PostAccountConnection
-      description: |-
-        Base class for all request payloads.
-        It is expected that each endpoint extends this class to define its own payload format
-      type: object
-      properties:
-        account_id:
-          title: Account Id
-          description: The account the connection is associated with
-          type: integer
-        name:
-          title: Name
-          description: The name of the connection
-          type: string
-        adapter_version:
-          description: Identifies the warehouse and version of its adapter
-          allOf:
-          - $ref: '#/components/schemas/DbtAdapterVersion'
-        private_link_endpoint_id:
-          title: Private Link Endpoint Id
-          type: string
-        is_ssh_tunnel_enabled:
-          title: Is Ssh Tunnel Enabled
-          default: false
-          type: boolean
-        oauth_configuration_id:
-          title: Oauth Configuration Id
-          type: integer
-        config:
-          title: Config
-          description: The adapter-specific configuration for the connection
-          anyOf:
-          - $ref: '#/components/schemas/SnowflakeConnection'
-          - $ref: '#/components/schemas/PostgresConnection'
-          - $ref: '#/components/schemas/RedshiftConnection'
-          - $ref: '#/components/schemas/BigqueryConnection'
-          - $ref: '#/components/schemas/BigqueryConnectionV1'
-          - $ref: '#/components/schemas/DatabricksConnection'
-          - $ref: '#/components/schemas/DatabricksSparkConnection'
-          - $ref: '#/components/schemas/TrinoConnection'
-          - $ref: '#/components/schemas/FabricConnection'
-          - $ref: '#/components/schemas/SynapseConnection'
-          - $ref: '#/components/schemas/ApacheSparkConnection'
-          - $ref: '#/components/schemas/AthenaConnection'
-          - $ref: '#/components/schemas/TeradataConnection'
-      required:
-      - account_id
-      - name
-      - adapter_version
-      additionalProperties: false
     PostLineageIntegrationRequest:
       title: PostLineageIntegration
       description: |-
