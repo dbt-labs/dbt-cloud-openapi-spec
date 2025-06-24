@@ -158,10 +158,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
         name: connection_id
         schema:
           type: integer
@@ -325,10 +321,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: query
         name: dbt_version
         schema:
@@ -555,10 +547,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: query
         name: dbt_version__in
         schema:
@@ -889,10 +877,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
         name: external_email
         schema:
           type: string
@@ -1107,10 +1091,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
         name: limit
         schema:
           type: integer
@@ -1288,10 +1268,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: account_id
-        schema:
-          type: integer
-      - in: query
         name: limit
         schema:
           type: integer
@@ -1430,10 +1406,6 @@ paths:
         schema:
           type: integer
         required: true
-      - in: query
-        name: account_id
-        schema:
-          type: integer
       - in: query
         name: created_at__range
         schema:
