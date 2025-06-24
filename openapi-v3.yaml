@@ -1225,10 +1225,6 @@ paths:
   /api/v3/accounts/{account_id}/private-link-endpoints/:
     get:
       operationId: List PrivateLink Endpoints
-      description: |-
-        List PrivateLink Endpoints for an account.
-
-        Note: This API is only available to Enterprise BusinessCritical customers.
       parameters:
       - in: path
         name: account_id
