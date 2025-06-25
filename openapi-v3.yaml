@@ -9346,6 +9346,9 @@ components:
         port:
           title: Port
           type: integer
+        retries:
+          title: Retries
+          type: integer
     OptionalRedshiftConnection:
       title: OptionalRedshiftConnection
       type: object
@@ -9358,6 +9361,9 @@ components:
           type: string
         port:
           title: Port
+          type: integer
+        retries:
+          title: Retries
           type: integer
     OptionalSnowflakeConnection:
       title: OptionalSnowflakeConnection
@@ -9735,6 +9741,11 @@ components:
           default: 5432
           exclusiveMinimum: 0
           maximum: 65535
+          type: integer
+        retries:
+          title: Retries
+          minimum: 0
+          maximum: 10
           type: integer
       required:
       - hostname
@@ -10237,6 +10248,11 @@ components:
           default: 5439
           exclusiveMinimum: 0
           maximum: 65535
+          type: integer
+        retries:
+          title: Retries
+          minimum: 0
+          maximum: 10
           type: integer
       required:
       - hostname
