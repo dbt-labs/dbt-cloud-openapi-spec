@@ -1965,8 +1965,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/:
     post:
-      operationId: Create Custom Environment Variable
-      description: Create a new Custom Environment Variable.
+      operationId: Create Projects Environment Variable
       parameters:
       - in: path
         name: account_id
@@ -1984,13 +1983,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableCreateBodyRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableCreateBodyRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableCreateBodyRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -1999,12 +1998,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableDetailResponse'
+                $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/{id}/:
     post:
-      operationId: Update Custom Environment Variable
-      description: Update an existing Custom Environment Variable.
+      operationId: Update Projects Environment Variable
       parameters:
       - in: path
         name: account_id
@@ -2027,13 +2025,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableUpdateBodyRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableUpdateBodyRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableUpdateBodyRequest'
+              $ref: '#/components/schemas/CustomEnvironmentVariableRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -2042,11 +2040,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableDetailResponse'
+                $ref: '#/components/schemas/CustomEnvironmentVariableEnveloped'
           description: ''
     delete:
-      operationId: Delete Custom Environment Variable Delete
-      description: Delete an existing Custom Environment Variable Delete.
+      operationId: Destroy Projects Environment Variable
       parameters:
       - in: path
         name: account_id
@@ -2177,34 +2174,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/environment/:
     get:
-      operationId: List Custom Environment Variable Environments
-      description: List all Custom Environment Variable Environments.
-      parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: integer
-        required: true
-      - in: path
-        name: project_id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Environment Variables
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableEnvironmentResponse'
-          description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/job/:
-    get:
-      operationId: List Custom Environment Variable Jobs
-      description: List all Custom Environment Variable Jobs.
+      operationId: List Projects Environment Variables Environment
       parameters:
       - in: path
         name: account_id
@@ -2212,42 +2182,53 @@ paths:
           type: integer
         required: true
       - in: query
+        name: environment_id
+        schema:
+          type: integer
+      - in: query
         name: job_definition_id
         schema:
           type: integer
-        description: The job definition ID to which the Job's Environment Variable
-          belong
+      - in: query
+        name: limit
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: offset
+        schema:
+          type: integer
+      - in: query
+        name: pk
+        schema:
+          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      tags:
-      - Environment Variables
-      security:
-      - BearerAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableJobResponse'
-          description: ''
-  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/user/:
-    get:
-      operationId: List Custom Environment Variable Users
-      description: List all Custom Environment Variable Users.
-      parameters:
-      - in: path
-        name: account_id
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
         schema:
           type: integer
-        required: true
-      - in: path
-        name: project_id
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
+      - in: query
+        name: type
         schema:
-          type: integer
-        required: true
+          type: string
       - in: query
         name: user_id
         schema:
@@ -2261,7 +2242,151 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableUserResponse'
+                $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
+          description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/job/:
+    get:
+      operationId: List Projects Environment Variables Job
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: environment_id
+        schema:
+          type: integer
+      - in: query
+        name: job_definition_id
+        schema:
+          type: integer
+      - in: query
+        name: limit
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: offset
+        schema:
+          type: integer
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
+      - in: query
+        name: type
+        schema:
+          type: string
+      - in: query
+        name: user_id
+        schema:
+          type: integer
+      tags:
+      - Environment Variables
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
+          description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/user/:
+    get:
+      operationId: List Projects Environment Variables User
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: environment_id
+        schema:
+          type: integer
+      - in: query
+        name: job_definition_id
+        schema:
+          type: integer
+      - in: query
+        name: limit
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: offset
+        schema:
+          type: integer
+      - in: query
+        name: pk
+        schema:
+          type: integer
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: project_id__in
+        schema:
+          type: array
+      - in: query
+        name: state
+        schema:
+          type: integer
+        description: "Filters by soft deletion state.\n            <ul>\n        \
+          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
+          \ Only active resources\n                </li>\n                <li>\n \
+          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
+          \ deleted resources\n                </li>\n                <li>\n     \
+          \               <strong>\"all\"</strong>: All resources\n              \
+          \  </li>\n            </ul>\n            "
+      - in: query
+        name: type
+        schema:
+          type: string
+      - in: query
+        name: user_id
+        schema:
+          type: integer
+      tags:
+      - Environment Variables
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environments/:
     get:
@@ -6534,323 +6659,124 @@ components:
       required:
       - data
       - status
-    CustomEnvironmentVariableCreateBodyRequest:
-      title: CustomEnvironmentVariableCreateBody
-      description: |-
-        Base class for all request payloads.
-        It is expected that each endpoint extends this class to define its own payload format
+    CustomEnvironmentVariableEnveloped:
       type: object
       properties:
-        account_id:
-          title: Account Id
-          description: The account ID to which the Environment Variable belongs
-          type: integer
-        project_id:
-          title: Project Id
-          description: The project ID to which the Environment Variable belongs
-          type: integer
-        environment_id:
-          title: Environment Id
-          description: The environment ID to which the Environment Variable belongs.
-            Required when type is 'environment'.
-          type: integer
-        user_id:
-          title: User Id
-          description: The user ID to which the Environment Variable belongs. Required
-            when type is 'user'.
-          type: integer
-        job_definition_id:
-          title: Job Definition Id
-          description: The job definition ID to which the Environment Variable belongs.
-            Required when type is 'job'.
-          type: integer
-        type:
-          description: The type of the Environment Variable.
-          allOf:
-          - $ref: '#/components/schemas/CustomEnvironmentVariableTypes'
-        name:
-          title: Name
-          description: The name of the Environment Variable.
-          type: string
-        raw_value:
-          title: Raw Value
-          description: The raw value of the Environment Variable. This value will
-            be encrypted if it is a secret.
-          type: string
-        pk:
-          title: Pk
-          deprecated: true
-          anyOf:
-          - type: integer
-          - type: string
-      required:
-      - account_id
-      - project_id
-      - type
-      - name
-      - raw_value
-      additionalProperties: false
-    CustomEnvironmentVariableDetail:
-      title: CustomEnvironmentVariableDetail
-      type: object
-      properties:
-        account_id:
-          title: Account Id
-          type: integer
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-        display_value:
-          title: Display Value
-          type: string
-        environment_id:
-          title: Environment Id
-          type: integer
-        id:
-          title: Id
-          type: integer
-        job_definition_id:
-          title: Job Definition Id
-          type: integer
-        name:
-          title: Name
-          type: string
-        project_id:
-          title: Project Id
-          type: integer
-        type:
-          $ref: '#/components/schemas/CustomEnvironmentVariableTypes'
-        updated_at:
-          title: Updated At
-          type: string
-          format: date-time
-        user_id:
-          title: User Id
-          type: integer
-        state:
-          allOf:
-          - $ref: '#/components/schemas/StateEnum'
-          title: State
-          default: 1
-      required:
-      - account_id
-      - created_at
-      - display_value
-      - id
-      - name
-      - project_id
-      - type
-      - updated_at
-    CustomEnvironmentVariableDetailResponse:
-      title: CustomEnvironmentVariableDetailResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
         data:
-          $ref: '#/components/schemas/CustomEnvironmentVariableDetail'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
+          $ref: '#/components/schemas/CustomEnvironmentVariableResponse'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
-    CustomEnvironmentVariableEnvironment:
-      title: CustomEnvironmentVariableEnvironment
-      description: |-
-        Builds a very specific and dynamic payload for the environment custom environment variables.
-        {
-                environments: [
-                    <[obj1|obj2].environment.name>,
-                ],
-                variables: {
-                    <[obj1|obj2].name>: {
-                        <obj1.environment.name>: {
-                            id: <obj.id>,
-                            value: <obj.display_value>,
-                        },
-                         <obj2.environment.name>: {
-                            id: <obj.id>,
-                            value: <obj.display_value>,
-                        },
-                    },
-                },
-            }
+      - status
+    CustomEnvironmentVariableListEnveloped:
       type: object
       properties:
-        environments:
-          title: Environments
+        data:
           type: array
           items:
-            type: string
-        variables:
-          title: Variables
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/EnvVarValue'
-      required:
-      - environments
-      - variables
-    CustomEnvironmentVariableEnvironmentResponse:
-      title: CustomEnvironmentVariableEnvironmentResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/CustomEnvironmentVariableEnvironment'
+            $ref: '#/components/schemas/CustomEnvironmentVariableResponse'
         extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
+          $ref: '#/components/schemas/Extra'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
       required:
       - data
-    CustomEnvironmentVariableJob:
-      title: CustomEnvironmentVariableJob
-      description: |-
-        Builds a very specific and dynamic payload for the job custom environment variables.
-        {
-            <[obj1|obj2].name>: {
-                <obj1.type>: {
-                    id: <obj1.id>,
-                    value: <obj1.raw_value>,
-                },
-                <obj2.type>: {
-                    id: <obj2.id>,
-                    value: <obj2.raw_value>,
-                },
-            },
-        }
-      type: object
-      additionalProperties:
-        type: object
-        additionalProperties:
-          $ref: '#/components/schemas/EnvVarValue'
-    CustomEnvironmentVariableJobResponse:
-      title: CustomEnvironmentVariableJobResponse
+      - extra
+      - status
+    CustomEnvironmentVariableRequest:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/CustomEnvironmentVariableJob'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
+        account_id:
           type: integer
+        project_id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+        type:
+          $ref: '#/components/schemas/CustomEnvironmentVariableTypeEnum'
+        user_id:
+          type: integer
+        environment_id:
+          type: integer
+        job_definition_id:
+          type: integer
+        raw_value:
+          type: string
+          writeOnly: true
+          minLength: 1
+        display_value:
+          type: string
+          minLength: 1
+        state:
+          example: 1
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
       required:
-      - data
-    CustomEnvironmentVariableTypes:
-      title: CustomEnvironmentVariableTypes
-      description: An enumeration.
+      - account_id
+      - name
+      - project_id
+      - type
+    CustomEnvironmentVariableResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account_id:
+          type: integer
+        project_id:
+          type: integer
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/CustomEnvironmentVariableTypeEnum'
+        user_id:
+          type: integer
+        environment_id:
+          type: integer
+        job_definition_id:
+          type: integer
+        display_value:
+          type: string
+        state:
+          example: 1
+          type: integer
+          default: 1
+          description: A value of 1 means this entity is active and a value of 2 means
+            this entity is deleted
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        environment:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentV3'
+          readOnly: true
+      required:
+      - created_at
+      - environment
+      - id
+      - updated_at
+    CustomEnvironmentVariableTypeEnum:
       enum:
       - project
       - environment
       - job
       - user
       type: string
-    CustomEnvironmentVariableUpdateBodyRequest:
-      title: CustomEnvironmentVariableUpdateBody
       description: |-
-        Base class for all request payloads.
-        It is expected that each endpoint extends this class to define its own payload format
-      type: object
-      properties:
-        pk:
-          title: Pk
-          type: integer
-        account_id:
-          title: Account Id
-          type: integer
-        project_id:
-          title: Project Id
-          type: integer
-        environment_id:
-          title: Environment Id
-          default: null
-          type: integer
-        user_id:
-          title: User Id
-          default: null
-          type: integer
-        job_definition_id:
-          title: Job Definition Id
-          default: null
-          type: integer
-        type:
-          default: null
-          allOf:
-          - $ref: '#/components/schemas/CustomEnvironmentVariableTypes'
-        name:
-          title: Name
-          default: null
-          type: string
-        raw_value:
-          title: Raw Value
-          type: string
-        created_at:
-          title: Created At
-          default: null
-        updated_at:
-          title: Updated At
-          default: null
-        state:
-          title: State
-          default: null
-        environment:
-          title: Environment
-          default: null
-        display_value:
-          title: Display Value
-          default: null
-      required:
-      - pk
-      - account_id
-      - project_id
-      - raw_value
-      additionalProperties: false
-    CustomEnvironmentVariableUser:
-      title: CustomEnvironmentVariableUser
-      description: |-
-        Builds a very specific and dynamic payload for the user custom environment variables.
-        {
-            <obj.name>: {
-                user: {
-                    id: <obj.for_user_id>,
-                    value: <obj.for_user_value>,
-                },
-            },
-        }
-      type: object
-      additionalProperties:
-        type: object
-        additionalProperties:
-          $ref: '#/components/schemas/EnvVarValue'
-    CustomEnvironmentVariableUserResponse:
-      title: CustomEnvironmentVariableUserResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        data:
-          $ref: '#/components/schemas/CustomEnvironmentVariableUser'
-        extra:
-          title: Extra
-          type: object
-        error_code:
-          title: Error Code
-          type: integer
-      required:
-      - data
+        * `project` - project
+        * `environment` - environment
+        * `job` - job
+        * `user` - user
     CustomPagination:
       type: object
       properties:
@@ -7357,19 +7283,6 @@ components:
           minLength: 1
       required:
       - application_id_uri
-    EnvVarValue:
-      title: EnvVarValue
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        value:
-          title: Value
-          type: string
-      required:
-      - id
-      - value
     EnvironmentV3:
       type: object
       properties:
@@ -11546,10 +11459,6 @@ components:
       - target_name
       - threads
       - type
-    StateEnum:
-      enum:
-      - 1
-      type: integer
     Status:
       title: Status
       type: object
