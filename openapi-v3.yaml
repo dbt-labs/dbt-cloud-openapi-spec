@@ -6817,6 +6817,11 @@ components:
           type: string
           writeOnly: true
           format: password
+        scopes:
+          title: Scopes
+          type: array
+          items:
+            type: string
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
@@ -9268,6 +9273,11 @@ components:
           type: string
           writeOnly: true
           format: password
+        scopes:
+          title: Scopes
+          type: array
+          items:
+            type: string
         adapter_id:
           title: Adapter Id
           type: integer
