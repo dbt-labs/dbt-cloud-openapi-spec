@@ -7082,6 +7082,21 @@ components:
       required:
       - code
       - is_success
+    DeployKey:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        public_key:
+          type: string
+        state:
+          example: 1
+          type: integer
+          default: 1
+          description: (Deprecated)
+      required:
+      - account_id
+      - public_key
     DeploymentEnvironmentAuthType:
       title: DeploymentEnvironmentAuthType
       description: An enumeration.
@@ -8514,22 +8529,6 @@ components:
         * `merge` - merge
         * `exposure_sync` - exposure_sync
         * `adaptive` - adaptive
-    Keypair:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        public_key:
-          type: string
-        state:
-          example: 1
-          type: integer
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-      required:
-      - account_id
-      - public_key
-      - state
     LegacyIntegerField:
       type: object
       properties:
@@ -10698,7 +10697,7 @@ components:
           readOnly: true
         deploy_key:
           allOf:
-          - $ref: '#/components/schemas/Keypair'
+          - $ref: '#/components/schemas/DeployKey'
           readOnly: true
         git_provider:
           readOnly: true
