@@ -2366,6 +2366,21 @@ components:
       required:
       - count
       - total_count
+    DeployKey:
+      type: object
+      properties:
+        account_id:
+          type: integer
+        public_key:
+          type: string
+        state:
+          example: 1
+          type: integer
+          default: 1
+          description: (Deprecated)
+      required:
+      - account_id
+      - public_key
     DeploymentTypeEnum:
       enum:
       - production
@@ -3690,22 +3705,6 @@ components:
         * `merge` - merge
         * `exposure_sync` - exposure_sync
         * `adaptive` - adaptive
-    Keypair:
-      type: object
-      properties:
-        account_id:
-          type: integer
-        public_key:
-          type: string
-        state:
-          example: 1
-          type: integer
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-      required:
-      - account_id
-      - public_key
-      - state
     LicenseAllocationListEnveloped:
       type: object
       properties:
@@ -4372,7 +4371,7 @@ components:
           readOnly: true
         deploy_key:
           allOf:
-          - $ref: '#/components/schemas/Keypair'
+          - $ref: '#/components/schemas/DeployKey'
           readOnly: true
       required:
       - created_at
