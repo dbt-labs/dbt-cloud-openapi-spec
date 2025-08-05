@@ -444,6 +444,54 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/favorite-assets/:
+    get:
+      operationId: List Favorite Asset Responses
+      description: List all Favorite Asset Responses.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: environment_id
+        schema:
+          type: integer
+        description: The environment ID the favorited asset is associated with. Can
+          be null for data warehouse assets.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+        description: The project ID the favorited asset is associated with
+      - in: query
+        name: user_id
+        schema:
+          type: integer
+        description: The user ID the favorited asset is associated with
+      tags:
+      - Favorite Assets
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailFavoriteAssetResponse'
+          description: ''
   /api/v3/accounts/{account_id}/group-permissions/{group_id}/:
     post:
       operationId: Assign Group Permissions
@@ -7160,6 +7208,22 @@ components:
           type: integer
       required:
       - data
+    DetailFavoriteAssetResponse:
+      title: DetailFavoriteAssetResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/FavoriteAsset'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
     DetailGroupSCIMResponse:
       title: DetailGroupSCIMResponse
       type: object
@@ -7665,6 +7729,53 @@ components:
       required:
       - server
       - database
+    FavoriteAsset:
+      title: FavoriteAsset
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        project_id:
+          title: Project Id
+          description: The project ID the favorited asset is associated with
+          type: integer
+        environment_id:
+          title: Environment Id
+          description: The environment ID the favorited asset is associated with
+          type: integer
+        asset_id:
+          title: Asset Id
+          description: The asset ID of the favorited asset
+          type: string
+        name:
+          title: Name
+          description: The name of the favorited asset
+          type: string
+        platform:
+          title: Platform
+          description: The platform of the favorited asset
+          type: string
+        asset_type:
+          title: Asset Type
+          description: The resource type of the favorited asset
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - project_id
+      - asset_id
+      - name
+      - platform
     FieldGroup:
       type: object
       properties:
