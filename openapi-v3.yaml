@@ -6041,6 +6041,9 @@ components:
         dataproc_cluster_name:
           title: Dataproc Cluster Name
           type: string
+        api_endpoint:
+          title: Api Endpoint
+          type: string
       required:
       - project_id
       - timeout_seconds
@@ -6152,6 +6155,9 @@ components:
           type: string
         dataproc_cluster_name:
           title: Dataproc Cluster Name
+          type: string
+        api_endpoint:
+          title: Api Endpoint
           type: string
         adapter_id:
           title: Adapter Id
@@ -9272,6 +9278,9 @@ components:
         dataproc_cluster_name:
           title: Dataproc Cluster Name
           type: string
+        api_endpoint:
+          title: Api Endpoint
+          type: string
     OptionalBigqueryConnectionV1:
       title: OptionalBigqueryConnectionV1
       type: object
@@ -9356,6 +9365,9 @@ components:
           type: string
         dataproc_cluster_name:
           title: Dataproc Cluster Name
+          type: string
+        api_endpoint:
+          title: Api Endpoint
           type: string
         adapter_id:
           title: Adapter Id
