@@ -7752,7 +7752,8 @@ components:
           format: date-time
         project_id:
           title: Project Id
-          description: The project ID the favorited asset is associated with
+          description: The project ID the favorited asset is associated with. Can
+            be null for data warehouse assets.
           type: integer
         environment_id:
           title: Environment Id
@@ -7778,7 +7779,6 @@ components:
       - id
       - created_at
       - updated_at
-      - project_id
       - asset_id
       - name
       - platform
