@@ -9727,6 +9727,7 @@ components:
       - cost_management_viewer
       - database_admin
       - developer
+      - fusion_admin
       - git_admin
       - job_admin
       - job_runner
@@ -9754,6 +9755,7 @@ components:
         * `cost_management_viewer` - COST_MANAGEMENT_VIEWER
         * `database_admin` - DATABASE_ADMIN
         * `developer` - DEVELOPER
+        * `fusion_admin` - FUSION_ADMIN
         * `git_admin` - GIT_ADMIN
         * `job_admin` - JOB_ADMIN
         * `job_runner` - JOB_RUNNER
@@ -10000,6 +10002,7 @@ components:
       - cost_management_viewer
       - database_admin
       - developer
+      - fusion_admin
       - git_admin
       - job_admin
       - job_runner
