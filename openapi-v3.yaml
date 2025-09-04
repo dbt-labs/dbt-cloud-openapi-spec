@@ -4208,7 +4208,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceToken'
+                $ref: '#/components/schemas/DetailCreateAccountScopedPATResponse'
           description: ''
   /api/v3/accounts/{account_id}/users/{user_id}/account-apikeys/{id}/:
     get:
@@ -4267,7 +4267,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceTokenEnveloped'
+                $ref: '#/components/schemas/DetailCreateAccountScopedPATResponse'
           description: ''
     delete:
       operationId: Delete Account Scoped PAT
@@ -6287,6 +6287,101 @@ components:
         * `snowflake` - snowflake
         * `bigquery` - bigquery
         * `adapter` - adapter
+    CreateAccountScopedPAT:
+      title: CreateAccountScopedPAT
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        account_id:
+          title: Account Id
+          description: The account the service token is associated with
+          type: integer
+        user_id:
+          title: User Id
+          type: integer
+        type:
+          $ref: '#/components/schemas/ServiceTokenType'
+        uid:
+          title: Uid
+          description: The unique identifier for the service token
+          type: string
+        name:
+          title: Name
+          description: The name of the service token
+          type: string
+        state:
+          title: State
+          description: The liveness state of the service token. A value of 1 means
+            this entity is active and a value of 2 means this entity is deleted
+          type: integer
+        token:
+          title: Token
+          description: The hashed token secret
+          type: string
+        token_string:
+          title: Token String
+          description: The full token string used to authenticate clients
+          type: string
+        last_used:
+          title: Last Used
+          description: Deprecated.
+          type: string
+          format: date-time
+        last_identify:
+          title: Last Identify
+          description: Deprecated.
+          type: string
+          format: date-time
+        expires_at:
+          title: Expires At
+          description: Deprecated.
+          type: string
+          format: date-time
+        user:
+          title: User
+          description: Deprecated.
+          type: object
+        service_token_permissions:
+          title: Service Token Permissions
+          description: Deprecated.
+          type: array
+          items:
+            type: object
+        semantic_layer_credentials:
+          title: Semantic Layer Credentials
+          description: Deprecated.
+          type: array
+          items:
+            type: object
+        metadata_only:
+          title: Metadata Only
+          description: Deprecated.
+          default: false
+          type: boolean
+        webhooks_only:
+          title: Webhooks Only
+          description: Deprecated.
+          default: false
+          type: boolean
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_id
+      - uid
+      - name
+      - state
+      - token_string
     CreateManagedRepositoryRequestRequest:
       type: object
       properties:
@@ -7174,6 +7269,22 @@ components:
           $ref: '#/components/schemas/Status'
         data:
           $ref: '#/components/schemas/AccountUser'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    DetailCreateAccountScopedPATResponse:
+      title: DetailCreateAccountScopedPATResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/CreateAccountScopedPAT'
         extra:
           title: Extra
           type: object
