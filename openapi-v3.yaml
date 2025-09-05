@@ -4570,6 +4570,17 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
       tags:
       - Webhooks
       security:
@@ -4590,6 +4601,17 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
       tags:
       - Webhooks
       requestBody:
