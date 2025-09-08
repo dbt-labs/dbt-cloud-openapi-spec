@@ -3580,11 +3580,12 @@ components:
             created the configuration.
         type:
           allOf:
-          - $ref: '#/components/schemas/Type2e2Enum'
+          - $ref: '#/components/schemas/TypeFe6Enum'
           description: "\n                The destination type.\n                1:\
             \ Internal Email\n                2: Slack\n                3: Deprecated\
             \ - do not use\n                4: External Email\n            \n\n* `1`\
-            \ - EMAIL\n* `2` - SLACK\n* `3` - WEBHOOK\n* `4` - EXTERNAL_EMAIL"
+            \ - EMAIL\n* `2` - SLACK\n* `3` - WEBHOOK\n* `4` - EXTERNAL_EMAIL\n* `5`\
+            \ - SLACK_V2"
         external_email:
           type: string
           minLength: 1
@@ -3650,11 +3651,12 @@ components:
             created the configuration.
         type:
           allOf:
-          - $ref: '#/components/schemas/Type2e2Enum'
+          - $ref: '#/components/schemas/TypeFe6Enum'
           description: "\n                The destination type.\n                1:\
             \ Internal Email\n                2: Slack\n                3: Deprecated\
             \ - do not use\n                4: External Email\n            \n\n* `1`\
-            \ - EMAIL\n* `2` - SLACK\n* `3` - WEBHOOK\n* `4` - EXTERNAL_EMAIL"
+            \ - EMAIL\n* `2` - SLACK\n* `3` - WEBHOOK\n* `4` - EXTERNAL_EMAIL\n* `5`\
+            \ - SLACK_V2"
         external_email:
           type: string
           description: The external email to send notifications to. Required for External
@@ -4963,18 +4965,6 @@ components:
       description: |-
         * `0` - DEFAULT
         * `1` - HYBRID
-    Type2e2Enum:
-      enum:
-      - 1
-      - 2
-      - 3
-      - 4
-      type: integer
-      description: |-
-        * `1` - EMAIL
-        * `2` - SLACK
-        * `3` - WEBHOOK
-        * `4` - EXTERNAL_EMAIL
     Type76eEnum:
       enum:
       - development
@@ -4983,6 +4973,20 @@ components:
       description: |-
         * `development` - DEVELOPMENT
         * `deployment` - DEPLOYMENT
+    TypeFe6Enum:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      type: integer
+      description: |-
+        * `1` - EMAIL
+        * `2` - SLACK
+        * `3` - WEBHOOK
+        * `4` - EXTERNAL_EMAIL
+        * `5` - SLACK_V2
     User:
       type: object
       properties:
