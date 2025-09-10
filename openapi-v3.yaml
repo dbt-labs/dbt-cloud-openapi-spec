@@ -7506,41 +7506,6 @@ components:
           minLength: 1
       required:
       - application_id_uri
-    EnvironmentProfile:
-      type: object
-      properties:
-        id:
-          type: integer
-        key:
-          type: string
-        connection_id:
-          type: integer
-        credentials_id:
-          type: integer
-        extended_attributes_id:
-          type: integer
-      required:
-      - connection_id
-      - credentials_id
-      - key
-    EnvironmentProfileRequest:
-      type: object
-      properties:
-        id:
-          type: integer
-        key:
-          type: string
-          minLength: 1
-        connection_id:
-          type: integer
-        credentials_id:
-          type: integer
-        extended_attributes_id:
-          type: integer
-      required:
-      - connection_id
-      - credentials_id
-      - key
     EnvironmentV3:
       type: object
       properties:
@@ -7583,21 +7548,11 @@ components:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        primary_profile:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentProfile'
-          description: The primary profile for this environment
-        secondary_profiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentProfile'
-          description: The catalog profiles for this environment
       required:
       - account_id
       - dbt_version
       - name
       - project_id
-      - secondary_profiles
       - state
       - supports_docs
       - type
@@ -7672,21 +7627,11 @@ components:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        primary_profile:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentProfileRequest'
-          description: The primary profile for this environment
-        secondary_profiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentProfileRequest'
-          description: The catalog profiles for this environment
       required:
       - account_id
       - dbt_version
       - name
       - project_id
-      - secondary_profiles
       - state
       - supports_docs
       - type
@@ -7761,16 +7706,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/Project'
           readOnly: true
-        primary_profile:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentProfile'
-          description: The primary profile for this environment
-        secondary_profiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentProfile'
-          default: []
-          description: The catalog profiles for this environment
         credentials:
           allOf:
           - $ref: '#/components/schemas/PostgresCredentials'
