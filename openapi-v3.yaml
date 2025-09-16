@@ -307,6 +307,15 @@ paths:
           type: integer
         description: The number of items to skip before starting to collect the result
           set.
+      - in: query
+        name: requires_platform_metadata_credentials
+        schema:
+          type: boolean
+        description: Filter connections by Platform Metadata Credentials status with
+          warehouse account deduplication. True=connections that need Platform Metadata
+          Credentials, False=connections that have direct Platform Metadata Credentials
+          only. Returns one connection per unique warehouse account (the one with
+          most environments).
       tags:
       - Connections
       security:
@@ -5005,6 +5014,24 @@ components:
         platform_metadata_credentials_id:
           title: Platform Metadata Credentials Id
           type: integer
+        config:
+          title: Config
+          description: The adapter-specific configuration for the connection (only
+            included when annotated)
+          anyOf:
+          - $ref: '#/components/schemas/SnowflakeConnection'
+          - $ref: '#/components/schemas/PostgresConnection'
+          - $ref: '#/components/schemas/RedshiftConnection'
+          - $ref: '#/components/schemas/BigqueryConnection'
+          - $ref: '#/components/schemas/BigqueryConnectionV1'
+          - $ref: '#/components/schemas/DatabricksConnection'
+          - $ref: '#/components/schemas/DatabricksSparkConnection'
+          - $ref: '#/components/schemas/TrinoConnection'
+          - $ref: '#/components/schemas/FabricConnection'
+          - $ref: '#/components/schemas/SynapseConnection'
+          - $ref: '#/components/schemas/ApacheSparkConnection'
+          - $ref: '#/components/schemas/AthenaConnection'
+          - $ref: '#/components/schemas/TeradataConnection'
       required:
       - id
       - created_at
