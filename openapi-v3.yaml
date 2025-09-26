@@ -453,6 +453,29 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/environments/{environment_id}/sao-cache/:
+    delete:
+      operationId: Delete Environment SAO Cache
+      description: Clear the environment SAO (State Aware Orchestration) cache in
+        Redis for the given environment
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: environment_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Environments
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/favorite-assets/:
     get:
       operationId: List Favorite Asset Responses
