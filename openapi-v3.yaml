@@ -4329,7 +4329,9 @@ paths:
   /api/v3/accounts/{account_id}/webhooks/event/{event_id}:
     get:
       operationId: Retrieve Webhooks Event
-      description: Get a specific event given an event_id
+      description: |-
+        Get a specific event given an event_id.
+        This endpoint is deprecated and should not be called anymore.
       parameters:
       - in: path
         name: account_id
@@ -4393,7 +4395,9 @@ paths:
   /api/v3/accounts/{account_id}/webhooks/receipt/{receipt_id}:
     get:
       operationId: Retrieve Webhooks Receipt
-      description: Get a specific receipt given its id
+      description: |-
+        Get a specific receipt given its id.
+        This endpoint is deprecated and should not be called anymore.
       parameters:
       - in: path
         name: account_id
@@ -4521,6 +4525,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteSubscriptionResponseEnvelope'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+          description: ''
+  /api/v3/accounts/{account_id}/webhooks/subscription/{subscription_id}/event/{event_id}/receipt:
+    get:
+      operationId: List Webhooks Subscription Event Receipt
+      description: |-
+        Get the receipt for a given subscription id and event id.
+        This endpoint is only used when the Notifications System is enabled, and uses Redis event history instead of the
+        Webhooks microservice's database.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: event_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: subscription_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Webhooks
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWebhooksReceiptsResponseEnvelope'
           description: ''
         '404':
           content:
