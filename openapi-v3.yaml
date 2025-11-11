@@ -5959,103 +5959,6 @@ components:
       - id
       - oauth_redirect_uri
       - updated_at
-    BaseSparkAdapterCredentialFields:
-      type: object
-      properties:
-        token:
-          $ref: '#/components/schemas/TextField'
-        schema:
-          $ref: '#/components/schemas/TextField'
-        target_name:
-          $ref: '#/components/schemas/TextField'
-        threads:
-          allOf:
-          - $ref: '#/components/schemas/LegacyIntegerField'
-          default:
-            metadata:
-              label: Threads
-              description: The number of threads to use for your jobs.
-              field_type: number
-              encrypt: false
-              depends_on: null
-              overrideable: false
-              is_searchable: null
-              validation:
-                min_length: null
-                max_length: null
-                required: true
-                pattern: null
-            value: 6
-      required:
-      - schema
-      - target_name
-      - token
-    BaseSparkAdapterCredentialFieldsRequest:
-      type: object
-      properties:
-        token:
-          $ref: '#/components/schemas/TextFieldRequest'
-        schema:
-          $ref: '#/components/schemas/TextFieldRequest'
-        target_name:
-          $ref: '#/components/schemas/TextFieldRequest'
-        threads:
-          allOf:
-          - $ref: '#/components/schemas/LegacyIntegerFieldRequest'
-          default:
-            metadata:
-              label: Threads
-              description: The number of threads to use for your jobs.
-              field_type: number
-              encrypt: false
-              depends_on: null
-              overrideable: false
-              is_searchable: null
-              validation:
-                min_length: null
-                max_length: null
-                required: true
-                pattern: null
-            value: 6
-      required:
-      - schema
-      - target_name
-      - token
-    BaseSparkAdapterCredentialsSchema:
-      type: object
-      properties:
-        fields:
-          $ref: '#/components/schemas/BaseSparkAdapterCredentialFields'
-        field_order:
-          type: array
-          items:
-            type: string
-          description: The field order for display in the UI
-        field_groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/FieldGroup'
-          description: Specification of how certain fields should be grouped
-      required:
-      - fields
-    BaseSparkAdapterCredentialsSchemaRequest:
-      type: object
-      properties:
-        fields:
-          $ref: '#/components/schemas/BaseSparkAdapterCredentialFieldsRequest'
-        field_order:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          description: The field order for display in the UI
-        field_groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/FieldGroupRequest'
-          description: Specification of how certain fields should be grouped
-      required:
-      - fields
     BigqueryConnection:
       title: BigqueryConnection
       type: object
@@ -7202,7 +7105,7 @@ components:
           type: integer
         credential_details:
           allOf:
-          - $ref: '#/components/schemas/BaseSparkAdapterCredentialsSchemaRequest'
+          - $ref: '#/components/schemas/EncryptedJSONValueRequest'
           writeOnly: true
         target_name:
           type: string
@@ -7585,6 +7488,21 @@ components:
           type: integer
       required:
       - data
+    EncryptedJSONValue:
+      type: object
+      properties:
+        _ciphertext:
+          type: string
+          default: NOT_SET
+          title: ' ciphertext'
+    EncryptedJSONValueRequest:
+      type: object
+      properties:
+        _ciphertext:
+          type: string
+          minLength: 1
+          default: NOT_SET
+          title: ' ciphertext'
     EntraExtraData:
       type: object
       properties:
@@ -8021,20 +7939,6 @@ components:
       required:
       - members
       - name
-    FieldGroupRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          minLength: 1
-        members:
-          type: array
-          items:
-            type: string
-            minLength: 1
-      required:
-      - members
-      - name
     Filters:
       type: object
       properties:
@@ -8045,31 +7949,6 @@ components:
       required:
       - limit
       - offset
-    GenericTextValidation:
-      type: object
-      properties:
-        min_length:
-          type: integer
-        max_length:
-          type: integer
-        required:
-          type: boolean
-          default: false
-        pattern:
-          type: string
-    GenericTextValidationRequest:
-      type: object
-      properties:
-        min_length:
-          type: integer
-        max_length:
-          type: integer
-        required:
-          type: boolean
-          default: false
-        pattern:
-          type: string
-          minLength: 1
     GetLineageIntegrationWatchSelectionResponse:
       title: GetLineageIntegrationWatchSelectionResponse
       type: object
@@ -8873,24 +8752,6 @@ components:
         * `merge` - merge
         * `exposure_sync` - exposure_sync
         * `adaptive` - adaptive
-    LegacyIntegerField:
-      type: object
-      properties:
-        metadata:
-          $ref: '#/components/schemas/TextFieldMetadata'
-        value:
-          type: integer
-      required:
-      - metadata
-    LegacyIntegerFieldRequest:
-      type: object
-      properties:
-        metadata:
-          $ref: '#/components/schemas/TextFieldMetadataRequest'
-        value:
-          type: integer
-      required:
-      - metadata
     LicenseMapEnveloped:
       type: object
       properties:
@@ -12031,78 +11892,6 @@ components:
       required:
       - data
       - status
-    TextField:
-      type: object
-      properties:
-        metadata:
-          $ref: '#/components/schemas/TextFieldMetadata'
-        value:
-          type: string
-      required:
-      - metadata
-    TextFieldMetadata:
-      type: object
-      properties:
-        label:
-          type: string
-        description:
-          type: string
-        field_type:
-          type: string
-        encrypt:
-          type: boolean
-        depends_on: {}
-        overrideable:
-          type: boolean
-          default: false
-        is_searchable:
-          type: boolean
-        validation:
-          $ref: '#/components/schemas/GenericTextValidation'
-      required:
-      - description
-      - encrypt
-      - field_type
-      - label
-      - validation
-    TextFieldMetadataRequest:
-      type: object
-      properties:
-        label:
-          type: string
-          minLength: 1
-        description:
-          type: string
-          minLength: 1
-        field_type:
-          type: string
-          minLength: 1
-        encrypt:
-          type: boolean
-        depends_on: {}
-        overrideable:
-          type: boolean
-          default: false
-        is_searchable:
-          type: boolean
-        validation:
-          $ref: '#/components/schemas/GenericTextValidationRequest'
-      required:
-      - description
-      - encrypt
-      - field_type
-      - label
-      - validation
-    TextFieldRequest:
-      type: object
-      properties:
-        metadata:
-          $ref: '#/components/schemas/TextFieldMetadataRequest'
-        value:
-          type: string
-          minLength: 1
-      required:
-      - metadata
     TrinoConnection:
       title: TrinoConnection
       type: object
