@@ -5265,6 +5265,7 @@ components:
             * `provisioned_team_annual` - PROVISIONED_TEAM_ANNUAL
             * `other` - OTHER
             * `migrated` - MIGRATED
+            * `workshop` - WORKSHOP
         unlocked_at:
           type: string
           format: date-time
@@ -9043,6 +9044,7 @@ components:
       - provisioned_team_annual
       - other
       - migrated
+      - workshop
       type: string
       description: |-
         * `trial_expired` - TRIAL_EXPIRED
@@ -9051,6 +9053,7 @@ components:
         * `provisioned_team_annual` - PROVISIONED_TEAM_ANNUAL
         * `other` - OTHER
         * `migrated` - MIGRATED
+        * `workshop` - WORKSHOP
     MetaComponent:
       title: MetaComponent
       description: |-
