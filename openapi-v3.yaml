@@ -11174,9 +11174,6 @@ components:
         name:
           type: string
           description: The user-facing name to identify these credentials.
-        values:
-          description: Key/val pairs of creds values. When returned via API, encrypted
-            values will be excluded.
         state:
           example: 1
           type: integer
