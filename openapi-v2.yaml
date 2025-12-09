@@ -165,10 +165,12 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -176,7 +178,14 @@ paths:
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -329,14 +338,18 @@ paths:
         name: dbt_version__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -349,10 +362,19 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -551,6 +573,8 @@ paths:
         name: dbt_version__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: environment_id
         schema:
@@ -566,10 +590,12 @@ paths:
         name: is_system
         schema:
           type: boolean
+          default: false
       - in: query
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: name__icontains
         schema:
@@ -578,6 +604,7 @@ paths:
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: order_by
         schema:
@@ -590,16 +617,25 @@ paths:
       - in: query
         name: project_id
         schema:
-          type: string
+          type: integer
         description: Filters the results to a specific Project
       - in: query
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -884,10 +920,12 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -899,7 +937,14 @@ paths:
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -911,6 +956,12 @@ paths:
         name: type
         schema:
           type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
       - in: query
         name: user_id
         schema:
@@ -1094,6 +1145,7 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: name__icontains
         schema:
@@ -1102,6 +1154,7 @@ paths:
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -1114,10 +1167,19 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -1271,10 +1333,12 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -1287,6 +1351,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: remote_url
         schema:
@@ -1294,7 +1360,14 @@ paths:
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -1410,6 +1483,9 @@ paths:
         name: created_at__range
         schema:
           type: array
+          items:
+            type: string
+            format: date-time
       - in: query
         name: dbt_version
         schema:
@@ -1418,6 +1494,8 @@ paths:
         name: dbt_version__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: deferring_run_id
         schema:
@@ -1430,6 +1508,9 @@ paths:
         name: finished_at__range
         schema:
           type: array
+          items:
+            type: string
+            format: date-time
       - in: query
         name: has_docs_generated
         schema:
@@ -1453,18 +1534,18 @@ paths:
       - in: query
         name: job_definition_id
         schema:
-          type: string
+          type: integer
         description: Filters the results to a specific Job
       - in: query
         name: limit
         schema:
-          type: string
+          type: integer
           default: 100
         description: Pagination limit
       - in: query
         name: offset
         schema:
-          type: string
+          type: integer
           default: 0
         description: Pagination offset
       - in: query
@@ -1482,28 +1563,41 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: project_id
         schema:
-          type: string
+          type: integer
         description: Filters the results to a specific Project
       - in: query
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: all
       - in: query
         name: status
         schema:
-          type: string
+          type: integer
         description: Filters the results to a specific run status
       - in: query
         name: status__in
         schema:
-          type: string
+          type: array
+          items:
+            type: integer
         description: 'Filters the results to a specific set of run statuses. `1: Queued`,
           `2: Starting`, `3: Running`, `10: Success`, `20: Error`, `30: Cancelled`'
       tags:
