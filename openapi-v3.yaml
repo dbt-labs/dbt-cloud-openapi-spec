@@ -574,6 +574,7 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: name
         schema:
@@ -586,6 +587,7 @@ paths:
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -594,10 +596,19 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -992,10 +1003,12 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -1003,7 +1016,14 @@ paths:
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -1152,10 +1172,12 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -1163,7 +1185,14 @@ paths:
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -1336,6 +1365,7 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: name__icontains
         schema:
@@ -1344,6 +1374,7 @@ paths:
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -1356,10 +1387,19 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -1646,6 +1686,20 @@ paths:
         name: adapter_version
         schema:
           type: string
+          enum:
+          - apache_spark_v0
+          - databricks_spark_v0
+          - databricks_v0
+          - trino_v0
+          - snowflake_v0
+          - bigquery_v0
+          - bigquery_v1
+          - postgres_v0
+          - redshift_v0
+          - synapse_v0
+          - fabric_v0
+          - athena_v0
+          - teradata_v0
       - in: query
         name: has_catalog_ingestion_enabled
         schema:
@@ -1662,10 +1716,12 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -1679,10 +1735,19 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -2273,6 +2338,7 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: name
         schema:
@@ -2281,6 +2347,7 @@ paths:
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -2294,10 +2361,19 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -2309,6 +2385,11 @@ paths:
         name: type
         schema:
           type: string
+          enum:
+          - project
+          - environment
+          - job
+          - user
       - in: query
         name: user_id
         schema:
@@ -2345,6 +2426,7 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: name
         schema:
@@ -2353,6 +2435,7 @@ paths:
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -2366,10 +2449,19 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -2381,6 +2473,11 @@ paths:
         name: type
         schema:
           type: string
+          enum:
+          - project
+          - environment
+          - job
+          - user
       - in: query
         name: user_id
         schema:
@@ -2417,6 +2514,7 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: name
         schema:
@@ -2425,6 +2523,7 @@ paths:
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -2438,10 +2537,19 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -2453,6 +2561,11 @@ paths:
         name: type
         schema:
           type: string
+          enum:
+          - project
+          - environment
+          - job
+          - user
       - in: query
         name: user_id
         schema:
@@ -2490,14 +2603,24 @@ paths:
         name: dbt_version__in
         schema:
           type: array
+          items:
+            type: string
       - in: query
         name: deployment_type
         schema:
           type: string
+          enum:
+          - production
+          - staging
       - in: query
         name: deployment_type__in
         schema:
           type: array
+          items:
+            type: string
+            enum:
+            - production
+            - staging
       - in: query
         name: id__gt
         schema:
@@ -2506,6 +2629,7 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: name
         schema:
@@ -2518,6 +2642,7 @@ paths:
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -2526,6 +2651,8 @@ paths:
         name: pk__in
         schema:
           type: array
+          items:
+            type: integer
       - in: path
         name: project_id
         schema:
@@ -2535,10 +2662,19 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -3181,10 +3317,12 @@ paths:
         name: limit
         schema:
           type: integer
+          default: 100
       - in: query
         name: offset
         schema:
           type: integer
+          default: 0
       - in: query
         name: pk
         schema:
@@ -3198,6 +3336,8 @@ paths:
         name: project_id__in
         schema:
           type: array
+          items:
+            type: integer
       - in: query
         name: remote_url
         schema:
@@ -3205,7 +3345,14 @@ paths:
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
@@ -3957,7 +4104,14 @@ paths:
       - in: query
         name: state
         schema:
-          type: integer
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - active
+            - deleted
+            - all
+          default: active
         description: "Filters by soft deletion state.\n            <ul>\n        \
           \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
           \ Only active resources\n                </li>\n                <li>\n \
