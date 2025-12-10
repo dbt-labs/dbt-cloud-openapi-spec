@@ -282,6 +282,11 @@ paths:
           type: boolean
         description: Connections with catalog ingestion enabled
       - in: query
+        name: has_cost_insights_enabled
+        schema:
+          type: boolean
+        description: Connections with cost insights enabled
+      - in: query
         name: has_cost_management_enabled
         schema:
           type: boolean
@@ -1702,6 +1707,10 @@ paths:
           - teradata_v0
       - in: query
         name: has_catalog_ingestion_enabled
+        schema:
+          type: boolean
+      - in: query
+        name: has_cost_insights_enabled
         schema:
           type: boolean
       - in: query
