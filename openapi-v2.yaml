@@ -50,6 +50,12 @@ paths:
     get:
       operationId: List Accounts
       description: Deprecated. Consider using the v3 API instead.
+      parameters:
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       tags:
       - Accounts
       security:
@@ -72,6 +78,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       tags:
       - Accounts
       security:
@@ -162,6 +173,11 @@ paths:
         schema:
           type: integer
       - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
+      - in: query
         name: limit
         schema:
           type: integer
@@ -171,6 +187,12 @@ paths:
         schema:
           type: integer
           default: 0
+      - in: query
+        name: order_by
+        schema:
+          type: string
+          default: id
+        description: Field to order results by. Prefix with '-' for descending order.
       - in: query
         name: pk
         schema:
@@ -251,6 +273,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       tags:
       - Connections
       security:
@@ -341,6 +368,12 @@ paths:
           items:
             type: string
       - in: query
+        name: include_related
+        schema:
+          type: string
+        description: 'Comma-separated list of related objects to include in the response.
+          Available: repository, connection.'
+      - in: query
         name: limit
         schema:
           type: integer
@@ -350,6 +383,12 @@ paths:
         schema:
           type: integer
           default: 0
+      - in: query
+        name: order_by
+        schema:
+          type: string
+          default: id
+        description: Field to order results by. Prefix with '-' for descending order.
       - in: query
         name: pk
         schema:
@@ -442,6 +481,12 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: 'Comma-separated list of related objects to include in the response.
+          Available: repository, connection.'
       tags:
       - Environments
       security:
@@ -523,6 +568,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       tags:
       - Invites
       security:
@@ -548,6 +598,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       tags:
       - Invites
       security:
@@ -701,6 +756,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       - in: path
         name: job_id
         schema:
@@ -891,6 +951,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       tags:
       - Licenses
       security:
@@ -917,6 +982,11 @@ paths:
         schema:
           type: string
       - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
+      - in: query
         name: limit
         schema:
           type: integer
@@ -926,6 +996,12 @@ paths:
         schema:
           type: integer
           default: 0
+      - in: query
+        name: order_by
+        schema:
+          type: string
+          default: id
+        description: Field to order results by. Prefix with '-' for descending order.
       - in: query
         name: pk
         schema:
@@ -1026,6 +1102,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       tags:
       - Notifications
       security:
@@ -1142,6 +1223,12 @@ paths:
           type: integer
         required: true
       - in: query
+        name: include_related
+        schema:
+          type: string
+        description: 'Comma-separated list of related objects to include in the response.
+          Available: repository, connection, group_permissions, docs_job, freshness_job.'
+      - in: query
         name: limit
         schema:
           type: integer
@@ -1155,6 +1242,12 @@ paths:
         schema:
           type: integer
           default: 0
+      - in: query
+        name: order_by
+        schema:
+          type: string
+          default: id
+        description: Field to order results by. Prefix with '-' for descending order.
       - in: query
         name: pk
         schema:
@@ -1247,6 +1340,12 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: 'Comma-separated list of related objects to include in the response.
+          Available: repository, connection, group_permissions, docs_job, freshness_job.'
       tags:
       - Projects
       security:
@@ -1330,6 +1429,12 @@ paths:
           type: integer
         required: true
       - in: query
+        name: include_related
+        schema:
+          type: string
+        description: 'Comma-separated list of related objects to include in the response.
+          Available: deploy_key.'
+      - in: query
         name: limit
         schema:
           type: integer
@@ -1339,6 +1444,12 @@ paths:
         schema:
           type: integer
           default: 0
+      - in: query
+        name: order_by
+        schema:
+          type: string
+          default: id
+        description: Field to order results by. Prefix with '-' for descending order.
       - in: query
         name: pk
         schema:
@@ -1435,6 +1546,12 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: 'Comma-separated list of related objects to include in the response.
+          Available: deploy_key.'
       tags:
       - Repositories
       security:
@@ -1656,6 +1773,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       - in: path
         name: run_id
         schema:
@@ -1689,6 +1811,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       - in: path
         name: remainder
         schema:
@@ -1751,6 +1878,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       - in: path
         name: run_id
         schema:
@@ -1839,6 +1971,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       tags:
       - Users
       security:
@@ -1871,6 +2008,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
       tags:
       - Users
       security:
