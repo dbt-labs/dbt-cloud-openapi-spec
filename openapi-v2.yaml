@@ -4048,6 +4048,8 @@ components:
       - admin
       - analyst
       - billing_admin
+      - cost_insights_admin
+      - cost_insights_viewer
       - cost_management_admin
       - cost_management_viewer
       - database_admin
@@ -4076,6 +4078,8 @@ components:
         * `admin` - ADMIN
         * `analyst` - ANALYST
         * `billing_admin` - BILLING_ADMIN
+        * `cost_insights_admin` - COST_INSIGHTS_ADMIN
+        * `cost_insights_viewer` - COST_INSIGHTS_VIEWER
         * `cost_management_admin` - COST_MANAGEMENT_ADMIN
         * `cost_management_viewer` - COST_MANAGEMENT_VIEWER
         * `database_admin` - DATABASE_ADMIN
