@@ -297,6 +297,7 @@ paths:
           - fabric_v0
           - postgres_v0
           - redshift_v0
+          - salesforce_v0
           - snowflake_v0
           - synapse_v0
           - teradata_v0
@@ -1840,6 +1841,7 @@ paths:
           - bigquery_v1
           - postgres_v0
           - redshift_v0
+          - salesforce_v0
           - synapse_v0
           - fabric_v0
           - athena_v0
@@ -5310,6 +5312,7 @@ paths:
           - fabric_v0
           - postgres_v0
           - redshift_v0
+          - salesforce_v0
           - snowflake_v0
           - synapse_v0
           - teradata_v0
@@ -5529,6 +5532,7 @@ components:
           - $ref: '#/components/schemas/SynapseConnection'
           - $ref: '#/components/schemas/ApacheSparkConnection'
           - $ref: '#/components/schemas/AthenaConnection'
+          - $ref: '#/components/schemas/SalesforceConnection'
           - $ref: '#/components/schemas/TeradataConnection'
       required:
       - account_id
@@ -5599,6 +5603,7 @@ components:
           - $ref: '#/components/schemas/SynapseConnection'
           - $ref: '#/components/schemas/ApacheSparkConnection'
           - $ref: '#/components/schemas/AthenaConnection'
+          - $ref: '#/components/schemas/SalesforceConnection'
           - $ref: '#/components/schemas/TeradataConnection'
       required:
       - id
@@ -5688,6 +5693,7 @@ components:
           - $ref: '#/components/schemas/SynapseConnection'
           - $ref: '#/components/schemas/ApacheSparkConnection'
           - $ref: '#/components/schemas/AthenaConnection'
+          - $ref: '#/components/schemas/SalesforceConnection'
           - $ref: '#/components/schemas/TeradataConnection'
       required:
       - id
@@ -5754,6 +5760,7 @@ components:
           - $ref: '#/components/schemas/OptionalSynapseConnection'
           - $ref: '#/components/schemas/OptionalApacheSparkConnection'
           - $ref: '#/components/schemas/OptionalAthenaConnection'
+          - $ref: '#/components/schemas/OptionalSalesforceConnection'
           - $ref: '#/components/schemas/OptionalTeradataConnection'
       additionalProperties: false
     AccountListEnveloped:
@@ -6221,6 +6228,7 @@ components:
       - bigquery_v1
       - postgres_v0
       - redshift_v0
+      - salesforce_v0
       - synapse_v0
       - fabric_v0
       - athena_v0
@@ -6236,6 +6244,7 @@ components:
         * `bigquery_v1` - bigquery_v1
         * `postgres_v0` - postgres_v0
         * `redshift_v0` - redshift_v0
+        * `salesforce_v0` - salesforce_v0
         * `synapse_v0` - synapse_v0
         * `fabric_v0` - fabric_v0
         * `athena_v0` - athena_v0
@@ -6396,6 +6405,12 @@ components:
       required:
       - data
       - status
+    AuthType:
+      title: AuthType
+      description: An enumeration.
+      enum:
+      - jwt_bearer
+      type: string
     BaseConnectionV3:
       type: object
       properties:
@@ -6813,6 +6828,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
@@ -6865,6 +6881,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
@@ -7666,6 +7683,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
@@ -7716,6 +7734,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
@@ -7809,6 +7828,7 @@ components:
       - bigquery_v1
       - postgres_v0
       - redshift_v0
+      - salesforce_v0
       - synapse_v0
       - fabric_v0
       - athena_v0
@@ -10178,6 +10198,34 @@ components:
         retries:
           title: Retries
           type: integer
+    OptionalSalesforceConnection:
+      title: OptionalSalesforceConnection
+      type: object
+      properties:
+        login_url:
+          title: Login Url
+          type: string
+        database:
+          title: Database
+          type: string
+        client_id:
+          title: Client Id
+          type: string
+          writeOnly: true
+          format: password
+        private_key:
+          title: Private Key
+          type: string
+          writeOnly: true
+          format: password
+        data_transform_run_timeout:
+          title: Data Transform Run Timeout
+          type: integer
+        auth_type:
+          $ref: '#/components/schemas/AuthType'
+        adapter_id:
+          title: Adapter Id
+          type: integer
     OptionalSnowflakeConnection:
       title: OptionalSnowflakeConnection
       type: object
@@ -10606,6 +10654,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
@@ -10662,6 +10711,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
@@ -11119,6 +11169,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
@@ -11186,6 +11237,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
@@ -11686,6 +11738,49 @@ components:
       - id
       - name
       - created_at
+    SalesforceConnection:
+      title: SalesforceConnection
+      type: object
+      properties:
+        login_url:
+          title: Login Url
+          maxLength: 255
+          minLength: 1
+          type: string
+        database:
+          title: Database
+          default: default
+          maxLength: 255
+          minLength: 1
+          type: string
+        client_id:
+          title: Client Id
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+        private_key:
+          title: Private Key
+          write_only: true
+          type: string
+          writeOnly: true
+          format: password
+        data_transform_run_timeout:
+          title: Data Transform Run Timeout
+          default: 300
+          type: integer
+        auth_type:
+          default: jwt_bearer
+          allOf:
+          - $ref: '#/components/schemas/AuthType'
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use connection_details.adapter_version
+          type: integer
+      required:
+      - login_url
+      - client_id
+      - private_key
     Schema:
       type: object
       properties:
@@ -11753,6 +11848,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
@@ -12178,6 +12274,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
@@ -12269,6 +12366,7 @@ components:
             * `bigquery_v1` - bigquery_v1
             * `postgres_v0` - postgres_v0
             * `redshift_v0` - redshift_v0
+            * `salesforce_v0` - salesforce_v0
             * `synapse_v0` - synapse_v0
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
