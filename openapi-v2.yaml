@@ -2357,6 +2357,7 @@ components:
       - bigquery_v1
       - postgres_v0
       - redshift_v0
+      - salesforce_v0
       - synapse_v0
       - fabric_v0
       - athena_v0
@@ -2372,6 +2373,7 @@ components:
         * `bigquery_v1` - bigquery_v1
         * `postgres_v0` - postgres_v0
         * `redshift_v0` - redshift_v0
+        * `salesforce_v0` - salesforce_v0
         * `synapse_v0` - synapse_v0
         * `fabric_v0` - fabric_v0
         * `athena_v0` - athena_v0
