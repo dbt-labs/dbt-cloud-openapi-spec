@@ -1448,6 +1448,40 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/private-endpoints/{pl_endpoint_ksuid}/:
+    get:
+      operationId: Get Private Endpoint
+      description: |-
+        Retrieve a specific PrivateLink Endpoint by its KSUID.
+
+        Note: This API is only available to Enterprise BusinessCritical customers.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
+      - in: path
+        name: pl_endpoint_ksuid
+        schema:
+          type: string
+        required: true
+      tags:
+      - Private Endpoints
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateLinkEndpointEnveloped'
+          description: ''
   /api/v3/accounts/{account_id}/private-link-endpoints/:
     get:
       operationId: List PrivateLink Endpoints
@@ -10764,6 +10798,16 @@ components:
       - team_admin
       - webhooks_only
       type: string
+    PrivateLinkEndpointEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/PrivateLinkEndpointResponse'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
     PrivateLinkEndpointListEnveloped:
       type: object
       properties:
