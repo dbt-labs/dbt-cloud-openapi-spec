@@ -2614,6 +2614,9 @@ paths:
         name: job_definition_id
         schema:
           type: integer
+        description: The ID of the job definition to retrieve environment variables
+          for
+        required: true
       - in: query
         name: limit
         schema:
@@ -2779,6 +2782,8 @@ paths:
         name: user_id
         schema:
           type: integer
+        description: The ID of the user to retrieve environment variables for
+        required: true
       tags:
       - Environment Variables
       security:
