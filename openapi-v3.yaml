@@ -5300,8 +5300,10 @@ paths:
   /api/v3/adapter-schema/:
     get:
       operationId: Retrieve Adapter Schema
-      description: Fetch the schema for a given adapter. The schema will include details
-        on available fields for connections and credentials.
+      description: "\"\n        Fetch the schema for a given adapter. The schema will\
+        \ include details on available fields for connections and credentials.\n \
+        \       \n        Notes:\n        - salesforce_v0 is currently in beta and\
+        \ not available to all users.\n        "
       parameters:
       - in: query
         name: adapter_version
