@@ -10249,16 +10249,6 @@ components:
         database:
           title: Database
           type: string
-        client_id:
-          title: Client Id
-          type: string
-          writeOnly: true
-          format: password
-        private_key:
-          title: Private Key
-          type: string
-          writeOnly: true
-          format: password
         data_transform_run_timeout:
           title: Data Transform Run Timeout
           type: integer
@@ -11804,18 +11794,6 @@ components:
           maxLength: 255
           minLength: 1
           type: string
-        client_id:
-          title: Client Id
-          write_only: true
-          type: string
-          writeOnly: true
-          format: password
-        private_key:
-          title: Private Key
-          write_only: true
-          type: string
-          writeOnly: true
-          format: password
         data_transform_run_timeout:
           title: Data Transform Run Timeout
           default: 300
@@ -11830,8 +11808,6 @@ components:
           type: integer
       required:
       - login_url
-      - client_id
-      - private_key
     Schema:
       type: object
       properties:
