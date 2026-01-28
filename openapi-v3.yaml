@@ -1450,11 +1450,8 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/private-endpoints/{pl_endpoint_ksuid}/:
     get:
-      operationId: Get Private Endpoint
-      description: |-
-        Retrieve a specific PrivateLink Endpoint by its KSUID.
-
-        Note: This API is only available to Enterprise BusinessCritical customers.
+      operationId: Retrieve Private Endpoint
+      description: Retrieve details of a specific Private Endpoint.
       parameters:
       - in: path
         name: account_id
@@ -1480,11 +1477,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PrivateLinkEndpointEnveloped'
+                $ref: '#/components/schemas/PrivateEndpointResponse'
           description: ''
   /api/v3/accounts/{account_id}/private-link-endpoints/:
     get:
-      operationId: List PrivateLink Endpoints
+      operationId: List Private Endpoints
+      description: List all Private Endpoints.
       parameters:
       - in: path
         name: account_id
@@ -1496,6 +1494,27 @@ paths:
         schema:
           type: string
         description: Comma-separated list of related objects to include in the response.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of Private Endpoints to return.
+      - in: query
+        name: name_search
+        schema:
+          type: string
+        description: The name of the Private Endpoint to filter by.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of Private Endpoints to skip before starting to collect
+          the result set.
+      - in: query
+        name: type
+        schema:
+          type: string
+        description: The type of the Private Endpoint to filter by.
       tags:
       - Private Link Endpoints
       security:
@@ -1505,7 +1524,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PrivateLinkEndpointListEnveloped'
+                $ref: '#/components/schemas/PrivateEndpointResponse'
           description: ''
   /api/v3/accounts/{account_id}/projects/:
     get:
@@ -10788,76 +10807,83 @@ components:
       - team_admin
       - webhooks_only
       type: string
-    PrivateLinkEndpointEnveloped:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/PrivateLinkEndpointResponse'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - status
-    PrivateLinkEndpointListEnveloped:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateLinkEndpointResponse'
-        extra:
-          $ref: '#/components/schemas/Extra'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - extra
-      - status
-    PrivateLinkEndpointResponse:
+    PrivateEndpoint:
+      title: PrivateEndpoint
       type: object
       properties:
         id:
+          title: Id
+          description: The unique identifier of the Private Endpoint.
           type: string
-          readOnly: true
         account_id:
+          title: Account Id
+          description: The ID of the account
+          type: integer
+        state:
+          title: State
+          description: The soft-deletion state of the private endpoint record
           type: integer
         name:
+          title: Name
+          description: The name of the Private Endpoint.
           type: string
         type:
+          title: Type
+          description: The type of the Private Endpoint.
           type: string
-          description: The warehouse or the git provider type of the PrivateLink endpoint
         private_link_endpoint:
+          title: Private Link Endpoint
+          description: The PrivateLink endpoint (DNS entry that lives in the dbt Cloud
+            VPC.
           type: string
         cidr_range:
+          title: Cidr Range
+          description: The CIDR range associated with the Private Endpoint.
           type: string
         endpoint_identifier:
+          title: Endpoint Identifier
+          description: The cloud provider's PrivateLink endpoint ID.
           type: string
         endpoint_state:
+          title: Endpoint State
+          description: The current state of the Private Endpoint.
           type: string
-          description: The state of the PrivateLink endpoint as reported by the cloud
-            provider
         connectivity_status:
+          title: Connectivity Status
+          description: The connectivity status of the Private Endpoint.
           type: string
-          description: The result of the most recent connection test against the PrivateLink
-            endpoint
-        state:
-          example: 1
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
         created_at:
+          title: Created At
+          description: The timestamp when the Private Endpoint was created.
           type: string
           format: date-time
-          readOnly: true
         updated_at:
+          title: Updated At
+          description: The timestamp when the Private Endpoint was last updated.
           type: string
           format: date-time
-          readOnly: true
       required:
-      - created_at
       - id
+      - account_id
+      - state
+      - created_at
       - updated_at
+    PrivateEndpointResponse:
+      title: PrivateEndpointResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/PrivateEndpoint'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
     Project:
       type: object
       properties:
