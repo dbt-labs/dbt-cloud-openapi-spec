@@ -6294,6 +6294,10 @@ components:
           - $ref: '#/components/schemas/Schema'
           description: The set of semantic layer credential-level fields for this
             adapter
+        cost_insights_config:
+          allOf:
+          - $ref: '#/components/schemas/Schema'
+          description: The set of cost insights configuration fields for this adapter
       required:
       - metadata
     AdapterMetadata:
@@ -11905,12 +11909,14 @@ components:
       - credential
       - semantic_layer_credentials
       - platform_metadata_credentials
+      - cost_insights_config
       type: string
       description: |-
         * `connection` - connection
         * `credential` - credential
         * `semantic_layer_credentials` - semantic_layer_credentials
         * `platform_metadata_credentials` - platform_metadata_credentials
+        * `cost_insights_config` - cost_insights_config
     SemanticLayerCredentialsListEnveloped:
       type: object
       properties:
@@ -11968,6 +11974,7 @@ components:
             * `credential` - credential
             * `semantic_layer_credentials` - semantic_layer_credentials
             * `platform_metadata_credentials` - platform_metadata_credentials
+            * `cost_insights_config` - cost_insights_config
         name:
           type: string
           description: The user-facing name to identify these credentials.
