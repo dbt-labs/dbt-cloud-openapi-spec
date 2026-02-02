@@ -10899,6 +10899,11 @@ components:
           title: Connectivity Status
           description: The connectivity status of the Private Endpoint.
           type: string
+        connection_count:
+          title: Connection Count
+          description: The number of active connections using this Private Endpoint.
+          default: 0
+          type: integer
         created_at:
           title: Created At
           description: The timestamp when the Private Endpoint was created.
