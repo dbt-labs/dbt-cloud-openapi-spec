@@ -886,7 +886,11 @@ paths:
           description: ''
     post:
       operationId: Update Job
-      description: Update a job.
+      description: |
+        Update an existing job with PATCH-style semantics.
+        
+        Only include the fields you want to change - all fields are optional.
+        ReadOnly fields in the request body are ignored.
       parameters:
       - in: path
         name: account_id
@@ -904,13 +908,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/HumanReadableJobDefinitionRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/HumanReadableJobDefinitionRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/HumanReadableJobDefinitionRequest'
+              $ref: '#/components/schemas/HumanReadableJobDefinitionUpdateRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -920,7 +918,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HumanReadableJobDefinitionEnveloped'
-          description: ''
+          description: Job updated successfully
+        '400':
+          description: Invalid request (validation errors, invalid IDs, etc.)
+        '404':
+          description: Job not found
     delete:
       operationId: Destroy Job
       description: Delete a job
@@ -3210,6 +3212,282 @@ components:
       - settings
       - state
       - triggers
+    HumanReadableJobDefinitionUpdateRequest:
+      type: object
+      description: |
+        Schema for updating an existing job via PATCH-style updates.
+        
+        **All fields are optional** - only send the fields you want to change.
+        
+        **Note**: ReadOnly fields (like `id`, `is_deferrable`, `cron_humanized`) may be 
+        included in the request (for convenience when sending back modified GET responses) 
+        but will be ignored by the API.
+      properties:
+        account_id:
+          type: integer
+          minimum: 1
+          description: The account ID (must match path parameter)
+        project_id:
+          type: integer
+          minimum: 1
+          description: The project this job belongs to
+        environment_id:
+          type: integer
+          minimum: 1
+          description: The environment where this job runs
+        name:
+          type: string
+          minLength: 1
+          description: The name of the job
+          example: "Daily Production Build"
+        description:
+          type: string
+          description: Description of what this job does
+          example: "Builds and tests the production project daily at 2 AM"
+        dbt_version:
+          type: string
+          minLength: 1
+          nullable: true
+          description: When set, overrides the dbt_version specified in the Job's Environment. Set to null to use environment default.
+          example: "1.7"
+        deferring_environment_id:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Environment to defer to for state comparison. Set to null to disable deferral.
+          example: 456
+        deferring_job_definition_id:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Job to defer to for state comparison. Set to null to disable deferral.
+          example: 789
+        execute_steps:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          description: A list of dbt commands to run in sequence
+          example: ["dbt build", "dbt test --select tag:critical"]
+        execution:
+          type: object
+          properties:
+            timeout_seconds:
+              type: integer
+              minimum: 60
+              maximum: 86400
+              description: Maximum time in seconds for the job to run (1 minute to 24 hours)
+              example: 3600
+          required:
+            - timeout_seconds
+        generate_docs:
+          type: boolean
+          description: When true, `dbt docs generate` will be run at the end of all runs for this Job
+          example: true
+        generate_sources:
+          type: boolean
+          default: false
+          description: When true, generate sources will run
+          example: false
+        run_generate_sources:
+          type: boolean
+          description: Enable source freshness checks
+          example: false
+        job_type:
+          type: string
+          enum: [ci, scheduled, other, merge, exposure_sync, adaptive]
+          description: |
+            Type of job:
+            - `ci` - Continuous Integration job triggered on PRs
+            - `scheduled` - Runs on a schedule
+            - `other` - General deployment job
+            - `merge` - Triggered on merge to main branch
+            - `exposure_sync` - Syncs exposures
+            - `adaptive` - Adaptive execution job
+          example: "scheduled"
+        lifecycle_webhooks:
+          type: boolean
+          description: Enable lifecycle webhooks for job events
+          example: false
+        run_compare_changes:
+          type: boolean
+          description: Enable compare changes for slim CI
+          example: true
+        compare_changes_flags:
+          type: string
+          minLength: 1
+          description: dbt syntax flags to be used for compare changes (e.g., state selection)
+          default: "--select state:modified"
+          example: "--select state:modified+ --exclude tag:deprecated"
+        run_lint:
+          type: boolean
+          description: Enable SQL linting for this job
+          example: true
+        errors_on_lint_failure:
+          type: boolean
+          description: Fail the job if linting errors are found
+          example: true
+        settings:
+          type: object
+          properties:
+            threads:
+              type: integer
+              minimum: 1
+              maximum: 128
+              description: The maximum number of models to run in parallel in a single dbt run
+              example: 4
+            target_name:
+              type: string
+              minLength: 1
+              description: Target name that can be consumed in dbt project code with {{ target.name }}
+              example: "prod"
+          required:
+            - threads
+            - target_name
+        state:
+          type: integer
+          description: |
+            Soft deletion state:
+            - `1` - Active
+            - `2` - Deleted
+          example: 1
+          enum: [1, 2]
+        triggers_on_draft_pr:
+          type: boolean
+          default: false
+          description: When true, job will trigger on draft PRs (in addition to ready PRs)
+          example: false
+        triggers:
+          type: object
+          description: Configuration for when this job should be triggered
+          properties:
+            github_webhook:
+              type: boolean
+              description: Trigger on GitHub webhook events (for CI jobs)
+              example: false
+            git_provider_webhook:
+              type: boolean
+              nullable: true
+              description: Trigger on git provider webhook events
+              example: null
+            schedule:
+              type: boolean
+              description: Enable scheduled runs (requires schedule configuration)
+              example: true
+            on_merge:
+              type: boolean
+              nullable: true
+              description: Trigger when PR is merged to target branch
+              example: null
+            custom_branch_only:
+              type: boolean
+              nullable: true
+              deprecated: true
+              description: (Deprecated) Use git_provider_webhook instead. When true, only trigger on custom branch.
+              example: null
+          required:
+            - github_webhook
+            - schedule
+        schedule:
+          type: object
+          nullable: true
+          description: |
+            Schedule configuration for when the job should run.
+            Required if triggers.schedule is true, otherwise should be null.
+          properties:
+            cron:
+              type: string
+              nullable: true
+              description: |
+                Cron expression for custom schedules.
+                Mutually exclusive with date/time configuration.
+              example: "0 2 * * *"
+            date:
+              type: object
+              nullable: true
+              description: |
+                Date-based schedule configuration.
+                Used with time configuration, mutually exclusive with cron.
+              properties:
+                type:
+                  type: string
+                  enum: [every_day, days_of_week, custom]
+                  description: Type of date schedule
+                  example: "every_day"
+                days:
+                  type: array
+                  items:
+                    type: integer
+                    minimum: 0
+                    maximum: 6
+                  description: Days of week (0=Sunday, 6=Saturday). Only for type=days_of_week
+                  example: [1, 2, 3, 4, 5]
+              required:
+                - type
+            time:
+              type: object
+              nullable: true
+              description: |
+                Time-based schedule configuration.
+                Used with date configuration, mutually exclusive with cron.
+              properties:
+                type:
+                  type: string
+                  enum: [every_hour, at_exact_time]
+                  description: Type of time schedule
+                  example: "at_exact_time"
+                interval:
+                  type: integer
+                  minimum: 1
+                  maximum: 23
+                  description: Hour interval for type=every_hour
+                  example: 2
+                hours:
+                  type: integer
+                  minimum: 0
+                  maximum: 23
+                  description: Hour of day for type=at_exact_time (24-hour format)
+                  example: 2
+                minutes:
+                  type: integer
+                  minimum: 0
+                  maximum: 59
+                  description: Minute of hour for type=at_exact_time
+                  example: 0
+              required:
+                - type
+      required:
+        - account_id
+        - project_id
+        - environment_id
+        - name
+      additionalProperties: true
+      example:
+        account_id: 123
+        project_id: 456
+        environment_id: 789
+        name: "Daily Production Build"
+        description: "Builds and tests production data daily"
+        execute_steps: ["dbt build"]
+        execution:
+          timeout_seconds: 3600
+        generate_docs: true
+        job_type: "scheduled"
+        run_lint: true
+        errors_on_lint_failure: true
+        settings:
+          threads: 4
+          target_name: "prod"
+        triggers:
+          github_webhook: false
+          schedule: true
+        schedule:
+          date:
+            type: "every_day"
+          time:
+            type: "at_exact_time"
+            hours: 2
+            minutes: 0
     HumanReadableJobDefinitionResponse:
       type: object
       properties:
