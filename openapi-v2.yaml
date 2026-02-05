@@ -3066,6 +3066,19 @@ components:
           type: boolean
         errors_on_lint_failure:
           type: boolean
+        cost_optimization_features:
+          type: array
+          items:
+            type: string
+          description: "<b>[Private Beta]</b> List of cost optimization features to\
+            \ enable for this job.\n            Requires job to be running on a fusion\
+            \ dbt_version.\n            <br/><br/>\n            <b>Valid values:</b>\n\
+            \            <ul>\n              <li>\"state_aware_orchestration\" - Enable\
+            \ orchestration that adapts to state changes</li>\n              <li>\"\
+            efficient_testing\" - Aggregate generic tests into a single query and\
+            \ reuse redundant tests across lineage</li>\n            </ul>\n     \
+            \       <b>Example:</b> [\"state_aware_orchestration\", \"efficient_testing\"\
+            ]\n            "
         settings:
           $ref: '#/components/schemas/JobDefinitionSettings'
         state:
@@ -3178,6 +3191,20 @@ components:
           type: boolean
         errors_on_lint_failure:
           type: boolean
+        cost_optimization_features:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          description: "<b>[Private Beta]</b> List of cost optimization features to\
+            \ enable for this job.\n            Requires job to be running on a fusion\
+            \ dbt_version.\n            <br/><br/>\n            <b>Valid values:</b>\n\
+            \            <ul>\n              <li>\"state_aware_orchestration\" - Enable\
+            \ orchestration that adapts to state changes</li>\n              <li>\"\
+            efficient_testing\" - Aggregate generic tests into a single query and\
+            \ reuse redundant tests across lineage</li>\n            </ul>\n     \
+            \       <b>Example:</b> [\"state_aware_orchestration\", \"efficient_testing\"\
+            ]\n            "
         settings:
           $ref: '#/components/schemas/JobDefinitionSettingsRequest'
         state:
@@ -3286,6 +3313,19 @@ components:
         errors_on_lint_failure:
           type: boolean
           default: true
+        cost_optimization_features:
+          type: array
+          items:
+            type: string
+          description: "<b>[Private Beta]</b> List of cost optimization features to\
+            \ enable for this job.\n            Requires job to be running on a fusion\
+            \ dbt_version.\n            <br/><br/>\n            <b>Valid values:</b>\n\
+            \            <ul>\n              <li>\"state_aware_orchestration\" - Enable\
+            \ orchestration that adapts to state changes</li>\n              <li>\"\
+            efficient_testing\" - Aggregate generic tests into a single query and\
+            \ reuse redundant tests across lineage</li>\n            </ul>\n     \
+            \       <b>Example:</b> [\"state_aware_orchestration\", \"efficient_testing\"\
+            ]\n            "
         settings:
           allOf:
           - $ref: '#/components/schemas/JobDefinitionSettings'
@@ -3478,6 +3518,19 @@ components:
           type: boolean
         errors_on_lint_failure:
           type: boolean
+        cost_optimization_features:
+          type: array
+          items:
+            type: string
+          description: "<b>[Private Beta]</b> List of cost optimization features to\
+            \ enable for this job.\n            Requires job to be running on a fusion\
+            \ dbt_version.\n            <br/><br/>\n            <b>Valid values:</b>\n\
+            \            <ul>\n              <li>\"state_aware_orchestration\" - Enable\
+            \ orchestration that adapts to state changes</li>\n              <li>\"\
+            efficient_testing\" - Aggregate generic tests into a single query and\
+            \ reuse redundant tests across lineage</li>\n            </ul>\n     \
+            \       <b>Example:</b> [\"state_aware_orchestration\", \"efficient_testing\"\
+            ]\n            "
         settings:
           $ref: '#/components/schemas/JobDefinitionSettings'
         state:
@@ -3744,6 +3797,19 @@ components:
           type: integer
         deferring_job_definition_id:
           type: integer
+        cost_optimization_features:
+          type: array
+          items:
+            type: string
+          description: "<b>[Private Beta]</b> List of cost optimization features to\
+            \ enable for this job.\n            Requires job to be running on a fusion\
+            \ dbt_version.\n            <br/><br/>\n            <b>Valid values:</b>\n\
+            \            <ul>\n              <li>\"state_aware_orchestration\" - Enable\
+            \ orchestration that adapts to state changes</li>\n              <li>\"\
+            efficient_testing\" - Aggregate generic tests into a single query and\
+            \ reuse redundant tests across lineage</li>\n            </ul>\n     \
+            \       <b>Example:</b> [\"state_aware_orchestration\", \"efficient_testing\"\
+            ]\n            "
       required:
       - account_id
       - environment_id
