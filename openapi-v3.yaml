@@ -3670,6 +3670,234 @@ paths:
       responses:
         '200':
           description: No response body
+  /api/v3/accounts/{account_id}/projects/{project_id}/profiles/:
+    get:
+      operationId: List Profiles
+      description: |-
+        List profiles.
+
+        Note: Profiles are in the process of being rolled out and may not be available for your account yet.
+
+        Profiles are the set of connection, credentials, and attributes used to connect to a data warehouse. They can be assigned to deployment environments to run jobs.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: connection_id
+        schema:
+          type: integer
+        description: The ID of the connection for the profile
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
+      - in: query
+        name: profile_ids
+        schema: {}
+        description: A list of profile IDs to fetch
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Profiles
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileListResponse'
+          description: ''
+    post:
+      operationId: Create Profile
+      description: |-
+        Create a new profile.
+
+        Note: Profiles are in the process of being rolled out and may not be available for your account yet.
+
+        Profiles are the set of connection, credentials, and attributes used to connect to a data warehouse. They can be assigned to deployment environments to run jobs.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Profiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileCreateBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProfileCreateBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProfileCreateBodyRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileDetailResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/projects/{project_id}/profiles/{id}/:
+    get:
+      operationId: Retrieve Profile
+      description: |-
+        Retrieve a specific profile.
+
+        Note: Profiles are in the process of being rolled out and may not be available for your account yet.
+
+        Profiles are the set of connection, credentials, and attributes used to connect to a data warehouse. They can be assigned to deployment environments to run jobs.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Profiles
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileDetailResponse'
+          description: ''
+    patch:
+      operationId: Update Profile
+      description: |-
+        Update an existing profile.
+
+        Note: Profiles are in the process of being rolled out and may not be available for your account yet.
+
+        Profiles are the set of connection, credentials, and attributes used to connect to a data warehouse. They can be assigned to deployment environments to run jobs.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Profiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileUpdateBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProfileUpdateBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProfileUpdateBodyRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileDetailResponse'
+          description: ''
+    delete:
+      operationId: Delete Profile
+      description: |-
+        Delete an existing profile. The profile must not be assigned to any deployment environments in order to be deleted.
+
+        Note: Profiles are in the process of being rolled out and may not be available for your account yet.
+
+        Profiles are the set of connection, credentials, and attributes used to connect to a data warehouse. They can be assigned to deployment environments to run jobs.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: project_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Profiles
+      security:
+      - BearerAuthentication: []
+      responses:
+        '204':
+          description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/repositories/:
     get:
       operationId: List Repositories
@@ -8288,6 +8516,9 @@ components:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
+        primary_profile_id:
+          type: integer
+          description: The id of the primary profile for this environment
       required:
       - account_id
       - dbt_version
@@ -8367,6 +8598,9 @@ components:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
+        primary_profile_id:
+          type: integer
+          description: The id of the primary profile for this environment
       required:
       - account_id
       - dbt_version
@@ -8446,6 +8680,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/Project'
           readOnly: true
+        primary_profile_id:
+          type: integer
+          description: The id of the primary profile for this environment
         credentials:
           allOf:
           - $ref: '#/components/schemas/PostgresCredentials'
@@ -10959,6 +11196,263 @@ components:
           type: integer
       required:
       - data
+    ProfileCreateBodyRequest:
+      title: ProfileCreateBody
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        account_id:
+          title: Account Id
+          description: The ID of the account
+          type: integer
+        project_id:
+          title: Project Id
+          description: The ID of the project
+          type: integer
+        connection_id:
+          title: Connection Id
+          description: The ID of the connection
+          type: integer
+        key:
+          title: Key
+          description: Unique name for the profile. The profile key must be unique
+            per project and can only contain letters, numbers, dashes, and underscores.
+            It must begin with a letter and end with a letter or number. It cannot
+            contain consecutive dashes or underscores.
+          type: string
+        credentials_id:
+          title: Credentials Id
+          description: The ID of the credentials
+          type: integer
+        extended_attributes_id:
+          title: Extended Attributes Id
+          description: The ID of the extended attributes
+          type: integer
+      required:
+      - account_id
+      - project_id
+      - connection_id
+      - key
+      - credentials_id
+      additionalProperties: false
+    ProfileDetail:
+      title: ProfileDetail
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The ID of the profile
+          type: integer
+        account_id:
+          title: Account Id
+          description: The ID of the account
+          type: integer
+        project_id:
+          title: Project Id
+          description: The ID of the project
+          type: integer
+        key:
+          title: Key
+          description: Unique name for the profile. The profile key must be unique
+            per project and can only contain letters, numbers, dashes, and underscores.
+            It must begin with a letter and end with a letter or number. It cannot
+            contain consecutive dashes or underscores.
+          type: string
+        connection_id:
+          title: Connection Id
+          description: The ID of the connection
+          type: integer
+        credentials_id:
+          title: Credentials Id
+          description: The ID of the credentials
+          type: integer
+        extended_attributes_id:
+          title: Extended Attributes Id
+          description: The ID of the extended attributes
+          type: integer
+        primary_bindings:
+          title: Primary Bindings
+          description: The primary bindings for the profile
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfileEnvironmentBinding'
+        catalog_bindings:
+          title: Catalog Bindings
+          description: The catalog bindings for the profile
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfileEnvironmentBinding'
+      required:
+      - id
+      - account_id
+      - project_id
+      - key
+      - connection_id
+      - credentials_id
+      - primary_bindings
+      - catalog_bindings
+    ProfileDetailResponse:
+      title: ProfileDetailResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/ProfileDetail'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    ProfileEnvironmentBinding:
+      title: ProfileEnvironmentBinding
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The ID of the environment binding
+          type: integer
+        name:
+          title: Name
+          description: The name of the environment binding
+          type: string
+        type:
+          title: Type
+          description: The type of the environment binding
+          type: string
+        deployment_type:
+          title: Deployment Type
+          description: The deployment type of the environment binding
+          type: string
+      required:
+      - id
+      - name
+      - type
+      - deployment_type
+    ProfileList:
+      title: ProfileList
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The ID of the profile
+          type: integer
+        account_id:
+          title: Account Id
+          description: The ID of the account
+          type: integer
+        project_id:
+          title: Project Id
+          description: The ID of the project
+          type: integer
+        key:
+          title: Key
+          description: Unique name for the profile. The profile key must be unique
+            per project and can only contain letters, numbers, dashes, and underscores.
+            It must begin with a letter and end with a letter or number. It cannot
+            contain consecutive dashes or underscores.
+          type: string
+        connection_id:
+          title: Connection Id
+          description: The ID of the connection
+          type: integer
+        credentials_id:
+          title: Credentials Id
+          description: The ID of the credentials
+          type: integer
+        extended_attributes_id:
+          title: Extended Attributes Id
+          description: The ID of the extended attributes
+          type: integer
+        primary_bindings:
+          title: Primary Bindings
+          description: The primary bindings for the profile
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfileEnvironmentBinding'
+        catalog_bindings:
+          title: Catalog Bindings
+          description: The catalog bindings for the profile
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfileEnvironmentBinding'
+      required:
+      - id
+      - account_id
+      - project_id
+      - key
+      - connection_id
+      - credentials_id
+      - primary_bindings
+      - catalog_bindings
+    ProfileListResponse:
+      title: ProfileListResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/ProfileList'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    ProfileUpdateBodyRequest:
+      title: ProfileUpdateBody
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        pk:
+          title: Pk
+          description: The ID of the Profile to be changed
+          type: integer
+        account_id:
+          title: Account Id
+          description: The ID of the account
+          type: integer
+        project_id:
+          title: Project Id
+          description: The ID of the project
+          type: integer
+        key:
+          title: Key
+          description: Unique name for the profile. The profile key must be unique
+            per project and can only contain letters, numbers, dashes, and underscores.
+            It must begin with a letter and end with a letter or number. It cannot
+            contain consecutive dashes or underscores.
+          default: null
+          type: string
+        connection_id:
+          title: Connection Id
+          description: The ID of the connection
+          default: null
+          type: integer
+        credentials_id:
+          title: Credentials Id
+          description: The ID of the credentials
+          default: null
+          type: integer
+        extended_attributes_id:
+          title: Extended Attributes Id
+          description: The ID of the extended attributes. Set to null to unset.
+          default: null
+          type: integer
+      required:
+      - pk
+      - account_id
+      - project_id
+      additionalProperties: false
     Project:
       type: object
       properties:
