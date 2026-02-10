@@ -2882,6 +2882,9 @@ components:
           type: integer
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
+        primary_profile_id:
+          type: integer
+          description: The id of the primary profile for this environment
       required:
       - account_id
       - dbt_version
