@@ -4899,7 +4899,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceTokenEnveloped'
+                $ref: '#/components/schemas/DetailServiceTokenResponse'
           description: ''
     put:
       operationId: Update Service Token
@@ -12585,16 +12585,6 @@ components:
       - uid
       - name
       - state
-    ServiceTokenEnveloped:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ServiceTokenResponse'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - status
     ServiceTokenListEnveloped:
       type: object
       properties:
