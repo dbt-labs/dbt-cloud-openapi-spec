@@ -2211,7 +2211,7 @@ paths:
           description: ''
     post:
       operationId: Create Credentials
-      description: Create a new set of credentials to associate with a user or environment
+      description: Create a new set of credentials to associate with a user or environment.
       parameters:
       - in: path
         name: account_id
@@ -2283,7 +2283,7 @@ paths:
           description: ''
     post:
       operationId: Update Credentials
-      description: Update a set of credentials
+      description: Update a set of credentials.
       parameters:
       - in: path
         name: account_id
@@ -2324,7 +2324,7 @@ paths:
           description: ''
     patch:
       operationId: Partial Update Credentials
-      description: Partially update a set of credentials
+      description: Partially update a set of credentials.
       parameters:
       - in: path
         name: account_id
@@ -2365,7 +2365,7 @@ paths:
           description: ''
     delete:
       operationId: Delete Credentials
-      description: Delete a set of credentials
+      description: Delete a set of credentials.
       parameters:
       - in: path
         name: account_id
@@ -7651,6 +7651,14 @@ components:
       - $ref: '#/components/schemas/SnowflakeCredentialsRequest'
       - $ref: '#/components/schemas/BigqueryCredentialsRequest'
       - $ref: '#/components/schemas/DbtAdapterCredentialsRequest'
+      discriminator:
+        propertyName: type
+        mapping:
+          postgres: '#/components/schemas/PostgresCredentialsRequest'
+          redshift: '#/components/schemas/RedshiftCredentialsRequest'
+          snowflake: '#/components/schemas/SnowflakeCredentialsRequest'
+          bigquery: '#/components/schemas/BigqueryCredentialsRequest'
+          adapter: '#/components/schemas/DbtAdapterCredentialsRequest'
     CredentialsResponse:
       oneOf:
       - $ref: '#/components/schemas/PostgresCredentials'
@@ -7658,6 +7666,14 @@ components:
       - $ref: '#/components/schemas/SnowflakeCredentials'
       - $ref: '#/components/schemas/BigqueryCredentials'
       - $ref: '#/components/schemas/DbtAdapterCredentials'
+      discriminator:
+        propertyName: type
+        mapping:
+          postgres: '#/components/schemas/PostgresCredentials'
+          redshift: '#/components/schemas/RedshiftCredentials'
+          snowflake: '#/components/schemas/SnowflakeCredentials'
+          bigquery: '#/components/schemas/BigqueryCredentials'
+          adapter: '#/components/schemas/DbtAdapterCredentials'
     CredentialsResponseEnveloped:
       type: object
       properties:
@@ -7675,6 +7691,14 @@ components:
       - $ref: '#/components/schemas/SnowflakeCredentials'
       - $ref: '#/components/schemas/BigqueryCredentials'
       - $ref: '#/components/schemas/DbtAdapterCredentials'
+      discriminator:
+        propertyName: type
+        mapping:
+          postgres: '#/components/schemas/PostgresCredentials'
+          redshift: '#/components/schemas/RedshiftCredentials'
+          snowflake: '#/components/schemas/SnowflakeCredentials'
+          bigquery: '#/components/schemas/BigqueryCredentials'
+          adapter: '#/components/schemas/DbtAdapterCredentials'
     CredentialsResponseListEnveloped:
       type: object
       properties:
