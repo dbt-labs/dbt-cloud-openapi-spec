@@ -1500,6 +1500,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/PrivateEndpointResponse'
           description: ''
+    post:
+      operationId: Create Private Endpoint
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
+      tags:
+      - Private Endpoints
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          description: No response body
   /api/v3/accounts/{account_id}/private-endpoints/{pl_endpoint_ksuid}/:
     get:
       operationId: Retrieve Private Endpoint
@@ -1578,6 +1604,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/PrivateEndpointResponse'
           description: ''
+    post:
+      operationId: Create Private Link Endpoint
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
+      tags:
+      - Private Link Endpoints
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          description: No response body
   /api/v3/accounts/{account_id}/projects/:
     get:
       operationId: List Projects
