@@ -11695,6 +11695,11 @@ components:
         freshness_job_id:
           type: integer
           description: The job used for source freshness generation
+        fusion_migration_enabled:
+          type: boolean
+          readOnly: true
+          default: false
+          description: Whether fusion migration is enabled for this project
         type:
           allOf:
           - $ref: '#/components/schemas/Type24eEnum'
@@ -11744,6 +11749,7 @@ components:
       - docs_job
       - environments
       - freshness_job
+      - fusion_migration_enabled
       - group_permissions
       - id
       - repository
