@@ -2439,6 +2439,11 @@ components:
         * `exposures generated` - exposures_generated
         * `adaptive` - adaptive
         * `ingest` - ingest
+    ConformanceReasonEnum:
+      enum:
+      - conformance_succeeded
+      type: string
+      description: '* `conformance_succeeded` - CONFORMANCE_SUCCEEDED'
     ConnectionEncryptionEnveloped:
       type: object
       properties:
@@ -3391,6 +3396,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/EnvironmentV2'
           readOnly: true
+        fusion_readiness:
+          allOf:
+          - $ref: '#/components/schemas/JobFusionReadiness'
+          readOnly: true
         schedule:
           $ref: '#/components/schemas/HumanReadableSchedule'
         generate_sources:
@@ -3400,6 +3409,7 @@ components:
       - account
       - created_at
       - environment
+      - fusion_readiness
       - id
       - is_deferrable
       - job_completion_trigger_condition
@@ -3823,6 +3833,17 @@ components:
       - run_generate_sources
       - settings
       - state
+    JobFusionReadiness:
+      type: object
+      properties:
+        is_ready:
+          type: boolean
+        is_conformant:
+          type: boolean
+        conformance_reason:
+          $ref: '#/components/schemas/ConformanceReasonEnum'
+      required:
+      - is_conformant
     JobNotificationSettingsEnveloped:
       type: object
       properties:
@@ -4306,6 +4327,27 @@ components:
       required:
       - data
       - status
+    ProjectFusionReadiness:
+      type: object
+      properties:
+        is_ready:
+          type: boolean
+        eligible_job_count:
+          type: integer
+        unknown_job_count:
+          type: integer
+        has_supported_dbt_version:
+          type: boolean
+        has_supported_adapter:
+          type: boolean
+        has_successful_job:
+          type: boolean
+      required:
+      - eligible_job_count
+      - has_successful_job
+      - has_supported_adapter
+      - has_supported_dbt_version
+      - unknown_job_count
     ProjectListEnveloped:
       type: object
       properties:
@@ -4461,6 +4503,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/JobDefinitionV2'
           readOnly: true
+        fusion_readiness:
+          allOf:
+          - $ref: '#/components/schemas/ProjectFusionReadiness'
+          readOnly: true
       required:
       - connection
       - created_at
@@ -4468,6 +4514,7 @@ components:
       - environments
       - freshness_job
       - fusion_migration_enabled
+      - fusion_readiness
       - group_permissions
       - id
       - repository
