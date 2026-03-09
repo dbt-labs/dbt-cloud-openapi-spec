@@ -8550,6 +8550,18 @@ components:
           minLength: 1
       required:
       - application_id_uri
+    EnvironmentFusionReadiness:
+      type: object
+      properties:
+        is_ready:
+          type: boolean
+        eligible_job_count:
+          type: integer
+        unknown_job_count:
+          type: integer
+      required:
+      - eligible_job_count
+      - unknown_job_count
     EnvironmentV3:
       type: object
       properties:
@@ -8763,9 +8775,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/PostgresCredentials'
           readOnly: true
+        fusion_readiness:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentFusionReadiness'
+          readOnly: true
       required:
       - created_at
       - credentials
+      - fusion_readiness
       - id
       - is_deferrable
       - project
@@ -11588,6 +11605,27 @@ components:
       required:
       - data
       - status
+    ProjectFusionReadiness:
+      type: object
+      properties:
+        is_ready:
+          type: boolean
+        eligible_job_count:
+          type: integer
+        unknown_job_count:
+          type: integer
+        has_supported_dbt_version:
+          type: boolean
+        has_supported_adapter:
+          type: boolean
+        has_successful_job:
+          type: boolean
+      required:
+      - eligible_job_count
+      - has_successful_job
+      - has_supported_adapter
+      - has_supported_dbt_version
+      - unknown_job_count
     ProjectListEnveloped:
       type: object
       properties:
@@ -11743,6 +11781,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/JobDefinitionV2'
           readOnly: true
+        fusion_readiness:
+          allOf:
+          - $ref: '#/components/schemas/ProjectFusionReadiness'
+          readOnly: true
       required:
       - connection
       - created_at
@@ -11750,6 +11792,7 @@ components:
       - environments
       - freshness_job
       - fusion_migration_enabled
+      - fusion_readiness
       - group_permissions
       - id
       - repository
