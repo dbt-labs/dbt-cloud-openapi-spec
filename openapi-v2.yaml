@@ -2442,8 +2442,25 @@ components:
     ConformanceReasonEnum:
       enum:
       - conformance_succeeded
+      - conformance_failed
+      - job_is_state_modified
+      - unsupported_adapter
+      - job_is_ci
+      - job_is_failing
+      - job_not_on_latest
+      - account_excluded_from_conformance
+      - non_eligible_commands
       type: string
-      description: '* `conformance_succeeded` - CONFORMANCE_SUCCEEDED'
+      description: |-
+        * `conformance_succeeded` - CONFORMANCE_SUCCEEDED
+        * `conformance_failed` - CONFORMANCE_FAILED
+        * `job_is_state_modified` - JOB_IS_STATE_MODIFIED
+        * `unsupported_adapter` - UNSUPPORTED_ADAPTER
+        * `job_is_ci` - JOB_IS_CI
+        * `job_is_failing` - JOB_IS_FAILING
+        * `job_not_on_latest` - JOB_NOT_ON_LATEST
+        * `account_excluded_from_conformance` - ACCOUNT_EXCLUDED_FROM_CONFORMANCE
+        * `non_eligible_commands` - NON_ELIGIBLE_COMMANDS
     ConnectionEncryptionEnveloped:
       type: object
       properties:
