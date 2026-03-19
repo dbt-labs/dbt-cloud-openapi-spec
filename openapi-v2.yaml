@@ -639,8 +639,14 @@ paths:
         schema:
           type: string
         description: A list of related objects to include in the response. Valid values
-          are `environment`, `custom_environment_variables`, `most_recent_run`, and
-          `most_recent_completed_run.
+          are `environment`, `custom_environment_variables`, `most_recent_run`, `most_recent_completed_run`,
+          and `fusion_readiness`.
+      - in: query
+        name: is_fusion_ready
+        schema:
+          type: boolean
+        description: Filters jobs by fusion readiness. When true, returns conformant
+          or override-ready jobs. When false, returns non-ready jobs.
       - in: query
         name: is_system
         schema:
@@ -871,8 +877,8 @@ paths:
         schema:
           type: string
         description: A list of related objects to include in the response. Valid values
-          are `environment`, `custom_environment_variables`, `most_recent_run`, and
-          `most_recent_completed_run.
+          are `environment`, `custom_environment_variables`, `most_recent_run`, `most_recent_completed_run`,
+          and `fusion_readiness`.
       tags:
       - Jobs
       security:
