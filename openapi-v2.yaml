@@ -2445,28 +2445,6 @@ components:
         * `exposures generated` - exposures_generated
         * `adaptive` - adaptive
         * `ingest` - ingest
-    ConformanceReasonEnum:
-      enum:
-      - conformance_succeeded
-      - conformance_failed
-      - job_is_state_modified
-      - unsupported_adapter
-      - job_is_ci
-      - job_is_failing
-      - job_not_on_latest
-      - account_excluded_from_conformance
-      - non_eligible_commands
-      type: string
-      description: |-
-        * `conformance_succeeded` - CONFORMANCE_SUCCEEDED
-        * `conformance_failed` - CONFORMANCE_FAILED
-        * `job_is_state_modified` - JOB_IS_STATE_MODIFIED
-        * `unsupported_adapter` - UNSUPPORTED_ADAPTER
-        * `job_is_ci` - JOB_IS_CI
-        * `job_is_failing` - JOB_IS_FAILING
-        * `job_not_on_latest` - JOB_NOT_ON_LATEST
-        * `account_excluded_from_conformance` - ACCOUNT_EXCLUDED_FROM_CONFORMANCE
-        * `non_eligible_commands` - NON_ELIGIBLE_COMMANDS
     ConnectionEncryptionEnveloped:
       type: object
       properties:
@@ -3420,8 +3398,6 @@ components:
           - $ref: '#/components/schemas/EnvironmentV2'
           readOnly: true
         fusion_readiness:
-          allOf:
-          - $ref: '#/components/schemas/JobFusionReadiness'
           readOnly: true
         schedule:
           $ref: '#/components/schemas/HumanReadableSchedule'
@@ -3856,17 +3832,6 @@ components:
       - run_generate_sources
       - settings
       - state
-    JobFusionReadiness:
-      type: object
-      properties:
-        is_ready:
-          type: boolean
-        is_conformant:
-          type: boolean
-        conformance_reason:
-          $ref: '#/components/schemas/ConformanceReasonEnum'
-      required:
-      - is_conformant
     JobNotificationSettingsEnveloped:
       type: object
       properties:
@@ -4350,27 +4315,6 @@ components:
       required:
       - data
       - status
-    ProjectFusionReadiness:
-      type: object
-      properties:
-        is_ready:
-          type: boolean
-        eligible_job_count:
-          type: integer
-        unknown_job_count:
-          type: integer
-        has_supported_dbt_version:
-          type: boolean
-        has_supported_adapter:
-          type: boolean
-        has_successful_job:
-          type: boolean
-      required:
-      - eligible_job_count
-      - has_successful_job
-      - has_supported_adapter
-      - has_supported_dbt_version
-      - unknown_job_count
     ProjectListEnveloped:
       type: object
       properties:
@@ -4522,8 +4466,6 @@ components:
           - $ref: '#/components/schemas/JobDefinitionV2'
           readOnly: true
         fusion_readiness:
-          allOf:
-          - $ref: '#/components/schemas/ProjectFusionReadiness'
           readOnly: true
       required:
       - connection
