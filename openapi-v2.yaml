@@ -4016,6 +4016,7 @@ components:
       - merge
       - exposure_sync
       - adaptive
+      - hybrid
       type: string
       description: |-
         * `ci` - ci
@@ -4024,6 +4025,7 @@ components:
         * `merge` - merge
         * `exposure_sync` - exposure_sync
         * `adaptive` - adaptive
+        * `hybrid` - hybrid
     LicenseAllocationListEnveloped:
       type: object
       properties:
