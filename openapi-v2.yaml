@@ -2858,10 +2858,12 @@ components:
         credentials_id:
           type: integer
           description: The id of the associated credentials. Null for development
-            environments.
+            environments. Must be included when updating a deployment environment
+            or the value will be reset to null.
         connection_id:
           type: integer
-          description: The id of the associated connection.
+          description: The id of the associated connection. Must be included when
+            updating an environment or the value will be reset to null.
         extended_attributes_id:
           type: integer
         name:
