@@ -2979,7 +2979,11 @@ paths:
           description: ''
     post:
       operationId: Update Environment
-      description: Update an Environment
+      description: Replace an Environment. This is a full replace operation — all
+        fields must be provided. Any omitted fields will be reset to their default
+        values (typically null). To avoid unintentionally clearing fields such as
+        credentials_id or connection_id, first retrieve the environment with a GET
+        request and include all current values in the update payload.
       parameters:
       - in: path
         name: account_id
@@ -8385,10 +8389,12 @@ components:
         credentials_id:
           type: integer
           description: The id of the associated credentials. Null for development
-            environments.
+            environments. Must be included when updating a deployment environment
+            or the value will be reset to null.
         connection_id:
           type: integer
-          description: The id of the associated connection.
+          description: The id of the associated connection. Must be included when
+            updating an environment or the value will be reset to null.
         extended_attributes_id:
           type: integer
         name:
@@ -8464,10 +8470,12 @@ components:
         credentials_id:
           type: integer
           description: The id of the associated credentials. Null for development
-            environments.
+            environments. Must be included when updating a deployment environment
+            or the value will be reset to null.
         connection_id:
           type: integer
-          description: The id of the associated connection.
+          description: The id of the associated connection. Must be included when
+            updating an environment or the value will be reset to null.
         extended_attributes_id:
           type: integer
         name:
@@ -8524,10 +8532,12 @@ components:
         credentials_id:
           type: integer
           description: The id of the associated credentials. Null for development
-            environments.
+            environments. Must be included when updating a deployment environment
+            or the value will be reset to null.
         connection_id:
           type: integer
-          description: The id of the associated connection.
+          description: The id of the associated connection. Must be included when
+            updating an environment or the value will be reset to null.
         extended_attributes_id:
           type: integer
         name:
