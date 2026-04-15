@@ -13030,10 +13030,10 @@ components:
     TestSubscriptionResponseData:
       type: object
       properties:
-        verification_error:
+        event_id:
           type: string
-        verification_status_code:
-          type: string
+      required:
+      - event_id
     TestSubscriptionResponseEnvelope:
       type: object
       properties:
