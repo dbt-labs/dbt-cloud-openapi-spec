@@ -2430,14 +2430,33 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
-        required: true
+              type: object
+              required:
+              - env_vars
+              properties:
+                env_vars:
+                  type: object
+                  description: Environment variable update payload. 'name' is the
+                    current variable name (required). 'new_name' is the rename target
+                    (optional). All other keys are either existing environment variable
+                    IDs (numeric strings) whose values should be updated, or environment
+                    names whose values should be created. Set a value to empty string
+                    or null to delete that variable override.
+                  required:
+                  - name
+                  properties:
+                    name:
+                      type: string
+                      description: Current name of the environment variable.
+                    new_name:
+                      type: string
+                      description: New name for the environment variable. Requires
+                        'name' to also be set.
+                  additionalProperties:
+                    type: string
+                    nullable: true
+                    description: Value keyed by either an existing env var ID (to
+                      update) or an environment name (to create a new override).
       security:
       - BearerAuthentication: []
       responses:
@@ -2445,13 +2464,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseListEnveloped'
+                $ref: '#/components/schemas/BulkPutSuccessResponseEnveloped'
           description: ''
         '400':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableBulkResponseFailListEnveloped'
+                $ref: '#/components/schemas/BulkPutErrorResponseEnveloped'
           description: ''
     delete:
       operationId: Destroy Projects Environment Variables Bulk
@@ -7117,6 +7136,46 @@ components:
       - target_name
       - threads
       - type
+    BulkPutErrorResponse:
+      type: object
+      properties:
+        reason:
+          type: string
+    BulkPutErrorResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkPutErrorResponse'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
+    BulkPutSuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        new_var_ids:
+          type: array
+          items:
+            type: integer
+        deleted_var_ids:
+          type: array
+          items:
+            type: integer
+        failures:
+          description: Map of environment name to failure reason.
+    BulkPutSuccessResponseEnveloped:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BulkPutSuccessResponse'
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+      required:
+      - data
+      - status
     ConnectionMethod:
       title: ConnectionMethod
       description: An enumeration.
