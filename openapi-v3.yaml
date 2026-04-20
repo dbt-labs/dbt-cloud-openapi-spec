@@ -2494,7 +2494,7 @@ paths:
           description: No response body
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/environment/:
     get:
-      operationId: List Projects Environment Variables Environment
+      operationId: Retrieve Projects Environment Variables Environment
       parameters:
       - in: path
         name: account_id
@@ -2502,84 +2502,15 @@ paths:
           type: integer
         required: true
       - in: query
-        name: environment_id
-        schema:
-          type: integer
-      - in: query
         name: include_related
         schema:
           type: string
         description: Comma-separated list of related objects to include in the response.
-      - in: query
-        name: job_definition_id
-        schema:
-          type: integer
-      - in: query
-        name: limit
-        schema:
-          type: integer
-          default: 100
-      - in: query
-        name: name
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-          default: 0
-      - in: query
-        name: order_by
-        schema:
-          type: string
-          default: id
-        description: Field to order results by. Prefix with '-' for descending order.
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-          items:
-            type: integer
-      - in: query
-        name: state
-        schema:
-          oneOf:
-          - type: integer
-          - type: string
-            enum:
-            - active
-            - deleted
-            - all
-          default: active
-        description: "Filters by soft deletion state.\n            <ul>\n        \
-          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
-          \ Only active resources\n                </li>\n                <li>\n \
-          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
-          \ deleted resources\n                </li>\n                <li>\n     \
-          \               <strong>\"all\"</strong>: All resources\n              \
-          \  </li>\n            </ul>\n            "
-      - in: query
-        name: type
-        schema:
-          type: string
-          enum:
-          - project
-          - environment
-          - job
-          - user
-      - in: query
-        name: user_id
-        schema:
-          type: integer
       tags:
       - Environment Variables
       security:
@@ -2589,21 +2520,51 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
+                $ref: '#/components/schemas/EnvVarEnvironmentResponse'
+              examples:
+                EnvironmentVariablesByEnvironment:
+                  value:
+                    data:
+                      environments:
+                      - project
+                      - production
+                      - staging
+                      - dev
+                      variables:
+                        DBT_ENV_SECRET_1:
+                          project:
+                            id: 1
+                            value: '**********'
+                          production:
+                            id: 2
+                            value: '**********'
+                        DBT_ENV_CUSTOM_2:
+                          project:
+                            id: 3
+                            value: project_default
+                          staging:
+                            id: 4
+                            value: staging_value
+                          dev:
+                            id: 5
+                            value: dev_value
+                    status:
+                      code: 200
+                      is_success: true
+                      user_message: Success!
+                      developer_message: ''
+                    extra: {}
+                  summary: Environment variables by environment
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/job/:
     get:
-      operationId: List Projects Environment Variables Job
+      operationId: Retrieve Projects Environment Variables Job
       parameters:
       - in: path
         name: account_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: environment_id
-        schema:
-          type: integer
       - in: query
         name: include_related
         schema:
@@ -2616,72 +2577,11 @@ paths:
         description: The ID of the job definition to retrieve environment variables
           for
         required: true
-      - in: query
-        name: limit
-        schema:
-          type: integer
-          default: 100
-      - in: query
-        name: name
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-          default: 0
-      - in: query
-        name: order_by
-        schema:
-          type: string
-          default: id
-        description: Field to order results by. Prefix with '-' for descending order.
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-          items:
-            type: integer
-      - in: query
-        name: state
-        schema:
-          oneOf:
-          - type: integer
-          - type: string
-            enum:
-            - active
-            - deleted
-            - all
-          default: active
-        description: "Filters by soft deletion state.\n            <ul>\n        \
-          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
-          \ Only active resources\n                </li>\n                <li>\n \
-          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
-          \ deleted resources\n                </li>\n                <li>\n     \
-          \               <strong>\"all\"</strong>: All resources\n              \
-          \  </li>\n            </ul>\n            "
-      - in: query
-        name: type
-        schema:
-          type: string
-          enum:
-          - project
-          - environment
-          - job
-          - user
-      - in: query
-        name: user_id
-        schema:
-          type: integer
       tags:
       - Environment Variables
       security:
@@ -2691,11 +2591,36 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
+                $ref: '#/components/schemas/EnvVarJobResponse'
+              examples:
+                JobEnvironmentVariables:
+                  value:
+                    data:
+                      DBT_ENV_SECRET_1:
+                        project:
+                          id: 1
+                          value: '**********'
+                      DBT_ENV_CUSTOM_2:
+                        project:
+                          id: 2
+                          value: project_default
+                        environment:
+                          id: 3
+                          value: dev_override
+                        job:
+                          id: 4
+                          value: job_override
+                    status:
+                      code: 200
+                      is_success: true
+                      user_message: Success!
+                      developer_message: ''
+                    extra: {}
+                  summary: Job environment variables
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environment-variables/user/:
     get:
-      operationId: List Projects Environment Variables User
+      operationId: Retrieve Projects Environment Variables User
       parameters:
       - in: path
         name: account_id
@@ -2703,80 +2628,15 @@ paths:
           type: integer
         required: true
       - in: query
-        name: environment_id
-        schema:
-          type: integer
-      - in: query
         name: include_related
         schema:
           type: string
         description: Comma-separated list of related objects to include in the response.
-      - in: query
-        name: job_definition_id
-        schema:
-          type: integer
-      - in: query
-        name: limit
-        schema:
-          type: integer
-          default: 100
-      - in: query
-        name: name
-        schema:
-          type: string
-      - in: query
-        name: offset
-        schema:
-          type: integer
-          default: 0
-      - in: query
-        name: order_by
-        schema:
-          type: string
-          default: id
-        description: Field to order results by. Prefix with '-' for descending order.
-      - in: query
-        name: pk
-        schema:
-          type: integer
       - in: path
         name: project_id
         schema:
           type: integer
         required: true
-      - in: query
-        name: project_id__in
-        schema:
-          type: array
-          items:
-            type: integer
-      - in: query
-        name: state
-        schema:
-          oneOf:
-          - type: integer
-          - type: string
-            enum:
-            - active
-            - deleted
-            - all
-          default: active
-        description: "Filters by soft deletion state.\n            <ul>\n        \
-          \        <li>\n                    <strong>\"active\"</strong> / <strong>1</strong>:\
-          \ Only active resources\n                </li>\n                <li>\n \
-          \                   <strong>\"deleted\"</strong> / <strong>2</strong>: Only\
-          \ deleted resources\n                </li>\n                <li>\n     \
-          \               <strong>\"all\"</strong>: All resources\n              \
-          \  </li>\n            </ul>\n            "
-      - in: query
-        name: type
-        schema:
-          type: string
-          enum:
-          - project
-          - environment
-          - job
-          - user
       - in: query
         name: user_id
         schema:
@@ -2792,7 +2652,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomEnvironmentVariableListEnveloped'
+                $ref: '#/components/schemas/EnvVarUserResponse'
+              examples:
+                UserEnvironmentVariables:
+                  value:
+                    data:
+                      DBT_ENV_SECRET_1:
+                        project:
+                          id: 1
+                          value: '**********'
+                      DBT_ENV_CUSTOM_2:
+                        project:
+                          id: 2
+                          value: project_default
+                        environment:
+                          id: 3
+                          value: dev_override
+                        user:
+                          id: 4
+                          value: user_override
+                    status:
+                      code: 200
+                      is_success: true
+                      user_message: Success!
+                      developer_message: ''
+                    extra: {}
+                  summary: User environment variables
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/environments/:
     get:
@@ -7752,21 +7637,6 @@ components:
       required:
       - data
       - status
-    CustomEnvironmentVariableListEnveloped:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomEnvironmentVariableResponse'
-        extra:
-          $ref: '#/components/schemas/Extra'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - extra
-      - status
     CustomEnvironmentVariableRequest:
       type: object
       properties:
@@ -8436,6 +8306,136 @@ components:
           minLength: 1
       required:
       - application_id_uri
+    EnvVarEnvironmentData:
+      title: EnvVarEnvironmentData
+      type: object
+      properties:
+        environments:
+          title: Environments
+          description: Ordered list of environment names (includes 'project' as the
+            first entry).
+          type: array
+          items:
+            type: string
+        variables:
+          title: Variables
+          description: Dict keyed by variable name. Each value is a dict keyed by
+            environment name (or 'project') mapping to {id, value} pairs.
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/EnvVarValue'
+      required:
+      - environments
+      - variables
+    EnvVarEnvironmentResponse:
+      title: EnvVarEnvironmentResponse
+      description: Response envelope for the environment/ environment-variable endpoint.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/EnvVarEnvironmentData'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    EnvVarJobResponse:
+      title: EnvVarJobResponse
+      description: |-
+        Response envelope for the job/ environment-variable endpoint.
+
+        ``data`` is a dict keyed by variable name, where each value is a dict keyed by
+        scope (``project``, ``environment``, ``job``) mapping to ``{id, value}`` pairs.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/EnvVarJobScopeMap'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    EnvVarJobScopeMap:
+      title: EnvVarJobScopeMap
+      description: |-
+        Overrides for a single variable on the job/ endpoint.
+
+        Each scope is optional because a variable may only be set at some levels.
+      type: object
+      properties:
+        project:
+          $ref: '#/components/schemas/EnvVarValue'
+        environment:
+          $ref: '#/components/schemas/EnvVarValue'
+        job:
+          $ref: '#/components/schemas/EnvVarValue'
+    EnvVarUserResponse:
+      title: EnvVarUserResponse
+      description: |-
+        Response envelope for the user/ environment-variable endpoint.
+
+        ``data`` is a dict keyed by variable name, where each value is a dict keyed by
+        scope (``project``, ``environment``, ``user``) mapping to ``{id, value}`` pairs.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/EnvVarUserScopeMap'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    EnvVarUserScopeMap:
+      title: EnvVarUserScopeMap
+      description: |-
+        Overrides for a single variable on the user/ endpoint.
+
+        Each scope is optional because a variable may only be set at some levels.
+      type: object
+      properties:
+        project:
+          $ref: '#/components/schemas/EnvVarValue'
+        environment:
+          $ref: '#/components/schemas/EnvVarValue'
+        user:
+          $ref: '#/components/schemas/EnvVarValue'
+    EnvVarValue:
+      title: EnvVarValue
+      description: 'A single environment variable override: its database ID and display
+        value.'
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        value:
+          title: Value
+          type: string
+      required:
+      - id
     EnvironmentV3:
       type: object
       properties:
