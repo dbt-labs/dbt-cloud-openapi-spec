@@ -1,22 +1,20 @@
+# dbt Cloud OpenAPI Spec
 
+This repo holds the OpenAPI specs for the dbt Cloud API (v2 and v3). It exists as a git repo rather than an S3 bucket mainly for change history, and because docs.getdbt.com already points here.
 
-## Lore
-In days long goneby, the admin api docs for [dbt-cloud](https://github.com/dbt-labs/dbt-cloud) were a manual affair.
-When new endpoints in our django monolith were updated, savvy engineers knew this repo actually existed, and would
-manually update the openapi spec within. Most knew not that this existed. Some were surprised we even had api docs.
+The specs are updated automatically via CI when API endpoints change in the dbt Cloud monolith.
 
-The cloud config team, from its unseen perch, heard the cry of Topher to automate this annoying processs. APIs were
-consistently mismatched with the docs and customers, I mean, the masses sought refuge. Stuck in the mires of the django monolith, a
-custom process was built. The docs were born anew.
+## Files
 
-For many fortnights, this "automation" was manual and oft forgotten. The darkness gained its foothold...
+- `openapi-v2.yaml` — v2 API spec
+- `openapi-v3.yaml` — v3 API spec
 
-And yet cloud config fought back! They rode once more into the veil. Some bold warriors found and slayed the miscast
-beasts that lurked oncemore. With docs once more showing the truth, they shew'ed dbt-cloud the path to guard
-itself and keep the people informed once more of the truth (via CI).
+## Local development
 
-## wtf?
-Yeah yeah, it's weird it's a repo. It should be dumped in S3 if we want these specs cached. But it is nice to have a history of changesets.
-Really it's just that there used to be a need for the repo, and it was easier to keep things in place then to start dumping to S3
-and reroute the docs.getdbt.com repo to the new location. Maybe you'll be the hero we need to switch things. But for now,
-it's good enough 👍
+To serve the specs locally (with CORS headers, for use with Swagger UI or similar):
+
+```bash
+python3 serve.py
+```
+
+Specs will be available at `http://localhost:8000`.
