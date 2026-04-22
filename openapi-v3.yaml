@@ -5907,6 +5907,7 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         name:
           type: string
@@ -6063,9 +6064,11 @@ components:
             this entity is deleted
         docs_job_id:
           type: integer
+          format: int64
           description: (Deprecated)
         freshness_job_id:
           type: integer
+          format: int64
           description: (Deprecated)
         copilot_locked_until:
           type: string
@@ -6138,9 +6141,11 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         uid:
           type: string
         name:
@@ -6166,6 +6171,7 @@ components:
           readOnly: true
         user_id:
           type: integer
+          format: int64
         user:
           $ref: '#/components/schemas/User'
         type:
@@ -6544,9 +6550,11 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
           description: The account the connection is associated with
         project_id:
           type: integer
+          format: int64
           description: The project the connection is associated with
         name:
           type: string
@@ -6557,8 +6565,10 @@ components:
           $ref: '#/components/schemas/AdapterVersionEnum'
         created_by_id:
           type: integer
+          format: int64
         created_by_service_token_id:
           type: integer
+          format: int64
         state:
           example: 1
           type: integer
@@ -6568,6 +6578,7 @@ components:
           type: string
         oauth_configuration_id:
           type: integer
+          format: int64
           description: The OAuth Configuration associated with this connection. When
             set,developer credentials leveraging OAuth may be created.
       required:
@@ -6606,9 +6617,11 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
           description: The account the connection is associated with
         project_id:
           type: integer
+          format: int64
           description: The project the connection is associated with
         name:
           type: string
@@ -6620,8 +6633,10 @@ components:
           $ref: '#/components/schemas/AdapterVersionEnum'
         created_by_id:
           type: integer
+          format: int64
         created_by_service_token_id:
           type: integer
+          format: int64
         state:
           example: 1
           type: integer
@@ -6632,6 +6647,7 @@ components:
           minLength: 1
         oauth_configuration_id:
           type: integer
+          format: int64
           description: The OAuth Configuration associated with this connection. When
             set,developer credentials leveraging OAuth may be created.
       required:
@@ -6645,12 +6661,15 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
           description: The account the connection is associated with
         project_id:
           type: integer
+          format: int64
           description: The project the connection is associated with
         name:
           type: string
@@ -6661,8 +6680,10 @@ components:
           $ref: '#/components/schemas/AdapterVersionEnum'
         created_by_id:
           type: integer
+          format: int64
         created_by_service_token_id:
           type: integer
+          format: int64
         state:
           example: 1
           type: integer
@@ -6678,6 +6699,7 @@ components:
             internally by dbt Cloud
         oauth_configuration_id:
           type: integer
+          format: int64
           description: The OAuth Configuration associated with this connection. When
             set,developer credentials leveraging OAuth may be created.
         created_at:
@@ -6923,8 +6945,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
@@ -6973,8 +6997,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
@@ -7642,8 +7668,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         name:
           type: string
           minLength: 1
@@ -7651,10 +7679,13 @@ components:
           $ref: '#/components/schemas/CustomEnvironmentVariableTypeEnum'
         user_id:
           type: integer
+          format: int64
         environment_id:
           type: integer
+          format: int64
         job_definition_id:
           type: integer
+          format: int64
         raw_value:
           type: string
           writeOnly: true
@@ -7678,21 +7709,27 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         name:
           type: string
         type:
           $ref: '#/components/schemas/CustomEnvironmentVariableTypeEnum'
         user_id:
           type: integer
+          format: int64
         environment_id:
           type: integer
+          format: int64
         job_definition_id:
           type: integer
+          format: int64
         display_value:
           type: string
         state:
@@ -7830,8 +7867,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
@@ -7843,6 +7882,7 @@ components:
           type: integer
         adapter_id:
           type: integer
+          format: int64
         target_name:
           type: string
         adapter_version:
@@ -7876,8 +7916,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
@@ -7889,6 +7931,7 @@ components:
           type: integer
         adapter_id:
           type: integer
+          format: int64
         credential_details:
           allOf:
           - $ref: '#/components/schemas/EncryptedJSONValueRequest'
@@ -7937,12 +7980,16 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         created_by_id:
           type: integer
+          format: int64
         created_by_service_token_id:
           type: integer
+          format: int64
         adapter_version:
           $ref: '#/components/schemas/AdapterVersionEnum'
         metadata_json: {}
@@ -7962,15 +8009,20 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         created_by_id:
           type: integer
+          format: int64
         created_by_service_token_id:
           type: integer
+          format: int64
         adapter_version:
           $ref: '#/components/schemas/AdapterVersionEnum'
         metadata_json: {}
@@ -8043,6 +8095,7 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         public_key:
           type: string
         state:
@@ -8441,21 +8494,26 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
           description: The account the environment is associated with
         project_id:
           type: integer
+          format: int64
           description: The project the environment is associated with
         credentials_id:
           type: integer
+          format: int64
           description: The id of the associated credentials. Null for development
             environments. Must be included when updating a deployment environment
             or the value will be reset to null.
         connection_id:
           type: integer
+          format: int64
           description: The id of the associated connection. Must be included when
             updating an environment or the value will be reset to null.
         extended_attributes_id:
           type: integer
+          format: int64
         name:
           type: string
           description: The name of the environment
@@ -8482,6 +8540,7 @@ components:
             this entity is deleted
         primary_profile_id:
           type: integer
+          format: int64
           description: The id of the primary profile for this environment
       required:
       - account_id
@@ -8522,21 +8581,26 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
           description: The account the environment is associated with
         project_id:
           type: integer
+          format: int64
           description: The project the environment is associated with
         credentials_id:
           type: integer
+          format: int64
           description: The id of the associated credentials. Null for development
             environments. Must be included when updating a deployment environment
             or the value will be reset to null.
         connection_id:
           type: integer
+          format: int64
           description: The id of the associated connection. Must be included when
             updating an environment or the value will be reset to null.
         extended_attributes_id:
           type: integer
+          format: int64
         name:
           type: string
           minLength: 1
@@ -8566,6 +8630,7 @@ components:
             this entity is deleted
         primary_profile_id:
           type: integer
+          format: int64
           description: The id of the primary profile for this environment
       required:
       - account_id
@@ -8581,24 +8646,30 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
           description: The account the environment is associated with
         project_id:
           type: integer
+          format: int64
           description: The project the environment is associated with
         credentials_id:
           type: integer
+          format: int64
           description: The id of the associated credentials. Null for development
             environments. Must be included when updating a deployment environment
             or the value will be reset to null.
         connection_id:
           type: integer
+          format: int64
           description: The id of the associated connection. Must be included when
             updating an environment or the value will be reset to null.
         extended_attributes_id:
           type: integer
+          format: int64
         name:
           type: string
           default: New Environment
@@ -8650,6 +8721,7 @@ components:
           readOnly: true
         primary_profile_id:
           type: integer
+          format: int64
           description: The id of the primary profile for this environment
         credentials:
           allOf:
@@ -8719,8 +8791,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         extended_attributes: {}
         state:
           example: 1
@@ -8737,11 +8811,14 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         extended_attributes: {}
         state:
           example: 1
@@ -8929,6 +9006,7 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         name:
           type: string
         state:
@@ -8992,10 +9070,13 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         group_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         all_projects:
           type: boolean
         permission_set:
@@ -9047,10 +9128,13 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         group_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         all_projects:
           type: boolean
         permission_set:
@@ -9079,13 +9163,17 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         group_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         all_projects:
           type: boolean
         permission_set:
@@ -9120,6 +9208,7 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         name:
           type: string
           minLength: 1
@@ -9145,9 +9234,11 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         name:
           type: string
         state:
@@ -9294,6 +9385,7 @@ components:
             this entity is deleted
         ip_restriction_rule_id:
           type: integer
+          format: int64
         enabled:
           type: boolean
         cidr:
@@ -9360,18 +9452,22 @@ components:
             this entity is deleted
         ip_restriction_rule_set_id:
           type: integer
+          format: int64
         rule_set_enabled:
           type: boolean
         account_id:
           type: integer
+          format: int64
         cidrs:
           type: array
           items:
             $ref: '#/components/schemas/IPRestrictionCidr'
         created_by_id:
           type: integer
+          format: int64
         created_by_service_token_id:
           type: integer
+          format: int64
         description:
           type: string
       required:
@@ -9411,6 +9507,7 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         name:
           type: string
@@ -9424,18 +9521,22 @@ components:
             this entity is deleted
         ip_restriction_rule_set_id:
           type: integer
+          format: int64
         rule_set_enabled:
           type: boolean
         account_id:
           type: integer
+          format: int64
         cidrs:
           type: array
           items:
             $ref: '#/components/schemas/IPRestrictionCidr'
         created_by_id:
           type: integer
+          format: int64
         created_by_service_token_id:
           type: integer
+          format: int64
         enabled_for_service_tokens:
           type: boolean
           readOnly: true
@@ -9469,9 +9570,11 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         state:
           example: 1
           type: integer
@@ -9603,10 +9706,13 @@ components:
       properties:
         environment_id:
           type: integer
+          format: int64
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         name:
           type: string
           description: The name of the job
@@ -9660,8 +9766,10 @@ components:
           default: true
         deferring_environment_id:
           type: integer
+          format: int64
         deferring_job_definition_id:
           type: integer
+          format: int64
         cost_optimization_features:
           type: array
           items:
@@ -9733,6 +9841,7 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         license_type:
           $ref: '#/components/schemas/LicenseTypeEnum'
         state:
@@ -9754,9 +9863,11 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         license_type:
           $ref: '#/components/schemas/LicenseTypeEnum'
         state:
@@ -10096,6 +10207,7 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         type:
           type: string
           minLength: 1
@@ -10128,9 +10240,11 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         type:
           type: string
         name:
@@ -10952,8 +11066,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
@@ -11002,8 +11118,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
@@ -11352,18 +11470,22 @@ components:
           description: The name of the project
         account_id:
           type: integer
+          format: int64
           description: The account the project is associated with
         description:
           type: string
           description: The description of the project
         connection_id:
           type: integer
+          format: int64
           description: The active connection
         repository_id:
           type: integer
+          format: int64
           description: The active repository
         semantic_layer_config_id:
           type: integer
+          format: int64
           description: The active semantic layer configuration
         state:
           example: 1
@@ -11376,9 +11498,11 @@ components:
             be found
         docs_job_id:
           type: integer
+          format: int64
           description: The job used for docs generation
         freshness_job_id:
           type: integer
+          format: int64
           description: The job used for source freshness generation
         type:
           allOf:
@@ -11427,6 +11551,7 @@ components:
           description: The name of the project
         account_id:
           type: integer
+          format: int64
           description: The account the project is associated with
         description:
           type: string
@@ -11434,12 +11559,15 @@ components:
           description: The description of the project
         connection_id:
           type: integer
+          format: int64
           description: The active connection
         repository_id:
           type: integer
+          format: int64
           description: The active repository
         semantic_layer_config_id:
           type: integer
+          format: int64
           description: The active semantic layer configuration
         state:
           example: 1
@@ -11453,9 +11581,11 @@ components:
             be found
         docs_job_id:
           type: integer
+          format: int64
           description: The job used for docs generation
         freshness_job_id:
           type: integer
+          format: int64
           description: The job used for source freshness generation
         type:
           allOf:
@@ -11475,24 +11605,29 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         name:
           type: string
           description: The name of the project
         account_id:
           type: integer
+          format: int64
           description: The account the project is associated with
         description:
           type: string
           description: The description of the project
         connection_id:
           type: integer
+          format: int64
           description: The active connection
         repository_id:
           type: integer
+          format: int64
           description: The active repository
         semantic_layer_config_id:
           type: integer
+          format: int64
           description: The active semantic layer configuration
         state:
           example: 1
@@ -11506,9 +11641,11 @@ components:
             be found
         docs_job_id:
           type: integer
+          format: int64
           description: The job used for docs generation
         freshness_job_id:
           type: integer
+          format: int64
           description: The job used for source freshness generation
         type:
           allOf:
@@ -11588,6 +11725,7 @@ components:
           type: string
         account_id:
           type: integer
+          format: int64
         source:
           type: string
         service:
@@ -11664,8 +11802,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
@@ -11725,8 +11865,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
@@ -11858,8 +12000,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         repository_id:
           type: integer
+          format: int64
         gitlab_project_id:
           type: integer
         state:
@@ -11881,9 +12025,11 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
           description: The account the repo is associated with
         project_id:
           type: integer
+          format: int64
           description: The project the repo is associated with
         full_name:
           type: string
@@ -11916,12 +12062,16 @@ components:
             * `git_token` - git_token
         deploy_key_id:
           type: integer
+          format: int64
         repository_credentials_id:
           type: integer
+          format: int64
         github_installation_id:
           type: integer
+          format: int64
         github_webhook_id:
           type: integer
+          format: int64
         state:
           example: 1
           type: integer
@@ -11931,6 +12081,7 @@ components:
           type: string
         git_provider_id:
           type: integer
+          format: int64
       required:
       - account_id
       - state
@@ -11964,9 +12115,11 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
           description: The account the repo is associated with
         project_id:
           type: integer
+          format: int64
           description: The project the repo is associated with
         full_name:
           type: string
@@ -12000,12 +12153,16 @@ components:
             * `git_token` - git_token
         deploy_key_id:
           type: integer
+          format: int64
         repository_credentials_id:
           type: integer
+          format: int64
         github_installation_id:
           type: integer
+          format: int64
         github_webhook_id:
           type: integer
+          format: int64
         state:
           example: 1
           type: integer
@@ -12016,6 +12173,7 @@ components:
           minLength: 1
         git_provider_id:
           type: integer
+          format: int64
       required:
       - account_id
       - state
@@ -12024,12 +12182,15 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
           description: The account the repo is associated with
         project_id:
           type: integer
+          format: int64
           description: The project the repo is associated with
         full_name:
           type: string
@@ -12062,12 +12223,16 @@ components:
             * `git_token` - git_token
         deploy_key_id:
           type: integer
+          format: int64
         repository_credentials_id:
           type: integer
+          format: int64
         github_installation_id:
           type: integer
+          format: int64
         github_webhook_id:
           type: integer
+          format: int64
         state:
           example: 1
           type: integer
@@ -12078,6 +12243,7 @@ components:
           type: string
         git_provider_id:
           type: integer
+          format: int64
         github_repo:
           type: string
           readOnly: true
@@ -12349,12 +12515,15 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
           description: The account the credentials are associated with
         project_id:
           type: integer
+          format: int64
           description: The project the credentials are associated with
         adapter_version:
           allOf:
@@ -12504,8 +12673,10 @@ components:
       properties:
         id:
           type: integer
+          format: int64
         account_id:
           type: integer
+          format: int64
         uid:
           type: string
         name:
@@ -12519,10 +12690,13 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         service_token_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         all_projects:
           type: boolean
         permission_set:
@@ -12581,13 +12755,17 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         service_token_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         all_projects:
           type: boolean
         permission_set:
@@ -12620,9 +12798,11 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
         uid:
           type: string
         name:
@@ -12648,6 +12828,7 @@ components:
           readOnly: true
         user_id:
           type: integer
+          format: int64
         user:
           $ref: '#/components/schemas/User'
         type:
@@ -12745,8 +12926,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
@@ -12818,8 +13001,10 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
         project_id:
           type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/ConnectionTypeEnum'
         state:
@@ -12949,6 +13134,7 @@ components:
           description: Reason for deactivation
         account_id:
           type: integer
+          format: int64
         account_identifier:
           type: string
       required:
@@ -13002,6 +13188,7 @@ components:
           description: Reason for deactivation
         account_id:
           type: integer
+          format: int64
         account_identifier:
           type: string
           minLength: 1
@@ -13273,15 +13460,19 @@ components:
       properties:
         account_id:
           type: integer
+          format: int64
           description: The account the user credentials are associated with
         user_id:
           type: integer
+          format: int64
           description: The user the user credentials are associated with
         project_id:
           type: integer
+          format: int64
           description: The project the user credentials are associated with
         credentials_id:
           type: integer
+          format: int64
           description: The credentials the user is associated with
         state:
           example: 1
@@ -13299,18 +13490,23 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         account_id:
           type: integer
+          format: int64
           description: The account the user credentials are associated with
         user_id:
           type: integer
+          format: int64
           description: The user the user credentials are associated with
         project_id:
           type: integer
+          format: int64
           description: The project the user credentials are associated with
         credentials_id:
           type: integer
+          format: int64
           description: The credentials the user is associated with
         state:
           example: 1
@@ -13438,6 +13634,7 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           readOnly: true
         first_name:
           type: string
