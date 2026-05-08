@@ -10895,6 +10895,7 @@ components:
       - account_viewer
       - admin
       - analyst
+      - analyst_read
       - billing_admin
       - cost_insights_admin
       - cost_insights_viewer
@@ -10926,6 +10927,7 @@ components:
         * `account_viewer` - ACCOUNT_VIEWER
         * `admin` - ADMIN
         * `analyst` - ANALYST
+        * `analyst_read` - ANALYST_READ
         * `billing_admin` - BILLING_ADMIN
         * `cost_insights_admin` - COST_INSIGHTS_ADMIN
         * `cost_insights_viewer` - COST_INSIGHTS_VIEWER
@@ -11182,6 +11184,7 @@ components:
       - account_viewer
       - admin
       - analyst
+      - analyst_read
       - billing_admin
       - cost_insights_admin
       - cost_insights_viewer
