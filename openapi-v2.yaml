@@ -4229,6 +4229,7 @@ components:
       - fusion_admin
       - git_admin
       - job_admin
+      - job_creator
       - job_runner
       - job_viewer
       - manage_marketplace_apps
@@ -4259,6 +4260,7 @@ components:
         * `fusion_admin` - FUSION_ADMIN
         * `git_admin` - GIT_ADMIN
         * `job_admin` - JOB_ADMIN
+        * `job_creator` - JOB_CREATOR
         * `job_runner` - JOB_RUNNER
         * `job_viewer` - JOB_VIEWER
         * `manage_marketplace_apps` - MANAGE_MARKETPLACE_APPS
