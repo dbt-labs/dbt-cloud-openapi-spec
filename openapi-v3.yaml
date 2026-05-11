@@ -11705,9 +11705,16 @@ components:
           readOnly: true
         fusion_readiness:
           readOnly: true
+        default_version:
+          type: string
+          readOnly: true
+          description: The default dbt version for new environments in this project.
+            Only populated when the project is fetched directly; null when the project
+            is included as a nested object on another resource.
       required:
       - connection
       - created_at
+      - default_version
       - docs_job
       - environments
       - freshness_job
