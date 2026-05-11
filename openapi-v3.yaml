@@ -6075,6 +6075,12 @@ components:
           format: date-time
           readOnly: true
           description: When copilot will be enabled again for the account
+        agent_credit_locked:
+          type: boolean
+          readOnly: true
+          default: false
+          description: True when the account's agent-credit balance is depleted and
+            dbt-owned-key agent calls should be refused. Cleared on successful top-up.
         account_migration_events:
           type: array
           items: {}
@@ -6097,6 +6103,7 @@ components:
           readOnly: true
       required:
       - account_migration_events
+      - agent_credit_locked
       - analyst_seats
       - billing_email_address
       - business_critical
