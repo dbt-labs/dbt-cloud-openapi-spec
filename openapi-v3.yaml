@@ -10919,6 +10919,7 @@ components:
       - manage_marketplace_apps
       - member
       - metadata_only
+      - notification_manager
       - owner
       - project_creator
       - readonly
@@ -10951,6 +10952,7 @@ components:
         * `manage_marketplace_apps` - MANAGE_MARKETPLACE_APPS
         * `member` - MEMBER
         * `metadata_only` - METADATA_ONLY
+        * `notification_manager` - NOTIFICATION_MANAGER
         * `owner` - OWNER
         * `project_creator` - PROJECT_CREATOR
         * `readonly` - READONLY
@@ -11208,6 +11210,7 @@ components:
       - manage_marketplace_apps
       - member
       - metadata_only
+      - notification_manager
       - owner
       - project_creator
       - readonly
