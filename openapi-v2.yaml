@@ -4617,7 +4617,6 @@ components:
     RemoteBackendEnum:
       enum:
       - ado
-      - azure_active_directory
       - github
       - managed
       - gitlab
@@ -4625,7 +4624,6 @@ components:
       type: string
       description: |-
         * `ado` - ado
-        * `azure_active_directory` - azure_active_directory
         * `github` - github
         * `managed` - managed
         * `gitlab` - gitlab
@@ -4654,7 +4652,6 @@ components:
             The associated git provider⚠️ If not set to the correct values, CI jobs may not trigger and the branch link from the dbt Cloud IDE may not work.
 
             * `ado` - ado
-            * `azure_active_directory` - azure_active_directory
             * `github` - github
             * `managed` - managed
             * `gitlab` - gitlab
@@ -4745,7 +4742,6 @@ components:
             The associated git provider⚠️ If not set to the correct values, CI jobs may not trigger and the branch link from the dbt Cloud IDE may not work.
 
             * `ado` - ado
-            * `azure_active_directory` - azure_active_directory
             * `github` - github
             * `managed` - managed
             * `gitlab` - gitlab
@@ -4815,7 +4811,6 @@ components:
             The associated git provider⚠️ If not set to the correct values, CI jobs may not trigger and the branch link from the dbt Cloud IDE may not work.
 
             * `ado` - ado
-            * `azure_active_directory` - azure_active_directory
             * `github` - github
             * `managed` - managed
             * `gitlab` - gitlab
@@ -4895,7 +4890,6 @@ components:
             The associated git provider⚠️ If not set to the correct values, CI jobs may not trigger and the branch link from the dbt Cloud IDE may not work.
 
             * `ado` - ado
-            * `azure_active_directory` - azure_active_directory
             * `github` - github
             * `managed` - managed
             * `gitlab` - gitlab
