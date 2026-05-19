@@ -12474,7 +12474,7 @@ components:
           type: string
         data_transform_run_timeout:
           title: Data Transform Run Timeout
-          default: 300
+          default: 180000
           type: integer
         auth_type:
           default: jwt_bearer
