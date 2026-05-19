@@ -2974,13 +2974,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExtendedAttributesRequest'
+              $ref: '#/components/schemas/ExtendedAttributesCreateBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ExtendedAttributesRequest'
+              $ref: '#/components/schemas/ExtendedAttributesCreateBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ExtendedAttributesRequest'
+              $ref: '#/components/schemas/ExtendedAttributesCreateBodyRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -2989,13 +2989,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExtendedAttributesEnveloped'
+                $ref: '#/components/schemas/ExtendedAttributesResponse'
           description: ''
   /api/v3/accounts/{account_id}/projects/{project_id}/extended-attributes/{id}/:
     get:
       operationId: Retrieve Extended Attributes
-      description: 'Given an account_id, project_id, and primary key: retrieve an
-        existing Extended Attributes record.'
+      description: Retrieve an existing Extended Attributes record.
       parameters:
       - in: path
         name: account_id
@@ -3026,11 +3025,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExtendedAttributesEnveloped'
+                $ref: '#/components/schemas/ExtendedAttributesResponse'
           description: ''
     patch:
       operationId: Update Extended Attributes
-      description: Update an existing Extended Attributes record by ID.
+      description: Update an existing Extended Attributes record.
       parameters:
       - in: path
         name: account_id
@@ -3053,13 +3052,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExtendedAttributesRequest'
+              $ref: '#/components/schemas/ExtendedAttributesUpdateBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ExtendedAttributesRequest'
+              $ref: '#/components/schemas/ExtendedAttributesUpdateBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ExtendedAttributesRequest'
+              $ref: '#/components/schemas/ExtendedAttributesUpdateBodyRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -3068,11 +3067,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExtendedAttributesEnveloped'
+                $ref: '#/components/schemas/ExtendedAttributesResponse'
           description: ''
     delete:
       operationId: Destroy Extended Attributes
-      description: Delete an existing Extended Attributes record by ID.
+      description: Delete an existing Extended Attributes record.
       parameters:
       - in: path
         name: account_id
@@ -8783,68 +8782,92 @@ components:
       required:
       - data
       - status
-    ExtendedAttributesEnveloped:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ExtendedAttributesResponse'
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-      required:
-      - data
-      - status
-    ExtendedAttributesRequest:
-      type: object
-      properties:
-        account_id:
-          type: integer
-          format: int64
-        project_id:
-          type: integer
-          format: int64
-        extended_attributes: {}
-        state:
-          example: 1
-          type: integer
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-      required:
-      - account_id
-      - extended_attributes
-      - project_id
-      - state
-    ExtendedAttributesResponse:
+    ExtendedAttributes:
+      title: ExtendedAttributes
       type: object
       properties:
         id:
+          title: Id
+          description: The ID of the extended attributes record
           type: integer
-          format: int64
-          readOnly: true
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
         account_id:
+          title: Account Id
+          description: The ID of the parent account
           type: integer
-          format: int64
         project_id:
+          title: Project Id
+          description: The ID of the parent project
           type: integer
-          format: int64
-        extended_attributes: {}
+        extended_attributes:
+          title: Extended Attributes
+          description: The key-value pairs stored as extended attributes
+          type: object
         state:
-          example: 1
-          type: integer
-          default: 1
+          title: State
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
+          default: 1
+          type: integer
       required:
-      - created_at
       - id
+      - created_at
       - updated_at
+      - account_id
+      - project_id
+      - extended_attributes
+    ExtendedAttributesCreateBodyRequest:
+      title: ExtendedAttributesCreateBody
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        extended_attributes:
+          title: Extended Attributes
+          description: The key-value pairs to be stored as extended attributes
+          type: object
+      required:
+      - extended_attributes
+    ExtendedAttributesResponse:
+      title: ExtendedAttributesResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/ExtendedAttributes'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    ExtendedAttributesUpdateBodyRequest:
+      title: ExtendedAttributesUpdateBody
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        extended_attributes:
+          title: Extended Attributes
+          description: The key-value pairs to be stored as extended attributes
+          type: object
+        state:
+          title: State
+          type: integer
+      required:
+      - extended_attributes
     Extra:
       type: object
       properties:
