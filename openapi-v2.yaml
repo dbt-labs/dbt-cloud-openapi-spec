@@ -2943,6 +2943,9 @@ components:
         enable_model_query_history:
           type: boolean
           default: false
+        enable_dbt_state:
+          type: boolean
+          default: false
         state:
           example: 1
           type: integer
