@@ -5662,6 +5662,7 @@ components:
       - account_id
       - name
       - adapter_version
+      - config
       additionalProperties: false
     AccountConnectionDetail:
       title: AccountConnectionDetail
