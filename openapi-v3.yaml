@@ -5462,7 +5462,10 @@ paths:
   /api/v3/users/{user_id}/credentials/:
     get:
       operationId: List User Credentials
-      description: List the development credentials associated with a given user.
+      description: |-
+        List the development credentials associated with a given user.
+
+        Authentication: Requires a personal access token (PAT) for the user specified by `user_id`. The authenticated user must match `user_id`. Service tokens are not supported, including Account Admin service tokens. An admin cannot use their PAT to manage another user's credentials.
       parameters:
       - in: query
         name: include_related
@@ -5488,7 +5491,10 @@ paths:
           description: ''
     post:
       operationId: Create User Credentials
-      description: Associate a set of development credentials with a given user.
+      description: |-
+        Associate a set of development credentials with a given user.
+
+        Authentication: Requires a personal access token (PAT) for the user specified by `user_id`. The authenticated user must match `user_id`. Service tokens are not supported, including Account Admin service tokens. An admin cannot use their PAT to manage another user's credentials.
       parameters:
       - in: path
         name: user_id
@@ -5521,7 +5527,10 @@ paths:
   /api/v3/users/{user_id}/credentials/{id}/:
     get:
       operationId: Get User Credentials
-      description: Get a development credentials association for a given user.
+      description: |-
+        Get a development credentials association for a given user.
+
+        Authentication: Requires a personal access token (PAT) for the user specified by `user_id`. The authenticated user must match `user_id`. Service tokens are not supported, including Account Admin service tokens. An admin cannot use their PAT to manage another user's credentials.
       parameters:
       - in: path
         name: id
@@ -5552,8 +5561,10 @@ paths:
           description: ''
     post:
       operationId: Update User Credentials
-      description: Update which development credentials are associated with a specific
-        user.
+      description: |-
+        Update which development credentials are associated with a specific user.
+
+        Authentication: Requires a personal access token (PAT) for the user specified by `user_id`. The authenticated user must match `user_id`. Service tokens are not supported, including Account Admin service tokens. An admin cannot use their PAT to manage another user's credentials.
       parameters:
       - in: path
         name: id
@@ -5590,7 +5601,10 @@ paths:
           description: ''
     delete:
       operationId: Delete User Credentials
-      description: Delete a development credentials / user association.
+      description: |-
+        Delete a development credentials / user association.
+
+        Authentication: Requires a personal access token (PAT) for the user specified by `user_id`. The authenticated user must match `user_id`. Service tokens are not supported, including Account Admin service tokens. An admin cannot use their PAT to manage another user's credentials.
       parameters:
       - in: path
         name: id
