@@ -1501,7 +1501,7 @@ paths:
                 $ref: '#/components/schemas/PrivateEndpointListResponse'
           description: ''
     post:
-      operationId: Create Private Endpoints List Alias View
+      operationId: Create Private Endpoint
       description: Create a new Private Endpoints List Alias View.
       parameters:
       - in: path
@@ -1559,8 +1559,8 @@ paths:
                 $ref: '#/components/schemas/PrivateEndpointDetailResponse'
           description: ''
     patch:
-      operationId: Update Private Endpoints Detail View
-      description: Update an existing Private Endpoints Detail View.
+      operationId: Update Private Endpoint
+      description: '-'
       parameters:
       - in: path
         name: account_id
@@ -1580,8 +1580,8 @@ paths:
         '200':
           description: No response body
     delete:
-      operationId: Delete Private Endpoints Detail View
-      description: Delete an existing Private Endpoints Detail View.
+      operationId: Delete Private Endpoint
+      description: '-'
       parameters:
       - in: path
         name: account_id
