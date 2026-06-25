@@ -4065,7 +4065,7 @@ paths:
           type: string
         description: Comma-separated list of related objects to include in the response.
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4085,7 +4085,7 @@ paths:
           type: integer
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       requestBody:
         content:
           application/json:
@@ -4123,7 +4123,7 @@ paths:
           type: string
         description: Comma-separated list of related objects to include in the response.
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4143,7 +4143,7 @@ paths:
           type: integer
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       requestBody:
         content:
           application/json:
@@ -4186,7 +4186,7 @@ paths:
           type: string
         description: Comma-separated list of related objects to include in the response.
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4211,7 +4211,7 @@ paths:
           type: integer
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4233,7 +4233,7 @@ paths:
           type: string
         description: Comma-separated list of related objects to include in the response.
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4253,7 +4253,7 @@ paths:
           type: integer
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       requestBody:
         content:
           application/scim+json:
@@ -4290,7 +4290,7 @@ paths:
           type: string
         description: Comma-separated list of related objects to include in the response.
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4315,7 +4315,7 @@ paths:
           type: string
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       requestBody:
         content:
           application/scim+json:
@@ -4346,7 +4346,7 @@ paths:
           type: string
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       requestBody:
         content:
           application/scim+json:
@@ -4377,7 +4377,7 @@ paths:
           type: string
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4399,7 +4399,7 @@ paths:
           type: string
         description: Comma-separated list of related objects to include in the response.
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4430,7 +4430,7 @@ paths:
           type: string
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4456,7 +4456,7 @@ paths:
           type: string
         description: Comma-separated list of related objects to include in the response.
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4487,7 +4487,7 @@ paths:
           type: string
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4513,7 +4513,7 @@ paths:
           type: string
         description: Comma-separated list of related objects to include in the response.
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4535,7 +4535,7 @@ paths:
           type: string
         description: Comma-separated list of related objects to include in the response.
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4555,7 +4555,7 @@ paths:
           type: integer
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       requestBody:
         content:
           application/scim+json:
@@ -4592,7 +4592,7 @@ paths:
           type: string
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
@@ -4617,7 +4617,7 @@ paths:
           type: string
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       requestBody:
         content:
           application/scim+json:
@@ -4648,7 +4648,7 @@ paths:
           type: string
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       requestBody:
         content:
           application/scim+json:
@@ -4680,7 +4680,7 @@ paths:
           type: string
         required: true
       tags:
-      - SCIM Endpoints - In Beta
+      - SCIM Endpoints
       security:
       - BearerAuthentication: []
       responses:
