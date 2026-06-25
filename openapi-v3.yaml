@@ -3605,8 +3605,6 @@ paths:
       description: |-
         List profiles.
 
-        Note: Profiles are in the process of being rolled out and may not be available for your account yet.
-
         Profiles are the set of connection, credentials, and attributes used to connect to a data warehouse. They can be assigned to deployment environments to run jobs.
       parameters:
       - in: path
@@ -3660,8 +3658,6 @@ paths:
       description: |-
         Create a new profile.
 
-        Note: Profiles are in the process of being rolled out and may not be available for your account yet.
-
         Profiles are the set of connection, credentials, and attributes used to connect to a data warehouse. They can be assigned to deployment environments to run jobs.
       parameters:
       - in: path
@@ -3714,8 +3710,6 @@ paths:
       description: |-
         Retrieve a specific profile.
 
-        Note: Profiles are in the process of being rolled out and may not be available for your account yet.
-
         Profiles are the set of connection, credentials, and attributes used to connect to a data warehouse. They can be assigned to deployment environments to run jobs.
       parameters:
       - in: path
@@ -3753,8 +3747,6 @@ paths:
       operationId: Update Profile
       description: |-
         Update an existing profile.
-
-        Note: Profiles are in the process of being rolled out and may not be available for your account yet.
 
         Profiles are the set of connection, credentials, and attributes used to connect to a data warehouse. They can be assigned to deployment environments to run jobs.
       parameters:
@@ -3800,8 +3792,6 @@ paths:
       operationId: Delete Profile
       description: |-
         Delete an existing profile. The profile must not be assigned to any deployment environments in order to be deleted.
-
-        Note: Profiles are in the process of being rolled out and may not be available for your account yet.
 
         Profiles are the set of connection, credentials, and attributes used to connect to a data warehouse. They can be assigned to deployment environments to run jobs.
       parameters:
