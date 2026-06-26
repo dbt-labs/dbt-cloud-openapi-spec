@@ -3152,15 +3152,15 @@ components:
           type: array
           items:
             type: string
-          description: "<b>[Private Beta]</b> List of cost optimization features to\
-            \ enable for this job.\n            Requires job to be running on a fusion\
-            \ dbt_version.\n            <br/><br/>\n            <b>Valid values:</b>\n\
-            \            <ul>\n              <li>\"state_aware_orchestration\" - Enable\
-            \ orchestration that adapts to state changes</li>\n              <li>\"\
-            efficient_testing\" - Aggregate generic tests into a single query and\
-            \ reuse redundant tests across lineage</li>\n            </ul>\n     \
-            \       <b>Example:</b> [\"state_aware_orchestration\", \"efficient_testing\"\
-            ]\n            "
+          description: "List of cost optimization features to enable for this job.\n\
+            \            <br/><br/>\n            <b>Valid values:</b>\n          \
+            \  <ul>\n              <li>\"state_aware_orchestration\" - Enable orchestration\
+            \ that adapts to state changes (Private beta, requires fusion)</li>\n\
+            \              <li>\"efficient_testing\" - Aggregate generic tests into\
+            \ a single query and reuse redundant tests (Private beta, requires fusion)</li>\n\
+            \              <li>\"dbt_state\" - Enable orchestration that adapts to\
+            \ state changes (does not require fusion)</li>\n            </ul>\n  \
+            \          <b>Example:</b> [\"dbt_state\"]\n            "
         settings:
           $ref: '#/components/schemas/JobDefinitionSettings'
         state:
@@ -3283,15 +3283,15 @@ components:
           items:
             type: string
             minLength: 1
-          description: "<b>[Private Beta]</b> List of cost optimization features to\
-            \ enable for this job.\n            Requires job to be running on a fusion\
-            \ dbt_version.\n            <br/><br/>\n            <b>Valid values:</b>\n\
-            \            <ul>\n              <li>\"state_aware_orchestration\" - Enable\
-            \ orchestration that adapts to state changes</li>\n              <li>\"\
-            efficient_testing\" - Aggregate generic tests into a single query and\
-            \ reuse redundant tests across lineage</li>\n            </ul>\n     \
-            \       <b>Example:</b> [\"state_aware_orchestration\", \"efficient_testing\"\
-            ]\n            "
+          description: "List of cost optimization features to enable for this job.\n\
+            \            <br/><br/>\n            <b>Valid values:</b>\n          \
+            \  <ul>\n              <li>\"state_aware_orchestration\" - Enable orchestration\
+            \ that adapts to state changes (Private beta, requires fusion)</li>\n\
+            \              <li>\"efficient_testing\" - Aggregate generic tests into\
+            \ a single query and reuse redundant tests (Private beta, requires fusion)</li>\n\
+            \              <li>\"dbt_state\" - Enable orchestration that adapts to\
+            \ state changes (does not require fusion)</li>\n            </ul>\n  \
+            \          <b>Example:</b> [\"dbt_state\"]\n            "
         settings:
           $ref: '#/components/schemas/JobDefinitionSettingsRequest'
         state:
@@ -3410,15 +3410,15 @@ components:
           type: array
           items:
             type: string
-          description: "<b>[Private Beta]</b> List of cost optimization features to\
-            \ enable for this job.\n            Requires job to be running on a fusion\
-            \ dbt_version.\n            <br/><br/>\n            <b>Valid values:</b>\n\
-            \            <ul>\n              <li>\"state_aware_orchestration\" - Enable\
-            \ orchestration that adapts to state changes</li>\n              <li>\"\
-            efficient_testing\" - Aggregate generic tests into a single query and\
-            \ reuse redundant tests across lineage</li>\n            </ul>\n     \
-            \       <b>Example:</b> [\"state_aware_orchestration\", \"efficient_testing\"\
-            ]\n            "
+          description: "List of cost optimization features to enable for this job.\n\
+            \            <br/><br/>\n            <b>Valid values:</b>\n          \
+            \  <ul>\n              <li>\"state_aware_orchestration\" - Enable orchestration\
+            \ that adapts to state changes (Private beta, requires fusion)</li>\n\
+            \              <li>\"efficient_testing\" - Aggregate generic tests into\
+            \ a single query and reuse redundant tests (Private beta, requires fusion)</li>\n\
+            \              <li>\"dbt_state\" - Enable orchestration that adapts to\
+            \ state changes (does not require fusion)</li>\n            </ul>\n  \
+            \          <b>Example:</b> [\"dbt_state\"]\n            "
         settings:
           allOf:
           - $ref: '#/components/schemas/JobDefinitionSettings'
@@ -3623,15 +3623,15 @@ components:
           type: array
           items:
             type: string
-          description: "<b>[Private Beta]</b> List of cost optimization features to\
-            \ enable for this job.\n            Requires job to be running on a fusion\
-            \ dbt_version.\n            <br/><br/>\n            <b>Valid values:</b>\n\
-            \            <ul>\n              <li>\"state_aware_orchestration\" - Enable\
-            \ orchestration that adapts to state changes</li>\n              <li>\"\
-            efficient_testing\" - Aggregate generic tests into a single query and\
-            \ reuse redundant tests across lineage</li>\n            </ul>\n     \
-            \       <b>Example:</b> [\"state_aware_orchestration\", \"efficient_testing\"\
-            ]\n            "
+          description: "List of cost optimization features to enable for this job.\n\
+            \            <br/><br/>\n            <b>Valid values:</b>\n          \
+            \  <ul>\n              <li>\"state_aware_orchestration\" - Enable orchestration\
+            \ that adapts to state changes (Private beta, requires fusion)</li>\n\
+            \              <li>\"efficient_testing\" - Aggregate generic tests into\
+            \ a single query and reuse redundant tests (Private beta, requires fusion)</li>\n\
+            \              <li>\"dbt_state\" - Enable orchestration that adapts to\
+            \ state changes (does not require fusion)</li>\n            </ul>\n  \
+            \          <b>Example:</b> [\"dbt_state\"]\n            "
         settings:
           $ref: '#/components/schemas/JobDefinitionSettings'
         state:
@@ -3909,15 +3909,15 @@ components:
           type: array
           items:
             type: string
-          description: "<b>[Private Beta]</b> List of cost optimization features to\
-            \ enable for this job.\n            Requires job to be running on a fusion\
-            \ dbt_version.\n            <br/><br/>\n            <b>Valid values:</b>\n\
-            \            <ul>\n              <li>\"state_aware_orchestration\" - Enable\
-            \ orchestration that adapts to state changes</li>\n              <li>\"\
-            efficient_testing\" - Aggregate generic tests into a single query and\
-            \ reuse redundant tests across lineage</li>\n            </ul>\n     \
-            \       <b>Example:</b> [\"state_aware_orchestration\", \"efficient_testing\"\
-            ]\n            "
+          description: "List of cost optimization features to enable for this job.\n\
+            \            <br/><br/>\n            <b>Valid values:</b>\n          \
+            \  <ul>\n              <li>\"state_aware_orchestration\" - Enable orchestration\
+            \ that adapts to state changes (Private beta, requires fusion)</li>\n\
+            \              <li>\"efficient_testing\" - Aggregate generic tests into\
+            \ a single query and reuse redundant tests (Private beta, requires fusion)</li>\n\
+            \              <li>\"dbt_state\" - Enable orchestration that adapts to\
+            \ state changes (does not require fusion)</li>\n            </ul>\n  \
+            \          <b>Example:</b> [\"dbt_state\"]\n            "
       required:
       - account_id
       - environment_id
