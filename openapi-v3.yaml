@@ -9517,43 +9517,6 @@ components:
       - id
       - displayName
       - meta
-    GroupSCIMResponse:
-      title: GroupSCIMResponse
-      type: object
-      properties:
-        id:
-          title: Id
-          description: The ID of the group
-          type: string
-        externalId:
-          title: Externalid
-          description: The external ID of the group
-          type: string
-        displayName:
-          title: Displayname
-          description: The display name of the group
-          type: string
-        members:
-          title: Members
-          description: The members of the group
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupMemberComponent'
-        meta:
-          title: Meta
-          description: The metadata of the group
-          allOf:
-          - $ref: '#/components/schemas/MetaComponent'
-        schemas:
-          title: Schemas
-          default:
-          - urn:ietf:params:scim:schemas:core:2.0:Group
-          type: array
-          items: {}
-      required:
-      - id
-      - displayName
-      - meta
     HumanReadableDateStrategyTypeEnum:
       enum:
       - every_day
@@ -13952,6 +13915,53 @@ components:
           description: The type of the email address
           default: work
           type: string
+    UserGroupComponent:
+      title: UserGroupComponent
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The ID of the group
+          type: string
+        externalId:
+          title: Externalid
+          description: The external ID of the group
+          type: string
+        displayName:
+          title: Displayname
+          description: The display name of the group
+          type: string
+        members:
+          title: Members
+          description: The members of the group
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMemberComponent'
+        meta:
+          title: Meta
+          description: The metadata of the group
+          allOf:
+          - $ref: '#/components/schemas/MetaComponent'
+        schemas:
+          title: Schemas
+          default:
+          - urn:ietf:params:scim:schemas:core:2.0:Group
+          type: array
+          items: {}
+        value:
+          title: Value
+          description: The ID of the group
+          type: string
+        display:
+          title: Display
+          description: The display name of the group
+          type: string
+      required:
+      - id
+      - displayName
+      - meta
+      - value
+      - display
     UserLicense:
       type: object
       properties:
@@ -14189,12 +14199,12 @@ components:
           title: Groups
           description: The groups the user belongs to
           example:
-          - id: '1234'
+          - value: '1234'
             externalId: group-1234
-            displayName: Example Group
+            display: Example Group
           type: array
           items:
-            $ref: '#/components/schemas/GroupSCIMResponse'
+            $ref: '#/components/schemas/UserGroupComponent'
         meta:
           title: Meta
           description: The metadata for the user
