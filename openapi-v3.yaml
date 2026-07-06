@@ -12761,6 +12761,12 @@ components:
           title: Schema
           description: The schema of the resource type
           type: string
+        schemaExtensions:
+          title: Schemaextensions
+          description: The extension schemas supported by the resource type
+          type: array
+          items:
+            $ref: '#/components/schemas/SCIMSchemaExtension'
         meta:
           title: Meta
           description: The metadata of the resource type
@@ -12773,6 +12779,21 @@ components:
       - description
       - schema
       - meta
+    SCIMSchemaExtension:
+      title: SCIMSchemaExtension
+      type: object
+      properties:
+        schema:
+          title: Schema
+          description: The URI of an extension schema supported by the resource type
+          type: string
+        required:
+          title: Required
+          description: Whether the extension schema is required for the resource type
+          type: boolean
+      required:
+      - schema
+      - required
     SCIMToken:
       title: SCIMToken
       type: object
