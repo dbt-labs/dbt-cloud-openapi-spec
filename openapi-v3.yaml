@@ -2020,12 +2020,6 @@ paths:
           type: integer
         required: true
       - in: query
-        name: project_id__in
-        schema:
-          type: array
-          items:
-            type: integer
-      - in: query
         name: state
         schema:
           oneOf:
