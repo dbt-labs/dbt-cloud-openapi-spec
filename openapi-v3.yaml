@@ -3617,6 +3617,11 @@ paths:
           type: string
         description: Comma-separated list of related objects to include in the response.
       - in: query
+        name: key
+        schema:
+          type: string
+        description: Filter profiles whose key contains this value, case-insensitive
+      - in: query
         name: limit
         schema:
           type: integer
