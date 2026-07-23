@@ -6093,6 +6093,7 @@ components:
             * `trial_2022` - TRIAL_2022
             * `trial_2025` - TRIAL_2025
             * `usage_2026` - USAGE_2026
+            * `usage_managed_2026` - USAGE_MANAGED_2026
         run_slots:
           type: integer
           readOnly: true
@@ -11135,6 +11136,7 @@ components:
       - trial_2022
       - trial_2025
       - usage_2026
+      - usage_managed_2026
       type: string
       description: |-
         * `cancelled` - CANCELLED
@@ -11154,6 +11156,7 @@ components:
         * `trial_2022` - TRIAL_2022
         * `trial_2025` - TRIAL_2025
         * `usage_2026` - USAGE_2026
+        * `usage_managed_2026` - USAGE_MANAGED_2026
     PostLineageIntegrationRequest:
       title: PostLineageIntegration
       description: |-
