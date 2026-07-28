@@ -10009,6 +10009,7 @@ components:
         state:
           example: 1
           type: integer
+          default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
         sso_license_mapping_groups:
@@ -10019,7 +10020,6 @@ components:
       required:
       - account_id
       - license_type
-      - state
     LicenseMapResponse:
       type: object
       properties:
