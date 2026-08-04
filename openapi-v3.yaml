@@ -6512,14 +6512,46 @@ components:
       properties:
         title:
           type: string
+          description: Brief human-facing name for the adapter
         docs_link:
           type: string
+          description: Link to the dbt core docs for this adapter
         image_link:
           type: string
+        private_link:
+          allOf:
+          - $ref: '#/components/schemas/AdapterPrivateLinkProperties'
+          description: Private link properties of the adapter; None means PrivateLink
+            is unsupported
       required:
       - docs_link
       - image_link
       - title
+    AdapterPrivateLinkProperties:
+      type: object
+      properties:
+        endpoint_type:
+          allOf:
+          - $ref: '#/components/schemas/ConnectionTypeEnum'
+          description: |-
+            The type of private link endpoint eligible. Typically ["adapter"]
+
+            * `postgres` - postgres
+            * `redshift` - redshift
+            * `snowflake` - snowflake
+            * `bigquery` - bigquery
+            * `adapter` - adapter
+        hostname_field:
+          type: string
+          default: host
+          description: The field in the connection schema that contains the hostname
+        strip_suffix:
+          type: string
+          description: Suffix to be stripped from the private link endpoint to obtain
+            the hostname for the connection
+      required:
+      - endpoint_type
+      - strip_suffix
     AdapterSchemaResponse:
       type: object
       properties:
