@@ -9051,7 +9051,9 @@ components:
       properties:
         extended_attributes:
           title: Extended Attributes
-          description: The key-value pairs to be stored as extended attributes
+          description: The key-value pairs to be stored as extended attributes. dbt
+            guarantees to support extended attributes up to 4096 bytes in serialized
+            JSON form.
           type: object
       required:
       - extended_attributes
@@ -9080,7 +9082,9 @@ components:
       properties:
         extended_attributes:
           title: Extended Attributes
-          description: The key-value pairs to be stored as extended attributes
+          description: The key-value pairs to be stored as extended attributes. dbt
+            guarantees to support extended attributes up to 4096 bytes in serialized
+            JSON form.
           type: object
         state:
           title: State
