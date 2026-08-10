@@ -12925,6 +12925,7 @@ components:
       - semantic_layer_credentials
       - platform_metadata_credentials
       - cost_insights_config
+      - analytics_credentials
       type: string
       description: |-
         * `connection` - connection
@@ -12932,6 +12933,7 @@ components:
         * `semantic_layer_credentials` - semantic_layer_credentials
         * `platform_metadata_credentials` - platform_metadata_credentials
         * `cost_insights_config` - cost_insights_config
+        * `analytics_credentials` - analytics_credentials
     SemanticLayerCredentialsListEnveloped:
       type: object
       properties:
@@ -12993,6 +12995,7 @@ components:
             * `semantic_layer_credentials` - semantic_layer_credentials
             * `platform_metadata_credentials` - platform_metadata_credentials
             * `cost_insights_config` - cost_insights_config
+            * `analytics_credentials` - analytics_credentials
         name:
           type: string
           description: The user-facing name to identify these credentials.
