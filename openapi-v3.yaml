@@ -12920,20 +12920,9 @@ components:
           description: Specification of how certain fields should be grouped
     SchemaTypeEnum:
       enum:
-      - connection
-      - credential
       - semantic_layer_credentials
-      - platform_metadata_credentials
-      - cost_insights_config
-      - analytics_credentials
       type: string
-      description: |-
-        * `connection` - connection
-        * `credential` - credential
-        * `semantic_layer_credentials` - semantic_layer_credentials
-        * `platform_metadata_credentials` - platform_metadata_credentials
-        * `cost_insights_config` - cost_insights_config
-        * `analytics_credentials` - analytics_credentials
+      description: '* `semantic_layer_credentials` - semantic_layer_credentials'
     SemanticLayerCredentialsListEnveloped:
       type: object
       properties:
@@ -12987,15 +12976,11 @@ components:
         schema_type:
           allOf:
           - $ref: '#/components/schemas/SchemaTypeEnum'
+          default: semantic_layer_credentials
           description: |-
-            The adapter schema type. Should always be 'semantic_layer_credentials'
+            The adapter schema type. Always is 'semantic_layer_credentials'
 
-            * `connection` - connection
-            * `credential` - credential
             * `semantic_layer_credentials` - semantic_layer_credentials
-            * `platform_metadata_credentials` - platform_metadata_credentials
-            * `cost_insights_config` - cost_insights_config
-            * `analytics_credentials` - analytics_credentials
         name:
           type: string
           description: The user-facing name to identify these credentials.
