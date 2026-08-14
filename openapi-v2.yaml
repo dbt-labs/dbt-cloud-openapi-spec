@@ -1803,14 +1803,17 @@ paths:
   /api/v2/accounts/{account_id}/runs/{run_id}/artifacts/{remainder}:
     get:
       operationId: Retrieve Run Artifact
-      description: Use this endpoint to fetch artifacts from a completed run. Once
-        a run has been completed, you can use this endpoint to download the `manifest.json`,
-        `run_results.json`, or `catalog.json` files from dbt Cloud. These artifacts
-        contain information about the models in your dbt project, timing information
-        around their execution, and a status message indicating the result of the
-        model build. By default, this endpoint returns artifacts from the last step
-        in the run. To list artifacts from other steps in the run, use the step query
-        parameter described below.
+      description: "Use this endpoint to fetch artifacts from a completed run. Once\
+        \ a run has been completed, you can use this endpoint to download the `manifest.json`,\
+        \ `run_results.json`, or `catalog.json` files from dbt platform. These artifacts\
+        \ contain information about the models in your dbt project, timing information\
+        \ around their execution, and a status message indicating the result of the\
+        \ model build. \n\nFor dbt Fusion job runs, you can also use this endpoint\
+        \ to fetch the per-step OpenTelemetry (OTel) telemetry artifact at `metadata/telemetry-<step>-otel.parquet`.\
+        \ You'll receive it as `application/x-parquet`, and it contains node outcomes,\
+        \ test outcomes, and timing for the step. \n\nBy default, you get artifacts\
+        \ from the last step in the run. To fetch artifacts from other run steps,\
+        \ use the `step` query parameter below."
       parameters:
       - in: path
         name: account_id
