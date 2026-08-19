@@ -11507,6 +11507,15 @@ components:
           title: Port
           description: The network port associated with the Private Endpoint.
           type: integer
+        provisioning_status:
+          title: Provisioning Status
+          description: Current provisioning status of the Private Endpoint, when known.
+          type: string
+        provisioning_status_message:
+          title: Provisioning Status Message
+          description: Customer-facing message describing the current provisioning
+            status, when one is available.
+          type: string
       required:
       - id
       - account_id
