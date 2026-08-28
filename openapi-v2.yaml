@@ -5688,6 +5688,9 @@ components:
           type: string
           format: date-time
           readOnly: true
+        show_existing_user_email_verification:
+          type: boolean
+          readOnly: true
         sso_only_user:
           type: boolean
           readOnly: true
@@ -5734,6 +5737,7 @@ components:
       - last_login
       - licenses
       - permissions
+      - show_existing_user_email_verification
       - sso_only_user
   securitySchemes:
     BearerAuthentication:
