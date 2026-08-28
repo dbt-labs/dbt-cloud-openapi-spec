@@ -11167,7 +11167,7 @@ components:
         * `cost_management_viewer` - COST_MANAGEMENT_VIEWER
         * `database_admin` - DATABASE_ADMIN
         * `developer` - DEVELOPER
-        * `fusion_admin` - FUSION_ADMIN
+        * `fusion_admin` - V2_MIGRATION_ADMIN
         * `git_admin` - GIT_ADMIN
         * `job_admin` - JOB_ADMIN
         * `job_creator` - JOB_CREATOR
