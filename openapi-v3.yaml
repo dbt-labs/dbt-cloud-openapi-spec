@@ -10012,8 +10012,11 @@ components:
             \              <li>\"efficient_testing\" - Aggregate generic tests into\
             \ a single query and reuse redundant tests (Private beta, requires fusion)</li>\n\
             \              <li>\"dbt_state\" - Enable orchestration that adapts to\
-            \ state changes (does not require fusion)</li>\n            </ul>\n  \
-            \          <b>Example:</b> [\"dbt_state\"]\n            "
+            \ state changes (does not require fusion)</li>\n              <li>\"inherit_environment\"\
+            \ - Inherit this job's dbt State setting from its environment. Must be\
+            \ sent on its own; it cannot be combined with any other value.</li>\n\
+            \            </ul>\n            <b>Example:</b> [\"dbt_state\"]\n    \
+            \        "
       required:
       - account_id
       - environment_id
