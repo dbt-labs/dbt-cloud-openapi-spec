@@ -6770,12 +6770,6 @@ components:
       required:
       - data
       - status
-    AuthType:
-      title: AuthType
-      description: An enumeration.
-      enum:
-      - jwt_bearer
-      type: string
     BaseConnectionV3:
       type: object
       properties:
@@ -10900,7 +10894,7 @@ components:
           title: Data Transform Run Timeout
           type: integer
         auth_type:
-          $ref: '#/components/schemas/AuthType'
+          $ref: '#/components/schemas/schemas__adapters__salesforce__connection_schema__AuthType'
         adapter_id:
           title: Adapter Id
           type: integer
@@ -12921,7 +12915,7 @@ components:
         auth_type:
           default: jwt_bearer
           allOf:
-          - $ref: '#/components/schemas/AuthType'
+          - $ref: '#/components/schemas/schemas__adapters__salesforce__connection_schema__AuthType'
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
@@ -14422,6 +14416,18 @@ components:
       enum:
       - interactive
       - batch
+      type: string
+    schemas__adapters__lake_compute__connection_schema__AuthType:
+      title: AuthType
+      description: An enumeration.
+      enum:
+      - token
+      type: string
+    schemas__adapters__salesforce__connection_schema__AuthType:
+      title: AuthType
+      description: An enumeration.
+      enum:
+      - jwt_bearer
       type: string
   securitySchemes:
     BearerAuthentication:
