@@ -4889,9 +4889,13 @@ components:
           allOf:
           - $ref: '#/components/schemas/DeployKey'
           readOnly: true
+        github_repo:
+          type: string
+          readOnly: true
       required:
       - created_at
       - deploy_key
+      - github_repo
       - id
       - updated_at
     RepositoryV3:
