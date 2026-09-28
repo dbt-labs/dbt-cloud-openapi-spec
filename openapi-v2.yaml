@@ -676,6 +676,16 @@ paths:
         schema:
           type: integer
       - in: query
+        name: pk__in
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Filters to the given job IDs. Send the list as one array literal,
+          for example <code>pk__in=[1,2,3]</code>. Repeated keys (<code>pk__in=1&pk__in=2</code>)
+          are not read. Give at most 100 IDs, and request more in further calls. <code>limit</code>
+          must be at least the number of IDs, and <code>offset</code> must be 0.
+      - in: query
         name: project_id
         schema:
           type: integer
