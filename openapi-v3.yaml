@@ -6219,6 +6219,17 @@ components:
           readOnly: true
           default: false
           description: Whether this account is on a Business Critical plan
+        default_license_type:
+          allOf:
+          - $ref: '#/components/schemas/DefaultLicenseTypeEnum'
+          default: developer
+          description: |-
+            The license type assigned to new users provisioned onto this account when no other license type is determined (e.g. no SSO group mapping, SCIM payload, or existing invite). Writes are ignored unless the account-wide default license flag is enabled for this account.
+
+            * `developer` - DEVELOPER
+            * `read_only` - READ_ONLY
+            * `analyst` - ANALYST
+            * `it` - IT
         starter_repo_url:
           type: string
           readOnly: true
@@ -8288,6 +8299,18 @@ components:
       - athena_v0
       - teradata_v0
       type: string
+    DefaultLicenseTypeEnum:
+      enum:
+      - developer
+      - read_only
+      - analyst
+      - it
+      type: string
+      description: |-
+        * `developer` - DEVELOPER
+        * `read_only` - READ_ONLY
+        * `analyst` - ANALYST
+        * `it` - IT
     DeleteSubscriptionResponseData:
       type: object
       properties:
