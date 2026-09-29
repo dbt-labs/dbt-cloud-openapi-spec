@@ -2430,6 +2430,7 @@ components:
       - fabric_v0
       - athena_v0
       - teradata_v0
+      - clickhouse_v0
       type: string
       description: |-
         * `apache_spark_v0` - apache_spark_v0
@@ -2446,6 +2447,7 @@ components:
         * `fabric_v0` - fabric_v0
         * `athena_v0` - athena_v0
         * `teradata_v0` - teradata_v0
+        * `clickhouse_v0` - clickhouse_v0
     BaseConnectionV3:
       type: object
       properties:
