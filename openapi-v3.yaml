@@ -292,6 +292,7 @@ paths:
           - athena_v0
           - bigquery_v0
           - bigquery_v1
+          - clickhouse_v0
           - databricks_spark_v0
           - databricks_v0
           - fabric_v0
@@ -302,7 +303,8 @@ paths:
           - synapse_v0
           - teradata_v0
           - trino_v0
-        description: The adapter to fetch the connections for
+        description: The adapter to fetch the connections for. Please note that Clickhouse
+          is in private beta; to request access, contact your account representative.
       - in: query
         name: has_analytics_credentials
         schema:
@@ -1978,6 +1980,7 @@ paths:
           - fabric_v0
           - athena_v0
           - teradata_v0
+          - clickhouse_v0
       - in: query
         name: has_catalog_ingestion_enabled
         schema:
@@ -5590,6 +5593,7 @@ paths:
           - athena_v0
           - bigquery_v0
           - bigquery_v1
+          - clickhouse_v0
           - databricks_spark_v0
           - databricks_v0
           - fabric_v0
@@ -5805,7 +5809,9 @@ components:
           description: The name of the connection
           type: string
         adapter_version:
-          description: Identifies the warehouse and version of its adapter
+          description: Identifies the warehouse and version of its adapter. Please
+            note that Clickhouse is in private beta; to request access, contact your
+            account representative.
           allOf:
           - $ref: '#/components/schemas/DbtAdapterVersion'
         private_link_endpoint_id:
@@ -5827,6 +5833,7 @@ components:
           - $ref: '#/components/schemas/RedshiftConnection'
           - $ref: '#/components/schemas/BigqueryConnection'
           - $ref: '#/components/schemas/BigqueryConnectionV1'
+          - $ref: '#/components/schemas/ClickHouseConnection'
           - $ref: '#/components/schemas/DatabricksConnection'
           - $ref: '#/components/schemas/DatabricksSparkConnection'
           - $ref: '#/components/schemas/TrinoConnection'
@@ -5902,6 +5909,7 @@ components:
           - $ref: '#/components/schemas/RedshiftConnection'
           - $ref: '#/components/schemas/BigqueryConnection'
           - $ref: '#/components/schemas/BigqueryConnectionV1'
+          - $ref: '#/components/schemas/ClickHouseConnection'
           - $ref: '#/components/schemas/DatabricksConnection'
           - $ref: '#/components/schemas/DatabricksSparkConnection'
           - $ref: '#/components/schemas/TrinoConnection'
@@ -5996,6 +6004,7 @@ components:
           - $ref: '#/components/schemas/RedshiftConnection'
           - $ref: '#/components/schemas/BigqueryConnection'
           - $ref: '#/components/schemas/BigqueryConnectionV1'
+          - $ref: '#/components/schemas/ClickHouseConnection'
           - $ref: '#/components/schemas/DatabricksConnection'
           - $ref: '#/components/schemas/DatabricksSparkConnection'
           - $ref: '#/components/schemas/TrinoConnection'
@@ -6063,6 +6072,7 @@ components:
           - $ref: '#/components/schemas/OptionalRedshiftConnection'
           - $ref: '#/components/schemas/OptionalBigqueryConnection'
           - $ref: '#/components/schemas/OptionalBigqueryConnectionV1'
+          - $ref: '#/components/schemas/OptionalClickHouseConnection'
           - $ref: '#/components/schemas/OptionalDatabricksConnection'
           - $ref: '#/components/schemas/OptionalDatabricksSparkConnection'
           - $ref: '#/components/schemas/OptionalTrinoConnection'
@@ -6609,6 +6619,7 @@ components:
       - fabric_v0
       - athena_v0
       - teradata_v0
+      - clickhouse_v0
       type: string
       description: |-
         * `apache_spark_v0` - apache_spark_v0
@@ -6625,6 +6636,7 @@ components:
         * `fabric_v0` - fabric_v0
         * `athena_v0` - athena_v0
         * `teradata_v0` - teradata_v0
+        * `clickhouse_v0` - clickhouse_v0
     ApacheSparkConnection:
       title: ApacheSparkConnection
       type: object
@@ -7221,6 +7233,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
       required:
       - account_id
       - schema
@@ -7276,6 +7289,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
       required:
       - account_id
       - schema
@@ -7323,6 +7337,32 @@ components:
       required:
       - data
       - status
+    ClickHouseConnection:
+      title: ClickHouseConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          maxLength: 1024
+          minLength: 1
+          type: string
+        port:
+          title: Port
+          default: 8443
+          exclusiveMinimum: 0
+          maximum: 65535
+          type: integer
+        database:
+          title: Database
+          default: ''
+          maxLength: 255
+          type: string
+        adapter_id:
+          title: Adapter Id
+          description: Deprecated, use credentials.adapter_version
+          type: integer
+      required:
+      - host
     ConnectionMethod:
       title: ConnectionMethod
       description: An enumeration.
@@ -8125,7 +8165,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AdapterVersionEnum'
           description: |-
-            The version of the adapter used to create this connection. Can use instead of adapter_id.
+            The version of the adapter used to create this connection. Can use instead of adapter_id. Please note that Clickhouse is in private beta; to request access, contact your account representative.
 
             * `apache_spark_v0` - apache_spark_v0
             * `databricks_spark_v0` - databricks_spark_v0
@@ -8141,6 +8181,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
       required:
       - account_id
       - state
@@ -8179,7 +8220,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AdapterVersionEnum'
           description: |-
-            The version of the adapter used to create this connection. Can use instead of adapter_id.
+            The version of the adapter used to create this connection. Can use instead of adapter_id. Please note that Clickhouse is in private beta; to request access, contact your account representative.
 
             * `apache_spark_v0` - apache_spark_v0
             * `databricks_spark_v0` - databricks_spark_v0
@@ -8195,6 +8236,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
       required:
       - account_id
       - state
@@ -8298,6 +8340,7 @@ components:
       - fabric_v0
       - athena_v0
       - teradata_v0
+      - clickhouse_v0
       type: string
     DefaultLicenseTypeEnum:
       enum:
@@ -10778,6 +10821,22 @@ components:
         adapter_id:
           title: Adapter Id
           type: integer
+    OptionalClickHouseConnection:
+      title: OptionalClickHouseConnection
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+        port:
+          title: Port
+          type: integer
+        database:
+          title: Database
+          type: string
+        adapter_id:
+          title: Adapter Id
+          type: integer
     OptionalDatabricksConnection:
       title: OptionalDatabricksConnection
       type: object
@@ -11366,6 +11425,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
       required:
       - account_id
       - default_schema
@@ -11425,6 +11485,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
       required:
       - account_id
       - default_schema
@@ -12305,6 +12366,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
       required:
       - account_id
       - auth_type
@@ -12375,6 +12437,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
       required:
       - account_id
       - auth_type
@@ -13013,6 +13076,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
         schema_type:
           allOf:
           - $ref: '#/components/schemas/SchemaTypeEnum'
@@ -13441,6 +13505,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
       required:
       - account_id
       - auth_type
@@ -13535,6 +13600,7 @@ components:
             * `fabric_v0` - fabric_v0
             * `athena_v0` - athena_v0
             * `teradata_v0` - teradata_v0
+            * `clickhouse_v0` - clickhouse_v0
       required:
       - account_id
       - auth_type
