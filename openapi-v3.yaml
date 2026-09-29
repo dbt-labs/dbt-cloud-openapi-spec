@@ -9866,14 +9866,14 @@ components:
         account_id:
           type: integer
           format: int64
+        enabled:
+          type: boolean
         state:
           example: 1
           type: integer
           default: 1
           description: A value of 1 means this entity is active and a value of 2 means
             this entity is deleted
-        enabled:
-          type: boolean
         enabled_for_service_tokens:
           type: boolean
           readOnly: true
