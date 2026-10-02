@@ -8,7 +8,7 @@ info:
     The dbt Cloud API v3 contains endpoints for programmatic administration of your dbt Cloud account.
     With it, you can replicate resources across projects, accounts, and environments, or standardize project
     creation for business teams. For endpoints related to jobs and runs, refer to the
-    [Discovery API](https://docs.getdbt.com/docs/dbt-cloud-apis/discovery-api) or [dbt Cloud API v2](https://docs.getdbt.com/dbt-cloud/api-v2#/).
+    [Discovery API](https://docs.getdbt.com/docs/dbt-apis/discovery-api) or [dbt Cloud API v2](https://docs.getdbt.com/dbt-cloud/api-v2#/).
 
     The API docs are generated from an openapi spec defined in the
     [dbt-cloud-openapi-spec](https://github.com/dbt-labs/dbt-cloud-openapi-spec/blob/master/openapi-v3.yaml)
