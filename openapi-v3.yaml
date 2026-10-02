@@ -11804,7 +11804,8 @@ components:
             $ref: '#/components/schemas/ProfileEnvironmentBinding'
         catalog_bindings:
           title: Catalog Bindings
-          description: The catalog bindings for the profile
+          description: The catalog bindings for the profile (deprecated)
+          default: []
           type: array
           items:
             $ref: '#/components/schemas/ProfileEnvironmentBinding'
@@ -11816,7 +11817,6 @@ components:
       - connection_id
       - credentials_id
       - primary_bindings
-      - catalog_bindings
     ProfileDetailResponse:
       title: ProfileDetailResponse
       type: object
@@ -11901,7 +11901,8 @@ components:
             $ref: '#/components/schemas/ProfileEnvironmentBinding'
         catalog_bindings:
           title: Catalog Bindings
-          description: The catalog bindings for the profile
+          description: The catalog bindings for the profile (deprecated)
+          default: []
           type: array
           items:
             $ref: '#/components/schemas/ProfileEnvironmentBinding'
@@ -11913,7 +11914,6 @@ components:
       - connection_id
       - credentials_id
       - primary_bindings
-      - catalog_bindings
     ProfileListResponse:
       title: ProfileListResponse
       type: object
