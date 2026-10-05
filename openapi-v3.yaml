@@ -356,15 +356,6 @@ paths:
         schema:
           type: string
         description: Filter by private endpoint ID
-      - in: query
-        name: requires_platform_metadata_credentials
-        schema:
-          type: boolean
-        description: Filter connections by Platform Metadata Credentials status with
-          warehouse account deduplication. True=connections that need Platform Metadata
-          Credentials, False=connections that have direct Platform Metadata Credentials
-          only. Returns one connection per unique warehouse account (the one with
-          most environments).
       tags:
       - Connections
       security:
