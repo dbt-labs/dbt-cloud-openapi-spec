@@ -6094,6 +6094,7 @@ components:
         account_id:
           title: Account Id
           description: The account the connection is associated with
+          format: int64
           type: integer
         name:
           title: Name
@@ -6114,6 +6115,7 @@ components:
           type: boolean
         oauth_configuration_id:
           title: Oauth Configuration Id
+          format: int64
           type: integer
         config:
           title: Config
@@ -6146,6 +6148,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         created_at:
           title: Created At
@@ -6158,6 +6161,7 @@ components:
         account_id:
           title: Account Id
           description: The account the connection is associated with
+          format: int64
           type: integer
         name:
           title: Name
@@ -6181,15 +6185,18 @@ components:
           type: string
         oauth_configuration_id:
           title: Oauth Configuration Id
+          format: int64
           type: integer
         is_configured_for_native_oauth:
           title: Is Configured For Native Oauth
           type: boolean
         platform_metadata_credentials_id:
           title: Platform Metadata Credentials Id
+          format: int64
           type: integer
         analytics_credentials_id:
           title: Analytics Credentials Id
+          format: int64
           type: integer
         config:
           title: Config
@@ -6241,6 +6248,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         created_at:
           title: Created At
@@ -6253,6 +6261,7 @@ components:
         account_id:
           title: Account Id
           description: The account the connection is associated with
+          format: int64
           type: integer
         name:
           title: Name
@@ -6273,6 +6282,7 @@ components:
           title: Oauth Configuration Id
           description: The OAuth Configuration associated with this connection. When
             set,developer credentials leveraging OAuth may be created.
+          format: int64
           type: integer
         environment__count:
           title: Environment  Count
@@ -6280,9 +6290,11 @@ components:
           type: integer
         platform_metadata_credentials_id:
           title: Platform Metadata Credentials Id
+          format: int64
           type: integer
         analytics_credentials_id:
           title: Analytics Credentials Id
+          format: int64
           type: integer
         config:
           title: Config
@@ -6339,6 +6351,7 @@ components:
         account_id:
           title: Account Id
           description: The account the connection is associated with
+          format: int64
           type: integer
         name:
           title: Name
@@ -6353,6 +6366,7 @@ components:
           type: boolean
         oauth_configuration_id:
           title: Oauth Configuration Id
+          format: int64
           type: integer
         config:
           title: Config
@@ -6730,6 +6744,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         created_at:
           title: Created At
@@ -6793,6 +6808,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         license_type:
           $ref: '#/components/schemas/LicenseType'
@@ -6975,6 +6991,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
+          format: int64
           type: integer
       required:
       - host
@@ -6986,8 +7003,10 @@ components:
           type: array
           items:
             type: integer
+            format: int64
         user_id:
           type: integer
+          format: int64
       required:
       - desired_group_ids
       - user_id
@@ -7034,6 +7053,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
+          format: int64
           type: integer
       required:
       - region_name
@@ -7476,6 +7496,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use credentials.adapter_version
+          format: int64
           type: integer
       required:
       - project_id
@@ -7612,10 +7633,12 @@ components:
           type: array
           items:
             type: integer
+            format: int64
         deleted_var_ids:
           type: array
           items:
             type: integer
+            format: int64
         failures:
           description: Map of environment name to failure reason.
     BulkPutSuccessResponseEnveloped:
@@ -7651,6 +7674,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use credentials.adapter_version
+          format: int64
           type: integer
       required:
       - host
@@ -7681,6 +7705,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         created_at:
           title: Created At
@@ -7693,9 +7718,11 @@ components:
         account_id:
           title: Account Id
           description: The account the service token is associated with
+          format: int64
           type: integer
         user_id:
           title: User Id
+          format: int64
           type: integer
         type:
           $ref: '#/components/schemas/ServiceTokenType'
@@ -7835,6 +7862,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         name:
           title: Name
@@ -7874,6 +7902,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         created_at:
           title: Created At
@@ -7886,6 +7915,7 @@ components:
         account_id:
           title: Account Id
           description: The account the service token is associated with
+          format: int64
           type: integer
         uid:
           title: Uid
@@ -7939,6 +7969,7 @@ components:
           format: date-time
         user_id:
           title: User Id
+          format: int64
           type: integer
         user:
           title: User
@@ -8382,6 +8413,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
+          format: int64
           type: integer
       required:
       - host
@@ -8426,6 +8458,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
+          format: int64
           type: integer
       required:
       - host
@@ -9065,6 +9098,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         value:
           title: Value
@@ -9374,6 +9408,7 @@ components:
         id:
           title: Id
           description: The ID of the extended attributes record
+          format: int64
           type: integer
         created_at:
           title: Created At
@@ -9386,10 +9421,12 @@ components:
         account_id:
           title: Account Id
           description: The ID of the parent account
+          format: int64
           type: integer
         project_id:
           title: Project Id
           description: The ID of the parent project
+          format: int64
           type: integer
         extended_attributes:
           title: Extended Attributes
@@ -9508,6 +9545,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
+          format: int64
           type: integer
       required:
       - server
@@ -9518,6 +9556,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         created_at:
           title: Created At
@@ -9531,10 +9570,12 @@ components:
           title: Project Id
           description: The project ID the favorited asset is associated with. Can
             be null for data warehouse assets.
+          format: int64
           type: integer
         environment_id:
           title: Environment Id
           description: The environment ID the favorited asset is associated with
+          format: int64
           type: integer
         asset_id:
           title: Asset Id
@@ -9993,6 +10034,7 @@ components:
           minLength: 1
         id:
           type: integer
+          format: int64
       required:
       - cidr
     IPRestrictionRequestRequest:
@@ -10007,6 +10049,7 @@ components:
           type: boolean
         account_id:
           type: integer
+          format: int64
         cidrs:
           type: array
           items:
@@ -10200,6 +10243,7 @@ components:
       properties:
         id:
           type: integer
+          format: int64
         email_addresses:
           type: array
           items:
@@ -10211,6 +10255,7 @@ components:
           type: array
           items:
             type: integer
+            format: int64
       required:
       - email_addresses
       - license_type
@@ -10505,6 +10550,7 @@ components:
         id:
           title: Id
           description: The integration's ID
+          format: int64
           type: integer
         created_at:
           title: Created At
@@ -10517,10 +10563,12 @@ components:
         account_id:
           title: Account Id
           description: The account the integration is associated with
+          format: int64
           type: integer
         project_id:
           title: Project Id
           description: The project the integration is associated with
+          format: int64
           type: integer
         name:
           title: Name
@@ -10891,6 +10939,7 @@ components:
           type: integer
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     OptionalAthenaConnection:
       title: OptionalAthenaConnection
@@ -10934,6 +10983,7 @@ components:
           type: integer
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     OptionalBigqueryConnection:
       title: OptionalBigqueryConnection
@@ -11111,6 +11161,7 @@ components:
           type: string
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     OptionalClickHouseConnection:
       title: OptionalClickHouseConnection
@@ -11127,6 +11178,7 @@ components:
           type: string
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     OptionalDatabricksConnection:
       title: OptionalDatabricksConnection
@@ -11158,6 +11210,7 @@ components:
             type: string
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     OptionalDatabricksSparkConnection:
       title: OptionalDatabricksSparkConnection
@@ -11188,6 +11241,7 @@ components:
           type: string
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     OptionalFabricConnection:
       title: OptionalFabricConnection
@@ -11216,6 +11270,7 @@ components:
           type: integer
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     OptionalLineageIntegrationConfigSchema:
       title: OptionalLineageIntegrationConfigSchema
@@ -11270,6 +11325,7 @@ components:
           $ref: '#/components/schemas/schemas__adapters__salesforce__connection_schema__AuthType'
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     OptionalSnowflakeConnection:
       title: OptionalSnowflakeConnection
@@ -11330,6 +11386,7 @@ components:
           type: integer
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     OptionalTeradataConnection:
       title: OptionalTeradataConnection
@@ -11352,6 +11409,7 @@ components:
           type: integer
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     OptionalTrinoConnection:
       title: OptionalTrinoConnection
@@ -11368,6 +11426,7 @@ components:
           type: integer
         adapter_id:
           title: Adapter Id
+          format: int64
           type: integer
     PaginatedWebhooksEvents:
       type: object
@@ -11454,10 +11513,12 @@ components:
         account_id:
           title: Account Id
           description: The account the integration is associated with
+          format: int64
           type: integer
         project_id:
           title: Project Id
           description: The project the integration is associated with
+          format: int64
           type: integer
         config:
           title: Config
@@ -11610,10 +11671,12 @@ components:
         account_id:
           title: Account Id
           description: The account the integration is associated with
+          format: int64
           type: integer
         project_id:
           title: Project Id
           description: The project the integration is associated with
+          format: int64
           type: integer
         config:
           title: Config
@@ -11832,6 +11895,7 @@ components:
         account_id:
           title: Account Id
           description: The ID of the account
+          format: int64
           type: integer
         state:
           title: State
@@ -11932,6 +11996,7 @@ components:
         account_id:
           title: Account Id
           description: The ID of the account
+          format: int64
           type: integer
         state:
           title: State
@@ -12021,14 +12086,17 @@ components:
         account_id:
           title: Account Id
           description: The ID of the account
+          format: int64
           type: integer
         project_id:
           title: Project Id
           description: The ID of the project
+          format: int64
           type: integer
         connection_id:
           title: Connection Id
           description: The ID of the connection
+          format: int64
           type: integer
         key:
           title: Key
@@ -12040,10 +12108,12 @@ components:
         credentials_id:
           title: Credentials Id
           description: The ID of the credentials
+          format: int64
           type: integer
         extended_attributes_id:
           title: Extended Attributes Id
           description: The ID of the extended attributes
+          format: int64
           type: integer
       required:
       - account_id
@@ -12059,14 +12129,17 @@ components:
         id:
           title: Id
           description: The ID of the profile
+          format: int64
           type: integer
         account_id:
           title: Account Id
           description: The ID of the account
+          format: int64
           type: integer
         project_id:
           title: Project Id
           description: The ID of the project
+          format: int64
           type: integer
         key:
           title: Key
@@ -12078,14 +12151,17 @@ components:
         connection_id:
           title: Connection Id
           description: The ID of the connection
+          format: int64
           type: integer
         credentials_id:
           title: Credentials Id
           description: The ID of the credentials
+          format: int64
           type: integer
         extended_attributes_id:
           title: Extended Attributes Id
           description: The ID of the extended attributes
+          format: int64
           type: integer
         primary_bindings:
           title: Primary Bindings
@@ -12131,6 +12207,7 @@ components:
         id:
           title: Id
           description: The ID of the environment binding
+          format: int64
           type: integer
         name:
           title: Name
@@ -12156,14 +12233,17 @@ components:
         id:
           title: Id
           description: The ID of the profile
+          format: int64
           type: integer
         account_id:
           title: Account Id
           description: The ID of the account
+          format: int64
           type: integer
         project_id:
           title: Project Id
           description: The ID of the project
+          format: int64
           type: integer
         key:
           title: Key
@@ -12175,14 +12255,17 @@ components:
         connection_id:
           title: Connection Id
           description: The ID of the connection
+          format: int64
           type: integer
         credentials_id:
           title: Credentials Id
           description: The ID of the credentials
+          format: int64
           type: integer
         extended_attributes_id:
           title: Extended Attributes Id
           description: The ID of the extended attributes
+          format: int64
           type: integer
         primary_bindings:
           title: Primary Bindings
@@ -12231,14 +12314,17 @@ components:
         pk:
           title: Pk
           description: The ID of the Profile to be changed
+          format: int64
           type: integer
         account_id:
           title: Account Id
           description: The ID of the account
+          format: int64
           type: integer
         project_id:
           title: Project Id
           description: The ID of the project
+          format: int64
           type: integer
         key:
           title: Key
@@ -12252,16 +12338,19 @@ components:
           title: Connection Id
           description: The ID of the connection
           default: null
+          format: int64
           type: integer
         credentials_id:
           title: Credentials Id
           description: The ID of the credentials
           default: null
+          format: int64
           type: integer
         extended_attributes_id:
           title: Extended Attributes Id
           description: The ID of the extended attributes. Set to null to unset.
           default: null
+          format: int64
           type: integer
       required:
       - pk
@@ -13106,6 +13195,7 @@ components:
           type: array
           items:
             type: integer
+            format: int64
         failures:
           description: This field will detail specific failures within a single environment
             variable you are attempting to create.
@@ -13254,6 +13344,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         name:
           title: Name
@@ -13296,6 +13387,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
+          format: int64
           type: integer
       required:
       - login_url
@@ -13412,6 +13504,7 @@ components:
       properties:
         id:
           title: Id
+          format: int64
           type: integer
         created_at:
           title: Created At
@@ -13424,6 +13517,7 @@ components:
         account_id:
           title: Account Id
           description: The account the service token is associated with
+          format: int64
           type: integer
         uid:
           title: Uid
@@ -13547,6 +13641,7 @@ components:
           title: Project Id
           description: The project to which the permissions are scoped. If none, then
             the permissions apply to all projects.
+          format: int64
           type: integer
         writable_environment_categories:
           title: Writable Environment Categories
@@ -13936,6 +14031,7 @@ components:
           type: array
           items:
             type: integer
+            format: int64
           description: Job IDs that trigger this webhook. Leave empty to trigger for
             all jobs.
         client_url:
@@ -13986,6 +14082,7 @@ components:
           type: array
           items:
             type: integer
+            format: int64
           description: Job IDs that trigger this webhook. Leave empty to trigger for
             all jobs.
         client_url:
@@ -14064,6 +14161,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
+          format: int64
           type: integer
       required:
       - host
@@ -14092,6 +14190,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
+          format: int64
           type: integer
       required:
       - host
@@ -14132,6 +14231,7 @@ components:
         adapter_id:
           title: Adapter Id
           description: Deprecated, use connection_details.adapter_version
+          format: int64
           type: integer
       required:
       - host
@@ -14183,6 +14283,7 @@ components:
           type: boolean
         account_id:
           type: integer
+          format: int64
         cidrs:
           type: array
           items:
@@ -14192,6 +14293,7 @@ components:
           minLength: 1
         id:
           type: integer
+          format: int64
       required:
       - account_id
       - cidrs
