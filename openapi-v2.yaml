@@ -3889,6 +3889,7 @@ components:
           type: array
           items:
             type: integer
+            format: int64
           default: []
         redeemed_at:
           type: string
@@ -4175,21 +4176,25 @@ components:
           type: array
           items:
             type: integer
+            format: int64
           description: List of job IDs to send notifications for when the job is cancelled.
         on_failure:
           type: array
           items:
             type: integer
+            format: int64
           description: List of job IDs to send notifications for when the job fails.
         on_success:
           type: array
           items:
             type: integer
+            format: int64
           description: List of job IDs to send notifications for when the job succeeds.
         on_warning:
           type: array
           items:
             type: integer
+            format: int64
           description: List of job IDs to send notifications for when the job warns.
         state:
           example: 1
@@ -4246,24 +4251,28 @@ components:
           type: array
           items:
             type: integer
+            format: int64
           default: []
           description: List of job IDs to send notifications for when the job is cancelled.
         on_failure:
           type: array
           items:
             type: integer
+            format: int64
           default: []
           description: List of job IDs to send notifications for when the job fails.
         on_success:
           type: array
           items:
             type: integer
+            format: int64
           default: []
           description: List of job IDs to send notifications for when the job succeeds.
         on_warning:
           type: array
           items:
             type: integer
+            format: int64
           default: []
           description: List of job IDs to send notifications for when the job warns.
         state:
@@ -5256,6 +5265,7 @@ components:
           type: array
           items:
             type: integer
+            format: int64
         created_at:
           type: string
           format: date-time
