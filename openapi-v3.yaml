@@ -109,6 +109,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Groups
@@ -145,6 +146,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -174,6 +176,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -199,6 +202,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -227,6 +231,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Audit Logs
@@ -251,6 +256,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -282,6 +288,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: adapter_version
@@ -375,6 +382,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: limit
@@ -419,11 +427,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -449,11 +459,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Connections
@@ -485,11 +497,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Connections
@@ -508,11 +522,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: environment_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environments
@@ -530,11 +546,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: environment_id
         schema:
           type: integer
+          format: int64
         description: The environment ID the favorited asset is associated with. Can
           be null for data warehouse assets.
       - in: query
@@ -557,11 +575,13 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         description: The project ID the favorited asset is associated with
       - in: query
         name: user_id
         schema:
           type: integer
+          format: int64
         description: The user ID the favorited asset is associated with
       tags:
       - Favorite Assets
@@ -582,11 +602,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: group_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Groups
@@ -619,6 +641,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -654,12 +677,14 @@ paths:
         name: pk
         schema:
           type: integer
+          format: int64
       - in: query
         name: pk__in
         schema:
           type: array
           items:
             type: integer
+            format: int64
       - in: query
         name: state
         schema:
@@ -696,6 +721,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Groups
@@ -728,11 +754,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -758,11 +786,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Groups
@@ -796,6 +826,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Invites
@@ -828,6 +859,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -857,6 +889,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - IP Restriction Endpoints
@@ -890,6 +923,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - IP Restriction Endpoints
@@ -925,11 +959,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -960,11 +996,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -975,6 +1013,7 @@ paths:
         name: rule_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - IP Restriction Endpoints
@@ -995,11 +1034,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -1029,11 +1070,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - IP Restriction Endpoints
@@ -1065,11 +1108,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - IP Restriction Endpoints
@@ -1086,6 +1131,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -1112,6 +1158,7 @@ paths:
         name: pk
         schema:
           type: integer
+          format: int64
       - in: query
         name: state
         schema:
@@ -1148,6 +1195,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - License Maps
@@ -1180,11 +1228,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -1209,11 +1259,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - License Maps
@@ -1245,11 +1297,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - License Maps
@@ -1267,6 +1321,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: client_id
@@ -1297,6 +1352,7 @@ paths:
         name: pk
         schema:
           type: integer
+          format: int64
       - in: query
         name: state
         schema:
@@ -1338,6 +1394,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - OAuth Configurations
@@ -1371,11 +1428,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -1401,11 +1460,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - OAuth Configurations
@@ -1438,11 +1499,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - OAuth Configurations
@@ -1460,6 +1523,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -1506,6 +1570,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: limit
@@ -1534,6 +1599,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -1564,6 +1630,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: pl_endpoint_ksuid
@@ -1585,6 +1652,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: pl_endpoint_ksuid
@@ -1607,6 +1675,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -1638,16 +1707,19 @@ paths:
         name: pk
         schema:
           type: integer
+          format: int64
       - in: query
         name: pk__gt
         schema:
           type: integer
+          format: int64
       - in: query
         name: pk__in
         schema:
           type: array
           items:
             type: integer
+            format: int64
       - in: query
         name: state
         schema:
@@ -1685,6 +1757,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Projects
@@ -1718,11 +1791,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -1749,11 +1824,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Projects
@@ -1786,11 +1863,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Projects
@@ -1809,11 +1888,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Adapters
@@ -1847,11 +1928,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -1862,6 +1945,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Adapters
@@ -1882,16 +1966,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Adapters
@@ -1924,16 +2011,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Adapters
@@ -1951,6 +2041,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: adapter_version
@@ -2013,10 +2104,12 @@ paths:
         name: pk
         schema:
           type: integer
+          format: int64
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: state
@@ -2056,11 +2149,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Connections
@@ -2095,11 +2190,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -2110,6 +2207,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Connections
@@ -2131,16 +2229,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Connections
@@ -2174,16 +2275,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Connections
@@ -2202,6 +2306,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -2212,6 +2317,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Credentials
@@ -2232,11 +2338,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Credentials
@@ -2269,11 +2377,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -2284,6 +2394,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Credentials
@@ -2304,16 +2415,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Credentials
@@ -2345,16 +2459,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Credentials
@@ -2386,16 +2503,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Credentials
@@ -2412,11 +2532,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environment Variables
@@ -2449,16 +2571,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environment Variables
@@ -2490,16 +2615,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environment Variables
@@ -2516,11 +2644,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environment Variables
@@ -2558,11 +2688,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environment Variables
@@ -2619,11 +2751,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environment Variables
@@ -2640,6 +2774,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -2650,6 +2785,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environment Variables
@@ -2704,6 +2840,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -2714,6 +2851,7 @@ paths:
         name: job_definition_id
         schema:
           type: integer
+          format: int64
         description: The ID of the job definition to retrieve environment variables
           for
         required: true
@@ -2721,6 +2859,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environment Variables
@@ -2766,6 +2905,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -2776,11 +2916,13 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: user_id
         schema:
           type: integer
+          format: int64
         description: The ID of the user to retrieve environment variables for
         required: true
       tags:
@@ -2828,11 +2970,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: credentials_id
         schema:
           type: integer
+          format: int64
       - in: query
         name: dbt_version
         schema:
@@ -2863,6 +3007,7 @@ paths:
         name: id__gt
         schema:
           type: integer
+          format: int64
       - in: query
         name: include_related
         schema:
@@ -2897,16 +3042,19 @@ paths:
         name: pk
         schema:
           type: integer
+          format: int64
       - in: query
         name: pk__in
         schema:
           type: array
           items:
             type: integer
+            format: int64
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: project_id__in
@@ -2914,6 +3062,7 @@ paths:
           type: array
           items:
             type: integer
+            format: int64
       - in: query
         name: state
         schema:
@@ -2955,11 +3104,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environments
@@ -2993,11 +3144,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -3009,6 +3162,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environments
@@ -3033,16 +3187,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environments
@@ -3075,16 +3232,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Environments
@@ -3102,11 +3262,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Extended Attributes
@@ -3140,11 +3302,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -3155,6 +3319,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Extended Attributes
@@ -3175,16 +3340,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Extended Attributes
@@ -3217,16 +3385,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Extended Attributes
@@ -3243,6 +3414,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -3253,6 +3425,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Lineage Integrations
@@ -3272,11 +3445,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Lineage Integrations
@@ -3309,11 +3484,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -3324,6 +3501,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Lineage Integrations
@@ -3343,16 +3521,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Lineage Integrations
@@ -3383,16 +3564,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Lineage Integrations
@@ -3409,6 +3593,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: collection_id
@@ -3419,6 +3604,7 @@ paths:
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -3429,6 +3615,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Lineage Integrations
@@ -3449,6 +3636,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: collection_id
@@ -3459,6 +3647,7 @@ paths:
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -3469,6 +3658,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Lineage Integrations
@@ -3489,16 +3679,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Lineage Integrations
@@ -3531,11 +3724,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Repositories
@@ -3569,6 +3764,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -3579,11 +3775,13 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: repository_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Projects Managed Repositories
@@ -3604,11 +3802,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: connection_id
         schema:
           type: integer
+          format: int64
         description: The ID of the connection for the profile
       - in: query
         name: include_related
@@ -3639,6 +3839,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Profiles
@@ -3662,6 +3863,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: limit
@@ -3678,6 +3880,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Profiles
@@ -3714,11 +3917,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -3729,6 +3934,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Profiles
@@ -3752,16 +3958,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Profiles
@@ -3797,16 +4006,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Profiles
@@ -3824,6 +4036,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -3851,10 +4064,12 @@ paths:
         name: pk
         schema:
           type: integer
+          format: int64
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: project_id__in
@@ -3862,6 +4077,7 @@ paths:
           type: array
           items:
             type: integer
+            format: int64
       - in: query
         name: remote_url
         schema:
@@ -3903,11 +4119,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Repositories
@@ -3941,11 +4159,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -3957,6 +4177,7 @@ paths:
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Repositories
@@ -3977,16 +4198,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Repositories
@@ -4019,16 +4243,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: project_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Repositories
@@ -4046,6 +4273,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4071,6 +4299,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - SCIM Endpoints
@@ -4104,6 +4333,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4129,6 +4359,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - SCIM Endpoints
@@ -4162,11 +4393,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4192,11 +4425,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - SCIM Endpoints
@@ -4214,6 +4449,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4239,6 +4475,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - SCIM Endpoints
@@ -4269,6 +4506,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: group_id
@@ -4299,6 +4537,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: group_id
@@ -4333,6 +4572,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: group_id
@@ -4367,6 +4607,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: group_id
@@ -4389,6 +4630,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4415,6 +4657,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4446,6 +4689,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4472,6 +4716,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4503,6 +4748,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4525,6 +4771,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4550,6 +4797,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - SCIM Endpoints
@@ -4580,6 +4828,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4610,6 +4859,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: user_id
@@ -4644,6 +4894,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: user_id
@@ -4679,6 +4930,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: user_id
@@ -4700,6 +4952,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4716,10 +4969,12 @@ paths:
         name: pk
         schema:
           type: integer
+          format: int64
       - in: query
         name: project_id
         schema:
           type: integer
+          format: int64
       - in: query
         name: state
         schema:
@@ -4757,6 +5012,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4782,6 +5038,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Service Tokens
@@ -4814,11 +5071,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4843,11 +5102,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Service Tokens
@@ -4879,11 +5140,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Service Tokens
@@ -4901,6 +5164,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4911,6 +5175,7 @@ paths:
         name: service_token_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Service Tokens
@@ -4932,6 +5197,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4957,11 +5223,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4987,6 +5255,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -4997,6 +5266,7 @@ paths:
         name: user_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Users
@@ -5016,11 +5286,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: user_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Users
@@ -5053,11 +5325,13 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -5068,6 +5342,7 @@ paths:
         name: user_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Users
@@ -5087,16 +5362,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: user_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Users
@@ -5116,16 +5394,19 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: user_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Users
@@ -5145,6 +5426,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: event_id
@@ -5185,6 +5467,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: event_id
@@ -5225,6 +5508,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -5263,6 +5547,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -5299,6 +5584,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: subscription_id
@@ -5342,6 +5628,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: subscription_id
@@ -5374,6 +5661,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: event_id
@@ -5416,6 +5704,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -5453,6 +5742,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -5490,6 +5780,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -5526,6 +5817,7 @@ paths:
         name: account_id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: limit
@@ -5632,6 +5924,7 @@ paths:
         name: user_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Users
@@ -5656,6 +5949,7 @@ paths:
         name: user_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Users
@@ -5693,6 +5987,7 @@ paths:
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: query
         name: include_related
@@ -5704,6 +5999,7 @@ paths:
         name: user_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Users
@@ -5728,11 +6024,13 @@ paths:
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: user_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Users
@@ -5769,11 +6067,13 @@ paths:
         name: id
         schema:
           type: integer
+          format: int64
         required: true
       - in: path
         name: user_id
         schema:
           type: integer
+          format: int64
         required: true
       tags:
       - Users
