@@ -9753,6 +9753,9 @@ components:
           type: array
           items:
             type: string
+          description: 'Environment types the permission set can write to. Allowed
+            values: development, other, staging, production, all. `other` is shown
+            as General in the dbt UI.'
       required:
       - account_id
       - all_projects
@@ -9812,6 +9815,9 @@ components:
           items:
             type: string
             minLength: 1
+          description: 'Environment types the permission set can write to. Allowed
+            values: development, other, staging, production, all. `other` is shown
+            as General in the dbt UI.'
       required:
       - account_id
       - all_projects
@@ -9851,6 +9857,9 @@ components:
           items:
             type: string
           default: []
+          description: 'Environment types the permission set can write to. Allowed
+            values: development, other, staging, production, all. `other` is shown
+            as General in the dbt UI.'
         created_at:
           type: string
           format: date-time
@@ -13624,6 +13633,9 @@ components:
           type: array
           items:
             type: string
+          description: 'Environment types the permission set can write to. Allowed
+            values: development, other, staging, production, all. `other` is shown
+            as General in the dbt UI.'
       required:
       - account_id
       - all_projects
@@ -13645,6 +13657,9 @@ components:
           type: integer
         writable_environment_categories:
           title: Writable Environment Categories
+          description: 'Environment types the permission set can write to. Allowed
+            values: development, other, staging, production, all. `other` is shown
+            as General in the dbt UI.'
           type: array
           items:
             type: string
@@ -13696,6 +13711,9 @@ components:
           items:
             type: string
           default: []
+          description: 'Environment types the permission set can write to. Allowed
+            values: development, other, staging, production, all. `other` is shown
+            as General in the dbt UI.'
         created_at:
           type: string
           format: date-time
