@@ -3217,6 +3217,9 @@ components:
           type: array
           items:
             type: string
+          description: 'Environment types the permission set can write to. Allowed
+            values: development, other, staging, production, all. `other` is shown
+            as General in the dbt UI.'
       required:
       - account_id
       - all_projects
