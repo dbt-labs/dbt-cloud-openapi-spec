@@ -5200,10 +5200,92 @@ paths:
           format: int64
         required: true
       - in: query
+        name: group_id
+        schema:
+          type: integer
+          format: int64
+        description: Filter by group id.
+      - in: query
         name: include_related
         schema:
           type: string
         description: Comma-separated list of related objects to include in the response.
+      - in: query
+        name: license_type
+        schema:
+          type: string
+          enum:
+          - analyst
+          - developer
+          - it
+          - read_only
+        description: Filter by license type.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+      - in: query
+        name: offset
+        schema:
+          type: integer
+      - in: query
+        name: omit_permissions
+        schema:
+          type: string
+          enum:
+          - '0'
+          - '1'
+        description: When set to "1" (recommended), group permissions and permission
+          statements are omitted from the response.
+      - in: query
+        name: order_by
+        schema:
+          type: string
+          enum:
+          - -created_at
+          - -date_joined
+          - -email
+          - -email_verified
+          - -first_name
+          - -id
+          - -last_login
+          - -last_name
+          - -license_type
+          - -pk
+          - -scim_managed
+          - -updated_at
+          - -username
+          - created_at
+          - date_joined
+          - email
+          - email_verified
+          - first_name
+          - id
+          - last_login
+          - last_name
+          - license_type
+          - pk
+          - scim_managed
+          - updated_at
+          - username
+      - in: query
+        name: pk
+        schema:
+          type: integer
+          format: int64
+        description: Filter by primary key (id).
+      - in: query
+        name: pk__in
+        schema:
+          type: string
+        description: Filter by primary keys (ids), as serialized JSON, e.g., [1,2,3].
+          Overrides "pk".
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Case insensitive substring search in email, first_name, last_name,
+          or full name.
       tags:
       - Users
       security:
