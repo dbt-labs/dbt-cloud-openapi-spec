@@ -8160,9 +8160,7 @@ components:
         urn:ietf:params:scim:schemas:extension:dbtLabs:2.0:User:
           title: Urn:Ietf:Params:Scim:Schemas:Extension:Dbtlabs:2.0:User
           description: Custom attributes for the user. This is where licenseType will
-            be stored
-          default:
-            licenseType: developer
+            be stored. When omitted, the account's default license type is used.
           example:
             licenseType: developer
           allOf:
