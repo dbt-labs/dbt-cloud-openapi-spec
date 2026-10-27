@@ -7081,16 +7081,25 @@ components:
     AssignGroupsRequestRequest:
       type: object
       properties:
+        user_id:
+          type: integer
+          format: int64
         desired_group_ids:
           type: array
           items:
             type: integer
             format: int64
-        user_id:
-          type: integer
-          format: int64
+        add_group_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+        remove_group_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
       required:
-      - desired_group_ids
       - user_id
     AthenaConnection:
       title: AthenaConnection
