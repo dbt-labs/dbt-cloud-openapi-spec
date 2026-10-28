@@ -9241,6 +9241,8 @@ components:
         enable_dbt_state:
           type: boolean
           default: false
+        enable_dbt_state_model_lock:
+          type: boolean
         state:
           example: 1
           type: integer
@@ -9253,6 +9255,7 @@ components:
       required:
       - account_id
       - dbt_version
+      - enable_dbt_state_model_lock
       - name
       - project_id
       - state
@@ -9334,6 +9337,8 @@ components:
         enable_dbt_state:
           type: boolean
           default: false
+        enable_dbt_state_model_lock:
+          type: boolean
         state:
           example: 1
           type: integer
@@ -9346,6 +9351,7 @@ components:
       required:
       - account_id
       - dbt_version
+      - enable_dbt_state_model_lock
       - name
       - project_id
       - state
@@ -9415,6 +9421,9 @@ components:
         enable_dbt_state:
           type: boolean
           default: false
+        enable_dbt_state_model_lock:
+          type: boolean
+          default: true
         state:
           example: 1
           type: integer
