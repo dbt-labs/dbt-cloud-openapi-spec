@@ -5460,6 +5460,17 @@ paths:
         required: true
       tags:
       - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountScopedPATRotateRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccountScopedPATRotateRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccountScopedPATRotateRequestRequest'
       security:
       - BearerAuthentication: []
       responses:
@@ -6737,6 +6748,9 @@ components:
         name:
           type: string
           minLength: 1
+        expires_at:
+          type: string
+          format: date-time
       required:
       - name
     AccountScopedPATResponse:
@@ -6820,6 +6834,12 @@ components:
       required:
       - data
       - status
+    AccountScopedPATRotateRequestRequest:
+      type: object
+      properties:
+        expires_at:
+          type: string
+          format: date-time
     AccountUser:
       title: AccountUser
       type: object
@@ -7838,6 +7858,11 @@ components:
           title: Token String
           description: The full token string used to authenticate clients
           type: string
+        expires_at:
+          title: Expires At
+          description: When the token stops authenticating. Null means it never expires.
+          type: string
+          format: date-time
         last_used:
           title: Last Used
           description: Deprecated.
@@ -7845,11 +7870,6 @@ components:
           format: date-time
         last_identify:
           title: Last Identify
-          description: Deprecated.
-          type: string
-          format: date-time
-        expires_at:
-          title: Expires At
           description: Deprecated.
           type: string
           format: date-time
@@ -8032,6 +8052,11 @@ components:
           description: The time the service token was last used
           type: string
           format: date-time
+        expires_at:
+          title: Expires At
+          description: When the token stops authenticating. Null means it never expires.
+          type: string
+          format: date-time
         semantic_layer_credentials:
           title: Semantic Layer Credentials
           type: array
@@ -8067,10 +8092,6 @@ components:
           type: object
         type:
           $ref: '#/components/schemas/ServiceTokenType'
-        expires_at:
-          title: Expires At
-          type: string
-          format: date-time
         service_token_permissions:
           title: Service Token Permissions
           type: array
@@ -8102,6 +8123,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceTokenPermissionGrant'
+        expires_at:
+          title: Expires At
+          description: When the token stops authenticating. Omit for no expiry. Must
+            be in the future, no more than 365 days out, with a timezone offset.
+          type: string
+          format: date-time
         metadata_only:
           title: Metadata Only
           description: Deprecated. Use the metadata_only permission set instead.
@@ -13648,6 +13675,11 @@ components:
         last_used:
           title: Last Used
           description: The time the service token was last used
+          type: string
+          format: date-time
+        expires_at:
+          title: Expires At
+          description: When the token stops authenticating. Null means it never expires.
           type: string
           format: date-time
         semantic_layer_credentials:
