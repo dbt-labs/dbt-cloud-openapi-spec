@@ -12284,7 +12284,8 @@ components:
           type: string
         connection_id:
           title: Connection Id
-          description: The ID of the connection
+          description: The ID of the connection. Null for profiles that have not been
+            assigned a connection.
           format: int64
           type: integer
         credentials_id:
@@ -12315,7 +12316,6 @@ components:
       - account_id
       - project_id
       - key
-      - connection_id
       - credentials_id
       - primary_bindings
     ProfileDetailResponse:
@@ -12388,7 +12388,8 @@ components:
           type: string
         connection_id:
           title: Connection Id
-          description: The ID of the connection
+          description: The ID of the connection. Null for profiles that have not been
+            assigned a connection.
           format: int64
           type: integer
         credentials_id:
@@ -12419,7 +12420,6 @@ components:
       - account_id
       - project_id
       - key
-      - connection_id
       - credentials_id
       - primary_bindings
     ProfileListResponse:
