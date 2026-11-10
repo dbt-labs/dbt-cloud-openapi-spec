@@ -12542,7 +12542,9 @@ components:
           type: string
         connection_id:
           title: Connection Id
-          description: The ID of the connection
+          description: The ID of the connection. Null is only accepted for a profile
+            that has no connection; a profile's connection cannot be removed once
+            set.
           default: null
           format: int64
           type: integer
