@@ -897,13 +897,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IPRestrictionRequestRequest'
+              $ref: '#/components/schemas/CreateIPRestrictionBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/IPRestrictionRequestRequest'
+              $ref: '#/components/schemas/CreateIPRestrictionBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/IPRestrictionRequestRequest'
+              $ref: '#/components/schemas/CreateIPRestrictionBodyRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -931,13 +931,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IPRestrictionSetRequestRequest'
+              $ref: '#/components/schemas/EnableIPRestrictionsBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/IPRestrictionSetRequestRequest'
+              $ref: '#/components/schemas/EnableIPRestrictionsBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/IPRestrictionSetRequestRequest'
+              $ref: '#/components/schemas/EnableIPRestrictionsBodyRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -1084,13 +1084,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateIPRestrictionRequestRequest'
+              $ref: '#/components/schemas/UpdateIPRestrictionBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UpdateIPRestrictionRequestRequest'
+              $ref: '#/components/schemas/UpdateIPRestrictionBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UpdateIPRestrictionRequestRequest'
+              $ref: '#/components/schemas/UpdateIPRestrictionBodyRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -7908,6 +7908,58 @@ components:
       - name
       - state
       - token_string
+    CreateIPRestrictionBodyRequest:
+      title: CreateIPRestrictionBody
+      description: An IP restriction rule and its CIDR ranges.
+      type: object
+      properties:
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        type:
+          description: 1 allows the ranges, 2 denies them.
+          allOf:
+          - $ref: '#/components/schemas/IPRestrictionType'
+        description:
+          title: Description
+          type: string
+        rule_set_enabled:
+          title: Rule Set Enabled
+          type: boolean
+        cidrs:
+          title: Cidrs
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/IPRestrictionCidrBody'
+        account_id:
+          title: Account Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        ip_restriction_rule_set_id:
+          title: Ip Restriction Rule Set Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        state:
+          title: State
+          description: Read-only, ignored.
+          type: integer
+        created_by_id:
+          title: Created By Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        enabled_for_service_tokens:
+          title: Enabled For Service Tokens
+          description: Read-only, ignored.
+          type: boolean
+      required:
+      - name
+      - type
+      additionalProperties: false
     CreateManagedRepositoryRequestRequest:
       type: object
       properties:
@@ -9060,6 +9112,26 @@ components:
           type: integer
       required:
       - data
+    EnableIPRestrictionsBodyRequest:
+      title: EnableIPRestrictionsBody
+      description: Turns IP restrictions on or off for the account.
+      type: object
+      properties:
+        enabled:
+          title: Enabled
+          type: boolean
+        account_id:
+          title: Account Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        state:
+          title: State
+          description: Read-only, ignored.
+          type: integer
+      required:
+      - enabled
+      additionalProperties: false
     EncryptedJSONValue:
       type: object
       properties:
@@ -10154,49 +10226,49 @@ components:
       - enabled
       - ip_restriction_rule_id
       - state
-    IPRestrictionCidrRequestRequest:
+    IPRestrictionCidrBody:
+      title: IPRestrictionCidrBody
+      description: A CIDR range in an IP restriction rule. Include `id` to update
+        an existing range.
       type: object
       properties:
-        state:
-          example: 1
-          type: integer
-          default: 1
-          description: A value of 1 means this entity is active and a value of 2 means
-            this entity is deleted
-        cidr:
-          type: string
-          minLength: 1
         id:
-          type: integer
+          title: Id
           format: int64
+          type: integer
+        cidr:
+          title: Cidr
+          type: string
+        enabled:
+          title: Enabled
+          default: true
+          type: boolean
+        state:
+          title: State
+          description: 1 keeps the range, 2 deletes it.
+          type: integer
+        ip_restriction_rule_id:
+          title: Ip Restriction Rule Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        cidr_ipv6:
+          title: Cidr Ipv6
+          description: Read-only, ignored.
+          type: string
+        created_at:
+          title: Created At
+          description: Read-only, ignored.
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          description: Read-only, ignored.
+          type: string
+          format: date-time
       required:
       - cidr
-    IPRestrictionRequestRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          minLength: 1
-        type:
-          $ref: '#/components/schemas/TypeEdaEnum'
-        rule_set_enabled:
-          type: boolean
-        account_id:
-          type: integer
-          format: int64
-        cidrs:
-          type: array
-          items:
-            $ref: '#/components/schemas/IPRestrictionCidrRequestRequest'
-        description:
-          type: string
-          minLength: 1
-      required:
-      - account_id
-      - cidrs
-      - name
-      - rule_set_enabled
-      - type
+      additionalProperties: false
     IPRestrictionRule:
       type: object
       properties:
@@ -10358,13 +10430,6 @@ components:
       - enabled_for_service_tokens
       - id
       - updated_at
-    IPRestrictionSetRequestRequest:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-      required:
-      - enabled
     IPRestrictionSetValidate:
       type: object
       properties:
@@ -10372,6 +10437,13 @@ components:
           type: boolean
       required:
       - is_valid_for_admin
+    IPRestrictionType:
+      title: IPRestrictionType
+      description: An enumeration.
+      enum:
+      - 1
+      - 2
+      type: integer
     InviteUsersRequestRequest:
       type: object
       properties:
@@ -14411,44 +14483,63 @@ components:
       description: |-
         * `development` - DEVELOPMENT
         * `deployment` - DEPLOYMENT
-    TypeEdaEnum:
-      enum:
-      - 1
-      - 2
-      type: integer
-      description: |-
-        * `1` - ALLOW
-        * `2` - DENY
-    UpdateIPRestrictionRequestRequest:
+    UpdateIPRestrictionBodyRequest:
+      title: UpdateIPRestrictionBody
+      description: New values for an IP restriction rule and its CIDR ranges.
       type: object
       properties:
         name:
-          type: string
+          title: Name
           minLength: 1
+          type: string
         type:
-          $ref: '#/components/schemas/TypeEdaEnum'
+          description: 1 allows the ranges, 2 denies them.
+          allOf:
+          - $ref: '#/components/schemas/IPRestrictionType'
+        description:
+          title: Description
+          type: string
         rule_set_enabled:
+          title: Rule Set Enabled
           type: boolean
-        account_id:
-          type: integer
-          format: int64
         cidrs:
+          title: Cidrs
+          default: []
           type: array
           items:
-            $ref: '#/components/schemas/IPRestrictionCidrRequestRequest'
-        description:
-          type: string
-          minLength: 1
-        id:
-          type: integer
+            $ref: '#/components/schemas/IPRestrictionCidrBody'
+        account_id:
+          title: Account Id
+          description: Read-only, ignored.
           format: int64
+          type: integer
+        ip_restriction_rule_set_id:
+          title: Ip Restriction Rule Set Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        state:
+          title: State
+          description: Read-only, ignored.
+          type: integer
+        created_by_id:
+          title: Created By Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        enabled_for_service_tokens:
+          title: Enabled For Service Tokens
+          description: Read-only, ignored.
+          type: boolean
+        id:
+          title: Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
       required:
-      - account_id
-      - cidrs
-      - id
       - name
-      - rule_set_enabled
       - type
+      additionalProperties: false
     UpdateServiceTokenRequestRequest:
       title: UpdateServiceTokenRequest
       description: Request body for updating a service token name.
