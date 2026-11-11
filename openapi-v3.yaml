@@ -6632,7 +6632,7 @@ components:
           - $ref: '#/components/schemas/DefaultLicenseTypeEnum'
           default: developer
           description: |-
-            The license type assigned to new users provisioned onto this account when no other license type is determined (e.g. no SSO group mapping, SCIM payload, or existing invite). Writes are ignored unless the account-wide default license flag is enabled for this account.
+            The license type assigned to new users provisioned onto this account when no other license type is determined (e.g. no SSO group mapping, SCIM payload, or existing invite).
 
             * `developer` - DEVELOPER
             * `read_only` - READ_ONLY
