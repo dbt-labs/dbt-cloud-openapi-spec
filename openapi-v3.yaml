@@ -14462,10 +14462,8 @@ components:
           description: The project the repo is associated with
         full_name:
           type: string
-          description: The name of the repo⚠️ If not set to the correct values, CI
-            jobs may not trigger and the branch link from the dbt Cloud IDE may not
-            work.For example, if the remote URL is 'git://github.com/your_org/your_repo_name.git',the
-            correct full_name is 'your_org/your_repo_name'.
+          description: (Deprecated) The name of the repo. The returned value is computed
+            from the remote URL, for example 'your_org/your_repo_name' for 'git://github.com/your_org/your_repo_name.git'.
         remote_backend:
           allOf:
           - $ref: '#/components/schemas/RemoteBackendEnum'
@@ -14552,10 +14550,8 @@ components:
         full_name:
           type: string
           minLength: 1
-          description: The name of the repo⚠️ If not set to the correct values, CI
-            jobs may not trigger and the branch link from the dbt Cloud IDE may not
-            work.For example, if the remote URL is 'git://github.com/your_org/your_repo_name.git',the
-            correct full_name is 'your_org/your_repo_name'.
+          description: (Deprecated) The name of the repo. The returned value is computed
+            from the remote URL, for example 'your_org/your_repo_name' for 'git://github.com/your_org/your_repo_name.git'.
         remote_backend:
           allOf:
           - $ref: '#/components/schemas/RemoteBackendEnum'
@@ -14621,10 +14617,8 @@ components:
           description: The project the repo is associated with
         full_name:
           type: string
-          description: The name of the repo⚠️ If not set to the correct values, CI
-            jobs may not trigger and the branch link from the dbt Cloud IDE may not
-            work.For example, if the remote URL is 'git://github.com/your_org/your_repo_name.git',the
-            correct full_name is 'your_org/your_repo_name'.
+          description: (Deprecated) The name of the repo. The returned value is computed
+            from the remote URL, for example 'your_org/your_repo_name' for 'git://github.com/your_org/your_repo_name.git'.
         remote_backend:
           allOf:
           - $ref: '#/components/schemas/RemoteBackendEnum'
