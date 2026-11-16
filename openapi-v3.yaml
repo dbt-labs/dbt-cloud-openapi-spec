@@ -5571,7 +5571,7 @@ paths:
         schema:
           type: string
         description: Filter by primary keys (ids), as serialized JSON, e.g., [1,2,3].
-          Overrides "pk".
+          Combined with "pk", only ids in both match.
       - in: query
         name: search
         schema:
