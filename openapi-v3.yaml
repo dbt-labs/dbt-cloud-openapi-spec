@@ -1312,6 +1312,298 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/mantle-migration/status/:
+    get:
+      operationId: Retrieve Wizard Migration Eligibility
+      description: Return ordered eligibility results for 1-100 projects. Unavailable
+        projects have no status.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+          format: int64
+        required: true
+      - in: query
+        name: project_ids
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int64
+            minimum: 1
+          minItems: 1
+          maxItems: 100
+          uniqueItems: true
+        description: Comma-separated distinct project IDs. One result per ID, in request
+          order.
+        required: true
+        explode: false
+        style: form
+      tags:
+      - Mantle Migration
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MantleEligibilityResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/migration-inventory/environment-overrides/disable/:
+    post:
+      operationId: Disable Environment Overrides
+      description: Revert environments to their configured versions without changing
+        version pins. Each actual revert records a new migration change; already reverted
+        or never upgraded environments are unchanged. Explicit 1-100 IDs are atomic.
+        all:true with view applies to the next slice of up to 1000 matching environments
+        in one transaction and returns a cursor when more remain. 408 means a slice
+        timed out and nothing in it changed. For explicit IDs, 404 hides unavailable
+        resources; 403 indicates insufficient token scopes. Invalid selections return
+        400.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+          format: int64
+        required: true
+      tags:
+      - Migration Inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisableEnvironmentOverridesBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DisableEnvironmentOverridesBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DisableEnvironmentOverridesBodyRequest'
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentOverridesResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/migration-inventory/environment-overrides/enable/:
+    post:
+      operationId: Enable Environment Overrides
+      description: Upgrade environments to latest. Each actual change records a new
+        migration change; environments already on latest keep their current change.
+        Explicit 1-100 IDs are atomic. all:true with view applies to the next slice
+        of up to 1000 matching environments in one transaction, skips environments
+        the actor cannot change, and returns a cursor when more remain. 408 means
+        a slice timed out and nothing in it changed. For explicit IDs, 404 hides unavailable
+        resources; 403 indicates insufficient token scopes; 409 means an environment
+        no longer has legacy workloads. Invalid selections or unsupported targets
+        return 400.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+          format: int64
+        required: true
+      tags:
+      - Migration Inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnableEnvironmentOverridesBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnableEnvironmentOverridesBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnableEnvironmentOverridesBodyRequest'
+        required: true
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentOverridesResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/migration-inventory/environments/:
+    get:
+      operationId: List Inventory Environments
+      description: 'List readable environments with legacy workloads or a saved migration
+        override, in ascending ID order. include_summary adds the same scoped summary
+        as GET /summary/ under extra.migration_summary, using the same read permissions.
+        Returns 400 for invalid pagination or ordering and 404 for an unavailable
+        account or project. Write capabilities are advisory: insufficient_permissions
+        blocks changes, and no_legacy_workloads blocks enabling an environment without
+        legacy workloads.'
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+          format: int64
+        required: true
+      - in: query
+        name: include_run_summary
+        schema:
+          type: boolean
+        description: Include environment run history and migration outcomes.
+      - in: query
+        name: include_summary
+        schema:
+          type: boolean
+        description: Include the same scoped summary as GET /summary/ in extra.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+      - in: query
+        name: offset
+        schema:
+          type: integer
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+          format: int64
+        description: Restrict inventory to a readable project.
+      - in: query
+        name: view
+        schema:
+          type: string
+          enum:
+          - all
+          - enabled
+        description: Filter the worklist count; compliance always covers every readable
+          resource in scope.
+      tags:
+      - Migration Inventory
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryEnvironmentResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/migration-inventory/environments/{environment_id}/job-groups/:
+    get:
+      operationId: Retrieve Inventory Job Groups
+      description: Return independently paginated compliant and legacy jobs with all-history
+        last runs and runs attributed to the current migration change.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+          format: int64
+        required: true
+      - in: query
+        name: compliant_limit
+        schema:
+          type: integer
+      - in: query
+        name: compliant_offset
+        schema:
+          type: integer
+      - in: path
+        name: environment_id
+        schema:
+          type: integer
+          format: int64
+        required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
+      - in: query
+        name: legacy_limit
+        schema:
+          type: integer
+      - in: query
+        name: legacy_offset
+        schema:
+          type: integer
+      tags:
+      - Migration Inventory
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryJobGroupsResponse'
+          description: ''
+  /api/v3/accounts/{account_id}/migration-inventory/summary/:
+    get:
+      operationId: Retrieve Inventory Summary
+      description: Summarize readable inventory for an account or project. The view
+        filters environment_count; compliance covers all readable resources in scope.
+        Pagination and ordering parameters are rejected. include_action_counts adds
+        advisory counts for all matching environments after optional deselections.
+        Returns 404 for an unavailable account or project.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+          format: int64
+        required: true
+      - in: query
+        name: excluded_environment_ids
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int64
+            minimum: 1
+          maxItems: 100
+          uniqueItems: true
+        description: Comma-separated deselections for action counts only.
+        explode: false
+        style: form
+      - in: query
+        name: include_action_counts
+        schema:
+          type: boolean
+        description: Include advisory counts for applying overrides to all matching
+          environments.
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+          format: int64
+        description: Restrict inventory to a readable project.
+      - in: query
+        name: view
+        schema:
+          type: string
+          enum:
+          - all
+          - enabled
+        description: Filter the worklist count; compliance always covers every readable
+          resource in scope.
+      tags:
+      - Migration Inventory
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventorySummaryResponse'
+          description: ''
   /api/v3/accounts/{account_id}/oauth-configurations/:
     get:
       operationId: List OAuthConfigurations
@@ -7046,6 +7338,62 @@ components:
         * `athena_v0` - athena_v0
         * `teradata_v0` - teradata_v0
         * `clickhouse_v0` - clickhouse_v0
+    All597Enum:
+      enum:
+      - false
+    All61dEnum:
+      enum:
+      - true
+    AllEnvironmentOverridesResource:
+      title: AllEnvironmentOverridesResource
+      type: object
+      properties:
+        selection:
+          allOf:
+          - $ref: '#/components/schemas/SelectionEnum'
+          title: Selection
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          title: Status
+        processed_environment_count:
+          title: Processed Environment Count
+          type: integer
+        changed_environment_count:
+          title: Changed Environment Count
+          type: integer
+        unchanged_environment_count:
+          title: Unchanged Environment Count
+          type: integer
+        skipped_environment_count:
+          title: Skipped Environment Count
+          type: integer
+        remaining_environment_count:
+          title: Remaining Environment Count
+          description: Matching environments still after this request's slice when
+            it committed.
+          type: integer
+        stop_reason:
+          allOf:
+          - $ref: '#/components/schemas/StopReasonEnum'
+          title: Stop Reason
+          description: request_limit when more environments remain; null when complete.
+          nullable: true
+        next_cursor:
+          title: Next Cursor
+          description: Resume with the identical all-mode selection and action.
+          nullable: true
+          type: string
+      required:
+      - selection
+      - status
+      - processed_environment_count
+      - changed_environment_count
+      - unchanged_environment_count
+      - skipped_environment_count
+      - remaining_environment_count
+      - stop_reason
+      - next_cursor
     ApacheSparkConnection:
       title: ApacheSparkConnection
       type: object
@@ -7215,6 +7563,12 @@ components:
       required:
       - data
       - status
+    AvailabilityEnum:
+      enum:
+      - available
+      - empty
+      - unavailable
+      type: string
     BaseConnectionV3:
       type: object
       properties:
@@ -7385,6 +7739,10 @@ components:
       - id
       - oauth_redirect_uri
       - updated_at
+    BasisEnum:
+      enum:
+      - effective
+      type: string
     BigqueryConnection:
       title: BigqueryConnection
       type: object
@@ -7720,6 +8078,12 @@ components:
       - target_name
       - threads
       - type
+    BlockedReasonEnum:
+      enum:
+      - not_legacy
+      - no_develop_access
+      - unavailable
+      type: string
     BulkPutErrorResponse:
       type: object
       properties:
@@ -7789,6 +8153,53 @@ components:
           type: integer
       required:
       - host
+    CohortEnum:
+      enum:
+      - baseline_legacy
+      type: string
+    ComplianceCountsResource:
+      title: ComplianceCountsResource
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+        compliant:
+          title: Compliant
+          type: integer
+        non_compliant:
+          title: Non Compliant
+          type: integer
+      required:
+      - total
+      - compliant
+      - non_compliant
+    ComplianceSummaryResource:
+      title: ComplianceSummaryResource
+      type: object
+      properties:
+        basis:
+          allOf:
+          - $ref: '#/components/schemas/BasisEnum'
+          title: Basis
+          description: Compliance uses effective execution versions after overrides.
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/ScopeEnum'
+          title: Scope
+          description: Scope of readable resources included in these counts.
+        projects:
+          $ref: '#/components/schemas/ComplianceCountsResource'
+        environments:
+          $ref: '#/components/schemas/ComplianceCountsResource'
+        jobs:
+          $ref: '#/components/schemas/ComplianceCountsResource'
+      required:
+      - basis
+      - scope
+      - projects
+      - environments
+      - jobs
     ConnectionMethod:
       title: ConnectionMethod
       description: An enumeration.
@@ -9112,6 +9523,141 @@ components:
           type: integer
       required:
       - data
+    DisableEnvironmentOverridesBodyRequest:
+      title: DisableEnvironmentOverridesBody
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        environment_ids:
+          title: Environment Ids
+          minItems: 1
+          maxItems: 100
+          type: array
+          items:
+            type: integer
+            format: int64
+        all:
+          title: All
+          default: false
+          type: boolean
+        view:
+          allOf:
+          - $ref: '#/components/schemas/ViewEnum'
+          title: View
+        project_id:
+          title: Project Id
+          format: int64
+          type: integer
+        excluded_environment_ids:
+          title: Excluded Environment Ids
+          maxItems: 100
+          type: array
+          items:
+            type: integer
+            format: int64
+        cursor:
+          title: Cursor
+          maxLength: 4096
+          type: string
+      additionalProperties: false
+      oneOf:
+      - required:
+        - environment_ids
+        properties:
+          all:
+            $ref: '#/components/schemas/All597Enum'
+        not:
+          anyOf:
+          - required:
+            - view
+          - required:
+            - project_id
+          - required:
+            - excluded_environment_ids
+          - required:
+            - cursor
+      - required:
+        - all
+        - view
+        properties:
+          all:
+            $ref: '#/components/schemas/All61dEnum'
+        not:
+          required:
+          - environment_ids
+    EnableEnvironmentOverridesBodyRequest:
+      title: EnableEnvironmentOverridesBody
+      description: |-
+        Base class for all request payloads.
+        It is expected that each endpoint extends this class to define its own payload format
+      type: object
+      properties:
+        environment_ids:
+          title: Environment Ids
+          minItems: 1
+          maxItems: 100
+          type: array
+          items:
+            type: integer
+            format: int64
+        all:
+          title: All
+          default: false
+          type: boolean
+        view:
+          allOf:
+          - $ref: '#/components/schemas/ViewEnum'
+          title: View
+        project_id:
+          title: Project Id
+          format: int64
+          type: integer
+        excluded_environment_ids:
+          title: Excluded Environment Ids
+          maxItems: 100
+          type: array
+          items:
+            type: integer
+            format: int64
+        cursor:
+          title: Cursor
+          maxLength: 4096
+          type: string
+        target_dbt_version:
+          allOf:
+          - $ref: '#/components/schemas/TargetDbtVersionEnum'
+          title: Target Dbt Version
+          description: Explicit migration target; only latest is supported.
+      required:
+      - target_dbt_version
+      additionalProperties: false
+      oneOf:
+      - required:
+        - environment_ids
+        properties:
+          all:
+            $ref: '#/components/schemas/All597Enum'
+        not:
+          anyOf:
+          - required:
+            - view
+          - required:
+            - project_id
+          - required:
+            - excluded_environment_ids
+          - required:
+            - cursor
+      - required:
+        - all
+        - view
+        properties:
+          all:
+            $ref: '#/components/schemas/All61dEnum'
+        not:
+          required:
+          - environment_ids
     EnableIPRestrictionsBodyRequest:
       title: EnableIPRestrictionsBody
       description: Turns IP restrictions on or off for the account.
@@ -9293,6 +9839,79 @@ components:
           type: string
       required:
       - id
+    EnvironmentOverrideResultResource:
+      title: EnvironmentOverrideResultResource
+      type: object
+      properties:
+        migration_target:
+          title: Migration Target
+          description: Current override target; null when disabled.
+          nullable: true
+          type: string
+        migration_enabled:
+          title: Migration Enabled
+          description: Whether an override target is set.
+          type: boolean
+        migration_change_id:
+          title: Migration Change Id
+          description: ID of the current upgrade or revert. Trial results only count
+            runs attributed to this change. Null when the environment has never been
+            upgraded.
+          nullable: true
+          format: int64
+          type: integer
+        migration_changed_at:
+          title: Migration Changed At
+          description: When the current change was made; null when the environment
+            has never been upgraded.
+          nullable: true
+          type: string
+          format: date-time
+        environment_id:
+          title: Environment Id
+          format: int64
+          type: integer
+        changed:
+          title: Changed
+          type: boolean
+      required:
+      - migration_enabled
+      - environment_id
+      - changed
+    EnvironmentOverridesResource:
+      title: EnvironmentOverridesResource
+      type: object
+      properties:
+        results:
+          title: Results
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentOverrideResultResource'
+        changed_environment_count:
+          title: Changed Environment Count
+          type: integer
+      required:
+      - results
+      - changed_environment_count
+    EnvironmentOverridesResponse:
+      title: EnvironmentOverridesResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          anyOf:
+          - $ref: '#/components/schemas/EnvironmentOverridesResource'
+          - $ref: '#/components/schemas/AllEnvironmentOverridesResource'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
     EnvironmentV3:
       type: object
       properties:
@@ -10444,6 +11063,448 @@ components:
       - 1
       - 2
       type: integer
+    InventoryEnvironment:
+      title: InventoryEnvironment
+      type: object
+      properties:
+        migration_target:
+          title: Migration Target
+          description: Current override target; null when disabled.
+          nullable: true
+          type: string
+        migration_enabled:
+          title: Migration Enabled
+          description: Whether an override target is set.
+          type: boolean
+        migration_change_id:
+          title: Migration Change Id
+          description: ID of the current upgrade or revert. Trial results only count
+            runs attributed to this change. Null when the environment has never been
+            upgraded.
+          nullable: true
+          format: int64
+          type: integer
+        migration_changed_at:
+          title: Migration Changed At
+          description: When the current change was made; null when the environment
+            has never been upgraded.
+          nullable: true
+          type: string
+          format: date-time
+        environment_id:
+          title: Environment Id
+          format: int64
+          type: integer
+        environment_name:
+          title: Environment Name
+          type: string
+        project_id:
+          title: Project Id
+          format: int64
+          type: integer
+        project_name:
+          title: Project Name
+          type: string
+        environment_type:
+          title: Environment Type
+          type: string
+        deployment_type:
+          title: Deployment Type
+          type: string
+        configured_dbt_version:
+          title: Configured Dbt Version
+          type: string
+        baseline_dbt_version:
+          title: Baseline Dbt Version
+          description: Resolved version before applying the migration override.
+          type: string
+        effective_dbt_version:
+          title: Effective Dbt Version
+          description: Resolved version after applying a supported migration override.
+          type: string
+        is_legacy:
+          title: Is Legacy
+          type: boolean
+        job_count:
+          title: Job Count
+          type: integer
+        legacy_job_count:
+          title: Legacy Job Count
+          type: integer
+        effective_legacy_job_count:
+          title: Effective Legacy Job Count
+          type: integer
+        overridden_job_count:
+          title: Overridden Job Count
+          type: integer
+        can_enable:
+          title: Can Enable
+          description: Whether this actor may enable or replace the override.
+          type: boolean
+        can_disable:
+          title: Can Disable
+          description: Whether this actor may disable the override.
+          type: boolean
+        enable_blocked_reason:
+          title: Enable Blocked Reason
+          description: insufficient_permissions or no_legacy_workloads; null when
+            enabling is allowed.
+          nullable: true
+          type: string
+        disable_blocked_reason:
+          title: Disable Blocked Reason
+          description: insufficient_permissions when the actor cannot disable; null
+            otherwise.
+          nullable: true
+          type: string
+        can_read_runs:
+          title: Can Read Runs
+          description: Omitted when include_run_summary is false.
+          default: false
+          type: boolean
+        last_run_at:
+          title: Last Run At
+          description: Creation time of the most recent readable run across all current
+            inventory jobs. Omitted when include_run_summary is false.
+          nullable: true
+          type: string
+          format: date-time
+        resolved_execution_version:
+          title: Resolved Execution Version
+          description: Execution version; currently always equal to effective_dbt_version.
+          nullable: true
+          type: string
+        execution_blocked_reason:
+          title: Execution Blocked Reason
+          description: Currently always null.
+          nullable: true
+          type: string
+        target_capabilities:
+          title: Target Capabilities
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetCapabilityResource'
+        migration_run_summary:
+          title: Migration Run Summary
+          description: Outcomes of each baseline legacy job's newest run attributed
+            to the current migration change; null unless include_run_summary is true.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/MigrationRunSummaryResource'
+      required:
+      - migration_enabled
+      - environment_id
+      - environment_name
+      - project_id
+      - project_name
+      - environment_type
+      - baseline_dbt_version
+      - effective_dbt_version
+      - is_legacy
+      - job_count
+      - legacy_job_count
+      - effective_legacy_job_count
+      - overridden_job_count
+      - can_enable
+      - can_disable
+      - target_capabilities
+      - migration_run_summary
+    InventoryEnvironmentExtraData:
+      title: InventoryEnvironmentExtraData
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/V3RequestParams'
+        order_by:
+          title: Order By
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        pagination:
+          $ref: '#/components/schemas/V3ResponsePagination'
+        migration_summary:
+          title: Migration Summary
+          description: Scoped inventory summary when include_summary=true; null otherwise.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/InventorySummaryResource'
+      required:
+      - pagination
+    InventoryEnvironmentResponse:
+      title: InventoryEnvironmentResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryEnvironment'
+        extra:
+          $ref: '#/components/schemas/InventoryEnvironmentExtraData'
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+      - extra
+    InventoryJobGroupPageResource:
+      title: InventoryJobGroupPageResource
+      type: object
+      properties:
+        jobs:
+          title: Jobs
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryJobResource'
+        pagination:
+          $ref: '#/components/schemas/InventoryJobPaginationResource'
+      required:
+      - jobs
+      - pagination
+    InventoryJobGroups:
+      title: InventoryJobGroups
+      type: object
+      properties:
+        environment_id:
+          title: Environment Id
+          format: int64
+          type: integer
+        compliant:
+          $ref: '#/components/schemas/InventoryJobGroupPageResource'
+        legacy:
+          $ref: '#/components/schemas/InventoryJobGroupPageResource'
+      required:
+      - environment_id
+      - compliant
+      - legacy
+    InventoryJobGroupsResponse:
+      title: InventoryJobGroupsResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/InventoryJobGroups'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    InventoryJobPaginationResource:
+      title: InventoryJobPaginationResource
+      type: object
+      properties:
+        count:
+          title: Count
+          type: integer
+        total_count:
+          title: Total Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - count
+      - total_count
+      - limit
+      - offset
+    InventoryJobResource:
+      title: InventoryJobResource
+      type: object
+      properties:
+        migration_target:
+          title: Migration Target
+          nullable: true
+          type: string
+        migration_enabled:
+          title: Migration Enabled
+          description: Whether an override target is set.
+          type: boolean
+        migration_change_id:
+          title: Migration Change Id
+          nullable: true
+          format: int64
+          type: integer
+        migration_changed_at:
+          title: Migration Changed At
+          nullable: true
+          type: string
+          format: date-time
+        job_id:
+          title: Job Id
+          format: int64
+          type: integer
+        job_name:
+          title: Job Name
+          type: string
+        environment_id:
+          title: Environment Id
+          format: int64
+          type: integer
+        configured_dbt_version:
+          title: Configured Dbt Version
+          nullable: true
+          type: string
+        baseline_dbt_version:
+          title: Baseline Dbt Version
+          type: string
+        effective_dbt_version:
+          title: Effective Dbt Version
+          type: string
+        version_source:
+          title: Version Source
+          type: string
+        is_legacy:
+          title: Is Legacy
+          type: boolean
+        is_effectively_legacy:
+          title: Is Effectively Legacy
+          type: boolean
+        is_overridden:
+          title: Is Overridden
+          type: boolean
+        is_deactivated:
+          title: Is Deactivated
+          type: boolean
+        version_group:
+          allOf:
+          - $ref: '#/components/schemas/VersionGroupEnum'
+          title: Version Group
+        can_read_runs:
+          title: Can Read Runs
+          type: boolean
+        latest_run:
+          title: Latest Run
+          description: Newest run attributed to the current migration change; null
+            when there is none.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/LatestJobRunResource'
+        last_run:
+          title: Last Run
+          description: Most recently finished run of any kind, including explicit-version
+            runs and runs before the trial.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/LastJobRunResource'
+        resolved_execution_version:
+          title: Resolved Execution Version
+          nullable: true
+          type: string
+        execution_blocked_reason:
+          title: Execution Blocked Reason
+          nullable: true
+          type: string
+      required:
+      - migration_target
+      - migration_enabled
+      - migration_change_id
+      - migration_changed_at
+      - job_id
+      - job_name
+      - environment_id
+      - configured_dbt_version
+      - baseline_dbt_version
+      - effective_dbt_version
+      - version_source
+      - is_legacy
+      - is_effectively_legacy
+      - is_overridden
+      - is_deactivated
+      - version_group
+      - can_read_runs
+      - latest_run
+      - last_run
+      - resolved_execution_version
+      - execution_blocked_reason
+    InventorySummary:
+      title: InventorySummary
+      type: object
+      properties:
+        account_id:
+          title: Account Id
+          format: int64
+          type: integer
+        compliance:
+          $ref: '#/components/schemas/ComplianceSummaryResource'
+        environment_count:
+          title: Environment Count
+          description: Environment count in the selected worklist, before pagination.
+          type: integer
+        supported_targets:
+          title: Supported Targets
+          description: Targets offered for new overrides; currently only latest.
+          type: array
+          items:
+            type: string
+        actions:
+          title: Actions
+          description: Action preview when include_action_counts=true; null otherwise.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/OverrideActionPreviewsResource'
+      required:
+      - account_id
+      - compliance
+      - environment_count
+      - supported_targets
+    InventorySummaryResource:
+      title: InventorySummaryResource
+      type: object
+      properties:
+        account_id:
+          title: Account Id
+          format: int64
+          type: integer
+        compliance:
+          $ref: '#/components/schemas/ComplianceSummaryResource'
+        environment_count:
+          title: Environment Count
+          description: Environment count in the selected worklist, before pagination.
+          type: integer
+        supported_targets:
+          title: Supported Targets
+          description: Targets offered for new overrides; currently only latest.
+          type: array
+          items:
+            type: string
+        actions:
+          title: Actions
+          description: Action preview when include_action_counts=true; null otherwise.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/OverrideActionPreviewsResource'
+      required:
+      - account_id
+      - compliance
+      - environment_count
+      - supported_targets
+    InventorySummaryResponse:
+      title: InventorySummaryResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/InventorySummary'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
     InviteUsersRequestRequest:
       type: object
       properties:
@@ -10647,6 +11708,66 @@ components:
         * `exposure_sync` - exposure_sync
         * `adaptive` - adaptive
         * `hybrid` - hybrid
+    LastJobRunResource:
+      title: LastJobRunResource
+      type: object
+      properties:
+        id:
+          title: Id
+          format: int64
+          type: integer
+        status:
+          title: Status
+          type: integer
+        status_humanized:
+          title: Status Humanized
+          type: string
+        status_message:
+          title: Status Message
+          nullable: true
+          type: string
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        dbt_version:
+          title: Dbt Version
+          description: Version saved on this run; null when execution has not started
+            or the version is unknown.
+          nullable: true
+          type: string
+      required:
+      - id
+      - status
+      - status_humanized
+      - status_message
+      - created_at
+      - dbt_version
+      nullable: true
+    LatestJobRunResource:
+      title: LatestJobRunResource
+      type: object
+      properties:
+        id:
+          title: Id
+          format: int64
+          type: integer
+        status:
+          title: Status
+          type: integer
+        status_humanized:
+          title: Status Humanized
+          type: string
+        status_message:
+          title: Status Message
+          nullable: true
+          type: string
+      required:
+      - id
+      - status
+      - status_humanized
+      - status_message
+      nullable: true
     LicenseMapEnveloped:
       type: object
       properties:
@@ -10954,6 +12075,88 @@ components:
         * `other` - OTHER
         * `migrated` - MIGRATED
         * `workshop` - WORKSHOP
+    MantleEligibility:
+      title: MantleEligibility
+      type: object
+      properties:
+        project_id:
+          title: Project Id
+          format: int64
+          type: integer
+        eligible:
+          title: Eligible
+          type: boolean
+        blocked_reason:
+          allOf:
+          - $ref: '#/components/schemas/BlockedReasonEnum'
+          title: Blocked Reason
+          nullable: true
+        status:
+          title: Status
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/MantleStatusResource'
+      required:
+      - project_id
+      - eligible
+      - blocked_reason
+      - status
+    MantleEligibilityResponse:
+      title: MantleEligibilityResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/MantleEligibility'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
+    MantleStatusResource:
+      title: MantleStatusResource
+      type: object
+      properties:
+        account_id:
+          title: Account Id
+          format: int64
+          type: integer
+        project_id:
+          title: Project Id
+          format: int64
+          type: integer
+        is_legacy:
+          title: Is Legacy
+          description: Whether any environment or job resolves to a pre-1.8 dbt Core
+            version
+          type: boolean
+        oldest_legacy_version:
+          title: Oldest Legacy Version
+          description: Oldest legacy version as "major.minor"
+          nullable: true
+          type: string
+        legacy_job_count:
+          title: Legacy Job Count
+          description: Jobs with an effective legacy version, pinned or inherited
+          type: integer
+        target_dbt_version:
+          title: Target Dbt Version
+          description: Migration target release track, currently "latest"
+          type: string
+      required:
+      - account_id
+      - project_id
+      - is_legacy
+      - oldest_legacy_version
+      - legacy_job_count
+      - target_dbt_version
     MetaComponent:
       title: MetaComponent
       description: |-
@@ -10986,6 +12189,90 @@ components:
       enum:
       - odbc
       type: string
+    MigrationRunCountsResource:
+      title: MigrationRunCountsResource
+      type: object
+      properties:
+        succeeded:
+          title: Succeeded
+          type: integer
+        failed:
+          title: Failed
+          type: integer
+        queued:
+          title: Queued
+          type: integer
+        starting:
+          title: Starting
+          type: integer
+        running:
+          title: Running
+          type: integer
+        cancelled:
+          title: Cancelled
+          type: integer
+        unknown:
+          title: Unknown
+          type: integer
+        no_qualifying_run:
+          title: No Qualifying Run
+          type: integer
+      required:
+      - succeeded
+      - failed
+      - queued
+      - starting
+      - running
+      - cancelled
+      - unknown
+      - no_qualifying_run
+      nullable: true
+    MigrationRunSummaryResource:
+      title: MigrationRunSummaryResource
+      type: object
+      properties:
+        cohort:
+          allOf:
+          - $ref: '#/components/schemas/CohortEnum'
+          title: Cohort
+        job_count:
+          title: Job Count
+          type: integer
+        change_id:
+          title: Change Id
+          description: Migration change whose attributed runs are counted; null when
+            there is none.
+          nullable: true
+          format: int64
+          type: integer
+        window_started_at:
+          title: Window Started At
+          description: 'When that change was made. Display only: runs are selected
+            by change, not by time.'
+          nullable: true
+          type: string
+          format: date-time
+        availability:
+          allOf:
+          - $ref: '#/components/schemas/AvailabilityEnum'
+          title: Availability
+        unavailable_reason:
+          title: Unavailable Reason
+          description: no_change when the environment has never been upgraded.
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UnavailableReasonEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        counts:
+          title: Counts
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/MigrationRunCountsResource'
+      required:
+      - cohort
+      - job_count
+      - availability
+      nullable: true
     NotFound:
       type: object
       properties:
@@ -11016,6 +12303,9 @@ components:
       - developer_message
       - is_success
       - user_message
+    NullEnum:
+      enum:
+      - null
     OAuthConfigurationEnveloped:
       type: object
       properties:
@@ -11634,6 +12924,35 @@ components:
           title: Adapter Id
           format: int64
           type: integer
+    OverrideActionCountsResource:
+      title: OverrideActionCountsResource
+      type: object
+      properties:
+        eligible_environment_count:
+          title: Eligible Environment Count
+          type: integer
+        legacy_job_count:
+          title: Legacy Job Count
+          type: integer
+        excluded_environment_count:
+          title: Excluded Environment Count
+          type: integer
+      required:
+      - eligible_environment_count
+      - legacy_job_count
+      - excluded_environment_count
+    OverrideActionPreviewsResource:
+      title: OverrideActionPreviewsResource
+      type: object
+      properties:
+        enable_latest:
+          $ref: '#/components/schemas/OverrideActionCountsResource'
+        disable:
+          $ref: '#/components/schemas/OverrideActionCountsResource'
+      required:
+      - enable_latest
+      - disable
+      nullable: true
     PaginatedWebhooksEvents:
       type: object
       properties:
@@ -13617,6 +14936,15 @@ components:
       - semantic_layer_credentials
       type: string
       description: '* `semantic_layer_credentials` - semantic_layer_credentials'
+    ScopeEnum:
+      enum:
+      - account
+      - project
+      type: string
+    SelectionEnum:
+      enum:
+      - all
+      type: string
     SemanticLayerCredentialsListEnveloped:
       type: object
       properties:
@@ -14234,6 +15562,15 @@ components:
           title: Developer Message
           default: ''
           type: string
+    StatusEnum:
+      enum:
+      - complete
+      - partial
+      type: string
+    StopReasonEnum:
+      enum:
+      - request_limit
+      type: string
     Subscription:
       type: object
       properties:
@@ -14388,6 +15725,33 @@ components:
       required:
       - host
       - database
+    TargetCapabilityResource:
+      title: TargetCapabilityResource
+      type: object
+      properties:
+        target:
+          title: Target
+          description: Supported migration target. Currently only latest is offered.
+          type: string
+        display_name:
+          title: Display Name
+          type: string
+        can_enable:
+          title: Can Enable
+          type: boolean
+        blocked_reason:
+          title: Blocked Reason
+          description: 'Why enabling is blocked: insufficient_permissions or no_legacy_workloads.'
+          nullable: true
+          type: string
+      required:
+      - target
+      - display_name
+      - can_enable
+    TargetDbtVersionEnum:
+      enum:
+      - latest
+      type: string
     TeradataConnection:
       title: TeradataConnection
       type: object
@@ -14485,6 +15849,11 @@ components:
       description: |-
         * `development` - DEVELOPMENT
         * `deployment` - DEPLOYMENT
+    UnavailableReasonEnum:
+      enum:
+      - runs_read_denied
+      - no_change
+      type: string
     UpdateIPRestrictionBodyRequest:
       title: UpdateIPRestrictionBody
       description: New values for an IP restriction rule and its CIDR ranges.
@@ -15093,6 +16462,16 @@ components:
       required:
       - count
       - total_count
+    VersionGroupEnum:
+      enum:
+      - compliant
+      - legacy
+      type: string
+    ViewEnum:
+      enum:
+      - all
+      - enabled
+      type: string
     WatchSelectionItem:
       title: WatchSelectionItem
       type: object
