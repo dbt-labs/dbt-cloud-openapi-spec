@@ -13681,7 +13681,8 @@ components:
           type: integer
         credentials_id:
           title: Credentials Id
-          description: The ID of the credentials
+          description: The ID of the credentials. Null for profiles that have not
+            been assigned credentials.
           format: int64
           type: integer
         extended_attributes_id:
@@ -13707,7 +13708,6 @@ components:
       - account_id
       - project_id
       - key
-      - credentials_id
       - primary_bindings
     ProfileDetailResponse:
       title: ProfileDetailResponse
@@ -13785,7 +13785,8 @@ components:
           type: integer
         credentials_id:
           title: Credentials Id
-          description: The ID of the credentials
+          description: The ID of the credentials. Null for profiles that have not
+            been assigned credentials.
           format: int64
           type: integer
         extended_attributes_id:
@@ -13811,7 +13812,6 @@ components:
       - account_id
       - project_id
       - key
-      - credentials_id
       - primary_bindings
     ProfileListResponse:
       title: ProfileListResponse
