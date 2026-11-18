@@ -13887,7 +13887,8 @@ components:
           type: integer
         credentials_id:
           title: Credentials Id
-          description: The ID of the credentials
+          description: The ID of the credentials. Null is only accepted for a profile
+            that has no credentials; credentials cannot be removed once set.
           default: null
           format: int64
           type: integer
