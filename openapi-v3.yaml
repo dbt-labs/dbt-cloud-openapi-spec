@@ -5674,13 +5674,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountScopedPATRequestRequest'
+              $ref: '#/components/schemas/CreateAccountScopedPATBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/AccountScopedPATRequestRequest'
+              $ref: '#/components/schemas/CreateAccountScopedPATBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/AccountScopedPATRequestRequest'
+              $ref: '#/components/schemas/CreateAccountScopedPATBodyRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -7034,17 +7034,6 @@ components:
       - unlocked_at
       - updated_at
       - vanity_subdomain
-    AccountScopedPATRequestRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          minLength: 1
-        expires_at:
-          type: string
-          format: date-time
-      required:
-      - name
     AccountScopedPATResponse:
       type: object
       properties:
@@ -8319,6 +8308,32 @@ components:
       - name
       - state
       - token_string
+    CreateAccountScopedPATBodyRequest:
+      title: CreateAccountScopedPATBody
+      description: Request body for creating an account-scoped personal access token.
+      type: object
+      properties:
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/CreateAccountScopedPATBodyTypeEnum'
+          title: Type
+        expires_at:
+          title: Expires At
+          description: When the token stops authenticating, ISO 8601 with a timezone
+            offset. Omit for no expiry.
+          format: date-time
+          type: string
+      required:
+      - name
+    CreateAccountScopedPATBodyTypeEnum:
+      enum:
+      - 1
+      - 2
+      type: integer
     CreateIPRestrictionBodyRequest:
       title: CreateIPRestrictionBody
       description: An IP restriction rule and its CIDR ranges.
