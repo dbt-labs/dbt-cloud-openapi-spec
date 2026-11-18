@@ -6805,6 +6805,7 @@ components:
           description: |-
             The active plan type for the account
 
+            * `bc_2027` - BC_2027
             * `cancelled` - CANCELLED
             * `cancelled_2022` - CANCELLED_2022
             * `cancelled_2025` - CANCELLED_2025
@@ -13159,6 +13160,7 @@ components:
         * `webhooks_only` - WEBHOOKS_ONLY
     PlanEnum:
       enum:
+      - bc_2027
       - cancelled
       - cancelled_2022
       - cancelled_2025
@@ -13179,6 +13181,7 @@ components:
       - usage_managed_2026
       type: string
       description: |-
+        * `bc_2027` - BC_2027
         * `cancelled` - CANCELLED
         * `cancelled_2022` - CANCELLED_2022
         * `cancelled_2025` - CANCELLED_2025
