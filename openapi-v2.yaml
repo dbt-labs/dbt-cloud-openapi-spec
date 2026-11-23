@@ -1684,7 +1684,18 @@ paths:
   /api/v2/accounts/{account_id}/runs/:
     get:
       operationId: List Runs
-      description: List runs for an account.
+      description: |-
+        List runs for an account.
+
+        Pass array query parameters, such as `finished_at__range`, `created_at__range`, and `status__in`, as a single URL-encoded JSON array string rather than repeated query parameters. For date ranges, pass two ISO 8601 UTC timestamps (`YYYY-MM-DDTHH:MM:SSZ`).
+
+        For example, use `curl -G` with `--data-urlencode` to filter runs by `finished_at__range`:
+
+        ```shell
+        curl -G "https://YOUR_ACCESS_URL/api/v2/accounts/YOUR_ACCOUNT_ID/runs/" \
+          --header "Authorization: Token YOUR_TOKEN" \
+          --data-urlencode 'finished_at__range=["2026-11-01T00:00:00Z","2026-11-02T00:00:00Z"]'
+        ```
       parameters:
       - in: path
         name: account_id
@@ -1699,6 +1710,8 @@ paths:
           items:
             type: string
             format: date-time
+        description: Filters runs created between two ISO 8601 UTC timestamps, passed
+          as a URL-encoded JSON array string. For example, `["2026-11-01T00:00:00Z","2026-11-02T00:00:00Z"]`.
       - in: query
         name: dbt_version
         schema:
@@ -1726,6 +1739,8 @@ paths:
           items:
             type: string
             format: date-time
+        description: Filters runs that finished between two ISO 8601 UTC timestamps,
+          passed as a URL-encoded JSON array string. For example, `["2026-11-01T00:00:00Z","2026-11-02T00:00:00Z"]`.
       - in: query
         name: has_docs_generated
         schema:
@@ -1819,7 +1834,8 @@ paths:
           type: array
           items:
             type: integer
-        description: 'Filters the results to a specific set of run statuses. `1: Queued`,
+        description: 'Filters the results to a specific set of run statuses, passed
+          as a URL-encoded JSON array string (for example, `[10, 20]`). `1: Queued`,
           `2: Starting`, `3: Running`, `10: Success`, `20: Error`, `30: Cancelled`'
       tags:
       - Runs
