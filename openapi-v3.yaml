@@ -1123,6 +1123,33 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v3/accounts/{account_id}/jobs/timezones/:
+    get:
+      operationId: Retrieve Job Timezones
+      description: The IANA timezone names a job schedule may use.
+      parameters:
+      - in: path
+        name: account_id
+        schema:
+          type: integer
+          format: int64
+        required: true
+      - in: query
+        name: include_related
+        schema:
+          type: string
+        description: Comma-separated list of related objects to include in the response.
+      tags:
+      - Jobs
+      security:
+      - BearerAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTimezonesResponse'
+          description: ''
   /api/v3/accounts/{account_id}/license-maps/:
     get:
       operationId: List License Maps
@@ -11706,6 +11733,34 @@ components:
       - run_generate_sources
       - settings
       - state
+    JobTimezones:
+      title: JobTimezones
+      type: object
+      properties:
+        timezones:
+          title: Timezones
+          description: Sorted IANA timezone names a job schedule may use, including
+            UTC.
+          readOnly: true
+          type: array
+          items:
+            type: string
+    JobTimezonesResponse:
+      title: JobTimezonesResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/JobTimezones'
+        extra:
+          title: Extra
+          type: object
+        error_code:
+          title: Error Code
+          type: integer
+      required:
+      - data
     JobTypeEnum:
       enum:
       - ci
