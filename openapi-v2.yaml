@@ -2378,6 +2378,7 @@ components:
             * `other` - OTHER
             * `migrated` - MIGRATED
             * `workshop` - WORKSHOP
+            * `frozen` - FROZEN
         unlocked_at:
           type: string
           format: date-time
@@ -4434,6 +4435,7 @@ components:
       - other
       - migrated
       - workshop
+      - frozen
       type: string
       description: |-
         * `trial_expired` - TRIAL_EXPIRED
@@ -4443,6 +4445,7 @@ components:
         * `other` - OTHER
         * `migrated` - MIGRATED
         * `workshop` - WORKSHOP
+        * `frozen` - FROZEN
     PermissionSetEnum:
       enum:
       - account_admin
