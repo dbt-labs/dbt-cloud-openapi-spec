@@ -729,13 +729,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GroupRequest'
+              $ref: '#/components/schemas/CreateGroupBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/GroupRequest'
+              $ref: '#/components/schemas/CreateGroupBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/GroupRequest'
+              $ref: '#/components/schemas/CreateGroupBodyRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -8363,6 +8363,65 @@ components:
       - 1
       - 2
       type: integer
+    CreateGroupBodyRequest:
+      title: CreateGroupBody
+      description: A permission group.
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        account_id:
+          title: Account Id
+          description: Defaults to the account in the path.
+          format: int64
+          type: integer
+        state:
+          title: State
+          description: 1 is active, 2 deletes the group.
+          default: 1
+          type: integer
+        assign_by_default:
+          title: Assign By Default
+          default: false
+          type: boolean
+        sso_mapping_groups:
+          title: Sso Mapping Groups
+          type: array
+          items:
+            type: string
+        id:
+          title: Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        created_at:
+          title: Created At
+          description: Read-only, ignored.
+          format: date-time
+          type: string
+        updated_at:
+          title: Updated At
+          description: Read-only, ignored.
+          format: date-time
+          type: string
+        group_permissions:
+          title: Group Permissions
+          description: Read-only, ignored.
+          type: array
+          items:
+            type: object
+        member_count:
+          title: Member Count
+          description: Read-only, ignored.
+          type: integer
+        scim_managed:
+          title: Scim Managed
+          description: Read-only, ignored.
+          type: boolean
+      required:
+      - name
+      additionalProperties: false
     CreateIPRestrictionBodyRequest:
       title: CreateIPRestrictionBody
       description: An IP restriction rule and its CIDR ranges.
