@@ -2425,7 +2425,7 @@ components:
         default_license_type:
           allOf:
           - $ref: '#/components/schemas/DefaultLicenseTypeEnum'
-          default: developer
+          default: read_only
           description: |-
             The license type assigned to new users provisioned onto this account when no other license type is determined (e.g. no SSO group mapping, SCIM payload, or existing invite). Analyst and IT can only be set when the account's plan includes that license type.
 
