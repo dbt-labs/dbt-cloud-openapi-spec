@@ -2619,7 +2619,10 @@ paths:
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/:
     get:
       operationId: List Credentials
-      description: List the credentials for a given project.
+      description: |-
+        List the credentials for a given project.
+
+        For adapter credentials (`type: "adapter"`), this endpoint returns `null` for `unencrypted_credential_details`. To view non-secret settings in `unencrypted_credential_details`, call Get Credentials for a specific credential ID.
       parameters:
       - in: path
         name: account_id
@@ -2651,7 +2654,10 @@ paths:
           description: ''
     post:
       operationId: Create Credentials
-      description: Create a new set of credentials to associate with a user or environment.
+      description: |-
+        Create a new set of credentials to associate with a user or environment.
+
+        For adapter credentials (`type: "adapter"`), this endpoint returns `null` for `unencrypted_credential_details`. Call Get Credentials for the credential ID to view non-secret settings.
       parameters:
       - in: path
         name: account_id
@@ -2690,7 +2696,10 @@ paths:
   /api/v3/accounts/{account_id}/projects/{project_id}/credentials/{id}/:
     get:
       operationId: Get Credentials
-      description: Fetch a specific set of credentials.
+      description: |-
+        Fetch a specific set of credentials.
+
+        For adapter credentials (`type: "adapter"`), this endpoint returns non-secret settings in `unencrypted_credential_details`. Non-adapter credential types omit this field. Other project credentials endpoints (List, Create, Update, and Partial Update) return `null` for `unencrypted_credential_details`.
       parameters:
       - in: path
         name: account_id
@@ -2728,7 +2737,10 @@ paths:
           description: ''
     post:
       operationId: Update Credentials
-      description: Update a set of credentials.
+      description: |-
+        Update a set of credentials.
+
+        For adapter credentials (`type: "adapter"`), this endpoint returns `null` for `unencrypted_credential_details`. Call Get Credentials for the credential ID to view non-secret settings.
       parameters:
       - in: path
         name: account_id
@@ -2772,7 +2784,10 @@ paths:
           description: ''
     patch:
       operationId: Partial Update Credentials
-      description: Partially update a set of credentials.
+      description: |-
+        Partially update a set of credentials.
+
+        For adapter credentials (`type: "adapter"`), this endpoint returns `null` for `unencrypted_credential_details`. Call Get Credentials for the credential ID to view non-secret settings.
       parameters:
       - in: path
         name: account_id
