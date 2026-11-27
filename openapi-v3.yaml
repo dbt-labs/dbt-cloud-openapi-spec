@@ -5341,6 +5341,10 @@ paths:
   /api/v3/accounts/{account_id}/service-tokens/:
     get:
       operationId: List Service Tokens
+      description: |-
+        Lists the tokens the caller can see. With `service_principal_id`, that principal's tokens, or
+        none if the caller can't see it. Without it, a caller who can read service tokens gets the
+        account's tokens as before; anyone else gets the tokens of every principal they can see.
       parameters:
       - in: path
         name: account_id
@@ -5353,6 +5357,17 @@ paths:
         schema:
           type: string
         description: Comma-separated list of related objects to include in the response.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
       tags:
       - Service Tokens
       security:
@@ -5374,6 +5389,17 @@ paths:
           type: integer
           format: int64
         required: true
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The maximum number of items to return.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result
+          set.
       tags:
       - Service Tokens
       requestBody:
@@ -8652,6 +8678,15 @@ components:
           title: Webhooks Only
           default: false
           type: boolean
+        service_principal_id:
+          title: Service Principal Id
+          description: The service principal the token acts as, if any.
+          format: int64
+          type: integer
+        is_expired:
+          title: Is Expired
+          default: false
+          type: boolean
         token:
           title: Token
           description: The hashed token secret
@@ -8710,6 +8745,12 @@ components:
             be in the future, no more than 365 days out, with a timezone offset.
           type: string
           format: date-time
+        service_principal_id:
+          title: Service Principal Id
+          description: Issues the token on this service principal, which holds its
+            permissions. Takes no permission grants.
+          format: int64
+          type: integer
         metadata_only:
           title: Metadata Only
           description: Deprecated. Use the metadata_only permission set instead.
@@ -15243,6 +15284,15 @@ components:
           type: boolean
         webhooks_only:
           title: Webhooks Only
+          default: false
+          type: boolean
+        service_principal_id:
+          title: Service Principal Id
+          description: The service principal the token acts as, if any.
+          format: int64
+          type: integer
+        is_expired:
+          title: Is Expired
           default: false
           type: boolean
       required:
