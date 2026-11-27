@@ -2992,13 +2992,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
+              $ref: '#/components/schemas/CreateEnvironmentVariablesBulkBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
+              $ref: '#/components/schemas/CreateEnvironmentVariablesBulkBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequestRequest'
+              $ref: '#/components/schemas/CreateEnvironmentVariablesBulkBodyRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -3036,33 +3036,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-              - env_vars
-              properties:
-                env_vars:
-                  type: object
-                  description: Environment variable update payload. 'name' is the
-                    current variable name (required). 'new_name' is the rename target
-                    (optional). All other keys are either existing environment variable
-                    IDs (numeric strings) whose values should be updated, or environment
-                    names whose values should be created. Set a value to empty string
-                    or null to delete that variable override.
-                  required:
-                  - name
-                  properties:
-                    name:
-                      type: string
-                      description: Current name of the environment variable.
-                    new_name:
-                      type: string
-                      description: New name for the environment variable. Requires
-                        'name' to also be set.
-                  additionalProperties:
-                    type: string
-                    nullable: true
-                    description: Value keyed by either an existing env var ID (to
-                      update) or an environment name (to create a new override).
+              $ref: '#/components/schemas/UpdateEnvironmentVariablesBulkBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateEnvironmentVariablesBulkBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateEnvironmentVariablesBulkBodyRequest'
+        required: true
       security:
       - BearerAuthentication: []
       responses:
@@ -4222,13 +4203,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProfileCreateBodyRequest'
+              $ref: '#/components/schemas/CreateProfileBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ProfileCreateBodyRequest'
+              $ref: '#/components/schemas/CreateProfileBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ProfileCreateBodyRequest'
+              $ref: '#/components/schemas/CreateProfileBodyRequest'
         required: true
       security:
       - BearerAuthentication: []
@@ -4312,14 +4293,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProfileUpdateBodyRequest'
+              $ref: '#/components/schemas/UpdateProfileBodyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ProfileUpdateBodyRequest'
+              $ref: '#/components/schemas/UpdateProfileBodyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ProfileUpdateBodyRequest'
-        required: true
+              $ref: '#/components/schemas/UpdateProfileBodyRequest'
       security:
       - BearerAuthentication: []
       responses:
@@ -8404,6 +8384,43 @@ components:
       - 1
       - 2
       type: integer
+    CreateEnvironmentVariableValuesBody:
+      title: CreateEnvironmentVariableValuesBody
+      description: A new variable, keyed by `new_name`, and its value per environment
+        name.
+      type: object
+      properties:
+        new_name:
+          title: New Name
+          description: Name of the variable to create.
+          type: string
+        project:
+          title: Project
+          description: The project-wide default value.
+          type: string
+      required:
+      - new_name
+      additionalProperties:
+        type: string
+        nullable: true
+        description: Value keyed by either an existing env var ID (to update) or an
+          environment name (to create a new override). Set a value to empty string
+          or null to delete that variable override.
+    CreateEnvironmentVariablesBulkBodyRequest:
+      title: CreateEnvironmentVariablesBulkBody
+      description: One variable, or a list of variables, to create.
+      type: object
+      properties:
+        env_var:
+          title: Env Var
+          anyOf:
+          - type: array
+            items:
+              $ref: '#/components/schemas/CreateEnvironmentVariableValuesBody'
+          - $ref: '#/components/schemas/CreateEnvironmentVariableValuesBody'
+      required:
+      - env_var
+      additionalProperties: false
     CreateGroupBodyRequest:
       title: CreateGroupBody
       description: A permission group.
@@ -8554,6 +8571,48 @@ components:
       required:
       - schemas
       - displayName
+    CreateProfileBodyRequest:
+      title: CreateProfileBody
+      description: 'A profile: a connection, credentials and optional extended attributes.'
+      type: object
+      properties:
+        key:
+          title: Key
+          description: Unique name for the profile. The profile key must be unique
+            per project and can only contain letters, numbers, dashes, and underscores.
+            It must begin with a letter and end with a letter or number. It cannot
+            contain consecutive dashes or underscores.
+          type: string
+        connection_id:
+          title: Connection Id
+          description: The ID of the connection
+          format: int64
+          type: integer
+        credentials_id:
+          title: Credentials Id
+          description: The ID of the credentials
+          format: int64
+          type: integer
+        extended_attributes_id:
+          title: Extended Attributes Id
+          description: The ID of the extended attributes
+          format: int64
+          type: integer
+        account_id:
+          title: Account Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        project_id:
+          title: Project Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+      required:
+      - key
+      - connection_id
+      - credentials_id
+      additionalProperties: false
     CreateSCIMConfigurationRequestRequest:
       title: CreateSCIMConfigurationRequest
       description: |-
@@ -8913,36 +8972,6 @@ components:
           - $ref: '#/components/schemas/LicenseType'
       required:
       - licenseType
-    CustomEnvironmentVariableBulkRequest:
-      type: object
-      properties:
-        new_name:
-          type: string
-          minLength: 1
-        project:
-          type: string
-          minLength: 1
-        environmentNameExample1:
-          type: string
-          minLength: 1
-          description: This key must match the name of the environment you want to
-            set this environment variable for.
-        environmentNameExample2:
-          type: string
-          minLength: 1
-          description: This key must match the name of the environment you want to
-            set this environment variable for.
-      required:
-      - new_name
-    CustomEnvironmentVariableBulkRequestRequest:
-      type: object
-      properties:
-        env_var:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomEnvironmentVariableBulkRequest'
-      required:
-      - env_var
     CustomEnvironmentVariableBulkResponse:
       type: object
       properties:
@@ -13792,52 +13821,6 @@ components:
       required:
       - data
       - extra
-    ProfileCreateBodyRequest:
-      title: ProfileCreateBody
-      description: |-
-        Base class for all request payloads.
-        It is expected that each endpoint extends this class to define its own payload format
-      type: object
-      properties:
-        account_id:
-          title: Account Id
-          description: The ID of the account
-          format: int64
-          type: integer
-        project_id:
-          title: Project Id
-          description: The ID of the project
-          format: int64
-          type: integer
-        connection_id:
-          title: Connection Id
-          description: The ID of the connection
-          format: int64
-          type: integer
-        key:
-          title: Key
-          description: Unique name for the profile. The profile key must be unique
-            per project and can only contain letters, numbers, dashes, and underscores.
-            It must begin with a letter and end with a letter or number. It cannot
-            contain consecutive dashes or underscores.
-          type: string
-        credentials_id:
-          title: Credentials Id
-          description: The ID of the credentials
-          format: int64
-          type: integer
-        extended_attributes_id:
-          title: Extended Attributes Id
-          description: The ID of the extended attributes
-          format: int64
-          type: integer
-      required:
-      - account_id
-      - project_id
-      - connection_id
-      - key
-      - credentials_id
-      additionalProperties: false
     ProfileDetail:
       title: ProfileDetail
       type: object
@@ -14020,62 +14003,6 @@ components:
           type: integer
       required:
       - data
-    ProfileUpdateBodyRequest:
-      title: ProfileUpdateBody
-      description: |-
-        Base class for all request payloads.
-        It is expected that each endpoint extends this class to define its own payload format
-      type: object
-      properties:
-        pk:
-          title: Pk
-          description: The ID of the Profile to be changed
-          format: int64
-          type: integer
-        account_id:
-          title: Account Id
-          description: The ID of the account
-          format: int64
-          type: integer
-        project_id:
-          title: Project Id
-          description: The ID of the project
-          format: int64
-          type: integer
-        key:
-          title: Key
-          description: Unique name for the profile. The profile key must be unique
-            per project and can only contain letters, numbers, dashes, and underscores.
-            It must begin with a letter and end with a letter or number. It cannot
-            contain consecutive dashes or underscores.
-          default: null
-          type: string
-        connection_id:
-          title: Connection Id
-          description: The ID of the connection. Null is only accepted for a profile
-            that has no connection; a profile's connection cannot be removed once
-            set.
-          default: null
-          format: int64
-          type: integer
-        credentials_id:
-          title: Credentials Id
-          description: The ID of the credentials. Null is only accepted for a profile
-            that has no credentials; credentials cannot be removed once set.
-          default: null
-          format: int64
-          type: integer
-        extended_attributes_id:
-          title: Extended Attributes Id
-          description: The ID of the extended attributes. Set to null to unset.
-          default: null
-          format: int64
-          type: integer
-      required:
-      - pk
-      - account_id
-      - project_id
-      additionalProperties: false
     Project:
       type: object
       properties:
@@ -16049,6 +15976,38 @@ components:
       - runs_read_denied
       - no_change
       type: string
+    UpdateEnvironmentVariableValuesBody:
+      title: UpdateEnvironmentVariableValuesBody
+      description: A variable, keyed by its current `name`, and its new name and values.
+      type: object
+      properties:
+        name:
+          title: Name
+          description: Current name of the environment variable.
+          type: string
+        new_name:
+          title: New Name
+          description: New name for the environment variable. Requires 'name' to also
+            be set.
+          type: string
+      required:
+      - name
+      additionalProperties:
+        type: string
+        nullable: true
+        description: Value keyed by either an existing env var ID (to update) or an
+          environment name (to create a new override). Set a value to empty string
+          or null to delete that variable override.
+    UpdateEnvironmentVariablesBulkBodyRequest:
+      title: UpdateEnvironmentVariablesBulkBody
+      description: The environment variable to update.
+      type: object
+      properties:
+        env_vars:
+          $ref: '#/components/schemas/UpdateEnvironmentVariableValuesBody'
+      required:
+      - env_vars
+      additionalProperties: false
     UpdateIPRestrictionBodyRequest:
       title: UpdateIPRestrictionBody
       description: New values for an IP restriction rule and its CIDR ranges.
@@ -16105,6 +16064,52 @@ components:
       required:
       - name
       - type
+      additionalProperties: false
+    UpdateProfileBodyRequest:
+      title: UpdateProfileBody
+      description: New values for a profile.
+      type: object
+      properties:
+        key:
+          title: Key
+          description: Unique name for the profile. The profile key must be unique
+            per project and can only contain letters, numbers, dashes, and underscores.
+            It must begin with a letter and end with a letter or number. It cannot
+            contain consecutive dashes or underscores.
+          type: string
+        connection_id:
+          title: Connection Id
+          description: The ID of the connection. Null is only accepted for a profile
+            that has no connection; a profile's connection cannot be removed once
+            set.
+          format: int64
+          type: integer
+        credentials_id:
+          title: Credentials Id
+          description: The ID of the credentials. Null is only accepted for a profile
+            that has no credentials; credentials cannot be removed once set.
+          format: int64
+          type: integer
+        extended_attributes_id:
+          title: Extended Attributes Id
+          description: The ID of the extended attributes. Set to null to unset.
+          format: int64
+          type: integer
+        id:
+          title: Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        account_id:
+          title: Account Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
+        project_id:
+          title: Project Id
+          description: Read-only, ignored.
+          format: int64
+          type: integer
       additionalProperties: false
     UpdateServiceTokenRequestRequest:
       title: UpdateServiceTokenRequest
